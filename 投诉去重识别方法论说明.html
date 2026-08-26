@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12345投诉去重识别模型 — 方法论说明</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif; background: #f0f2f5; color: #333; line-height: 1.8; }
+  .header { background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%); color: #fff; padding: 40px 0; text-align: center; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: 2px; }
+  .header .subtitle { font-size: 14px; margin-top: 8px; opacity: 0.8; }
+  .header .meta { font-size: 12px; margin-top: 12px; opacity: 0.6; }
+  .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+  .section { background: #fff; border-radius: 12px; padding: 30px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .section-title { font-size: 20px; font-weight: 700; color: #1a3a5f; margin-bottom: 16px; display: flex; align-items: center; }
+  .section-title::before { content: ''; width: 6px; height: 24px; background: #1890ff; border-radius: 3px; margin-right: 12px; flex-shrink: 0; }
+  .section-title .num { background: #1890ff; color: #fff; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; flex-shrink: 0; }
+  p { margin-bottom: 12px; color: #444; }
+  .highlight { background: #e6f7ff; padding: 2px 6px; border-radius: 4px; font-weight: 600; color: #096dd9; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 20px 0; }
+  .stat-card { background: #f6f8fa; border-radius: 8px; padding: 20px 12px; text-align: center; border: 1px solid #e8e8e8; }
+  .stat-card .num { font-size: 32px; font-weight: 700; color: #1890ff; }
+  .stat-card .label { font-size: 12px; color: #888; margin-top: 4px; }
+  .strategy-card { background: #f6f8fa; border-left: 4px solid #1890ff; border-radius: 8px; padding: 20px 24px; margin-bottom: 16px; }
+  .strategy-card .strategy-header { display: flex; align-items: center; margin-bottom: 12px; }
+  .strategy-card .strategy-badge { background: #1890ff; color: #fff; font-size: 13px; padding: 4px 12px; border-radius: 12px; margin-right: 12px; font-weight: 600; }
+  .strategy-card .strategy-title { font-size: 17px; font-weight: 700; color: #1a3a5f; }
+  .strategy-card .strategy-desc { font-size: 14px; color: #555; margin-bottom: 10px; }
+  .strategy-card .criteria-box { background: #fff; border: 1px solid #d9d9d9; border-radius: 6px; padding: 12px 16px; margin: 8px 0; }
+  .strategy-card .criteria-label { font-size: 12px; color: #888; font-weight: 600; margin-bottom: 4px; }
+  .strategy-card .criteria-value { font-size: 14px; color: #333; }
+  .strategy-card .code { font-family: "SF Mono", "Consolas", monospace; background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #d4380d; }
+  .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+  .data-table th { background: #1a3a5f; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
+  .data-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #e8e8e8; }
+  .data-table tr:nth-child(even) { background: #fafafa; }
+  .finding-card { background: #f6f8fa; border-left: 4px solid #52c41a; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
+  .finding-card .finding-title { font-weight: 700; color: #1a3a5f; margin-bottom: 4px; font-size: 15px; }
+  .finding-card .finding-desc { font-size: 13px; color: #555; }
+  .footer { text-align: center; padding: 30px 0; font-size: 12px; color: #999; }
+
+  /* 流程图样式 */
+  .flowchart { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
+  .flow-node { background: #1890ff; color: #fff; border-radius: 8px; padding: 10px 24px; font-size: 14px; font-weight: 600; text-align: center; min-width: 200px; }
+  .flow-node.start { background: #52c41a; }
+  .flow-node.end { background: #722ed1; }
+  .flow-node.process { background: #1890ff; }
+  .flow-node.decision { background: #fa8c16; border-radius: 8px; }
+  .flow-arrow { width: 2px; height: 24px; background: #999; position: relative; }
+  .flow-arrow::after { content: '▼'; position: absolute; bottom: -6px; left: -6px; color: #999; font-size: 12px; }
+  .flow-branches { display: flex; gap: 40px; align-items: flex-start; }
+  .flow-branch { display: flex; flex-direction: column; align-items: center; }
+  .flow-branch-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .flow-strategies { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  .flow-strategy { background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 8px; padding: 12px; text-align: center; }
+  .flow-strategy .s-name { font-weight: 700; color: #096dd9; font-size: 13px; }
+  .flow-strategy .s-detail { font-size: 11px; color: #666; margin-top: 4px; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>12345投诉去重识别模型 — 方法论说明</h1>
+  <div class="subtitle">四重识别策略 · 技术模型构建 · 数据质量控制</div>
+  <div class="meta">徐汇物业课题一期 · 核心成果二 | 2026年8月</div>
+</div>
+
+<div class="container">
+
+  <!-- 一、模型背景 -->
+  <div class="section">
+    <div class="section-title"><span class="num">1</span>模型背景与目标</div>
+    <p>12345热线投诉数据中存在大量重复投诉，包括同一市民多次提交相同诉求、催办重发、同小区同类问题高频投诉等。重复投诉如不去重，将导致投诉量虚高、趋势失真，无法准确评估实际治理效果。</p>
+    <p>本项目构建了<span class="highlight">"投诉去重识别模型"</span>，通过四重识别策略，对2026年1-6月共9,239条有效工单进行系统性去重分析，识别出3,746条重复投诉工单，重复投诉占比<span class="highlight">40.5%</span>，为准确评估投诉量下降趋势提供了数据基础。</p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">9,239</div><div class="label">有效工单总数</div></div>
+      <div class="stat-card"><div class="num">3,746</div><div class="label">重复投诉工单</div></div>
+      <div class="stat-card"><div class="num">40.5%</div><div class="label">重复投诉占比</div></div>
+      <div class="stat-card"><div class="num">499</div><div class="label">涉及小区数</div></div>
+    </div>
+  </div>
+
+  <!-- 二、四重识别策略 -->
+  <div class="section">
+    <div class="section-title"><span class="num">2</span>四重识别策略详解</div>
+    <p>模型采用<span class="highlight">四重综合识别策略</span>，从精确匹配到文本挖掘，逐层递进，确保重复投诉识别的全面性和准确性。四种策略的结果取并集后去重，得到最终重复投诉清单。</p>
+
+    <!-- 策略一 -->
+    <div class="strategy-card" style="border-left-color: #f5222d;">
+      <div class="strategy-header">
+        <span class="strategy-badge" style="background:#f5222d;">策略一</span>
+        <span class="strategy-title">完全重复识别</span>
+      </div>
+      <div class="strategy-desc">识别同一市民在短时间内多次提交完全相同内容的投诉工单。</div>
+      <div class="criteria-box">
+        <div class="criteria-label">判定条件</div>
+        <div class="criteria-value">
+          同一小区名称（<span class="code">小区名称</span>字段相同）<strong>且</strong>
+          内容描述（<span class="code">内容描述</span>字段）<strong>完全一致</strong>（字符级精确匹配）
+        </div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别逻辑</div>
+        <div class="criteria-value">按<span class="code">小区名称</span>分组，组内对<span class="code">内容描述</span>做字符串精确比对，完全相同的工单归为一组。</div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别结果</div>
+        <div class="criteria-value">37组，涉及89条工单。占重复投诉总量比例较小，但识别精度最高（100%确定重复）。</div>
+      </div>
+    </div>
+
+    <!-- 策略二 -->
+    <div class="strategy-card" style="border-left-color: #fa8c16;">
+      <div class="strategy-header">
+        <span class="strategy-badge" style="background:#fa8c16;">策略二</span>
+        <span class="strategy-title">催办/重新交办识别</span>
+      </div>
+      <div class="strategy-desc">识别市民对首次答复不满意、要求催办或重新交办的工单。这是重复投诉的主要形式。</div>
+      <div class="criteria-box">
+        <div class="criteria-label">判定条件</div>
+        <div class="criteria-value">
+          内容描述（<span class="code">内容描述</span>字段）中包含以下任一关键词：
+          <br>① <span class="code">"催单"</span> &nbsp; ② <span class="code">"重新交办"</span> &nbsp; ③ <span class="code">"反复"</span> &nbsp; ④ <span class="code">"相同事项"</span>
+        </div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别逻辑</div>
+        <div class="criteria-value">对每条工单的<span class="code">内容描述</span>文本进行关键词检索，命中任一关键词即判定为催办/重发类重复投诉。</div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别结果</div>
+        <div class="criteria-value">1,909条，是四类策略中数量最多的，反映了首次办理质量和处理速度是重复投诉的核心成因。</div>
+      </div>
+    </div>
+
+    <!-- 策略三 -->
+    <div class="strategy-card" style="border-left-color: #1890ff;">
+      <div class="strategy-header">
+        <span class="strategy-badge" style="background:#1890ff;">策略三</span>
+        <span class="strategy-title">同小区同类高频识别</span>
+      </div>
+      <div class="strategy-desc">识别同一小区内同一类问题被反复投诉3次及以上的高频聚集现象。</div>
+      <div class="criteria-box">
+        <div class="criteria-label">判定条件</div>
+        <div class="criteria-value">
+          同一小区（<span class="code">小区名称</span>相同）<strong>且</strong>
+          同一十四类分类（<span class="code">十四类</span>相同）<strong>且</strong>
+          投诉次数达到 <span class="highlight">3次及以上</span>
+        </div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别逻辑</div>
+        <div class="criteria-value">按 <span class="code">(小区名称, 十四类)</span> 二维分组统计投诉次数，筛选次数 ≥ 3 的组，该组内所有工单标记为高频重复投诉。</div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别结果</div>
+        <div class="criteria-value">4,942条，涉及大量小区-类别组合，反映了停车管理、邻里纠纷等长期未解决的共性问题在小区层面的集中爆发。</div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">阈值设定依据</div>
+        <div class="criteria-value">3次阈值的设定基于数据分布分析：同一小区同类投诉3次以上的情况，通常意味着问题未被有效解决，而非偶发投诉。3次是区分"偶发"与"高频"的经验分界点。</div>
+      </div>
+    </div>
+
+    <!-- 策略四 -->
+    <div class="strategy-card" style="border-left-color: #722ed1;">
+      <div class="strategy-header">
+        <span class="strategy-badge" style="background:#722ed1;">策略四</span>
+        <span class="strategy-title">TF-IDF文本相似度识别</span>
+      </div>
+      <div class="strategy-desc">运用自然语言处理技术，识别内容描述高度相似但非完全相同的重复投诉，捕捉改写、换词但实质相同的诉求。</div>
+      <div class="criteria-box">
+        <div class="criteria-label">技术方案</div>
+        <div class="criteria-value">
+          ① <strong>分词工具</strong>：jieba中文分词<br>
+          ② <strong>预处理</strong>：分词后去除停用词（"的"、"了"、"在"等）<br>
+          ③ <strong>向量化</strong>：TF-IDF算法将文本转化为词频-逆文档频率向量<br>
+          ④ <strong>相似度计算</strong>：余弦相似度（Cosine Similarity）<br>
+          ⑤ <strong>计算范围</strong>：同一小区内工单两两配对计算
+        </div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">判定阈值</div>
+        <div class="criteria-value">余弦相似度 <span class="highlight">≥ 0.6</span> → 判定为高度相似重复投诉</div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">阈值设定依据</div>
+        <div class="criteria-value">0.6的相似度阈值经过实测校准：低于0.5会误判不同问题为相似（如"车位被占"和"车位不足"），高于0.7会遗漏改写较多的重复投诉。0.6在召回率和精确率之间取得最佳平衡。</div>
+      </div>
+      <div class="criteria-box">
+        <div class="criteria-label">识别结果</div>
+        <div class="criteria-value">4,755对高度相似工单对，覆盖499个小区。这一策略的价值在于捕捉了前三类策略无法发现的"软重复"——市民换了说法但实质相同的投诉。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、识别流程 -->
+  <div class="section">
+    <div class="section-title"><span class="num">3</span>识别流程</div>
+    <p>四种策略并行执行，结果合并去重后形成最终重复投诉清单。完整流程如下：</p>
+
+    <div class="flowchart">
+      <div class="flow-node start">输入：12345热线原始工单数据</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node process">数据预处理：字段标准化、分词、去停用词</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node decision">四重策略并行识别</div>
+
+      <div class="flow-strategies">
+        <div class="flow-strategy">
+          <div class="s-name">策略一：完全重复</div>
+          <div class="s-detail">同小区 + 内容完全一致<br>字符串精确匹配</div>
+        </div>
+        <div class="flow-strategy">
+          <div class="s-name">策略二：催办/重发</div>
+          <div class="s-detail">关键词检索<br>"催单""重新交办""反复""相同事项"</div>
+        </div>
+        <div class="flow-strategy">
+          <div class="s-name">策略三：同小区同类高频</div>
+          <div class="s-detail">同小区 + 同类别<br>次数 ≥ 3</div>
+        </div>
+        <div class="flow-strategy">
+          <div class="s-name">策略四：TF-IDF相似度</div>
+          <div class="s-detail">jieba分词 → TF-IDF向量化<br>余弦相似度 ≥ 0.6</div>
+        </div>
+      </div>
+
+      <div class="flow-arrow"></div>
+      <div class="flow-node process">结果合并：四类识别结果取并集</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node process">交叉去重：工单编号去重，避免一条工单被多策略重复计数</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node process">人工抽检：随机抽取10%样本人工复核</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node end">输出：去重后投诉清单 + 重复投诉分析报告</div>
+    </div>
+  </div>
+
+  <!-- 四、识别结果 -->
+  <div class="section">
+    <div class="section-title"><span class="num">4</span>识别结果汇总</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>识别策略</th>
+          <th>识别结果</th>
+          <th>计量单位</th>
+          <th>技术手段</th>
+          <th>识别精度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">策略一：完全重复</td><td>89</td><td>条（37组）</td><td>字符串精确匹配</td><td>100%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略二：催办/重发</td><td>1,909</td><td>条</td><td>关键词检索</td><td>高</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略三：同小区同类高频</td><td>4,942</td><td>条</td><td>分组统计 + 阈值过滤</td><td>中高</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略四：TF-IDF相似度</td><td>4,755</td><td>对（499小区）</td><td>NLP文本挖掘</td><td>中高（≥0.6）</td></tr>
+        <tr style="background:#e6f7ff;font-weight:700;"><td style="text-align:left;">合并去重后总计</td><td>3,746</td><td>条</td><td>四策略并集去重</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:12px;font-size:13px;color:#888;">注：四种策略的结果存在交叉（同一条工单可能同时被多个策略识别），合并后按工单编号去重，最终重复投诉为3,746条，占有效工单总量的40.5%。</p>
+  </div>
+
+  <!-- 五、重复投诉特征分析 -->
+  <div class="section">
+    <div class="section-title"><span class="num">5</span>重复投诉特征分析</div>
+
+    <p><strong>5.1 月度趋势</strong></p>
+    <table class="data-table">
+      <thead><tr><th>月份</th><th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th></tr></thead>
+      <tbody><tr><td>重复投诉量</td><td>895</td><td>469</td><td>825</td><td>737</td><td>496</td><td>324</td></tr></tbody>
+    </table>
+    <p style="font-size:13px;color:#888;">从1月895条降至6月324条，降幅64%，表明治理措施逐步见效。</p>
+
+    <p style="margin-top:20px;"><strong>5.2 类别分布</strong></p>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>投诉类别</th><th>重复投诉量</th><th>占比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;">停车管理</td><td>466</td><td>15.3%</td></tr>
+        <tr><td>2</td><td style="text-align:left;">邻里纠纷</td><td>442</td><td>14.5%</td></tr>
+        <tr><td>3</td><td style="text-align:left;">房屋违规使用</td><td>346</td><td>11.4%</td></tr>
+        <tr><td>4</td><td style="text-align:left;">房屋维修</td><td>331</td><td>10.9%</td></tr>
+        <tr><td>5</td><td style="text-align:left;">业主大会/业委会</td><td>316</td><td>10.4%</td></tr>
+        <tr><td>6</td><td style="text-align:left;">消防管理</td><td>261</td><td>8.6%</td></tr>
+        <tr><td>7</td><td style="text-align:left;">物业安保</td><td>171</td><td>5.6%</td></tr>
+        <tr><td>8</td><td style="text-align:left;">群租管理</td><td>164</td><td>5.4%</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px;"><strong>5.3 热点小区Top10</strong></p>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区名称</th><th>重复投诉量</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;">欣嘉苑1-3期</td><td>56</td></tr>
+        <tr><td>2</td><td style="text-align:left;">安福直管公房</td><td>43</td></tr>
+        <tr><td>3</td><td style="text-align:left;">家乐苑</td><td>40</td></tr>
+        <tr><td>4</td><td style="text-align:left;">紫阳花苑</td><td>39</td></tr>
+        <tr><td>5</td><td style="text-align:left;">吴东小区</td><td>38</td></tr>
+        <tr><td>6</td><td style="text-align:left;">南丹小区</td><td>38</td></tr>
+        <tr><td>7</td><td style="text-align:left;">宛龙小区</td><td>35</td></tr>
+        <tr><td>8</td><td style="text-align:left;">华欣家园</td><td>33</td></tr>
+        <tr><td>9</td><td style="text-align:left;">凌云新村</td><td>33</td></tr>
+        <tr><td>10</td><td style="text-align:left;">淮中直管公房</td><td>29</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px;"><strong>5.4 高频关键词</strong></p>
+    <p style="font-size:13px;">通过对重复投诉内容描述进行jieba分词和词频统计，高频关键词如下：</p>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>关键词</th><th>出现次数</th><th>关联问题</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>车位</td><td>909</td><td>停车管理</td></tr>
+        <tr><td>2</td><td>维修</td><td>901</td><td>房屋维修</td></tr>
+        <tr><td>3</td><td>电梯</td><td>856</td><td>旧住房改造/房屋维修</td></tr>
+        <tr><td>4</td><td>停车</td><td>850</td><td>停车管理</td></tr>
+        <tr><td>5</td><td>漏水</td><td>691</td><td>房屋维修/邻里纠纷</td></tr>
+        <tr><td>6</td><td>安装</td><td>717</td><td>旧住房改造（加装电梯）</td></tr>
+        <tr><td>7</td><td>公共</td><td>709</td><td>消防管理/物业安保</td></tr>
+        <tr><td>8</td><td>至今</td><td>718</td><td>反映问题久拖不决</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 六、数据质量控制 -->
+  <div class="section">
+    <div class="section-title"><span class="num">6</span>数据质量控制机制</div>
+
+    <div class="finding-card">
+      <div class="finding-title">质量控制一：人工抽检校验</div>
+      <div class="finding-desc">对四类策略识别结果随机抽取10%样本进行人工复核，验证识别准确性。重点抽检策略四（TF-IDF相似度）的结果，确保0.6阈值不会误判不同问题为重复。抽检通过率作为模型质量评估指标。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">质量控制二：阈值敏感性分析</div>
+      <div class="finding-desc">对策略三的频率阈值（3次）和策略四的相似度阈值（0.6）进行敏感性测试：分别测试2次/3次/4次和0.5/0.6/0.7的组合，对比识别结果数量和准确性，最终选定3次+0.6为最优参数组合。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">质量控制三：分类交叉验证</div>
+      <div class="finding-desc">将识别出的重复投诉与十四类业务分类交叉验证，检查各类别的重复投诉占比是否合理。如某类别重复投诉占比异常偏高或偏低，回溯检查该类别的识别逻辑是否存在偏差。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">质量控制四：时间窗口校验</div>
+      <div class="finding-desc">对策略一（完全重复）和策略四（文本相似度）增加时间窗口约束：仅对受理时间间隔在90天内的工单进行配对比较，避免将跨年度的同类正常投诉误判为重复。</div>
+    </div>
+  </div>
+
+  <!-- 七、与市局数据复核机制 -->
+  <div class="section">
+    <div class="section-title"><span class="num">7</span>与市局数据复核机制</div>
+    <p>重复投诉识别结果不直接修改原始数据，而是作为分析参考层叠加在原始数据之上，确保数据可追溯、可复核。</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>环节</th><th>操作内容</th><th>责任方</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:600;">原始数据保全</td><td style="text-align:left;">市局下发的原始工单数据完整保存，不做任何删改</td><td>区级数据中心</td></tr>
+        <tr><td style="font-weight:600;">识别结果叠加</td><td style="text-align:left;">去重识别结果作为"分析标记层"，在报表中以"原始量/去重后量"双口径展示</td><td>项目组</td></tr>
+        <tr><td style="font-weight:600;">口径对齐</td><td style="text-align:left;">与市局确认14类分类口径、工单类型范围（投诉举报类+求助类）、剔除规则一致性</td><td>区局 ↔ 市局</td></tr>
+        <tr><td style="font-weight:600;">差异复核</td><td style="text-align:left;">如区级去重后数据与市局口径存在差异，逐条比对差异工单，确认差异原因（时间口径/分类口径/剔除规则）</td><td>项目组 ↔ 市局</td></tr>
+        <tr><td style="font-weight:600;">报告标注</td><td style="text-align:left;">所有对外报告中注明数据口径：是原始量还是去重后量，确保数据使用方理解差异</td><td>项目组</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 八、模型应用价值 -->
+  <div class="section">
+    <div class="section-title"><span class="num">8</span>模型应用价值</div>
+
+    <div class="finding-card" style="border-left-color:#1890ff;">
+      <div class="finding-title">价值一：准确评估投诉量下降趋势</div>
+      <div class="finding-desc">去除40.5%的重复投诉后，投诉量下降趋势更加真实。2026年1-6月原始工单9,239条，去重后5,493条，去重后的同比下降幅度更能反映实际治理效果，避免重复投诉虚高掩盖治理成效。</div>
+    </div>
+    <div class="finding-card" style="border-left-color:#1890ff;">
+      <div class="finding-title">价值二：定位治理盲区</div>
+      <div class="finding-desc">催办/重发类重复投诉1,909条，直接指向首次办理质量不高的小区和物业企业；同小区同类高频投诉4,942条，指向长期未解决的共性问题。这些识别结果为精准施策提供了明确的靶向。</div>
+    </div>
+    <div class="finding-card" style="border-left-color:#1890ff;">
+      <div class="finding-title">价值三：建立预警机制</div>
+      <div class="finding-desc">当同一小区同类投诉达到3次时自动预警，从"事后分析"转向"事前感知"。Top20热点小区清单直接指导"一小区一方案"专项治理计划的制定。</div>
+    </div>
+    <div class="finding-card" style="border-left-color:#1890ff;">
+      <div class="finding-title">价值四：首次办理质量评估</div>
+      <div class="finding-desc">重复投诉率（40.5%）可作为各物业企业、各街道首次办理质量的量化评估指标，纳入物业监管考核体系，推动从"解决投诉"向"一次解决"转变。</div>
+    </div>
+    <div class="finding-card" style="border-left-color:#1890ff;">
+      <div class="finding-title">价值五：技术可复制性</div>
+      <div class="finding-desc">四重识别策略基于标准NLP技术（jieba分词 + TF-IDF + 余弦相似度），可直接迁移至其他区、其他领域的12345数据分析，形成可推广的"投诉去重识别"标准方法。</div>
+    </div>
+  </div>
+
+  <!-- 九、技术参数总结 -->
+  <div class="section">
+    <div class="section-title"><span class="num">9</span>技术参数一览</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>参数</th><th>取值</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:600;">分词工具</td><td>jieba</td><td style="text-align:left;">中文分词，支持自定义词典</td></tr>
+        <tr><td style="font-weight:600;">向量化算法</td><td>TF-IDF</td><td style="text-align:left;">词频-逆文档频率，衡量词的重要性</td></tr>
+        <tr><td style="font-weight:600;">相似度算法</td><td>余弦相似度</td><td style="text-align:left;">Cosine Similarity，衡量向量夹角</td></tr>
+        <tr><td style="font-weight:600;">相似度阈值</td><td>0.6</td><td style="text-align:left;">≥0.6判定为高度相似，经敏感性测试校准</td></tr>
+        <tr><td style="font-weight:600;">高频阈值</td><td>3次</td><td style="text-align:left;">同小区同类≥3次判定为高频重复</td></tr>
+        <tr><td style="font-weight:600;">催办关键词</td><td>4个</td><td style="text-align:left;">催单、重新交办、反复、相同事项</td></tr>
+        <tr><td style="font-weight:600;">计算范围</td><td>同小区内</td><td style="text-align:left;">策略一和策略四均在同一小区内配对计算</td></tr>
+        <tr><td style="font-weight:600;">时间窗口</td><td>90天</td><td style="text-align:left;">配对工单受理时间间隔≤90天</td></tr>
+        <tr><td style="font-weight:600;">人工抽检比例</td><td>10%</td><td style="text-align:left;">随机抽取10%样本人工复核</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 核心成果二 · 2026年8月
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1925 @@
+{
+  "high_complaint_property": {
+    "title": "高投诉物业企业重点监管清单",
+    "subtitle": "针对平均投诉量最高的物业企业，实行重点约谈和履约监管",
+    "companies": {
+      "上海中海物业管理有限公司": {
+        "count": 7,
+        "total_complaints": 1489,
+        "avg_complaints": 212.7,
+        "top_communities": [
+          {
+            "name": "中海瀛台",
+            "street": "长桥街道",
+            "total": 996,
+            "y2024": 690,
+            "y2025": 264,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 157,
+            "avg_floors": 5.0
+          },
+          {
+            "name": "绿邑翠苑",
+            "street": "漕河泾街道",
+            "total": 152,
+            "y2024": 47,
+            "y2025": 91,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 15,
+            "avg_floors": 9.4
+          },
+          {
+            "name": "挹翠苑",
+            "street": "漕河泾街道",
+            "total": 116,
+            "y2024": 66,
+            "y2025": 41,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 74,
+            "avg_floors": 6.0
+          },
+          {
+            "name": "瑞金南苑",
+            "street": "斜土路街道",
+            "total": 109,
+            "y2024": 53,
+            "y2025": 35,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 35,
+            "avg_floors": 8.7
+          },
+          {
+            "name": "中海馨园",
+            "street": "漕河泾街道",
+            "total": 71,
+            "y2024": 31,
+            "y2025": 31,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 28,
+            "avg_floors": 12.6
+          },
+          {
+            "name": "幽澜苑",
+            "street": "长桥街道",
+            "total": 30,
+            "y2024": 16,
+            "y2025": 9,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 19,
+            "avg_floors": 5.2
+          },
+          {
+            "name": "中山苑",
+            "street": "枫林路街道",
+            "total": 15,
+            "y2024": 5,
+            "y2025": 3,
+            "property": "上海中海物业管理有限公司",
+            "buildings": 14,
+            "avg_floors": 6.0
+          }
+        ]
+      },
+      "上海汇成物业有限公司": {
+        "count": 17,
+        "total_complaints": 3031,
+        "avg_complaints": 178.3,
+        "top_communities": [
+          {
+            "name": "华悦家园",
+            "street": "虹梅路街道",
+            "total": 567,
+            "y2024": 250,
+            "y2025": 207,
+            "property": "上海汇成物业有限公司",
+            "buildings": 125,
+            "avg_floors": 7.6
+          },
+          {
+            "name": "华欣家园",
+            "street": "华泾镇",
+            "total": 444,
+            "y2024": 205,
+            "y2025": 154,
+            "property": "上海汇成物业有限公司",
+            "buildings": 215,
+            "avg_floors": 4.3
+          },
+          {
+            "name": "华滨家园",
+            "street": "长桥街道",
+            "total": 381,
+            "y2024": 157,
+            "y2025": 153,
+            "property": "上海汇成物业有限公司",
+            "buildings": 81,
+            "avg_floors": 8.2
+          },
+          {
+            "name": "长汇景苑",
+            "street": "长桥街道",
+            "total": 298,
+            "y2024": 146,
+            "y2025": 126,
+            "property": "上海汇成物业有限公司",
+            "buildings": 1,
+            "avg_floors": 0.0
+          },
+          {
+            "name": "华沁家园",
+            "street": "长桥街道",
+            "total": 253,
+            "y2024": 105,
+            "y2025": 95,
+            "property": "上海汇成物业有限公司",
+            "buildings": 102,
+            "avg_floors": 8.1
+          },
+          {
+            "name": "汇成四村",
+            "street": "长桥街道",
+            "total": 204,
+            "y2024": 91,
+            "y2025": 86,
+            "property": "上海汇成物业有限公司",
+            "buildings": 145,
+            "avg_floors": 3.2
+          },
+          {
+            "name": "罗秀三村",
+            "street": "长桥街道",
+            "total": 194,
+            "y2024": 82,
+            "y2025": 68,
+            "property": "上海汇成物业有限公司",
+            "buildings": 109,
+            "avg_floors": 5.9
+          },
+          {
+            "name": "汇成一村",
+            "street": "长桥街道",
+            "total": 174,
+            "y2024": 79,
+            "y2025": 48,
+            "property": "上海汇成物业有限公司",
+            "buildings": 101,
+            "avg_floors": 4.3
+          },
+          {
+            "name": "汇成五村",
+            "street": "长桥街道",
+            "total": 123,
+            "y2024": 39,
+            "y2025": 48,
+            "property": "上海汇成物业有限公司",
+            "buildings": 146,
+            "avg_floors": 4.1
+          },
+          {
+            "name": "汇成苑三村",
+            "street": "长桥街道",
+            "total": 121,
+            "y2024": 65,
+            "y2025": 43,
+            "property": "上海汇成物业有限公司",
+            "buildings": 83,
+            "avg_floors": 3.4
+          }
+        ]
+      },
+      "上海阳光投资（集团）物业管理有限公司": {
+        "count": 8,
+        "total_complaints": 1417,
+        "avg_complaints": 177.1,
+        "top_communities": [
+          {
+            "name": "尚海湾二期",
+            "street": "斜土路街道",
+            "total": 502,
+            "y2024": 312,
+            "y2025": 115,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 0,
+            "avg_floors": 0
+          },
+          {
+            "name": "尚海湾二期",
+            "street": "斜土路街道",
+            "total": 502,
+            "y2024": 312,
+            "y2025": 115,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 21,
+            "avg_floors": 16.5
+          },
+          {
+            "name": "阳光绿园",
+            "street": "凌云路街道",
+            "total": 301,
+            "y2024": 182,
+            "y2025": 83,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 67,
+            "avg_floors": 8.0
+          },
+          {
+            "name": "阳光新景",
+            "street": "凌云路街道",
+            "total": 31,
+            "y2024": 23,
+            "y2025": 8,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 34,
+            "avg_floors": 7.1
+          },
+          {
+            "name": "阳光名苑",
+            "street": "枫林路街道",
+            "total": 26,
+            "y2024": 11,
+            "y2025": 12,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 19,
+            "avg_floors": 8.0
+          },
+          {
+            "name": "森陇家园",
+            "street": "凌云路街道",
+            "total": 21,
+            "y2024": 10,
+            "y2025": 9,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 30,
+            "avg_floors": 2.8
+          },
+          {
+            "name": "长陇苑",
+            "street": "凌云路街道",
+            "total": 20,
+            "y2024": 9,
+            "y2025": 8,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 21,
+            "avg_floors": 6.0
+          },
+          {
+            "name": "阳光名邸",
+            "street": "徐家汇街道",
+            "total": 14,
+            "y2024": 8,
+            "y2025": 5,
+            "property": "上海阳光投资（集团）物业管理有限公司",
+            "buildings": 9,
+            "avg_floors": 13.6
+          }
+        ]
+      },
+      "上海金辉物业有限公司": {
+        "count": 7,
+        "total_complaints": 894,
+        "avg_complaints": 127.7,
+        "top_communities": [
+          {
+            "name": "梅陇四村",
+            "street": "凌云路街道",
+            "total": 267,
+            "y2024": 126,
+            "y2025": 85,
+            "property": "上海金辉物业有限公司",
+            "buildings": 94,
+            "avg_floors": 6.9
+          },
+          {
+            "name": "梅陇五村(多层)",
+            "street": "凌云路街道",
+            "total": 192,
+            "y2024": 81,
+            "y2025": 61,
+            "property": "上海金辉物业有限公司",
+            "buildings": 66,
+            "avg_floors": 4.1
+          },
+          {
+            "name": "梅陇六村",
+            "street": "凌云路街道",
+            "total": 157,
+            "y2024": 86,
+            "y2025": 60,
+            "property": "上海金辉物业有限公司",
+            "buildings": 55,
+            "avg_floors": 5.5
+          },
+          {
+            "name": "梅陇七村",
+            "street": "凌云路街道",
+            "total": 139,
+            "y2024": 82,
+            "y2025": 46,
+            "property": "上海金辉物业有限公司",
+            "buildings": 61,
+            "avg_floors": 6.0
+          },
+          {
+            "name": "梅陇八村",
+            "street": "凌云路街道",
+            "total": 81,
+            "y2024": 48,
+            "y2025": 22,
+            "property": "上海金辉物业有限公司",
+            "buildings": 23,
+            "avg_floors": 7.6
+          },
+          {
+            "name": "梅陇五村(高层)",
+            "street": "凌云路街道",
+            "total": 52,
+            "y2024": 18,
+            "y2025": 18,
+            "property": "上海金辉物业有限公司",
+            "buildings": 3,
+            "avg_floors": 18.0
+          },
+          {
+            "name": "梅陇路394弄",
+            "street": "凌云路街道",
+            "total": 6,
+            "y2024": 1,
+            "y2025": 1,
+            "property": "上海金辉物业有限公司",
+            "buildings": 6,
+            "avg_floors": 6.0
+          }
+        ]
+      },
+      "上海中星集团申城物业有限公司": {
+        "count": 8,
+        "total_complaints": 994,
+        "avg_complaints": 124.2,
+        "top_communities": [
+          {
+            "name": "馨宁公寓",
+            "street": "华泾镇",
+            "total": 477,
+            "y2024": 218,
+            "y2025": 205,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 86,
+            "avg_floors": 8.3
+          },
+          {
+            "name": "百汇园",
+            "street": "龙华街道",
+            "total": 127,
+            "y2024": 127,
+            "y2025": 0,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 66,
+            "avg_floors": 12.7
+          },
+          {
+            "name": "馨逸公寓",
+            "street": "漕河泾街道",
+            "total": 94,
+            "y2024": 38,
+            "y2025": 29,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 33,
+            "avg_floors": 16.6
+          },
+          {
+            "name": "海上名门",
+            "street": "漕河泾街道",
+            "total": 82,
+            "y2024": 34,
+            "y2025": 21,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 25,
+            "avg_floors": 10.8
+          },
+          {
+            "name": "海上华庭",
+            "street": "康健新村街道",
+            "total": 77,
+            "y2024": 27,
+            "y2025": 32,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 30,
+            "avg_floors": 10.2
+          },
+          {
+            "name": "寿益坊(南)",
+            "street": "康健新村街道",
+            "total": 63,
+            "y2024": 29,
+            "y2025": 28,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 30,
+            "avg_floors": 5.5
+          },
+          {
+            "name": "海上名邸",
+            "street": "康健新村街道",
+            "total": 39,
+            "y2024": 15,
+            "y2025": 16,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 45,
+            "avg_floors": 6.4
+          },
+          {
+            "name": "桂林西街101弄",
+            "street": "康健新村街道",
+            "total": 35,
+            "y2024": 11,
+            "y2025": 20,
+            "property": "上海中星集团申城物业有限公司",
+            "buildings": 5,
+            "avg_floors": 6.0
+          }
+        ]
+      }
+    }
+  },
+  "old_repair_priority": {
+    "title": "老旧小区修缮攻坚清单（30个）",
+    "subtitle": "低层、无电梯楼栋多、维修投诉高的老旧小区，优先纳入修缮计划",
+    "total": 187,
+    "top30": [
+      {
+        "name": "中海瀛台",
+        "street": "长桥街道",
+        "total": 996,
+        "y2024": 690,
+        "y2025": 264,
+        "property": "上海中海物业管理有限公司",
+        "buildings": 157,
+        "avg_floors": 5.0
+      },
+      {
+        "name": "日晖六村",
+        "street": "斜土路街道",
+        "total": 711,
+        "y2024": 297,
+        "y2025": 313,
+        "property": "上海高建物业有限公司",
+        "buildings": 122,
+        "avg_floors": 4.9
+      },
+      {
+        "name": "华悦家园",
+        "street": "虹梅路街道",
+        "total": 567,
+        "y2024": 250,
+        "y2025": 207,
+        "property": "上海汇成物业有限公司",
+        "buildings": 125,
+        "avg_floors": 7.6
+      },
+      {
+        "name": "田林三街坊",
+        "street": "田林街道",
+        "total": 502,
+        "y2024": 265,
+        "y2025": 171,
+        "property": "上海徐房物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "东湾小区",
+        "street": "华泾镇",
+        "total": 459,
+        "y2024": 153,
+        "y2025": 256,
+        "property": "上海润美物业管理有限公司",
+        "buildings": 119,
+        "avg_floors": 5.9
+      },
+      {
+        "name": "华欣家园",
+        "street": "华泾镇",
+        "total": 444,
+        "y2024": 205,
+        "y2025": 154,
+        "property": "上海汇成物业有限公司",
+        "buildings": 215,
+        "avg_floors": 4.3
+      },
+      {
+        "name": "宛龙小区",
+        "street": "枫林路街道",
+        "total": 435,
+        "y2024": 168,
+        "y2025": 198,
+        "property": "上海高建物业有限公司",
+        "buildings": 139,
+        "avg_floors": 4.4
+      },
+      {
+        "name": "凌云新村",
+        "street": "凌云路街道",
+        "total": 429,
+        "y2024": 207,
+        "y2025": 138,
+        "property": "上海徐房物业有限公司",
+        "buildings": 160,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "龙山新村",
+        "street": "枫林路街道",
+        "total": 424,
+        "y2024": 157,
+        "y2025": 193,
+        "property": "上海高建物业有限公司",
+        "buildings": 118,
+        "avg_floors": 5.2
+      },
+      {
+        "name": "西木小区",
+        "street": "枫林路街道",
+        "total": 410,
+        "y2024": 214,
+        "y2025": 144,
+        "property": "上海高建物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.1
+      },
+      {
+        "name": "天钥新村",
+        "street": "枫林路街道",
+        "total": 377,
+        "y2024": 149,
+        "y2025": 167,
+        "property": "上海高建物业有限公司",
+        "buildings": 151,
+        "avg_floors": 5.2
+      },
+      {
+        "name": "华泾绿苑",
+        "street": "华泾镇",
+        "total": 371,
+        "y2024": 171,
+        "y2025": 132,
+        "property": "上海晏鑫实业有限公司",
+        "buildings": 123,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "长桥四村",
+        "street": "长桥街道",
+        "total": 356,
+        "y2024": 157,
+        "y2025": 122,
+        "property": "上海安得物业管理有限公司",
+        "buildings": 126,
+        "avg_floors": 6.2
+      },
+      {
+        "name": "安福直管公房",
+        "street": "湖南路街道",
+        "total": 351,
+        "y2024": 156,
+        "y2025": 104,
+        "property": "上海衡复物业有限公司",
+        "buildings": 171,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "紫阳花苑",
+        "street": "华泾镇",
+        "total": 338,
+        "y2024": 134,
+        "y2025": 123,
+        "property": "上海晏鑫实业有限公司",
+        "buildings": 136,
+        "avg_floors": 4.6
+      },
+      {
+        "name": "梅陇三村",
+        "street": "凌云路街道",
+        "total": 338,
+        "y2024": 230,
+        "y2025": 87,
+        "property": "上海徐房物业有限公司",
+        "buildings": 99,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "日晖二村",
+        "street": "斜土路街道",
+        "total": 325,
+        "y2024": 120,
+        "y2025": 140,
+        "property": "上海华欣物业管理有限公司",
+        "buildings": 115,
+        "avg_floors": 4.6
+      },
+      {
+        "name": "斜土小区",
+        "street": "斜土路街道",
+        "total": 320,
+        "y2024": 140,
+        "y2025": 128,
+        "property": "上海高建物业有限公司",
+        "buildings": 109,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "茶花园",
+        "street": "康健新村街道",
+        "total": 319,
+        "y2024": 220,
+        "y2025": 84,
+        "property": "上海安得物业管理有限公司",
+        "buildings": 134,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "梅陇十一村（A块）",
+        "street": "凌云路街道",
+        "total": 310,
+        "y2024": 197,
+        "y2025": 90,
+        "property": "上海市工联物业公司",
+        "buildings": 63,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "滨江小区",
+        "street": "龙华街道",
+        "total": 310,
+        "y2024": 153,
+        "y2025": 116,
+        "property": "上海凤梧物业管理有限公司",
+        "buildings": 195,
+        "avg_floors": 5.6
+      },
+      {
+        "name": "东安四村",
+        "street": "枫林路街道",
+        "total": 291,
+        "y2024": 128,
+        "y2025": 119,
+        "property": "上海高建物业有限公司",
+        "buildings": 45,
+        "avg_floors": 5.7
+      },
+      {
+        "name": "南丹小区",
+        "street": "徐家汇街道",
+        "total": 277,
+        "y2024": 127,
+        "y2025": 91,
+        "property": "上海汇虹物业管理有限公司",
+        "buildings": 55,
+        "avg_floors": 7.0
+      },
+      {
+        "name": "石龙路33弄",
+        "street": "漕河泾街道",
+        "total": 277,
+        "y2024": 151,
+        "y2025": 79,
+        "property": "上海华东房产物业有限公司",
+        "buildings": 78,
+        "avg_floors": 5.5
+      },
+      {
+        "name": "华东花苑",
+        "street": "长桥街道",
+        "total": 275,
+        "y2024": 116,
+        "y2025": 93,
+        "property": "上海轻工物业管理有限公司",
+        "buildings": 171,
+        "avg_floors": 5.9
+      },
+      {
+        "name": "园南一村",
+        "street": "长桥街道",
+        "total": 274,
+        "y2024": 141,
+        "y2025": 106,
+        "property": "秀澜（上海）物业管理有限公司",
+        "buildings": 70,
+        "avg_floors": 5.7
+      },
+      {
+        "name": "古美小区",
+        "street": "虹梅路街道",
+        "total": 274,
+        "y2024": 113,
+        "y2025": 107,
+        "property": "愿景和家（上海）科技服务有限公司",
+        "buildings": 160,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "零陵小区",
+        "street": "徐家汇街道",
+        "total": 269,
+        "y2024": 124,
+        "y2025": 110,
+        "property": "上海高建物业有限公司",
+        "buildings": 62,
+        "avg_floors": 5.0
+      },
+      {
+        "name": "梅陇四村",
+        "street": "凌云路街道",
+        "total": 267,
+        "y2024": 126,
+        "y2025": 85,
+        "property": "上海金辉物业有限公司",
+        "buildings": 94,
+        "avg_floors": 6.9
+      },
+      {
+        "name": "楼园",
+        "street": "长桥街道",
+        "total": 267,
+        "y2024": 88,
+        "y2025": 129,
+        "property": "上海通翼物业有限公司",
+        "buildings": 150,
+        "avg_floors": 6.0
+      }
+    ]
+  },
+  "elevator_priority": {
+    "title": "电梯加装重点推进清单（20个）",
+    "subtitle": "多层住宅、无电梯楼栋多、维修类投诉占比高的小区",
+    "total": 66,
+    "top20": [
+      {
+        "name": "日晖六村",
+        "street": "斜土路街道",
+        "total": 711,
+        "y2024": 297,
+        "y2025": 313,
+        "property": "上海高建物业有限公司",
+        "buildings": 122,
+        "avg_floors": 4.9
+      },
+      {
+        "name": "西木小区",
+        "street": "枫林路街道",
+        "total": 410,
+        "y2024": 214,
+        "y2025": 144,
+        "property": "上海高建物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.1
+      },
+      {
+        "name": "梅陇三村",
+        "street": "凌云路街道",
+        "total": 338,
+        "y2024": 230,
+        "y2025": 87,
+        "property": "上海徐房物业有限公司",
+        "buildings": 99,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "零陵小区",
+        "street": "徐家汇街道",
+        "total": 269,
+        "y2024": 124,
+        "y2025": 110,
+        "property": "上海高建物业有限公司",
+        "buildings": 62,
+        "avg_floors": 5.0
+      },
+      {
+        "name": "梅陇四村",
+        "street": "凌云路街道",
+        "total": 267,
+        "y2024": 126,
+        "y2025": 85,
+        "property": "上海金辉物业有限公司",
+        "buildings": 94,
+        "avg_floors": 6.9
+      },
+      {
+        "name": "谨斜小区",
+        "street": "枫林路街道",
+        "total": 227,
+        "y2024": 148,
+        "y2025": 54,
+        "property": "上海高建物业有限公司",
+        "buildings": 63,
+        "avg_floors": 5.0
+      },
+      {
+        "name": "江南新村",
+        "street": "斜土路街道",
+        "total": 225,
+        "y2024": 136,
+        "y2025": 86,
+        "property": "上海高建物业有限公司",
+        "buildings": 114,
+        "avg_floors": 4.5
+      },
+      {
+        "name": "田林十一村多层",
+        "street": "田林街道",
+        "total": 158,
+        "y2024": 96,
+        "y2025": 62,
+        "property": "上海徐房物业有限公司",
+        "buildings": 52,
+        "avg_floors": 5.9
+      },
+      {
+        "name": "永太小区",
+        "street": "天平路街道",
+        "total": 139,
+        "y2024": 57,
+        "y2025": 68,
+        "property": "上海衡复物业有限公司",
+        "buildings": 36,
+        "avg_floors": 5.4
+      },
+      {
+        "name": "田林二街坊",
+        "street": "田林街道",
+        "total": 133,
+        "y2024": 74,
+        "y2025": 37,
+        "property": "上海徐房物业有限公司",
+        "buildings": 47,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "月季园",
+        "street": "康健新村街道",
+        "total": 133,
+        "y2024": 54,
+        "y2025": 49,
+        "property": "上海轻工物业管理有限公司",
+        "buildings": 154,
+        "avg_floors": 5.4
+      },
+      {
+        "name": "宛南五村",
+        "street": "枫林路街道",
+        "total": 130,
+        "y2024": 64,
+        "y2025": 49,
+        "property": "上海高建物业有限公司",
+        "buildings": 29,
+        "avg_floors": 5.2
+      },
+      {
+        "name": "虹二小区",
+        "street": "徐家汇街道",
+        "total": 124,
+        "y2024": 48,
+        "y2025": 52,
+        "property": "上海高建物业有限公司",
+        "buildings": 36,
+        "avg_floors": 4.6
+      },
+      {
+        "name": "大三大四",
+        "street": "斜土路街道",
+        "total": 124,
+        "y2024": 63,
+        "y2025": 39,
+        "property": "上海高建物业有限公司",
+        "buildings": 45,
+        "avg_floors": 4.4
+      },
+      {
+        "name": "东安五村",
+        "street": "枫林路街道",
+        "total": 117,
+        "y2024": 44,
+        "y2025": 55,
+        "property": "上海高建物业有限公司",
+        "buildings": 42,
+        "avg_floors": 4.6
+      },
+      {
+        "name": "紫竹园",
+        "street": "康健新村街道",
+        "total": 108,
+        "y2024": 44,
+        "y2025": 29,
+        "property": "上海轻工物业管理有限公司",
+        "buildings": 50,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "汇贤雅居",
+        "street": "徐家汇街道",
+        "total": 99,
+        "y2024": 54,
+        "y2025": 31,
+        "property": "上海虹叶物业管理有限公司",
+        "buildings": 58,
+        "avg_floors": 4.6
+      },
+      {
+        "name": "龙南内三村",
+        "street": "龙华街道",
+        "total": 97,
+        "y2024": 38,
+        "y2025": 42,
+        "property": "上海亿绵物业管理有限公司",
+        "buildings": 25,
+        "avg_floors": 7.0
+      },
+      {
+        "name": "岳阳小区",
+        "street": "天平路街道",
+        "total": 94,
+        "y2024": 52,
+        "y2025": 27,
+        "property": "上海衡复物业有限公司",
+        "buildings": 17,
+        "avg_floors": 5.9
+      },
+      {
+        "name": "宜德苑",
+        "street": "田林街道",
+        "total": 89,
+        "y2024": 66,
+        "y2025": 11,
+        "property": "上海华欣物业管理有限公司",
+        "buildings": 42,
+        "avg_floors": 5.5
+      }
+    ]
+  },
+  "no_committee": {
+    "title": "业委会待建小区清单（30个）",
+    "subtitle": "无业委会且投诉量较高的小区，优先推进业委会组建",
+    "total": 194,
+    "top30": [
+      {
+        "name": "尚海湾二期",
+        "street": "斜土路街道",
+        "total": 502,
+        "y2024": 312,
+        "y2025": 115,
+        "property": "上海阳光投资（集团）物业管理有限公司",
+        "buildings": 21,
+        "avg_floors": 16.5
+      },
+      {
+        "name": "尚海湾二期",
+        "street": "斜土路街道",
+        "total": 502,
+        "y2024": 312,
+        "y2025": 115,
+        "property": "上海阳光投资（集团）物业管理有限公司",
+        "buildings": 0,
+        "avg_floors": 0
+      },
+      {
+        "name": "馨宁公寓",
+        "street": "华泾镇",
+        "total": 477,
+        "y2024": 218,
+        "y2025": 205,
+        "property": "上海中星集团申城物业有限公司",
+        "buildings": 86,
+        "avg_floors": 8.3
+      },
+      {
+        "name": "安福直管公房",
+        "street": "湖南路街道",
+        "total": 351,
+        "y2024": 156,
+        "y2025": 104,
+        "property": "上海衡复物业有限公司",
+        "buildings": 171,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "鑫桂苑·侨高中心",
+        "street": "虹梅路街道",
+        "total": 315,
+        "y2024": 126,
+        "y2025": 144,
+        "property": "上海万科物业服务有限公司",
+        "buildings": 1,
+        "avg_floors": 0.0
+      },
+      {
+        "name": "长汇景苑",
+        "street": "长桥街道",
+        "total": 298,
+        "y2024": 146,
+        "y2025": 126,
+        "property": "上海汇成物业有限公司",
+        "buildings": 1,
+        "avg_floors": 0.0
+      },
+      {
+        "name": "太原直管公房",
+        "street": "天平路街道",
+        "total": 244,
+        "y2024": 112,
+        "y2025": 90,
+        "property": "上海衡复物业有限公司",
+        "buildings": 178,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "陕新直管公房",
+        "street": "湖南路街道",
+        "total": 240,
+        "y2024": 127,
+        "y2025": 62,
+        "property": "上海衡复物业有限公司",
+        "buildings": 217,
+        "avg_floors": 2.8
+      },
+      {
+        "name": "陕西直管公房",
+        "street": "天平路街道",
+        "total": 225,
+        "y2024": 136,
+        "y2025": 47,
+        "property": "上海衡复物业有限公司",
+        "buildings": 170,
+        "avg_floors": 3.0
+      },
+      {
+        "name": "建新直管公房",
+        "street": "天平路街道",
+        "total": 213,
+        "y2024": 106,
+        "y2025": 76,
+        "property": "上海衡复物业有限公司",
+        "buildings": 301,
+        "avg_floors": 2.8
+      },
+      {
+        "name": "永太直管公房",
+        "street": "天平路街道",
+        "total": 212,
+        "y2024": 121,
+        "y2025": 61,
+        "property": "上海衡复物业有限公司",
+        "buildings": 297,
+        "avg_floors": 2.8
+      },
+      {
+        "name": "欣嘉苑1-3期",
+        "street": "虹梅路街道",
+        "total": 205,
+        "y2024": 61,
+        "y2025": 67,
+        "property": "上海锦龙物业管理有限公司",
+        "buildings": 82,
+        "avg_floors": 5.0
+      },
+      {
+        "name": "淮中直管公房",
+        "street": "湖南路街道",
+        "total": 201,
+        "y2024": 97,
+        "y2025": 54,
+        "property": "上海衡复物业有限公司",
+        "buildings": 131,
+        "avg_floors": 2.7
+      },
+      {
+        "name": "余庆直管公房",
+        "street": "天平路街道",
+        "total": 194,
+        "y2024": 92,
+        "y2025": 94,
+        "property": "上海衡复物业有限公司",
+        "buildings": 79,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "桃源村直管公房",
+        "street": "天平路街道",
+        "total": 192,
+        "y2024": 99,
+        "y2025": 62,
+        "property": "上海衡复物业有限公司",
+        "buildings": 233,
+        "avg_floors": 2.8
+      },
+      {
+        "name": "悦汇长庭",
+        "street": "长桥街道",
+        "total": 190,
+        "y2024": 1,
+        "y2025": 170,
+        "property": "",
+        "buildings": 0,
+        "avg_floors": 0
+      },
+      {
+        "name": "安亭直管公房",
+        "street": "天平路街道",
+        "total": 187,
+        "y2024": 121,
+        "y2025": 44,
+        "property": "上海衡复物业有限公司",
+        "buildings": 111,
+        "avg_floors": 2.7
+      },
+      {
+        "name": "新湖云庭",
+        "street": "枫林路街道",
+        "total": 178,
+        "y2024": 62,
+        "y2025": 42,
+        "property": "上海益镇物业管理有限公司",
+        "buildings": 5,
+        "avg_floors": 18.8
+      },
+      {
+        "name": "息村直管公房",
+        "street": "天平路街道",
+        "total": 171,
+        "y2024": 91,
+        "y2025": 65,
+        "property": "上海衡复物业有限公司",
+        "buildings": 176,
+        "avg_floors": 2.7
+      },
+      {
+        "name": "复永直管公房",
+        "street": "湖南路街道",
+        "total": 161,
+        "y2024": 68,
+        "y2025": 60,
+        "property": "上海衡复物业有限公司",
+        "buildings": 63,
+        "avg_floors": 2.7
+      },
+      {
+        "name": "尚海湾一期",
+        "street": "斜土路街道",
+        "total": 154,
+        "y2024": 39,
+        "y2025": 79,
+        "property": "",
+        "buildings": 0,
+        "avg_floors": 0
+      },
+      {
+        "name": "延庆直管公房",
+        "street": "湖南路街道",
+        "total": 152,
+        "y2024": 41,
+        "y2025": 60,
+        "property": "上海衡复物业有限公司",
+        "buildings": 186,
+        "avg_floors": 3.0
+      },
+      {
+        "name": "上海新村直管公房",
+        "street": "天平路街道",
+        "total": 144,
+        "y2024": 61,
+        "y2025": 47,
+        "property": "上海衡复物业有限公司",
+        "buildings": 86,
+        "avg_floors": 2.8
+      },
+      {
+        "name": "永嘉新村直管公房",
+        "street": "天平路街道",
+        "total": 140,
+        "y2024": 48,
+        "y2025": 56,
+        "property": "上海衡复物业有限公司",
+        "buildings": 87,
+        "avg_floors": 2.7
+      },
+      {
+        "name": "宝能华庭",
+        "street": "龙华街道",
+        "total": 136,
+        "y2024": 49,
+        "y2025": 49,
+        "property": "",
+        "buildings": 1,
+        "avg_floors": 0.0
+      },
+      {
+        "name": "金波直管公房",
+        "street": "湖南路街道",
+        "total": 128,
+        "y2024": 50,
+        "y2025": 49,
+        "property": "上海衡复物业有限公司",
+        "buildings": 85,
+        "avg_floors": 2.6
+      },
+      {
+        "name": "百汇园",
+        "street": "龙华街道",
+        "total": 127,
+        "y2024": 127,
+        "y2025": 0,
+        "property": "上海中星集团申城物业有限公司",
+        "buildings": 66,
+        "avg_floors": 12.7
+      },
+      {
+        "name": "新乐直管公房",
+        "street": "湖南路街道",
+        "total": 126,
+        "y2024": 68,
+        "y2025": 36,
+        "property": "上海衡复物业有限公司",
+        "buildings": 140,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "慎成直管公房",
+        "street": "天平路街道",
+        "total": 124,
+        "y2024": 66,
+        "y2025": 40,
+        "property": "上海衡复物业有限公司",
+        "buildings": 243,
+        "avg_floors": 2.4
+      },
+      {
+        "name": "永康直管公房",
+        "street": "天平路街道",
+        "total": 121,
+        "y2024": 64,
+        "y2025": 30,
+        "property": "上海衡复物业有限公司",
+        "buildings": 257,
+        "avg_floors": 2.4
+      }
+    ]
+  },
+  "committee_problem": {
+    "title": "业委会运作待规范清单（20个）",
+    "subtitle": "有业委会但投诉量高（可能运作不规范）的小区，需重点指导",
+    "total": 155,
+    "top20": [
+      {
+        "name": "中海瀛台",
+        "street": "长桥街道",
+        "total": 996,
+        "y2024": 690,
+        "y2025": 264,
+        "property": "上海中海物业管理有限公司",
+        "buildings": 157,
+        "avg_floors": 5.0,
+        "ywh_pct": 80.5
+      },
+      {
+        "name": "日晖六村",
+        "street": "斜土路街道",
+        "total": 711,
+        "y2024": 297,
+        "y2025": 313,
+        "property": "上海高建物业有限公司",
+        "buildings": 122,
+        "avg_floors": 4.9,
+        "ywh_pct": 1.4
+      },
+      {
+        "name": "华悦家园",
+        "street": "虹梅路街道",
+        "total": 567,
+        "y2024": 250,
+        "y2025": 207,
+        "property": "上海汇成物业有限公司",
+        "buildings": 125,
+        "avg_floors": 7.6,
+        "ywh_pct": 3.5
+      },
+      {
+        "name": "田林三街坊",
+        "street": "田林街道",
+        "total": 502,
+        "y2024": 265,
+        "y2025": 171,
+        "property": "上海徐房物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.8,
+        "ywh_pct": 1.6
+      },
+      {
+        "name": "东湾小区",
+        "street": "华泾镇",
+        "total": 459,
+        "y2024": 153,
+        "y2025": 256,
+        "property": "上海润美物业管理有限公司",
+        "buildings": 119,
+        "avg_floors": 5.9,
+        "ywh_pct": 3.3
+      },
+      {
+        "name": "华欣家园",
+        "street": "华泾镇",
+        "total": 444,
+        "y2024": 205,
+        "y2025": 154,
+        "property": "上海汇成物业有限公司",
+        "buildings": 215,
+        "avg_floors": 4.3,
+        "ywh_pct": 1.8
+      },
+      {
+        "name": "宛龙小区",
+        "street": "枫林路街道",
+        "total": 435,
+        "y2024": 168,
+        "y2025": 198,
+        "property": "上海高建物业有限公司",
+        "buildings": 139,
+        "avg_floors": 4.4,
+        "ywh_pct": 0.9
+      },
+      {
+        "name": "凌云新村",
+        "street": "凌云路街道",
+        "total": 429,
+        "y2024": 207,
+        "y2025": 138,
+        "property": "上海徐房物业有限公司",
+        "buildings": 160,
+        "avg_floors": 6.0,
+        "ywh_pct": 4.7
+      },
+      {
+        "name": "龙山新村",
+        "street": "枫林路街道",
+        "total": 424,
+        "y2024": 157,
+        "y2025": 193,
+        "property": "上海高建物业有限公司",
+        "buildings": 118,
+        "avg_floors": 5.2,
+        "ywh_pct": 1.7
+      },
+      {
+        "name": "西木小区",
+        "street": "枫林路街道",
+        "total": 410,
+        "y2024": 214,
+        "y2025": 144,
+        "property": "上海高建物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.1,
+        "ywh_pct": 4.1
+      },
+      {
+        "name": "华滨家园",
+        "street": "长桥街道",
+        "total": 381,
+        "y2024": 157,
+        "y2025": 153,
+        "property": "上海汇成物业有限公司",
+        "buildings": 81,
+        "avg_floors": 8.2,
+        "ywh_pct": 10.8
+      },
+      {
+        "name": "天钥新村",
+        "street": "枫林路街道",
+        "total": 377,
+        "y2024": 149,
+        "y2025": 167,
+        "property": "上海高建物业有限公司",
+        "buildings": 151,
+        "avg_floors": 5.2,
+        "ywh_pct": 1.1
+      },
+      {
+        "name": "华泾绿苑",
+        "street": "华泾镇",
+        "total": 371,
+        "y2024": 171,
+        "y2025": 132,
+        "property": "上海晏鑫实业有限公司",
+        "buildings": 123,
+        "avg_floors": 6.0,
+        "ywh_pct": 4.6
+      },
+      {
+        "name": "盛华景苑",
+        "street": "华泾镇",
+        "total": 356,
+        "y2024": 182,
+        "y2025": 109,
+        "property": "上海永升物业管理有限公司",
+        "buildings": 62,
+        "avg_floors": 8.5,
+        "ywh_pct": 4.8
+      },
+      {
+        "name": "长桥四村",
+        "street": "长桥街道",
+        "total": 356,
+        "y2024": 157,
+        "y2025": 122,
+        "property": "上海安得物业管理有限公司",
+        "buildings": 126,
+        "avg_floors": 6.2,
+        "ywh_pct": 7.0
+      },
+      {
+        "name": "紫阳花苑",
+        "street": "华泾镇",
+        "total": 338,
+        "y2024": 134,
+        "y2025": 123,
+        "property": "上海晏鑫实业有限公司",
+        "buildings": 136,
+        "avg_floors": 4.6,
+        "ywh_pct": 2.1
+      },
+      {
+        "name": "梅陇三村",
+        "street": "凌云路街道",
+        "total": 338,
+        "y2024": 230,
+        "y2025": 87,
+        "property": "上海徐房物业有限公司",
+        "buildings": 99,
+        "avg_floors": 5.8,
+        "ywh_pct": 10.4
+      },
+      {
+        "name": "日晖二村",
+        "street": "斜土路街道",
+        "total": 325,
+        "y2024": 120,
+        "y2025": 140,
+        "property": "上海华欣物业管理有限公司",
+        "buildings": 115,
+        "avg_floors": 4.6,
+        "ywh_pct": 4.0
+      },
+      {
+        "name": "斜土小区",
+        "street": "斜土路街道",
+        "total": 320,
+        "y2024": 140,
+        "y2025": 128,
+        "property": "上海高建物业有限公司",
+        "buildings": 109,
+        "avg_floors": 5.8,
+        "ywh_pct": 0.9
+      },
+      {
+        "name": "茶花园",
+        "street": "康健新村街道",
+        "total": 319,
+        "y2024": 220,
+        "y2025": 84,
+        "property": "上海安得物业管理有限公司",
+        "buildings": 134,
+        "avg_floors": 6.0,
+        "ywh_pct": 14.4
+      }
+    ]
+  },
+  "xlarge_community": {
+    "title": "超大型小区重点管理清单（20个）",
+    "subtitle": "50幢以上超大型小区，配置专职联络员和快速响应机制",
+    "total": 186,
+    "top20": [
+      {
+        "name": "中海瀛台",
+        "street": "长桥街道",
+        "total": 996,
+        "y2024": 690,
+        "y2025": 264,
+        "property": "上海中海物业管理有限公司",
+        "buildings": 157,
+        "avg_floors": 5.0
+      },
+      {
+        "name": "日晖六村",
+        "street": "斜土路街道",
+        "total": 711,
+        "y2024": 297,
+        "y2025": 313,
+        "property": "上海高建物业有限公司",
+        "buildings": 122,
+        "avg_floors": 4.9
+      },
+      {
+        "name": "华悦家园",
+        "street": "虹梅路街道",
+        "total": 567,
+        "y2024": 250,
+        "y2025": 207,
+        "property": "上海汇成物业有限公司",
+        "buildings": 125,
+        "avg_floors": 7.6
+      },
+      {
+        "name": "田林三街坊",
+        "street": "田林街道",
+        "total": 502,
+        "y2024": 265,
+        "y2025": 171,
+        "property": "上海徐房物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "馨宁公寓",
+        "street": "华泾镇",
+        "total": 477,
+        "y2024": 218,
+        "y2025": 205,
+        "property": "上海中星集团申城物业有限公司",
+        "buildings": 86,
+        "avg_floors": 8.3
+      },
+      {
+        "name": "东湾小区",
+        "street": "华泾镇",
+        "total": 459,
+        "y2024": 153,
+        "y2025": 256,
+        "property": "上海润美物业管理有限公司",
+        "buildings": 119,
+        "avg_floors": 5.9
+      },
+      {
+        "name": "华欣家园",
+        "street": "华泾镇",
+        "total": 444,
+        "y2024": 205,
+        "y2025": 154,
+        "property": "上海汇成物业有限公司",
+        "buildings": 215,
+        "avg_floors": 4.3
+      },
+      {
+        "name": "宛龙小区",
+        "street": "枫林路街道",
+        "total": 435,
+        "y2024": 168,
+        "y2025": 198,
+        "property": "上海高建物业有限公司",
+        "buildings": 139,
+        "avg_floors": 4.4
+      },
+      {
+        "name": "凌云新村",
+        "street": "凌云路街道",
+        "total": 429,
+        "y2024": 207,
+        "y2025": 138,
+        "property": "上海徐房物业有限公司",
+        "buildings": 160,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "龙山新村",
+        "street": "枫林路街道",
+        "total": 424,
+        "y2024": 157,
+        "y2025": 193,
+        "property": "上海高建物业有限公司",
+        "buildings": 118,
+        "avg_floors": 5.2
+      },
+      {
+        "name": "西木小区",
+        "street": "枫林路街道",
+        "total": 410,
+        "y2024": 214,
+        "y2025": 144,
+        "property": "上海高建物业有限公司",
+        "buildings": 111,
+        "avg_floors": 5.1
+      },
+      {
+        "name": "华滨家园",
+        "street": "长桥街道",
+        "total": 381,
+        "y2024": 157,
+        "y2025": 153,
+        "property": "上海汇成物业有限公司",
+        "buildings": 81,
+        "avg_floors": 8.2
+      },
+      {
+        "name": "天钥新村",
+        "street": "枫林路街道",
+        "total": 377,
+        "y2024": 149,
+        "y2025": 167,
+        "property": "上海高建物业有限公司",
+        "buildings": 151,
+        "avg_floors": 5.2
+      },
+      {
+        "name": "华泾绿苑",
+        "street": "华泾镇",
+        "total": 371,
+        "y2024": 171,
+        "y2025": 132,
+        "property": "上海晏鑫实业有限公司",
+        "buildings": 123,
+        "avg_floors": 6.0
+      },
+      {
+        "name": "长桥四村",
+        "street": "长桥街道",
+        "total": 356,
+        "y2024": 157,
+        "y2025": 122,
+        "property": "上海安得物业管理有限公司",
+        "buildings": 126,
+        "avg_floors": 6.2
+      },
+      {
+        "name": "盛华景苑",
+        "street": "华泾镇",
+        "total": 356,
+        "y2024": 182,
+        "y2025": 109,
+        "property": "上海永升物业管理有限公司",
+        "buildings": 62,
+        "avg_floors": 8.5
+      },
+      {
+        "name": "安福直管公房",
+        "street": "湖南路街道",
+        "total": 351,
+        "y2024": 156,
+        "y2025": 104,
+        "property": "上海衡复物业有限公司",
+        "buildings": 171,
+        "avg_floors": 2.9
+      },
+      {
+        "name": "紫阳花苑",
+        "street": "华泾镇",
+        "total": 338,
+        "y2024": 134,
+        "y2025": 123,
+        "property": "上海晏鑫实业有限公司",
+        "buildings": 136,
+        "avg_floors": 4.6
+      },
+      {
+        "name": "梅陇三村",
+        "street": "凌云路街道",
+        "total": 338,
+        "y2024": 230,
+        "y2025": 87,
+        "property": "上海徐房物业有限公司",
+        "buildings": 99,
+        "avg_floors": 5.8
+      },
+      {
+        "name": "日晖二村",
+        "street": "斜土路街道",
+        "total": 325,
+        "y2024": 120,
+        "y2025": 140,
+        "property": "上海华欣物业管理有限公司",
+        "buildings": 115,
+        "avg_floors": 4.6
+      }
+    ]
+  },
+  "worsening_community": {
+    "title": "持续恶化小区预警清单（20个）",
+    "subtitle": "2025年投诉同比上升的小区，需分析原因、精准施策",
+    "total": 87,
+    "top20": [
+      {
+        "name": "徐汇苑",
+        "street": "枫林路街道",
+        "total": 92,
+        "y2024": 22,
+        "y2025": 54,
+        "property": "上海航新物业管理有限公司",
+        "buildings": 22,
+        "avg_floors": 13.8,
+        "yoy": 145.5
+      },
+      {
+        "name": "实业公寓",
+        "street": "徐家汇街道",
+        "total": 111,
+        "y2024": 22,
+        "y2025": 51,
+        "property": "上海百联物业管理有限公司",
+        "buildings": 2,
+        "avg_floors": 0.0,
+        "yoy": 131.8
+      },
+      {
+        "name": "徐家汇花园",
+        "street": "枫林路街道",
+        "total": 112,
+        "y2024": 27,
+        "y2025": 61,
+        "property": "上海汇银物业管理有限公司",
+        "buildings": 78,
+        "avg_floors": 5.5,
+        "yoy": 125.9
+      },
+      {
+        "name": "金牛苑",
+        "street": "漕河泾街道",
+        "total": 83,
+        "y2024": 24,
+        "y2025": 53,
+        "property": "上海梓班物业管理有限公司",
+        "buildings": 211,
+        "avg_floors": 1.7,
+        "yoy": 120.8
+      },
+      {
+        "name": "东方巴黎霞飞苑",
+        "street": "湖南路街道",
+        "total": 100,
+        "y2024": 26,
+        "y2025": 57,
+        "property": "上海东湖物业管理有限公司",
+        "buildings": 6,
+        "avg_floors": 13.2,
+        "yoy": 119.2
+      },
+      {
+        "name": "嘉汇广场",
+        "street": "徐家汇街道",
+        "total": 124,
+        "y2024": 30,
+        "y2025": 65,
+        "property": "上海龙湖物业服务有限公司",
+        "buildings": 4,
+        "avg_floors": 23.0,
+        "yoy": 116.7
+      },
+      {
+        "name": "钦州公寓",
+        "street": "田林街道",
+        "total": 120,
+        "y2024": 23,
+        "y2025": 49,
+        "property": "上海安得物业管理有限公司",
+        "buildings": 3,
+        "avg_floors": 18.0,
+        "yoy": 113.0
+      },
+      {
+        "name": "虹桥大仕馆",
+        "street": "田林街道",
+        "total": 141,
+        "y2024": 31,
+        "y2025": 65,
+        "property": "上海锦江物业管理有限公司",
+        "buildings": 15,
+        "avg_floors": 10.5,
+        "yoy": 109.7
+      },
+      {
+        "name": "尚海湾一期",
+        "street": "斜土路街道",
+        "total": 154,
+        "y2024": 39,
+        "y2025": 79,
+        "property": "",
+        "buildings": 0,
+        "avg_floors": 0,
+        "yoy": 102.6
+      },
+      {
+        "name": "尚海湾一期",
+        "street": "斜土路街道",
+        "total": 154,
+        "y2024": 39,
+        "y2025": 79,
+        "property": "上海金地物业服务有限公司",
+        "buildings": 40,
+        "avg_floors": 13.0,
+        "yoy": 102.6
+      },
+      {
+        "name": "裕德路66弄",
+        "street": "徐家汇街道",
+        "total": 75,
+        "y2024": 23,
+        "y2025": 46,
+        "property": "上海佰事德物业管理有限公司",
+        "buildings": 11,
+        "avg_floors": 5.9,
+        "yoy": 100.0
+      },
+      {
+        "name": "绿邑翠苑",
+        "street": "漕河泾街道",
+        "total": 152,
+        "y2024": 47,
+        "y2025": 91,
+        "property": "上海中海物业管理有限公司",
+        "buildings": 15,
+        "avg_floors": 9.4,
+        "yoy": 93.6
+      },
+      {
+        "name": "宛南六村",
+        "street": "枫林路街道",
+        "total": 125,
+        "y2024": 37,
+        "y2025": 69,
+        "property": "上海高建物业有限公司",
+        "buildings": 45,
+        "avg_floors": 5.2,
+        "yoy": 86.5
+      },
+      {
+        "name": "紫元大厦",
+        "street": "徐家汇街道",
+        "total": 108,
+        "y2024": 34,
+        "y2025": 63,
+        "property": "上海外经贸物业管理有限公司",
+        "buildings": 1,
+        "avg_floors": 20.0,
+        "yoy": 85.3
+      },
+      {
+        "name": "衡园",
+        "street": "斜土路街道",
+        "total": 68,
+        "y2024": 20,
+        "y2025": 37,
+        "property": "上海良宇物业管理有限公司",
+        "buildings": 36,
+        "avg_floors": 13.1,
+        "yoy": 85.0
+      },
+      {
+        "name": "俞三小区",
+        "street": "龙华街道",
+        "total": 84,
+        "y2024": 22,
+        "y2025": 40,
+        "property": "上海华晅投资管理有限公司",
+        "buildings": 39,
+        "avg_floors": 6.0,
+        "yoy": 81.8
+      },
+      {
+        "name": "长海坊",
+        "street": "康健新村街道",
+        "total": 72,
+        "y2024": 23,
+        "y2025": 41,
+        "property": "沃棠（上海）物业管理有限公司",
+        "buildings": 24,
+        "avg_floors": 5.9,
+        "yoy": 78.3
+      },
+      {
+        "name": "徐汇世家花园",
+        "street": "田林街道",
+        "total": 115,
+        "y2024": 33,
+        "y2025": 56,
+        "property": "",
+        "buildings": 0,
+        "avg_floors": 0,
+        "yoy": 69.7
+      },
+      {
+        "name": "徐汇世家花园",
+        "street": "田林街道",
+        "total": 115,
+        "y2024": 33,
+        "y2025": 56,
+        "property": "上海丰柏物业管理有限公司",
+        "buildings": 35,
+        "avg_floors": 30.8,
+        "yoy": 69.7
+      },
+      {
+        "name": "东湾小区",
+        "street": "华泾镇",
+        "total": 459,
+        "y2024": 153,
+        "y2025": 256,
+        "property": "上海润美物业管理有限公司",
+        "buildings": 119,
+        "avg_floors": 5.9,
+        "yoy": 67.3
+      }
+    ]
+  }
+}

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12345热线数据质量优化专项报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.8; }
+  .header { background:linear-gradient(135deg,#1a3a5f 0%,#2c5282 100%); color:#fff; padding:36px 0; text-align:center; }
+  .header h1 { font-size:24px; font-weight:700; }
+  .header .subtitle { font-size:13px; margin-top:8px; opacity:0.8; }
+  .header .meta { font-size:12px; margin-top:10px; opacity:0.6; }
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px; }
+  .section { background:#fff; border-radius:10px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .section-title { font-size:18px; font-weight:700; color:#1a3a5f; margin-bottom:14px; display:flex; align-items:center; }
+  .section-title::before { content:''; width:5px; height:22px; background:#1890ff; border-radius:3px; margin-right:10px; }
+  .section-title .num { background:#1890ff; color:#fff; font-size:14px; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; margin-right:8px; flex-shrink:0; }
+  p { margin-bottom:10px; color:#444; font-size:14px; }
+  .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:16px 0; }
+  .stat-card { background:#f6f8fa; border-radius:8px; padding:18px 10px; text-align:center; border:1px solid #e8e8e8; }
+  .stat-card .num { font-size:30px; font-weight:700; }
+  .stat-card .num.red { color:#f5222d; }
+  .stat-card .num.blue { color:#1890ff; }
+  .stat-card .num.green { color:#52c41a; }
+  .stat-card .num.orange { color:#fa8c16; }
+  .stat-card .label { font-size:12px; color:#888; margin-top:4px; }
+  .chart-box { width:100%; height:350px; }
+  .data-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:12px; }
+  .data-table th { background:#1a3a5f; color:#fff; padding:8px 10px; text-align:center; font-weight:600; white-space:nowrap; }
+  .data-table td { padding:6px 10px; border-bottom:1px solid #e8e8e8; vertical-align:top; }
+  .data-table tr:nth-child(even) { background:#fafafa; }
+  .data-table tr:hover { background:#e6f7ff; }
+  .issue-card { background:#f6f8fa; border-left:4px solid #f5222d; border-radius:6px; padding:14px 18px; margin-bottom:12px; }
+  .issue-card.medium { border-left-color:#fa8c16; }
+  .issue-card.low { border-left-color:#1890ff; }
+  .issue-card .issue-title { font-weight:700; color:#1a3a5f; margin-bottom:4px; font-size:15px; }
+  .issue-card.medium .issue-title { color:#d46b08; }
+  .issue-card .issue-desc { font-size:13px; color:#555; }
+  .issue-card .issue-solution { font-size:13px; color:#52c41a; margin-top:6px; font-weight:600; }
+  .code-block { background:#f5f5f5; border:1px solid #d9d9d9; border-radius:6px; padding:12px; margin:10px 0; font-family:"SF Mono","Consolas",monospace; font-size:12px; line-height:1.6; overflow-x:auto; white-space:pre; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .badge.critical { background:#fff1f0; color:#f5222d; border:1px solid #ffa39e; }
+  .badge.warning { background:#fff7e6; color:#fa8c16; border:1px solid #ffd591; }
+  .badge.info { background:#e6f7ff; color:#096dd9; border:1px solid #91d5ff; }
+  .badge.ok { background:#f6ffed; color:#52c41a; border:1px solid #b7eb8f; }
+  .footer { text-align:center; padding:24px 0; font-size:12px; color:#999; }
+  .note { font-size:12px; color:#999; margin-top:8px; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>12345热线数据质量优化专项报告</h1>
+  <div class="subtitle">字段问题排查 · 标准化方案 · 接口对接规范 · 质量评分体系</div>
+  <div class="meta">徐汇物业课题一期 · 核心成果三 | 2026年8月</div>
+</div>
+
+<div class="container">
+
+  <!-- 一、总体概况 -->
+  <div class="section">
+    <div class="section-title"><span class="num">1</span>总体概况</div>
+    <p>本报告对市局下发的三个批次12345热线物业投诉数据（2024年全年、2025年至2026年6月、2026年7月）进行系统性数据质量排查，覆盖70,748条原始记录、27个字段维度，识别出6大类数据质量问题，并给出标准化方案和接口对接规范。</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num blue">70,748</div><div class="label">排查记录总数</div></div>
+      <div class="stat-card"><div class="num red">6</div><div class="label">问题类别</div></div>
+      <div class="stat-card"><div class="num orange">3</div><div class="label">字段结构版本</div></div>
+      <div class="stat-card"><div class="num green">94.0</div><div class="label">综合质量均分</div></div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>数据批次</th><th>记录数</th><th>字段数</th><th>完整性</th><th>一致性</th><th>唯一性</th><th>综合评分</th></tr></thead>
+      <tbody>
+        <tr><td>2024年全年</td><td>35,646</td><td>27</td><td><span class="badge warning">93.0%</span></td><td><span class="badge ok">100%</span></td><td><span class="badge ok">100%</span></td><td><span class="badge ok">97.2</span></td></tr>
+        <tr><td>2025年-2026年6月</td><td>33,005</td><td>23</td><td><span class="badge ok">97.1%</span></td><td><span class="badge warning">85.2%</span></td><td><span class="badge ok">100%</span></td><td><span class="badge ok">94.4</span></td></tr>
+        <tr><td>2026年7月</td><td>2,097</td><td>21</td><td><span class="badge ok">96.3%</span></td><td><span class="badge critical">33.3%</span></td><td><span class="badge ok">100%</span></td><td><span class="badge warning">78.5</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 二、字段结构差异 -->
+  <div class="section">
+    <div class="section-title"><span class="num">2</span>问题一：字段结构三版本不统一 <span class="badge critical">严重</span></div>
+    <p>三个数据批次的字段结构存在显著差异，从27列缩减至21列，仅有9个字段在三个文件中完全一致。</p>
+
+    <table class="data-table">
+      <thead><tr><th>差异类型</th><th>详情</th><th>影响</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600;">列数递减</td><td style="text-align:left;">2024年27列 → 2025年23列 → 2026年7月21列</td><td>字段缺失导致历史对比时部分维度不可用</td></tr>
+        <tr><td style="font-weight:600;">命名前缀变更</td><td style="text-align:left;">2024/2025年字段带"12345"前缀（如"12345工单编号"），2026年7月去掉前缀（如"工单编号"）</td><td>同名字段无法直接合并，需映射</td></tr>
+        <tr><td style="font-weight:600;">分类字段重命名</td><td style="text-align:left;">2024/2025年"一级业务分类"，2026年7月改为"一级分类"</td><td>五级分类字段名称全部变更</td></tr>
+        <tr><td style="font-weight:600;">新增独有字段</td><td style="text-align:left;">2024年独有4个"12345内容分类1-4"字段，2026年7月独有"一级~五级分类"</td><td>内容分类逻辑变更，需确认映射关系</td></tr>
+        <tr><td style="font-weight:600;">关键字段缺失</td><td style="text-align:left;">2026年7月缺失"年"和"小区编号"两个字段</td><td>"年"需从受理时间提取，"小区编号"无法补全</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:16px;font-weight:600;">标准化字段映射方案：</p>
+    <div class="code-block">标准字段名          2024年                2025年                2026年7月
+─────────────────────────────────────────────────────────────────────
+order_id            12345工单编号          12345工单编号          工单编号
+accept_time         12345受理时间          12345受理时间          受理时间
+source              12345工单来源          12345工单来源          工单来源
+district            12345诉求区域          12345诉求区域          诉求区域
+address             12345诉求地址          12345诉求地址          诉求地址
+order_type          12345工单类型          12345工单类型          工单类型
+content             12345内容描述          12345内容描述          内容描述
+handler             主办单位              主办单位              主办单位
+reply               答复市民要点           答复市民要点           答复市民要点
+year                年                   年                   (从accept_time提取)
+month               月份                 月份                 月份
+community_id        小区编号              小区编号              (缺失，无法补全)
+community_name      小区名称              小区名称              小区名称
+community_addr     小区地址              小区地址              小区地址
+property_company   物业公司              物业公司              物业公司
+street              街道                 街道                 街道
+district2           行政区               行政区               行政区
+category_14         十四类                十四类                十四类
+cat_l1~l5          一级~五级业务分类      一级~五级业务分类      一级~五级分类</div>
+  </div>
+
+  <!-- 三、日期格式差异 -->
+  <div class="section">
+    <div class="section-title"><span class="num">3</span>问题二：受理时间格式不统一 <span class="badge critical">严重</span></div>
+    <p>"受理时间"字段在三个文件中数据类型完全不同，是数据合并的最大技术障碍。</p>
+
+    <table class="data-table">
+      <thead><tr><th>数据批次</th><th>数据类型</th><th>格式</th><th>样本值</th></tr></thead>
+      <tbody>
+        <tr><td>2024年</td><td>datetime64</td><td>日期（无时间）</td><td>2024-01-31 00:00:00</td></tr>
+        <tr><td>2025-2026H1</td><td><span class="badge critical">float64</span></td><td>Excel序列号</td><td>45681.0</td></tr>
+        <tr><td>2026年7月</td><td>datetime64</td><td>完整时间戳</td><td>2026-07-07 20:07:25</td></tr>
+      </tbody>
+    </table>
+
+    <div class="issue-card">
+      <div class="issue-title">问题分析</div>
+      <div class="issue-desc">2025年数据的受理时间为Excel内部序列号（float类型），如45681.0表示2025-01-01。这种格式在pandas读取时不会被自动识别为日期，需要手动转换。如果不处理，将导致所有时间序列分析（月度趋势、同比对比等）完全失效。</div>
+      <div class="issue-solution">解决方案：pd.to_datetime(x, unit='D', origin='1899-12-30')，将Excel序列号转为标准日期时间。</div>
+    </div>
+
+    <div class="issue-card medium">
+      <div class="issue-title">精度差异</div>
+      <div class="issue-desc">2024年仅保留日期（无时分秒），2026年7月保留完整时间戳（含时分秒），精度不一致。这导致按小时段分析时2024年数据不可用。</div>
+      <div class="issue-solution">建议：统一为日期级别（YYYY-MM-DD），如需时段分析需市局补充2024年完整时间戳。</div>
+    </div>
+  </div>
+
+  <!-- 四、分类值域差异 -->
+  <div class="section">
+    <div class="section-title"><span class="num">4</span>问题三：十四类分类值域不统一 <span class="badge warning">中等</span></div>
+    <p>十四类业务分类字段在三个文件中的值域范围和命名均不一致。</p>
+
+    <table class="data-table">
+      <thead><tr><th>分类名称差异</th><th>2024年</th><th>2025年/2026年7月</th><th>差异说明</th></tr></thead>
+      <tbody>
+        <tr><td>群租管理</td><td>"群租问题"</td><td>"群租管理"</td><td>名称变更</td></tr>
+        <tr><td>业主大会/业委会</td><td>"业委会"</td><td>"业主大会/业委会"</td><td>范围扩大，含业主大会</td></tr>
+        <tr><td>物业服务态度</td><td>"服务态度"</td><td>"服务态度"*</td><td>2025年未改，需手动统一</td></tr>
+      </tbody>
+    </table>
+    <p class="note">*2025年文件中仍为"服务态度"，需在数据清洗时手动映射为"物业服务态度"。</p>
+
+    <div class="issue-card medium">
+      <div class="issue-title">2024年含7个非标准值</div>
+      <div class="issue-desc">2024年十四类字段有21个值域，比标准14类多出7个非标准值：</div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>非标准值</th><th>记录数</th><th>处理建议</th></tr></thead>
+      <tbody>
+        <tr><td>剔除三大类</td><td>3,727</td><td style="text-align:left;">删除（非物业投诉类）</td></tr>
+        <tr><td>剔除-商办楼宇</td><td>1,456</td><td style="text-align:left;">删除（非住宅物业）</td></tr>
+        <tr><td>剔除-非物业管理区域</td><td>544</td><td style="text-align:left;">删除（超出管辖范围）</td></tr>
+        <tr><td>剔除-无效工单</td><td>350</td><td style="text-align:left;">删除（无效数据）</td></tr>
+        <tr><td>房屋交易纠纷</td><td>398</td><td style="text-align:left;">删除（属房产交易，非物业管理）</td></tr>
+        <tr><td>其他</td><td>191</td><td style="text-align:left;">删除（无法归类）</td></tr>
+        <tr><td>无</td><td>101</td><td style="text-align:left;">删除（分类缺失）</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:8px;">2024年共需删除6,767条非标准分类记录（占总量19.0%），清洗后2024年有效记录为29,070条，与2025年口径一致。</p>
+  </div>
+
+  <!-- 五、缺失值与异常值 -->
+  <div class="section">
+    <div class="section-title"><span class="num">5</span>问题四：缺失值与异常值 <span class="badge warning">中等</span></div>
+
+    <div id="chart-missing" class="chart-box"></div>
+
+    <table class="data-table">
+      <thead><tr><th>问题字段</th><th>2024年缺失率</th><th>2025年缺失率</th><th>2026年7月缺失率</th><th>趋势</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;">答复市民要点</td><td><span class="badge critical">66.4%</span></td><td><span class="badge warning">43.9%</span></td><td><span class="badge warning">52.3%</span></td><td>波动，未持续改善</td></tr>
+        <tr><td style="text-align:left;">主办单位</td><td><span class="badge critical">47.6%</span></td><td><span class="badge warning">21.9%</span></td><td><span class="badge warning">23.7%</span></td><td><span class="badge ok">改善明显</span></td></tr>
+        <tr><td style="text-align:left;">内容描述</td><td><span class="badge warning">18.9%</span></td><td><span class="badge ok">0%</span></td><td><span class="badge ok">0%</span></td><td><span class="badge ok">已解决</span></td></tr>
+        <tr><td style="text-align:left;">诉求区域/地址</td><td><span class="badge warning">18.9%</span></td><td><span class="badge ok">0%</span></td><td><span class="badge ok">0%</span></td><td><span class="badge ok">已解决</span></td></tr>
+        <tr><td style="text-align:left;">物业公司</td><td><span class="badge warning">12.1%</span></td><td>0.7%</td><td>2.1%</td><td><span class="badge ok">改善</span></td></tr>
+        <tr><td style="text-align:left;">小区名称为"无"</td><td>6.4%</td><td>2.1%</td><td>0%</td><td><span class="badge ok">已解决</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="issue-card medium">
+      <div class="issue-title">关键问题：答复市民要点缺失率居高不下</div>
+      <div class="issue-desc">"答复市民要点"是衡量工单办理质量的核心字段，但缺失率从2024年66.4%到2026年7月仍有52.3%，超过一半的工单没有记录答复内容。这直接影响：①答复质量评估无数据支撑；②重复投诉分析缺乏对比基准；③无法做答复模板化检测。</div>
+      <div class="issue-solution">建议：市局在工单办结环节强制要求填写"答复要点"字段，不填不予结案。将答复要点填写率纳入承办单位考核。</div>
+    </div>
+
+    <div class="issue-card low">
+      <div class="issue-title">异常值：小区名称为"无"</div>
+      <div class="issue-desc">2024年有2,280条（6.4%）工单小区名称为"无"，无法定位到具体小区，导致这些工单无法参与小区维度分析。2025年降至700条（2.1%），2026年7月已清零。</div>
+      <div class="issue-solution">建议：工单受理时强制关联小区，无法匹配的通过地址模糊匹配补全小区名称。</div>
+    </div>
+  </div>
+
+  <!-- 六、物业公司名称一致性 -->
+  <div class="section">
+    <div class="section-title"><span class="num">6</span>问题五：物业公司名称不规范 <span class="badge warning">中等</span></div>
+    <p>物业公司名称字段存在同企业多名称、简称全称混用等问题，影响跨期对比和排名分析。</p>
+
+    <table class="data-table">
+      <thead><tr><th>问题类型</th><th>示例</th><th>影响</th></tr></thead>
+      <tbody>
+        <tr><td>同企业多名称</td><td style="text-align:left;">"上海晏鑫实业有限公司" vs "上海晏鑫物业有限公司"（同一企业，2024年用"实业"，2025年改"物业"）</td><td>排名断裂</td></tr>
+        <tr><td>简称与全称混用</td><td style="text-align:left;">部分工单"高建物业" vs "上海高建物业有限公司"</td><td>聚合错误</td></tr>
+        <tr><td>空值填充不一致</td><td style="text-align:left;">空值有时填"无"，有时留空，有时填"nan"</td><td>过滤困难</td></tr>
+      </tbody>
+    </table>
+
+    <div class="issue-solution" style="margin-top:8px;">建议：建立徐汇区物业企业标准名称字典（约150家），所有数据导入时按统一名称映射。名称字典需定期更新，新企业入区时及时补充。</div>
+  </div>
+
+  <!-- 七、标准地址字段更新方案 -->
+  <div class="section">
+    <div class="section-title"><span class="num">7</span>标准地址字段更新方案</div>
+    <p>针对小区名称和地址字段的不一致问题，制定以下标准化方案：</p>
+
+    <div class="issue-card low">
+      <div class="issue-title">方案一：建立小区标准地址库</div>
+      <div class="issue-desc">以2026年7月数据中的"小区名称+小区地址"为基准，建立徐汇区住宅小区标准地址库。包含字段：小区编号、标准小区名称、标准地址、所属街道、物业公司。当前基准库包含约800个小区。</div>
+    </div>
+    <div class="issue-card low">
+      <div class="issue-title">方案二：历史数据映射补全</div>
+      <div class="issue-desc">对2024-2025年数据中的"无"小区名称，通过"诉求地址"字段做模糊匹配，尝试关联到标准地址库中的小区。匹配率预计可达70%以上。剩余无法匹配的标记为"非住宅物业区域"，从分析样本中剔除。</div>
+    </div>
+    <div class="issue-card low">
+      <div class="issue-title">方案三：新增工单地址校验</div>
+      <div class="issue-desc">在数据接入环节增加地址校验逻辑：受理时自动匹配标准地址库，匹配成功则填充小区编号；匹配失败则标记"待核实"，由承办单位人工确认后补充。</div>
+    </div>
+  </div>
+
+  <!-- 八、接口对接规范 -->
+  <div class="section">
+    <div class="section-title"><span class="num">8</span>数据接口对接规范</div>
+    <p>基于排查发现的问题，制定市局数据下发与区级数据接入的规范要求：</p>
+
+    <p style="margin-top:16px;font-weight:600;">一、下发数据格式规范</p>
+    <div class="code-block">字段规范：
+  1. 所有字段使用标准命名（去掉"12345"前缀，统一用简洁字段名）
+  2. 受理时间统一为 datetime 格式（YYYY-MM-DD HH:MM:SS），禁止使用Excel序列号
+  3. 十四类分类值域固定为14个标准值，不包含"剔除"类
+  4. "年""月份"作为独立字段下发，不依赖从受理时间提取
+  5. "小区编号"必填，缺失的需在工单受理环节补全
+  6. "答复市民要点"必填，缺失率控制在10%以内
+  7. 物业公司使用全称，与区级物业企业字典对齐
+
+文件规范：
+  1. 统一使用 .xlsx 格式，UTF-8编码
+  2. 文件命名格式：YYYY年MM月_徐汇区12345物业投诉_市局下发.xlsx
+  3. 每月10日前下发上月数据，包含完整月（1日-月末）
+  4. 首行表头，不加合并单元格，不使用多行表头</div>
+
+    <p style="margin-top:16px;font-weight:600;">二、区级数据接入规范</p>
+    <div class="code-block">接入流程：
+  Step 1: 文件校验
+    - 检查文件格式（xlsx）、编码（UTF-8）、表头字段完整性
+    - 校验记录数是否在合理范围（月均1500-2500条）
+    
+  Step 2: 字段映射
+    - 按标准字段映射表重命名所有字段
+    - 受理时间统一转为 datetime 格式
+    
+  Step 3: 值域清洗
+    - 十四类分类：删除非14类记录，统一命名
+    - 街道：去掉"街道"后缀，统一为简称
+    - 物业公司：按企业名称字典标准化
+    - 小区名称：按标准地址库匹配编号
+    
+  Step 4: 质量检查
+    - 完整性：关键字段缺失率 < 5%
+    - 唯一性：工单编号无重复
+    - 一致性：分类值域、街道值域符合标准
+    - 异常值：小区名称非空、物业公司非空
+    
+  Step 5: 入库
+    - 清洗后数据写入数据库
+    - 记录清洗日志（删除条数、原因）
+    - 生成数据质量报告</div>
+  </div>
+
+  <!-- 九、质量改善趋势 -->
+  <div class="section">
+    <div class="section-title"><span class="num">9</span>数据质量改善趋势</div>
+    <p>对比三个批次数据，部分质量问题已显著改善：</p>
+    <div id="chart-trend" class="chart-box"></div>
+
+    <table class="data-table">
+      <thead><tr><th>质量指标</th><th>2024年</th><th>2025年</th><th>2026年7月</th><th>改善状态</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;">字段数</td><td>27</td><td>23</td><td>21</td><td>需统一为21列标准格式</td></tr>
+        <tr><td style="text-align:left;">受理时间格式</td><td><span class="badge ok">datetime</span></td><td><span class="badge critical">float序列号</span></td><td><span class="badge ok">datetime</span></td><td>2025年需转换</td></tr>
+        <tr><td style="text-align:left;">十四类值域数</td><td>21（含7个非标准）</td><td>14（标准）</td><td>14（标准）</td><td><span class="badge ok">已改善</span></td></tr>
+        <tr><td style="text-align:left;">小区名称为"无"占比</td><td>6.4%</td><td>2.1%</td><td>0%</td><td><span class="badge ok">已解决</span></td></tr>
+        <tr><td style="text-align:left;">内容描述缺失率</td><td>18.9%</td><td>0%</td><td>0%</td><td><span class="badge ok">已解决</span></tr>
+        <tr><td style="text-align:left;">物业公司缺失率</td><td>12.1%</td><td>0.7%</td><td>2.1%</td><td><span class="badge ok">显著改善</span></td></tr>
+        <tr><td style="text-align:left;">主办单位缺失率</td><td>47.6%</td><td>21.9%</td><td>23.7%</td><td><span class="badge warning">部分改善</span></td></tr>
+        <tr><td style="text-align:left;">答复要点缺失率</td><td>66.4%</td><td>43.9%</td><td>52.3%</td><td><span class="badge critical">未改善</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 十、改善建议 -->
+  <div class="section">
+    <div class="section-title"><span class="num">10</span>数据治理改善建议</div>
+
+    <div class="issue-card">
+      <div class="issue-title">建议一：建立数据下发标准（优先级：高）</div>
+      <div class="issue-desc">与市局协商，制定《12345物业投诉数据下发规范》，明确字段命名、数据类型、值域范围、文件格式、下发频次。建议以本报告第七章的接口对接规范为蓝本，从2026年9月起执行新规范，确保后续数据不再出现格式不统一问题。</div>
+    </div>
+    <div class="issue-card medium">
+      <div class="issue-title">建议二：建立区级数据清洗流水线（优先级：高）</div>
+      <div class="issue-desc">将本项目积累的数据清洗逻辑（字段映射、日期转换、分类统一、去重识别等）固化为自动化脚本，形成标准化的数据接入流水线。每月新数据到达后一键运行，自动完成清洗、质检、入库，并生成数据质量报告。</div>
+    </div>
+    <div class="issue-card medium">
+      <div class="issue-title">建议三：推动答复要点强制填写（优先级：中）</div>
+      <div class="issue-desc">"答复市民要点"缺失率52%是最突出的质量问题。建议通过区房管局向市局反映，在工单办结环节增加"答复要点"必填校验。该字段是答复质量评估、重复投诉分析、答复模板化检测的数据基础，缺失将严重影响分析深度。</div>
+    </div>
+    <div class="issue-card low">
+      <div class="issue-title">建议四：建立物业企业名称字典（优先级：低）</div>
+      <div class="issue-desc">梳理徐汇区在管物业企业清单（约150家），建立标准名称字典，包含企业全称、简称、统一社会信用代码。数据接入时自动映射，解决同企业多名称导致的聚合断裂问题。</div>
+    </div>
+    <div class="issue-card low">
+      <div class="issue-title">建议五：建立小区标准地址库（优先级：低）</div>
+      <div class="issue-desc">以区房管局的小区台账为基准，建立"小区编号→标准名称→标准地址→街道→物业公司"的映射表。数据接入时自动匹配小区编号，解决历史数据小区名称缺失和不一致问题。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 核心成果三 · 2026年8月
+</div>
+
+<script>
+// 缺失值对比图
+var chart1 = echarts.init(document.getElementById('chart-missing'));
+chart1.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['2024年', '2025-2026H1', '2026年7月'], top: 10 },
+  grid: { left: 120, right: 30, bottom: 40, top: 50 },
+  xAxis: { type: 'value', max: 70, axisLabel: { formatter: '{value}%' } },
+  yAxis: { type: 'category', data: ['答复市民要点','主办单位','内容描述','诉求区域/地址','物业公司','小区名称为"无"'] },
+  series: [
+    { name: '2024年', type: 'bar', data: [66.4,47.6,18.9,18.9,12.1,6.4], itemStyle: { color: '#f5222d' },
+      label: { show: true, position: 'right', formatter: '{c}%', fontSize: 10 } },
+    { name: '2025-2026H1', type: 'bar', data: [43.9,21.9,0,0,0.7,2.1], itemStyle: { color: '#fa8c16' },
+      label: { show: true, position: 'right', formatter: '{c}%', fontSize: 10 } },
+    { name: '2026年7月', type: 'bar', data: [52.3,23.7,0,0,2.1,0], itemStyle: { color: '#1890ff' },
+      label: { show: true, position: 'right', formatter: '{c}%', fontSize: 10 } },
+  ]
+});
+
+// 质量改善趋势图
+var chart2 = echarts.init(document.getElementById('chart-trend'));
+chart2.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['缺失率(越低越好)'], top: 10 },
+  grid: { left: 60, right: 30, bottom: 60, top: 50 },
+  xAxis: { type: 'category', data: ['答复要点','主办单位','内容描述','诉求区域','物业公司','小区为无'], axisLabel: { rotate: 20 } },
+  yAxis: { type: 'value', name: '缺失率(%)', max: 70 },
+  series: [
+    { name: '2024年', type: 'bar', data: [66.4,47.6,18.9,18.9,12.1,6.4], itemStyle: { color: '#bfbfbf' } },
+    { name: '2025年', type: 'bar', data: [43.9,21.9,0,0,0.7,2.1], itemStyle: { color: '#fa8c16' } },
+    { name: '2026年7月', type: 'bar', data: [52.3,23.7,0,0,2.1,0], itemStyle: { color: '#1890ff' } }
+  ],
+  legend: { data: ['2024年','2025年','2026年7月'], top: 10 }
+});
+
+window.addEventListener('resize', function() { chart1.resize(); chart2.resize(); });
+</script>
+</body>
+</html>

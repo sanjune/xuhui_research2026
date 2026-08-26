@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>徐汇区物业 AI 智能体 · 微信真机测试指南</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%);
+  min-height: 100vh;
+  padding: 24px 16px;
+  color: #1a202c;
+}
+.container { max-width: 760px; margin: 0 auto; }
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+h1 { font-size: 22px; color: #1a3a5f; margin-bottom: 4px; }
+.subtitle { color: #718096; font-size: 13px; margin-bottom: 18px; }
+.banner-tag {
+  display: inline-block;
+  background: #e53e3e;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+.qr-wrap {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: #f7fafc;
+  border: 2px dashed #cbd5e0;
+  border-radius: 12px;
+  padding: 20px;
+}
+.qr-img {
+  width: 200px;
+  height: 200px;
+  border: 8px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.qr-info { flex: 1 1 280px; min-width: 280px; }
+.qr-title { font-size: 16px; font-weight: 600; color: #2d3748; margin-bottom: 10px; }
+.url-box {
+  background: #1a202c;
+  color: #68d391;
+  font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  word-break: break-all;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.url-box::before { content: "🔗 URL: "; color: #e2e8f0; font-family: inherit; }
+.pre-check {
+  background: #fffbeb;
+  border-left: 4px solid #f6ad55;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #744210;
+}
+.pre-check b { color: #975a16; }
+h2 { font-size: 17px; color: #1a3a5f; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h2 .badge { background: #2c5282; color: #fff; font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #edf2f7; vertical-align: top; }
+th { background: #edf2f7; color: #2d3748; font-weight: 600; }
+tr:hover td { background: #f7fafc; }
+.pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.pill-high { background: #fed7d7; color: #c53030; }
+.pill-mid { background: #fefcbf; color: #975a16; }
+.pill-low { background: #c6f6d5; color: #276749; }
+.pill-ui { background: #bee3f8; color: #2a4365; }
+.pill-core { background: #e9d8fd; color: #44337a; }
+.steps { font-size: 14px; line-height: 1.8; color: #2d3748; }
+.steps ol { padding-left: 22px; }
+.steps li { margin-bottom: 8px; }
+.steps code {
+  background: #edf2f7;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: #c53030;
+}
+.feedback {
+  background: #ebf4ff;
+  border-left: 4px solid #4299e1;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #2a4365;
+}
+.feedback b { color: #1a3a5f; }
+.feedback code {
+  background: #fff;
+  color: #2b6cb0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.issue-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+@media (max-width: 600px) { .issue-grid { grid-template-columns: 1fr; } }
+.issue-item {
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #c53030;
+  line-height: 1.5;
+}
+.footer {
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+  font-size: 12px;
+  margin-top: 12px;
+}
+.tip {
+  display: inline-block;
+  background: #c6f6d5;
+  color: #276749;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>📱 微信真机测试 · 扫码入口</h1>
+    <div class="subtitle">徐汇区物业投诉 AI 智能体 · H5 微信浏览器验收 · 阶段 10</div>
+    <div class="banner-tag">⚠️ 手机 & 电脑必须连【同一 WiFi】(192.168.31.x 网段)</div>
+    <div class="qr-wrap">
+      <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&amp;margin=10&amp;data=http%3A%2F%2F192.168.31.73%3A8000%2F" alt="微信扫一扫">
+      <div class="qr-info">
+        <div class="qr-title">👆 用微信扫一扫左侧二维码</div>
+        <div class="url-box">http://192.168.31.73:8000/</div>
+        <div class="pre-check">
+          <b>📶 网络准备:</b><br>
+          · 电脑 WiFi: 确认连接 <b>192.168.31.x</b> 网段<br>
+          · 手机 WiFi: 与电脑连接<b>同一个路由器</b><br>
+          · 关闭手机 VPN/代理 · 关闭电脑防火墙"阻止传入连接"<br>
+          <b>💡 微信弹"非官方页面"怎么办?</b> → 选<b>"继续访问"</b>即可(HTTP 协议,非 HTTPS,微信仅安全提示)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✅ 必测 6 项 <span class="badge">P0</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>测试项</th><th>操作步骤</th><th>预期结果</th><th>优先级</th><th>结果(手动填)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>T1</td>
+          <td><b>首页加载与样式</b></td>
+          <td>扫码/输入URL → 微信打开 → 加载完成</td>
+          <td>
+            ✅ 蓝底顶栏(🏛️ 徐汇区物业投诉分析智能助手)<br>
+            ✅ 白色欢迎气泡 + 5 个圆角快捷按钮 + 底部输入发送栏<br>
+            ✅ 底部输入框不被 iPhone 刘海 / Home 指示条遮挡<br>
+            ✅ 无白屏、无 CSS 丢失、无错位溢出
+          </td>
+          <td><span class="pill pill-ui">UI 基础</span></td>
+          <td>____ 通过 / ____ 失败</td>
+        </tr>
+        <tr>
+          <td>T2</td>
+          <td><b>快捷按钮点击</b></td>
+          <td>点击第一个快捷按钮【本月概况】</td>
+          <td>
+            ✅ 右侧(深蓝):出现"这个月全区投诉情况怎么样?"用户气泡<br>
+            ✅ 左侧:三点跳动动画 → 0.8-1.5s 后替换为 LLM 总结 + 8 行数据表格<br>
+            ✅ 5 个快捷按钮和发送按钮在请求期间灰显、完成后恢复
+          </td>
+          <td><span class="pill pill-core">核心功能</span></td>
+          <td>____ 通过 / ____ 失败</td>
+        </tr>
+        <tr>
+          <td>T3</td>
+          <td><b>手动输入发送</b></td>
+          <td>输入框输入【今年的投诉量和去年比降了没有?】→ 点发送(或按回车)</td>
+          <td>
+            ✅ 正常触发 Q2(趋势)意图,表格显示 2026/2025 逐月对比<br>
+            ✅ 键盘自动收起 · 聊天区域自动滚动到底部<br>
+            ✅ 输入框内容发送后清空
+          </td>
+          <td><span class="pill pill-core">核心功能</span></td>
+          <td>____ 通过 / ____ 失败</td>
+        </tr>
+        <tr>
+          <td>T4</td>
+          <td><b>上下文继承(关键!)</b></td>
+          <td>(在 T2 或 T3 之后,不要刷新)输入【那停车类呢?】→发送</td>
+          <td>
+            ✅ 系统自动继承上一轮的 <code>month=7</code><br>
+            ✅ 正确返回 2026 年 7 月的停车类投诉(263 件,化工一四村/罗秀新二村 Top)<br>
+            ✅ ⚠️ 如果需要重测上下文:务必先刷新清空会话
+          </td>
+          <td><span class="pill pill-high">技术含量</span></td>
+          <td>____ 通过 / ____ 失败</td>
+        </tr>
+        <tr>
+          <td>T5</td>
+          <td><b>企业对比:徐房 vs 城投</b></td>
+          <td>输入【徐房集团和城投集团今年表现怎么样?】→发送</td>
+          <td>
+            ✅ 正确识别两家企业(徐房:上海徐房物业 / 城投:相关物业)<br>
+            ✅ LLM 总结中应含"徐房投诉量远高于城投"的对比描述<br>
+            ✅ 数据表格有 3 列以上对比维度
+          </td>
+          <td><span class="pill pill-mid">验收演示项</span></td>
+          <td>____ 通过 / ____ 失败</td>
+        </tr>
+        <tr>
+          <td>T6</td>
+          <td><b>响应速度 & 稳定性</b></td>
+          <td>连测 3 轮(T2 → T3 → T4),每轮记录时间</td>
+          <td>
+            ✅ 3 轮均 ≤ <b>3 秒</b>(验收指标:≤3s)&nbsp;<span class="tip">最佳 ≤1.5s</span><br>
+            ✅ 无超时(>10s)、无白屏、无"网络失败"红字提示<br>
+            ✅ 刷新后重新开始,不保留旧会话(可测 Q1 再次回复)
+          </td>
+          <td><span class="pill pill-core">性能指标</span></td>
+          <td>____ 全部 ≤3s / ____ 有超时</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ 推荐测试顺序(8分钟)</h2>
+    <div class="steps">
+      <ol>
+        <li>扫码打开页面,观察首页样式(T1) → 1 分钟</li>
+        <li>点【本月概况】(T2) → 截图保存</li>
+        <li>输入【那停车类呢?】(T4 上下文继承) → 截图保存</li>
+        <li>刷新页面,输入【今年的投诉量和去年比降了没有?】(T3)</li>
+        <li>接着输入【徐房集团和城投集团今年表现怎么样?】(T5) → 截图保存</li>
+        <li>再跑 2 轮快速查询(T6 性能)、记录响应时间</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🚨 异常反馈模板 <span class="badge">P0 · 出问题必填</span></h2>
+    <div class="feedback">
+      出问题时请<b>截图 + 按格式反馈</b>至少以下 4 项:<br><br>
+      <div class="issue-grid">
+        <div class="issue-item">① 现象描述:<code>点击【XX】按钮 → 没反应 / 白屏 / 红字报错 / 表格错位</code></div>
+        <div class="issue-item">② 操作步骤:<code>先点了XX → 再输入XX → 最后出现XX</code></div>
+        <div class="issue-item">③ 手机型号:<code>iPhone 14 / 华为Mate 60 / ...</code></div>
+        <div class="issue-item">④ 微信版本:<code>iOS 微信 8.0.xx / Android 微信...</code></div>
+        <div class="issue-item">⑤ 是否同一WiFi:<code>是 / 否 (手机4G访问)</code></div>
+        <div class="issue-item">⑥ 截图:<code>必附(聊天气泡 + 浏览器地址栏)</code></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 徐汇区物业课题一期 · AI 智能体 · 本机局域网部署 · URL http://192.168.31.73:8000/
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年1-6月 12345投诉去重建议清单</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+  .header { background:linear-gradient(135deg,#1a3a5f 0%,#2c5282 100%); color:#fff; padding:36px 0; text-align:center; }
+  .header h1 { font-size:24px; font-weight:700; }
+  .header .subtitle { font-size:13px; margin-top:8px; opacity:0.8; }
+  .header .meta { font-size:12px; margin-top:10px; opacity:0.6; }
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px; }
+  .section { background:#fff; border-radius:10px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .section-title { font-size:18px; font-weight:700; color:#1a3a5f; margin-bottom:14px; display:flex; align-items:center; }
+  .section-title::before { content:''; width:5px; height:22px; background:#1890ff; border-radius:3px; margin-right:10px; }
+  p { margin-bottom:10px; color:#444; font-size:14px; }
+  .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:16px 0; }
+  .stat-card { background:#f6f8fa; border-radius:8px; padding:18px 10px; text-align:center; border:1px solid #e8e8e8; }
+  .stat-card .num { font-size:30px; font-weight:700; }
+  .stat-card .num.red { color:#f5222d; }
+  .stat-card .num.blue { color:#1890ff; }
+  .stat-card .num.green { color:#52c41a; }
+  .stat-card .num.orange { color:#fa8c16; }
+  .stat-card .label { font-size:12px; color:#888; margin-top:4px; }
+  .chart-box { width:100%; height:380px; }
+  .data-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:12px; }
+  .data-table th { background:#1a3a5f; color:#fff; padding:8px 10px; text-align:center; font-weight:600; }
+  .data-table td { padding:6px 10px; border-bottom:1px solid #e8e8e8; text-align:center; }
+  .data-table tr:nth-child(even) { background:#fafafa; }
+  .data-table tr:hover { background:#e6f7ff; }
+  .decline { color:#52c41a; font-weight:600; }
+  .increase { color:#f5222d; font-weight:600; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .badge.high { background:#fff1f0; color:#f5222d; border:1px solid #ffa39e; }
+  .badge.medium { background:#fff7e6; color:#fa8c16; border:1px solid #ffd591; }
+  .badge.cross { background:#e6f7ff; color:#096dd9; border:1px solid #91d5ff; }
+  .action-card { background:#f6f8fa; border-left:4px solid #1890ff; border-radius:6px; padding:14px 18px; margin-bottom:10px; }
+  .action-card .ac-title { font-weight:700; color:#1a3a5f; margin-bottom:4px; font-size:14px; }
+  .action-card .ac-desc { font-size:13px; color:#555; }
+  .action-card.urgent { border-left-color:#f5222d; }
+  .action-card.urgent .ac-title { color:#cf1322; }
+  .footer { text-align:center; padding:24px 0; font-size:12px; color:#999; }
+  .excel-link { display:inline-block; background:#52c41a; color:#fff; padding:8px 20px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:600; margin:12px 0; }
+  .note { font-size:12px; color:#999; margin-top:8px; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>2026年1-6月 12345投诉去重建议清单</h1>
+  <div class="subtitle">四重识别策略逐月应用 · 跨月热点追踪 · 分级处置建议</div>
+  <div class="meta">徐汇物业课题一期 · 投诉去重识别模型应用实例 | 2026年8月</div>
+</div>
+
+<div class="container">
+
+  <!-- 一、总体概览 -->
+  <div class="section">
+    <div class="section-title">总体概览</div>
+    <p>运用投诉去重识别模型四重策略，对2026年1-6月徐汇区12345物业投诉工单逐月进行系统性去重分析。</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num blue">9,387</div><div class="label">1-6月工单总数</div></div>
+      <div class="stat-card"><div class="num red">4,217</div><div class="label">重复投诉工单</div></div>
+      <div class="stat-card"><div class="num red">44.9%</div><div class="label">重复投诉占比</div></div>
+      <div class="stat-card"><div class="num orange">5,170</div><div class="label">去重后有效工单</div></div>
+    </div>
+    <p>去重后，1-6月实际有效投诉5,170条，较原始9,387条减少4,217条（44.9%）。重复投诉中，催办/重发类1,430条（33.9%），同小区同类高频3,082条（73.1%），TF-IDF文本相似2,314条（54.9%），完全重复68条（1.6%）。</p>
+    <a class="excel-link" href="computer:///Users/macbookpro/Desktop/8-24%20徐汇课题一期/2026年1-6月投诉去重建议清单.xlsx">下载完整清单（4,217条 Excel）</a>
+  </div>
+
+  <!-- 二、月度趋势 -->
+  <div class="section">
+    <div class="section-title">月度重复投诉趋势</div>
+    <p>逐月工单总量、重复投诉量及重复投诉率变化趋势。2月重复率最低（32.5%），6月最高（49.0%），整体呈上升趋势，说明存量未解决问题持续累积。</p>
+    <div id="chart-trend" class="chart-box"></div>
+  </div>
+
+  <!-- 三、月度策略结果 -->
+  <div class="section">
+    <div class="section-title">月度四重策略识别结果</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>月份</th><th>工单总量</th><th>重复量</th><th>重复率</th>
+          <th>完全重复</th><th>催办/重发</th><th>同小区高频</th><th>文本相似</th>
+          <th>高频组数</th><th>相似对数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1月</td><td>1,485</td><td>584</td><td class="decline">39.3%</td><td>10</td><td>221</td><td>392</td><td>231</td><td>99</td><td>179</td></tr>
+        <tr><td>2月</td><td>888</td><td>289</td><td class="decline">32.5%</td><td>6</td><td>122</td><td>174</td><td>120</td><td>46</td><td>89</td></tr>
+        <tr><td>3月</td><td>1,682</td><td>805</td><td class="increase">47.9%</td><td>10</td><td>276</td><td>569</td><td>464</td><td>137</td><td>462</td></tr>
+        <tr><td>4月</td><td>1,704</td><td>822</td><td class="increase">48.2%</td><td>28</td><td>285</td><td>563</td><td>522</td><td>128</td><td>783</td></tr>
+        <tr><td>5月</td><td>1,772</td><td>807</td><td class="increase">45.5%</td><td>4</td><td>240</td><td>542</td><td>447</td><td>122</td><td>490</td></tr>
+        <tr><td>6月</td><td>1,856</td><td>910</td><td class="increase">49.0%</td><td>10</td><td>286</td><td>642</td><td>530</td><td>144</td><td>549</td></tr>
+        <tr style="background:#e6f7ff;font-weight:700;"><td>合计</td><td>9,387</td><td>4,217</td><td>44.9%</td><td>68</td><td>1,430</td><td>3,082</td><td>2,314</td><td>676</td><td>2,552</td></tr>
+      </tbody>
+    </table>
+    <p class="note">注：各策略结果存在交叉，合计行为各月简单加总。重复率 = 当月重复工单数 / 当月工单总数。</p>
+  </div>
+
+  <!-- 四、优先级分布 -->
+  <div class="section">
+    <div class="section-title">月度优先级分布</div>
+    <div id="chart-priority" class="chart-box"></div>
+    <table class="data-table">
+      <thead><tr><th>月份</th><th>高优先级</th><th>中优先级</th><th>低优先级</th><th>合计</th></tr></thead>
+      <tbody>
+        <tr><td>1月</td><td><span class="badge high">334</span></td><td><span class="badge medium">250</span></td><td>0</td><td>584</td></tr>
+        <tr><td>2月</td><td><span class="badge high">163</span></td><td><span class="badge medium">124</span></td><td>2</td><td>289</td></tr>
+        <tr><td>3月</td><td><span class="badge high">449</span></td><td><span class="badge medium">354</span></td><td>2</td><td>805</td></tr>
+        <tr><td>4月</td><td><span class="badge high">466</span></td><td><span class="badge medium">356</span></td><td>0</td><td>822</td></tr>
+        <tr><td>5月</td><td><span class="badge high">438</span></td><td><span class="badge medium">369</span></td><td>0</td><td>807</td></tr>
+        <tr><td>6月</td><td><span class="badge high">510</span></td><td><span class="badge medium">400</span></td><td>0</td><td>910</td></tr>
+        <tr style="background:#e6f7ff;font-weight:700;"><td>合计</td><td>2,360</td><td>1,853</td><td>4</td><td>4,217</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 五、跨月热点小区 -->
+  <div class="section">
+    <div class="section-title">跨月热点小区Top10（持续性问题追踪）</div>
+    <p>以下小区在多个月份中反复出现高频重复投诉，属于持续性、跨月未解决的问题，需重点跟踪治理。</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>排名</th><th>小区名称</th><th>主要问题</th><th>累计频次</th><th>出现月数</th><th>街道</th><th>物业公司</th><th>标记</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td style="font-weight:700;">欣嘉苑1-3期</td><td>停车管理</td><td style="color:#f5222d;font-weight:700;">49</td><td>4个月</td><td>虹梅路</td><td>锦龙物业</td><td><span class="badge cross">跨月持续</span></td></tr>
+        <tr><td>2</td><td style="font-weight:700;">华欣家园</td><td>停车管理</td><td style="color:#f5222d;font-weight:700;">30</td><td>3个月</td><td>华泾</td><td>泾鸿物业</td><td><span class="badge cross">跨月持续</span></td></tr>
+        <tr><td>3</td><td style="font-weight:700;">华悦家园</td><td>群租管理</td><td style="font-weight:700;">20</td><td>2个月</td><td>虹梅路</td><td>汇成物业</td><td><span class="badge cross">跨月持续</span></td></tr>
+        <tr><td>4</td><td>尚海湾二期</td><td>业主大会/业委会</td><td>26</td><td>1个月(4月集中)</td><td>斜土路</td><td>阳光投资物业</td><td><span class="badge high">单月爆发</span></td></tr>
+        <tr><td>5</td><td>盛大花园</td><td>业主大会/业委会</td><td>22</td><td>1个月(2月集中)</td><td>龙华</td><td>永升物业</td><td><span class="badge high">单月爆发</span></td></tr>
+        <tr><td>6</td><td>宝能华庭</td><td>业主大会/业委会</td><td>19</td><td>1个月(6月集中)</td><td>龙华</td><td>深圳吉祥服务</td><td><span class="badge high">单月爆发</span></td></tr>
+        <tr><td>7</td><td>海珀旭晖</td><td>房屋维修</td><td>12</td><td>1个月(6月)</td><td>斜土路</td><td>绿地物业</td><td><span class="badge medium">需关注</span></td></tr>
+        <tr><td>8</td><td>淮中直管公房</td><td>邻里纠纷</td><td>10</td><td>1个月(6月)</td><td>湖南路</td><td>衡复物业</td><td><span class="badge medium">需关注</span></td></tr>
+        <tr><td>9</td><td>安福直管公房</td><td>房屋违规使用</td><td>13</td><td>1个月(5月)</td><td>湖南路</td><td>衡复物业</td><td><span class="badge medium">需关注</span></td></tr>
+        <tr><td>10</td><td>罗秀新二村</td><td>停车管理</td><td>12</td><td>1个月(3月)</td><td>长桥</td><td>中誉物业</td><td><span class="badge medium">需关注</span></td></tr>
+      </tbody>
+    </table>
+    <p class="note">"跨月持续"标记表示该小区在2个及以上月份中出现高频投诉，问题长期未解决；"单月爆发"表示在单月内投诉量异常高，可能是事件驱动。</p>
+  </div>
+
+  <!-- 六、各月热点Top5 -->
+  <div class="section">
+    <div class="section-title">各月高频热点小区Top5</div>
+    <table class="data-table">
+      <thead><tr><th>月份</th><th>Top1</th><th>Top2</th><th>Top3</th><th>Top4</th><th>Top5</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:600;">1月</td>
+          <td>龙山新村 停车(9)</td><td>周家湾 停车(8)</td><td>泰成花苑 业委会(8)</td><td>馨宁公寓 停车(8)</td><td>南赵巷 安保(7)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">2月</td>
+          <td style="color:#f5222d;">盛大花园 业委会(22)</td><td>上海新村 邻里(6)</td><td>桃源村 维修(5)</td><td>汇成五村 安保(5)</td><td>盛大花园 邻里(5)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">3月</td>
+          <td>华泾绿苑 停车(13)</td><td>罗秀新二村 停车(12)</td><td>华泾五村 停车(9)</td><td>电力建筑 旧改(9)</td><td>凯翔 停车(8)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">4月</td>
+          <td style="color:#f5222d;">尚海湾二期 业委会(26)</td><td>吴东小区 旧改(12)</td><td>气象苑 维修(12)</td><td>欣嘉苑 停车(10)</td><td>紫阳花苑 停车(10)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">5月</td>
+          <td>欣嘉苑 停车(14)</td><td>安福直管 违规(13)</td><td>康兴花园 停车(12)</td><td>汇东小区 群租(12)</td><td>华悦家园 群租(11)</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;">6月</td>
+          <td style="color:#f5222d;">宝能华庭 业委会(19)</td><td>欣嘉苑 停车(17)</td><td>华欣家园 停车(14)</td><td>海珀旭晖 维修(12)</td><td>淮中直管 邻里(10)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 七、策略占比分析 -->
+  <div class="section">
+    <div class="section-title">四重策略识别占比分析</div>
+    <div id="chart-strategy" class="chart-box"></div>
+    <p>同小区同类高频策略识别量最大（3,082条，占重复总量73.1%），说明大量问题属于同小区内同类别反复投诉；TF-IDF文本相似次之（2,314条，54.9%），捕捉了大量改写式重复；催办/重发1,430条（33.9%），直接反映首次答复质量问题。</p>
+  </div>
+
+  <!-- 八、处置行动建议 -->
+  <div class="section">
+    <div class="section-title">1-6月综合处置行动建议</div>
+
+    <div class="action-card urgent">
+      <div class="ac-title">行动一：3个跨月持续小区重点督办（49+30+20=99条）</div>
+      <div class="ac-desc">欣嘉苑1-3期（停车管理，4个月49次）、华欣家园（停车管理，3个月30次）、华悦家园（群租管理，2个月20次）— 这3个小区的问题贯穿多个月份仍未解决，建议区房管局直接介入，约谈物业公司（锦龙/泾鸿/汇成），限期30天内给出解决方案。停车管理问题建议同步联动区交警支队、街道办协商停车规约。</div>
+    </div>
+    <div class="action-card urgent">
+      <div class="ac-title">行动二：3个单月爆发小区紧急处置（26+22+19=67条）</div>
+      <div class="ac-desc">尚海湾二期（4月26次业委会纠纷）、盛大花园（2月22次业委会纠纷）、宝能华庭（6月19次业委会纠纷）— 均为业主大会/业委会类问题在单月集中爆发，可能涉及业委会换届、物业合同续签等事件。建议街道办牵头组织业主大会，区房管局提供业委会运作指导，化解矛盾。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">行动三：1,430条催办工单答复质量整改</div>
+      <div class="ac-desc">1-6月催办/重发工单1,430条，占重复总量的33.9%，月均238条。催办工单的核心问题是首次答复模板化、不解决实际问题。建议：①建立答复内容审核机制，答复必须包含具体措施和时限；②对催办2次以上的工单自动升级处理级别；③将催办率纳入物业企业考核指标。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">行动四：2,552对文本相似工单核实合并</div>
+      <div class="ac-desc">TF-IDF识别出2,552对高度相似工单（涉及数百个小区），其中大量相似度≥0.99的为同一市民多次提交或系统重复派单。建议承办单位批量核实，确认同一问题后合并处理，减少无效工单流转，释放处置资源。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">行动五：建立月度去重通报机制</div>
+      <div class="ac-desc">每月生成去重建议清单，通报各街道重复投诉Top10小区和催办率最高物业企业。将重复投诉率（当前44.9%）作为核心指标纳入月度通报，目标：6个月内将重复率降至35%以下。重复率下降即意味着首次解决率提升，是最直接的治理效果指标。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 投诉去重识别模型应用实例 · 2026年8月<br>
+  完整4,217条去重建议清单见附件Excel文件
+</div>
+
+<script>
+// 月度趋势图
+var chart1 = echarts.init(document.getElementById('chart-trend'));
+chart1.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+  legend: { data: ['工单总量', '重复投诉量', '重复率'], top: 10 },
+  grid: { left: 70, right: 70, bottom: 40, top: 50 },
+  xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月'] },
+  yAxis: [
+    { type: 'value', name: '工单量（件）', position: 'left' },
+    { type: 'value', name: '重复率（%）', position: 'right', max: 60, axisLabel: { formatter: '{value}%' } }
+  ],
+  series: [
+    { name: '工单总量', type: 'bar', data: [1485,888,1682,1704,1772,1856], itemStyle: { color: '#1890ff' } },
+    { name: '重复投诉量', type: 'bar', data: [584,289,805,822,807,910], itemStyle: { color: '#f5222d' } },
+    { name: '重复率', type: 'line', yAxisIndex: 1, data: [39.3,32.5,47.9,48.2,45.5,49.0],
+      itemStyle: { color: '#fa8c16' }, lineStyle: { width: 3 },
+      label: { show: true, formatter: '{c}%', fontSize: 11 } }
+  ]
+});
+
+// 优先级分布图
+var chart2 = echarts.init(document.getElementById('chart-priority'));
+chart2.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['高优先级', '中优先级'], top: 10 },
+  grid: { left: 60, right: 30, bottom: 40, top: 50 },
+  xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月'] },
+  yAxis: { type: 'value', name: '工单量（条）' },
+  series: [
+    { name: '高优先级', type: 'bar', stack: 'total', data: [334,163,449,466,438,510], itemStyle: { color: '#f5222d' },
+      label: { show: true, position: 'inside', formatter: '{c}', fontSize: 10, color: '#fff' } },
+    { name: '中优先级', type: 'bar', stack: 'total', data: [250,124,354,356,369,400], itemStyle: { color: '#fa8c16' },
+      label: { show: true, position: 'inside', formatter: '{c}', fontSize: 10, color: '#fff' } }
+  ]
+});
+
+// 策略占比图
+var chart3 = echarts.init(document.getElementById('chart-strategy'));
+chart3.setOption({
+  tooltip: { trigger: 'item', formatter: '{a}<br/>{b}: {c}条 ({d}%)' },
+  legend: { orient: 'vertical', left: 'left', top: 20 },
+  series: [{
+    name: '识别策略',
+    type: 'pie',
+    radius: ['40%', '70%'],
+    center: ['55%', '50%'],
+    data: [
+      { value: 3082, name: '同小区同类高频', itemStyle: { color: '#1890ff' } },
+      { value: 2314, name: 'TF-IDF文本相似', itemStyle: { color: '#722ed1' } },
+      { value: 1430, name: '催办/重发', itemStyle: { color: '#fa8c16' } },
+      { value: 68, name: '完全重复', itemStyle: { color: '#f5222d' } },
+    ],
+    label: { formatter: '{b}\n{c}条 ({d}%)', fontSize: 11 }
+  }]
+});
+
+window.addEventListener('resize', function() { chart1.resize(); chart2.resize(); chart3.resize(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12345重点问题专题分析报告（5份）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+  .header { background:linear-gradient(135deg,#1a3a5f 0%,#2c5282 100%); color:#fff; padding:40px 0; text-align:center; }
+  .header h1 { font-size:26px; font-weight:700; }
+  .header .subtitle { font-size:14px; margin-top:8px; opacity:0.8; }
+  .header .meta { font-size:12px; margin-top:10px; opacity:0.6; }
+  .nav { background:#fff; padding:12px 20px; position:sticky; top:0; z-index:100; box-shadow:0 2px 4px rgba(0,0,0,0.08); display:flex; justify-content:center; gap:8px; flex-wrap:wrap; }
+  .nav a { padding:6px 16px; border-radius:20px; font-size:13px; text-decoration:none; color:#1890ff; border:1px solid #d6e4ff; transition:all 0.2s; }
+  .nav a:hover { background:#1890ff; color:#fff; }
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px; }
+  .topic-section { background:#fff; border-radius:10px; margin-bottom:24px; box-shadow:0 2px 8px rgba(0,0,0,0.06); overflow:hidden; }
+  .topic-header { padding:24px; color:#fff; }
+  .topic-header h2 { font-size:20px; font-weight:700; }
+  .topic-header .topic-num { font-size:40px; opacity:0.2; position:absolute; right:24px; top:10px; font-weight:900; }
+  .topic-header p { font-size:13px; opacity:0.9; margin-top:4px; }
+  .topic-body { padding:24px; }
+  .sub-title { font-size:16px; font-weight:700; color:#1a3a5f; margin:20px 0 10px; display:flex; align-items:center; }
+  .sub-title::before { content:''; width:4px; height:20px; border-radius:2px; margin-right:8px; }
+  .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:14px 0; }
+  .stat-card { background:#f6f8fa; border-radius:8px; padding:16px 10px; text-align:center; border:1px solid #e8e8e8; }
+  .stat-card .num { font-size:26px; font-weight:700; }
+  .stat-card .label { font-size:11px; color:#888; margin-top:2px; }
+  .chart-box { width:100%; height:320px; margin:10px 0; }
+  .data-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+  .data-table th { color:#fff; padding:7px 8px; text-align:center; font-weight:600; white-space:nowrap; }
+  .data-table td { padding:5px 8px; border-bottom:1px solid #e8e8e8; text-align:center; }
+  .data-table tr:nth-child(even) { background:#fafafa; }
+  .data-table tr:hover { background:#e6f7ff; }
+  .keyword-cloud { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+  .keyword { display:inline-block; padding:4px 12px; border-radius:14px; font-size:12px; }
+  .root-cause { background:#f6f8fa; border-left:4px solid; border-radius:6px; padding:12px 16px; margin:8px 0; }
+  .root-cause .rc-title { font-weight:700; margin-bottom:4px; font-size:14px; }
+  .root-cause .rc-desc { font-size:13px; color:#555; }
+  .advice-card { background:#f6ffed; border:1px solid #b7eb8f; border-radius:6px; padding:12px 16px; margin:8px 0; }
+  .advice-card .ac-title { font-weight:700; color:#389e0d; margin-bottom:4px; font-size:14px; }
+  .advice-card .ac-desc { font-size:13px; color:#555; }
+  .decline { color:#52c41a; font-weight:600; }
+  .increase { color:#f5222d; font-weight:600; }
+  .badge { display:inline-block; padding:1px 6px; border-radius:8px; font-size:10px; font-weight:600; }
+  .badge.red { background:#fff1f0; color:#f5222d; }
+  .badge.green { background:#f6ffed; color:#52c41a; }
+  .badge.orange { background:#fff7e6; color:#fa8c16; }
+  .footer { text-align:center; padding:24px 0; font-size:12px; color:#999; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>12345重点问题专题分析报告</h1>
+  <div class="subtitle">五大投诉类别 · 统一格式 · 深度根因分析 · 治理建议</div>
+  <div class="meta">徐汇物业课题一期 · 深度分析成果 | 2026年8月</div>
+</div>
+
+<div class="nav">
+  <a href="#topic1">一、停车管理</a>
+  <a href="#topic2">二、房屋维修</a>
+  <a href="#topic3">三、邻里纠纷</a>
+  <a href="#topic4">四、房屋违规使用</a>
+  <a href="#topic5">五、业主大会/业委会</a>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 专题一：停车管理 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="topic-section" id="topic1">
+  <div class="topic-header" style="background:linear-gradient(135deg,#0050b3 0%,#0066cc 100%);position:relative;">
+    <span class="topic-num">01</span>
+    <h2>专题一：停车管理</h2>
+    <p>投诉量第一大类 | 2024-2026年累计10,082条 | 占总投诉15.8%</p>
+  </div>
+  <div class="topic-body">
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num" style="color:#0050b3;">10,082</div><div class="label">累计投诉总量</div></div>
+      <div class="stat-card"><div class="num decline">-19.5%</div><div class="label">2025年同比</div></div>
+      <div class="stat-card"><div class="num decline">-27.2%</div><div class="label">2026年1-7月同比</div></div>
+      <div class="stat-card"><div class="num" style="color:#fa8c16;">No.1</div><div class="label">投诉类别排名</div></div>
+    </div>
+
+    <div class="sub-title" style="color:#0050b3;"><span style="background:#0050b3;"></span>1.1 月度趋势（三年对比）</div>
+    <p>2025年停车管理投诉从4,706件降至3,788件，同比减少918件（-19.5%）。2026年1-7月延续下降趋势，同比再降27.2%。月度看，2025年5-7月降幅最大，说明治理措施在年中开始显现效果。</p>
+    <div id="chart1" class="chart-box"></div>
+
+    <div class="sub-title" style="color:#0050b3;"><span style="background:#0050b3;"></span>1.2 街道分布</div>
+    <table class="data-table">
+      <thead style="background:#0050b3;"><tr><th>街道</th><th>累计投诉</th><th>2024年</th><th>2025年</th><th>2026年1-7月</th><th>同比变化</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">长桥</td><td>1,561</td><td>699</td><td>653</td><td>209</td><td><span class="decline">-30.1%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">华泾</td><td>1,170</td><td>449</td><td>471</td><td>250</td><td><span class="increase">+5.2%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">凌云路</td><td>1,133</td><td>614</td><td>367</td><td>152</td><td><span class="decline">-40.3%</span></td></tr>
+        <tr><td style="text-align:left;">康健新村</td><td>866</td><td>479</td><td>300</td><td>87</td><td><span class="decline">-37.4%</span></td></tr>
+        <tr><td style="text-align:left;">漕河泾</td><td>847</td><td>365</td><td>319</td><td>163</td><td><span class="decline">-12.6%</span></td></tr>
+        <tr><td style="text-align:left;">枫林路</td><td>813</td><td>401</td><td>297</td><td>115</td><td><span class="decline">-26.0%</span></td></tr>
+        <tr><td style="text-align:left;">龙华</td><td>737</td><td>383</td><td>256</td><td>98</td><td><span class="decline">-33.2%</span></td></tr>
+        <tr><td style="text-align:left;">田林</td><td>684</td><td>309</td><td>235</td><td>140</td><td><span class="decline">-24.0%</span></td></tr>
+        <tr><td style="text-align:left;">徐家汇</td><td>615</td><td>268</td><td>260</td><td>87</td><td><span class="decline">-0.4%</span></td></tr>
+        <tr><td style="text-align:left;">斜土路</td><td>582</td><td>259</td><td>232</td><td>91</td><td><span class="decline">-10.4%</span></td></tr>
+        <tr><td style="text-align:left;">虹梅路</td><td>444</td><td>156</td><td>175</td><td>113</td><td><span class="increase">+12.2%</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;margin-top:4px;">注：同比变化 = 2026年1-7月 vs 2025年1-7月。华泾和虹梅路不降反升，需重点关注。</p>
+
+    <div class="sub-title" style="color:#0050b3;"><span style="background:#0050b3;"></span>1.3 热点小区Top10</div>
+    <table class="data-table">
+      <thead style="background:#0050b3;"><tr><th>排名</th><th>小区名称</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>街道</th><th>物业公司</th><th>趋势</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;font-weight:600;">东湾小区</td><td>169</td><td>47</td><td style="color:#f5222d;font-weight:600;">104</td><td>18</td><td>华泾</td><td>润美物业</td><td><span class="badge red">2025爆发</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:600;">华欣家园</td><td>168</td><td>70</td><td>60</td><td style="color:#f5222d;font-weight:600;">38</td><td>华泾</td><td>汇成物业</td><td><span class="badge red">持续高发</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:600;">田林三街坊</td><td>151</td><td>95</td><td>49</td><td>7</td><td>田林</td><td>徐房物业</td><td><span class="badge green">显著改善</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;">阳光绿园</td><td>144</td><td>52</td><td>75</td><td>17</td><td>华泾</td><td>—</td><td><span class="badge orange">需关注</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;">长桥八村</td><td>116</td><td>55</td><td>45</td><td>16</td><td>长桥</td><td>中鹊物业</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;">古宜小区</td><td>112</td><td>47</td><td>50</td><td>15</td><td>田林</td><td>—</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;">欣嘉苑</td><td>110</td><td>38</td><td>42</td><td>30</td><td>虹梅路</td><td>锦龙物业</td><td><span class="badge red">2026攀升</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;">华泾绿苑</td><td>108</td><td>39</td><td>40</td><td>29</td><td>华泾</td><td>—</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;">明丰新纪苑</td><td>103</td><td>36</td><td>36</td><td>31</td><td>华泾</td><td>泾鸿物业</td><td><span class="badge red">2026攀升</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;">东航小区</td><td>99</td><td>42</td><td>38</td><td>19</td><td>枫林路</td><td>高建物业</td><td><span class="badge green">改善</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title" style="color:#0050b3;"><span style="background:#0050b3;"></span>1.4 投诉关键词</div>
+    <div class="keyword-cloud">
+      <span class="keyword" style="background:#e6f7ff;color:#0050b3;font-size:16px;font-weight:600;">车位不足</span>
+      <span class="keyword" style="background:#e6f7ff;color:#0050b3;font-size:14px;">停车费用</span>
+      <span class="keyword" style="background:#e6f7ff;color:#096dd9;font-size:13px;">外来车辆</span>
+      <span class="keyword" style="background:#e6f7ff;color:#096dd9;font-size:13px;">物业不管</span>
+      <span class="keyword" style="background:#e6f7ff;color:#1890ff;font-size:12px;">车位被占</span>
+      <span class="keyword" style="background:#e6f7ff;color:#1890ff;font-size:12px;">规约不公</span>
+      <span class="keyword" style="background:#e6f7ff;color:#1890ff;font-size:12px;">路面停车</span>
+      <span class="keyword" style="background:#e6f7ff;color:#1890ff;font-size:12px;">固定车位</span>
+      <span class="keyword" style="background:#e6f7ff;color:#1890ff;font-size:12px;">临时停车</span>
+      <span class="keyword" style="background:#e6f7ff;color:#1890ff;font-size:12px;">新能源充电</span>
+    </div>
+
+    <div class="sub-title" style="color:#0050b3;"><span style="background:#0050b3;"></span>1.5 根因分析</div>
+    <div class="root-cause" style="border-left-color:#0050b3;">
+      <div class="rc-title" style="color:#0050b3;">根因一：车位供需矛盾（结构性短缺）</div>
+      <div class="rc-desc">华泾镇（1,170条）和长桥街道（1,561条）的停车投诉合计占全区27%，这两个区域均为大型居住社区集中地，建于2000年前的小区普遍未规划地下车库，户车比不足1:0.3。东湾小区2025年投诉从47件暴增至104件，核心原因是小区改建后住户增加但车位未增。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因二：停车规约执行不力</div>
+      <div class="rc-desc">大量投诉涉及"外来车辆停入小区""固定车位被占""物业不执行停车规约"等问题。物业公司对停车管理的主动性不足，缺乏有效的车辆识别和准入制度，导致业主对物业不信任，反复投诉。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因三：华泾片区集中爆发</div>
+      <div class="rc-desc">华泾镇是唯一同比上升的街道（+5.2%），Top10热点小区中5个位于华泾。该片区多为动迁安置房和经适房社区，停车矛盾较商品房社区更为突出，需作为专项治理重点。</div>
+    </div>
+
+    <div class="sub-title" style="color:#0050b3;"><span style="background:#0050b3;"></span>1.6 治理建议</div>
+    <div class="advice-card"><div class="ac-title">建议一：华泾片区停车专项治理</div><div class="ac-desc">对华泾镇5个热点小区（东湾、华欣、阳光绿园、华泾绿苑、明丰新纪苑）制定"一小区一方案"。利用周边空地、错时共享周边商办车位、规划立体车位等方式增加供给。目标：6个月内停车投诉下降30%。</div></div>
+    <div class="advice-card"><div class="ac-title">建议二：推行停车规约标准化</div><div class="ac-desc">区房管局制定《小区停车管理规约示范文本》，明确车辆准入、车位分配、外来车辆管理规则。物业企业必须按规约执行，将执行情况纳入物业考核。</div></div>
+    <div class="advice-card"><div class="ac-title">建议三：田林三街坊经验推广</div><div class="ac-desc">田林三街坊从95件降至7件（-92.6%），是治理成功案例。总结其经验（规约改革+车位重新分配+业委会主导），在长桥、凌云路等同类老旧小区推广。</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 专题二：房屋维修 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="topic-section" id="topic2">
+  <div class="topic-header" style="background:linear-gradient(135deg,#722ed1 0%,#9254de 100%);position:relative;">
+    <span class="topic-num">02</span>
+    <h2>专题二：房屋维修</h2>
+    <p>投诉量第二大类 | 2024-2026年累计9,958条 | 下降幅度最大（-26.0%）</p>
+  </div>
+  <div class="topic-body">
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num" style="color:#722ed1;">9,958</div><div class="label">累计投诉总量</div></div>
+      <div class="stat-card"><div class="num decline">-26.0%</div><div class="label">2025年同比</div></div>
+      <div class="stat-card"><div class="num decline">-14.9%</div><div class="label">2026年1-7月同比</div></div>
+      <div class="stat-card"><div class="num" style="color:#fa8c16;">No.2</div><div class="label">投诉类别排名</div></div>
+    </div>
+
+    <div class="sub-title" style="color:#722ed1;"><span style="background:#722ed1;"></span>2.1 月度趋势</div>
+    <p>房屋维修是十四类中下降幅度最大的类别，2025年同比减少1,217件（-26.0%）。但2026年降幅收窄至-14.9%，说明经过前期集中修缮，易于解决的问题已基本处置完毕，存量问题进入"深水区"。</p>
+    <div id="chart2" class="chart-box"></div>
+
+    <div class="sub-title" style="color:#722ed1;"><span style="background:#722ed1;"></span>2.2 街道分布</div>
+    <table class="data-table">
+      <thead style="background:#722ed1;"><tr><th>街道</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>同比变化</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">长桥</td><td>1,572</td><td>771</td><td>565</td><td>236</td><td><span class="decline">-26.8%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">漕河泾</td><td>1,063</td><td>530</td><td>365</td><td>168</td><td><span class="decline">-31.1%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">凌云路</td><td>968</td><td>494</td><td>325</td><td>149</td><td><span class="decline">-34.2%</span></td></tr>
+        <tr><td style="text-align:left;">田林</td><td>918</td><td>457</td><td>307</td><td>154</td><td><span class="decline">-32.8%</span></td></tr>
+        <tr><td style="text-align:left;">枫林路</td><td>896</td><td>453</td><td>293</td><td>150</td><td><span class="decline">-35.3%</span></td></tr>
+        <tr><td style="text-align:left;">康健新村</td><td>736</td><td>383</td><td>249</td><td>104</td><td><span class="decline">-35.1%</span></td></tr>
+        <tr><td style="text-align:left;">徐家汇</td><td>680</td><td>333</td><td>232</td><td>115</td><td><span class="decline">-30.4%</span></td></tr>
+        <tr><td style="text-align:left;">斜土路</td><td>550</td><td>267</td><td>193</td><td>90</td><td><span class="decline">-27.7%</span></td></tr>
+        <tr><td style="text-align:left;">华泾</td><td>522</td><td>247</td><td>196</td><td>79</td><td><span class="decline">-20.4%</span></td></tr>
+        <tr><td style="text-align:left;">龙华</td><td>487</td><td>246</td><td>169</td><td>72</td><td><span class="decline">-31.1%</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title" style="color:#722ed1;"><span style="background:#722ed1;"></span>2.3 热点小区Top10</div>
+    <table class="data-table">
+      <thead style="background:#722ed1;"><tr><th>排名</th><th>小区</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>街道</th><th>物业</th><th>趋势</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;font-weight:600;">日晖六村</td><td>237</td><td>120</td><td>85</td><td>32</td><td>斜土路</td><td>高建物业</td><td><span class="badge green">持续改善</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:600;">盛华景苑</td><td>207</td><td>92</td><td>85</td><td>30</td><td>长桥</td><td>—</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:600;">馨宁公寓</td><td>186</td><td>85</td><td>70</td><td>31</td><td>枫林路</td><td>—</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;">梅陇十一村</td><td>176</td><td>82</td><td>64</td><td>30</td><td>凌云路</td><td>—</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;">长桥八村</td><td>169</td><td>80</td><td>62</td><td>27</td><td>长桥</td><td>中鹊物业</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;">东湾小区</td><td>163</td><td>65</td><td>71</td><td>27</td><td>华泾</td><td>润美物业</td><td><span class="badge orange">略升</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;">长青苑</td><td>150</td><td>75</td><td>53</td><td>22</td><td>漕河泾</td><td>—</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;">漕东小区</td><td>146</td><td>68</td><td>55</td><td>23</td><td>漕河泾</td><td>—</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;">华欣家园</td><td>144</td><td>62</td><td>55</td><td>27</td><td>华泾</td><td>汇成物业</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;">海珀旭晖</td><td>139</td><td>58</td><td>51</td><td>30</td><td>斜土路</td><td>绿地物业</td><td><span class="badge orange">持平</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title" style="color:#722ed1;"><span style="background:#722ed1;"></span>2.4 根因分析</div>
+    <div class="root-cause" style="border-left-color:#722ed1;">
+      <div class="rc-title" style="color:#722ed1;">根因一：老旧小区房屋老化（结构性问题）</div>
+      <div class="rc-desc">日晖六村（237条）、盛华景苑（207条）、馨宁公寓（186条）均为建于1990-2000年的老旧小区，管道老化、屋顶渗漏、外墙脱落等结构性问题频发。这类问题无法通过单次维修根除，需纳入旧住房改造计划。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因二：维修响应不及时</div>
+      <div class="rc-desc">大量投诉涉及"报修后物业迟迟不来""修了又坏""维修质量差"等问题。物业企业的维修响应机制不完善，缺乏SLA（服务级别协议），导致小问题拖成大投诉。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#52c41a;">
+      <div class="rc-title" style="color:#389e0d;">根因三：修缮旧改成效显现</div>
+      <div class="rc-desc">2025年降幅最大（-26.0%）与旧住房改造推进时间吻合。长桥、凌云路、枫林路等降幅超30%的街道，正是近两年旧改集中区域。说明修缮旧改对减少维修类投诉效果显著。</div>
+    </div>
+
+    <div class="sub-title" style="color:#722ed1;"><span style="background:#722ed1;"></span>2.5 治理建议</div>
+    <div class="advice-card"><div class="ac-title">建议一：老旧小区维修纳入旧改优先级</div><div class="ac-desc">日晖六村、盛华景苑、馨宁公寓等高发小区应优先纳入旧住房改造计划。对暂未列入旧改的小区，设立"维修应急基金"，确保结构性问题快速处置。</div></div>
+    <div class="advice-card"><div class="ac-title">建议二：推行维修响应SLA机制</div><div class="ac-desc">要求物业企业建立维修响应时限标准：急修2小时内到场、24小时内处置；报修48小时内上门。将响应时效纳入物业企业月度考核，连续超时的约谈企业负责人。</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 专题三：邻里纠纷 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="topic-section" id="topic3">
+  <div class="topic-header" style="background:linear-gradient(135deg,#d4380d 0%,#ff7a45 100%);position:relative;">
+    <span class="topic-num">03</span>
+    <h2>专题三：邻里纠纷</h2>
+    <p>投诉量第三大类 | 2024-2026年累计7,248条 | 降幅最小，2026年不降反升（+1.7%）</p>
+  </div>
+  <div class="topic-body">
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num" style="color:#d4380d;">7,248</div><div class="label">累计投诉总量</div></div>
+      <div class="stat-card"><div class="num decline">-8.4%</div><div class="label">2025年同比</div></div>
+      <div class="stat-card"><div class="num increase">+1.7%</div><div class="label">2026年1-7月同比</div></div>
+      <div class="stat-card"><div class="num" style="color:#fa8c16;">No.3</div><div class="label">投诉类别排名</div></div>
+    </div>
+
+    <div class="sub-title" style="color:#d4380d;"><span style="background:#d4380d;"></span>3.1 月度趋势</div>
+    <p style="color:#d4380d;font-weight:600;">邻里纠纷是十四类投诉中唯一在2026年不降反升的类别。</p>
+    <p>2025年同比仅降8.4%，远低于全区平均降幅（-18.8%）。2026年1-7月同比+1.7%，从1,568件微增至1,595件。这表明邻里纠纷是"最难治理"的投诉类型，传统的物业管理和行政介入手段效果有限。</p>
+    <div id="chart3" class="chart-box"></div>
+
+    <div class="sub-title" style="color:#d4380d;"><span style="background:#d4380d;"></span>3.2 街道分布</div>
+    <table class="data-table">
+      <thead style="background:#d4380d;"><tr><th>街道</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>同比变化</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">长桥</td><td>1,072</td><td>436</td><td>416</td><td>220</td><td><span class="increase">+5.8%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">凌云路</td><td>919</td><td>390</td><td>337</td><td>192</td><td><span class="decline">-7.1%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">漕河泾</td><td>890</td><td>352</td><td>340</td><td>198</td><td><span class="increase">+16.5%</span></td></tr>
+        <tr><td style="text-align:left;">田林</td><td>817</td><td>356</td><td>284</td><td>177</td><td><span class="decline">-0.6%</span></td></tr>
+        <tr><td style="text-align:left;">康健新村</td><td>700</td><td>307</td><td>250</td><td>143</td><td><span class="decline">-18.4%</span></td></tr>
+        <tr><td style="text-align:left;">枫林路</td><td>694</td><td>265</td><td>258</td><td>171</td><td><span class="increase">+2.4%</span></td></tr>
+        <tr><td style="text-align:left;">华泾</td><td>601</td><td>254</td><td>225</td><td>122</td><td><span class="decline">-8.8%</span></td></tr>
+        <tr><td style="text-align:left;">徐家汇</td><td>481</td><td>203</td><td>181</td><td>97</td><td><span class="decline">-7.2%</span></td></tr>
+        <tr><td style="text-align:left;">湖南路</td><td>329</td><td>123</td><td>135</td><td>71</td><td><span class="increase">+15.4%</span></td></tr>
+        <tr><td style="text-align:left;">斜土路</td><td>295</td><td>118</td><td>111</td><td>66</td><td><span class="decline">-6.1%</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;">注：长桥（+5.8%）、漕河泾（+16.5%）、湖南路（+15.4%）、枫林路（+2.4%）四个街道不降反升。</p>
+
+    <div class="sub-title" style="color:#d4380d;"><span style="background:#d4380d;"></span>3.3 热点小区Top10</div>
+    <table class="data-table">
+      <thead style="background:#d4380d;"><tr><th>排名</th><th>小区</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>街道</th><th>趋势</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;font-weight:600;">梅陇十一村A块</td><td>163</td><td>68</td><td>58</td><td>37</td><td>凌云路</td><td><span class="badge red">2026攀升</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:600;">日晖六村</td><td>150</td><td>62</td><td>57</td><td>31</td><td>斜土路</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:600;">田林三街坊</td><td>132</td><td>60</td><td>46</td><td>26</td><td>田林</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;">实业公寓</td><td>115</td><td>45</td><td>44</td><td>26</td><td>徐家汇</td><td><span class="badge red">2026攀升</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;">武康6.8</td><td>107</td><td>45</td><td>38</td><td>24</td><td>湖南路</td><td><span class="badge orange">略升</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;">淮中直管公房</td><td>103</td><td>42</td><td>37</td><td>24</td><td>湖南路</td><td><span class="badge orange">略升</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;">长桥八村</td><td>98</td><td>42</td><td>37</td><td>19</td><td>长桥</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;">康沁苑</td><td>93</td><td>38</td><td>36</td><td>19</td><td>康健</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;">樱花园</td><td>90</td><td>35</td><td>36</td><td>19</td><td>漕河泾</td><td><span class="badge orange">略升</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;">光华苑</td><td>87</td><td>36</td><td>33</td><td>18</td><td>漕河泾</td><td><span class="badge green">改善</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title" style="color:#d4380d;"><span style="background:#d4380d;"></span>3.4 根因分析</div>
+    <div class="root-cause" style="border-left-color:#d4380d;">
+      <div class="rc-title" style="color:#d4380d;">根因一：老旧社区空间紧张引发矛盾</div>
+      <div class="rc-desc">邻里纠纷高发的小区（梅陇十一村、日晖六村、田林三街坊）均为老旧公房社区，户型小、公共空间少。噪音扰民、楼道堆物、公共空间占用是主要纠纷来源。这类矛盾属于"存量矛盾"，无法通过硬件改造根除。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因二：调解机制响应不足</div>
+      <div class="rc-desc">邻里纠纷的处置需要"调解"而非"执法"，但当前物业和社区调解力量薄弱。居民遇到纠纷首先想到12345而非社区调解委员会，说明"人民调解"前端化解机制未充分发挥作用。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因三：后疫情时代邻里关系紧张</div>
+      <div class="rc-desc">2026年不降反升的趋势值得关注。疫情后居家时间增多、邻里互动减少、信任度下降，可能导致矛盾积累。漕河泾（+16.5%）、湖南路（+15.4%）的异常增长需要深入调研是否有事件性诱因。</div>
+    </div>
+
+    <div class="sub-title" style="color:#d4380d;"><span style="background:#d4380d;"></span>3.5 治理建议</div>
+    <div class="advice-card"><div class="ac-title">建议一：强化社区调解前端化解</div><div class="ac-desc">在邻里纠纷高发小区建立"社区调解工作站"，由街道司法所、居委会、物业三方组成。目标：将60%的邻里纠纷在社区内化解，减少12345投诉。调解成功案例可形成示范，推广经验。</div></div>
+    <div class="advice-card"><div class="ac-title">建议二：对4个上升街道专项调研</div><div class="ac-desc">长桥、漕河泾、湖南路、枫林路四个不降反升的街道，需逐个调研是否有事件性诱因（如装修集中期、新搬入居民冲突等），针对性制定化解方案。</div></div>
+    <div class="advice-card"><div class="ac-title">建议三：老旧社区公共空间微改造</div><div class="ac-desc">对梅陇十一村、日晖六村等空间紧张的老旧社区，通过楼道清理、公共空间微改造、加装隔音设施等方式，从硬件层面减少纠纷触发条件。</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 专题四：房屋违规使用 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="topic-section" id="topic4">
+  <div class="topic-header" style="background:linear-gradient(135deg,#fa541c 0%,#ff9c6e 100%);position:relative;">
+    <span class="topic-num">04</span>
+    <h2>专题四：房屋违规使用</h2>
+    <p>投诉量第四大类 | 2024-2026年累计6,615条 | 含群租、违建、擅自改变房屋用途</p>
+  </div>
+  <div class="topic-body">
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num" style="color:#fa541c;">6,615</div><div class="label">累计投诉总量</div></div>
+      <div class="stat-card"><div class="num decline">-21.4%</div><div class="label">2025年同比</div></div>
+      <div class="stat-card"><div class="num decline">-24.9%</div><div class="label">2026年1-7月同比</div></div>
+      <div class="stat-card"><div class="num" style="color:#fa8c16;">No.4</div><div class="label">投诉类别排名</div></div>
+    </div>
+
+    <div class="sub-title" style="color:#fa541c;"><span style="background:#fa541c;"></span>4.1 月度趋势</div>
+    <p>房屋违规使用2025年同比降21.4%，2026年1-7月延续下降趋势（-24.9%）。该类投诉的治理效果较好，说明联合执法机制（城管+房管+街道）发挥作用。</p>
+    <div id="chart4" class="chart-box"></div>
+
+    <div class="sub-title" style="color:#fa541c;"><span style="background:#fa541c;"></span>4.2 街道分布</div>
+    <table class="data-table">
+      <thead style="background:#fa541c;"><tr><th>街道</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>同比变化</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">湖南路</td><td>1,293</td><td>612</td><td>456</td><td>225</td><td><span class="decline">-21.7%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">天平路</td><td>1,061</td><td>503</td><td>369</td><td>189</td><td><span class="decline">-26.7%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">徐家汇</td><td>845</td><td>408</td><td>295</td><td>142</td><td><span class="decline">-27.5%</span></td></tr>
+        <tr><td style="text-align:left;">龙华</td><td>602</td><td>275</td><td>222</td><td>105</td><td><span class="decline">-24.1%</span></td></tr>
+        <tr><td style="text-align:left;">斜土路</td><td>526</td><td>248</td><td>195</td><td>83</td><td><span class="decline">-32.8%</span></td></tr>
+        <tr><td style="text-align:left;">枫林路</td><td>432</td><td>215</td><td>148</td><td>69</td><td><span class="decline">-32.4%</span></td></tr>
+        <tr><td style="text-align:left;">田林</td><td>375</td><td>186</td><td>127</td><td>62</td><td><span class="decline">-32.2%</span></td></tr>
+        <tr><td style="text-align:left;">长桥</td><td>335</td><td>170</td><td>115</td><td>50</td><td><span class="decline">-29.9%</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;">注：湖南路和天平路合计占35.5%，这两个街道为衡复历史文化风貌区核心区域，违规使用问题最为集中。</p>
+
+    <div class="sub-title" style="color:#fa541c;"><span style="background:#fa541c;"></span>4.3 热点小区Top10</div>
+    <table class="data-table">
+      <thead style="background:#fa541c;"><tr><th>排名</th><th>小区</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>街道</th><th>趋势</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;font-weight:600;">安福直管公房</td><td>196</td><td>85</td><td>75</td><td>36</td><td>湖南路</td><td><span class="badge orange">持续高发</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:600;">金色港湾公寓</td><td>172</td><td>80</td><td>64</td><td>28</td><td>湖南路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:600;">华悦家园</td><td>158</td><td>70</td><td>58</td><td>30</td><td>虹梅路</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;">永福一区</td><td>144</td><td>65</td><td>52</td><td>27</td><td>湖南路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;">兴湖小区</td><td>137</td><td>62</td><td>50</td><td>25</td><td>湖南路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;">太原直管公房</td><td>125</td><td>55</td><td>46</td><td>24</td><td>湖南路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;">武康大楼</td><td>118</td><td>52</td><td>43</td><td>23</td><td>湖南路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;">吴兴直管公房</td><td>110</td><td>50</td><td>40</td><td>20</td><td>天平路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;">高邮路弄</td><td>102</td><td>48</td><td>37</td><td>17</td><td>湖南路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;">复兴大厦</td><td>95</td><td>45</td><td>35</td><td>15</td><td>天平路</td><td><span class="badge green">改善</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;">注：Top10中6个小区位于湖南路街道，衡复风貌区是违规使用问题的核心区域。</p>
+
+    <div class="sub-title" style="color:#fa541c;"><span style="background:#fa541c;"></span>4.4 根因分析</div>
+    <div class="root-cause" style="border-left-color:#fa541c;">
+      <div class="rc-title" style="color:#fa541c;">根因一：衡复风貌区保护与使用冲突</div>
+      <div class="rc-desc">湖南路（1,293条）和天平路（1,061条）占全区违规使用投诉的35.5%。衡复历史文化风貌区内历史建筑密集，居民擅自装修、改变外立面、加层等行为频繁。风貌区保护要求与居民改善居住条件的需求存在长期张力。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因二：直管公房管理薄弱</div>
+      <div class="rc-desc">安福直管公房（196条）、太原直管公房（125条）、永福一区（144条）均为直管公房，产权归政府但由物业代管。直管公房管理主体不清晰，违规使用发现和制止机制不健全，租户违规装修成本低、违规概率高。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#52c41a;">
+      <div class="rc-title" style="color:#389e0d;">根因三：联合执法效果显现</div>
+      <div class="rc-desc">2025-2026年持续下降（-21.4%、-24.9%）说明城管+房管+街道联合执法机制有效。斜土路（-32.8%）、枫林路（-32.4%）降幅最大，说明执法力度与投诉下降直接正相关。</div>
+    </div>
+
+    <div class="sub-title" style="color:#fa541c;"><span style="background:#fa541c;"></span>4.5 治理建议</div>
+    <div class="advice-card"><div class="ac-title">建议一：衡复风貌区专项巡查</div><div class="ac-desc">对湖南路、天平路的直管公房和历史建筑建立"一房一档"巡查台账，每季度全覆盖巡查一次。发现违规装修立即制止，建立"发现-制止-处罚-修复"闭环。</div></div>
+    <div class="advice-card"><div class="ac-title">建议二：直管公房管理主体明确化</div><div class="ac-desc">明确直管公房的日常管理责任主体（建议由衡复物业统一负责），建立装修申请审批制度，未经审批不得施工。违规装修纳入个人信用记录。</div></div>
+    <div class="advice-card"><div class="ac-title">建议三：推广斜土路执法经验</div><div class="ac-desc">斜土路街道降幅最大（-32.8%），总结其联合执法经验（执法频次、处罚力度、巡查机制），在全区推广。</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 专题五：业主大会/业委会 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="topic-section" id="topic5">
+  <div class="topic-header" style="background:linear-gradient(135deg,#08979c 0%,#36cfc9 100%);position:relative;">
+    <span class="topic-num">05</span>
+    <h2>专题五：业主大会/业委会</h2>
+    <p>投诉量第五大类 | 2024-2026年累计6,253条 | 涉及自治治理纠纷</p>
+  </div>
+  <div class="topic-body">
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num" style="color:#08979c;">6,253</div><div class="label">累计投诉总量</div></div>
+      <div class="stat-card"><div class="num decline">-22.8%</div><div class="label">2025年同比</div></div>
+      <div class="stat-card"><div class="num decline">-24.2%</div><div class="label">2026年1-7月同比</div></div>
+      <div class="stat-card"><div class="num" style="color:#fa8c16;">No.5</div><div class="label">投诉类别排名</div></div>
+    </div>
+
+    <div class="sub-title" style="color:#08979c;"><span style="background:#08979c;"></span>5.1 月度趋势</div>
+    <p>业委会类投诉2025年同比下降22.8%，2026年1-7月延续下降（-24.2%）。但需注意该类投诉有"事件驱动"特征——个别小区在业委会换届、物业合同续签期间会出现集中爆发。</p>
+    <div id="chart5" class="chart-box"></div>
+
+    <div class="sub-title" style="color:#08979c;"><span style="background:#08979c;"></span>5.2 街道分布</div>
+    <table class="data-table">
+      <thead style="background:#08979c;"><tr><th>街道</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>同比变化</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">斜土路</td><td>1,079</td><td>518</td><td>385</td><td>176</td><td><span class="decline">-31.4%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">龙华</td><td>961</td><td>455</td><td>358</td><td>148</td><td><span class="decline">-34.6%</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">徐家汇</td><td>830</td><td>406</td><td>300</td><td>124</td><td><span class="decline">-26.2%</span></td></tr>
+        <tr><td style="text-align:left;">长桥</td><td>586</td><td>288</td><td>210</td><td>88</td><td><span class="decline">-27.2%</span></td></tr>
+        <tr><td style="text-align:left;">田林</td><td>514</td><td>250</td><td>185</td><td>79</td><td><span class="decline">-26.0%</span></td></tr>
+        <tr><td style="text-align:left;">漕河泾</td><td>453</td><td>220</td><td>160</td><td>73</td><td><span class="decline">-27.3%</span></td></tr>
+        <tr><td style="text-align:left;">凌云路</td><td>408</td><td>200</td><td>143</td><td>65</td><td><span class="decline">-28.5%</span></td></tr>
+        <tr><td style="text-align:left;">华泾</td><td>312</td><td>152</td><td>110</td><td>50</td><td><span class="decline">-27.5%</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title" style="color:#08979c;"><span style="background:#08979c;"></span>5.3 热点小区Top10</div>
+    <table class="data-table">
+      <thead style="background:#08979c;"><tr><th>排名</th><th>小区</th><th>累计</th><th>2024</th><th>2025</th><th>2026</th><th>街道</th><th>趋势</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;font-weight:600;">中海瀛台</td><td>198</td><td>85</td><td>75</td><td>38</td><td>斜土路</td><td><span class="badge orange">持续高发</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:600;">尚海湾二期</td><td>172</td><td>58</td><td>64</td><td style="color:#f5222d;font-weight:600;">50</td><td>斜土路</td><td><span class="badge red">2026爆发</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:600;">长汇景苑</td><td>165</td><td>72</td><td>65</td><td>28</td><td>龙华</td><td><span class="badge orange">持平</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;">盛大花园</td><td>152</td><td>62</td><td>58</td><td>32</td><td>龙华</td><td><span class="badge orange">略升</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;">宝能华庭</td><td>145</td><td>55</td><td>50</td><td style="color:#f5222d;font-weight:600;">40</td><td>龙华</td><td><span class="badge red">2026爆发</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;">中恒苑</td><td>133</td><td>58</td><td>48</td><td>27</td><td>徐家汇</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;">日晖二村</td><td>125</td><td>55</td><td>45</td><td>25</td><td>斜土路</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;">实业公寓</td><td>118</td><td>50</td><td>43</td><td>25</td><td>徐家汇</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;">虹桥大仕馆</td><td>110</td><td>48</td><td>40</td><td>22</td><td>田林</td><td><span class="badge green">改善</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;">光启园</td><td>102</td><td>45</td><td>37</td><td>20</td><td>徐家汇</td><td><span class="badge green">改善</span></td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;">注：尚海湾二期（50件）和宝能华庭（40件）在2026年出现爆发式增长，均为业委会运作纠纷。</p>
+
+    <div class="sub-title" style="color:#08979c;"><span style="background:#08979c;"></span>5.4 根因分析</div>
+    <div class="root-cause" style="border-left-color:#08979c;">
+      <div class="rc-title" style="color:#08979c;">根因一：业委会运作不规范</div>
+      <div class="rc-desc">尚海湾二期2026年1-7月投诉50件（2025年同期约37件），核心问题是业委会决策不透明、擅签物业合同。宝能华庭同样涉及业委会主任擅自变更公示合同。业委会成员缺乏专业培训，运作流程不规范是普遍问题。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因二：物业选续聘矛盾</div>
+      <div class="rc-desc">大量投诉集中在"物业合同到期后选续聘程序不透明""业委会与物业公司利益输送""新老物业交接不顺畅"等问题。物业选续聘是业主自治的核心环节，但程序复杂、专业门槛高，容易产生纠纷。</div>
+    </div>
+    <div class="root-cause" style="border-left-color:#fa8c16;">
+      <div class="rc-title" style="color:#d46b08;">根因三：商品房社区治理矛盾突出</div>
+      <div class="rc-desc">与维修类投诉集中在老旧社区不同，业委会类投诉集中在商品房社区（中海瀛台、尚海湾、宝能华庭等）。商品房业主权利意识更强，对自治治理参与度更高，但缺乏有效引导，容易形成对抗。</div>
+    </div>
+
+    <div class="sub-title" style="color:#08979c;"><span style="background:#08979c;"></span>5.5 治理建议</div>
+    <div class="advice-card"><div class="ac-title">建议一：紧急处置两个爆发小区</div><div class="ac-desc">尚海湾二期和宝能华庭2026年投诉量异常，建议街道办立即介入，组织业主大会重新审议物业合同，区房管局提供业委会运作指导。必要时启动业委会改选程序。</div></div>
+    <div class="advice-card"><div class="ac-title">建议二：推行业委会运作标准化</div><div class="ac-desc">制定《徐汇区业主大会/业委会运作规范》，明确议事规则、决策程序、信息公开要求。对业委会成员开展专项培训，提高自治治理能力。将业委会运作规范度纳入小区治理考核。</div></div>
+    <div class="advice-card"><div class="ac-title">建议三：建立物业选续聘指导机制</div><div class="ac-desc">区房管局设立"物业选续聘指导中心"，在合同到期前6个月提前介入，指导业委会依法依规开展选续聘程序。提供标准合同模板、招标流程指引，减少因程序不规范引发的纠纷。</div></div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 深度分析成果 · 5份专题分析报告 · 2026年8月
+</div>
+
+<script>
+function createChart(id, title, data2024, data2025, data2026, color) {
+  var chart = echarts.init(document.getElementById(id));
+  chart.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['2024年','2025年','2026年'], top: 5 },
+    grid: { left: 50, right: 20, bottom: 30, top: 40 },
+    xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] },
+    yAxis: { type: 'value', name: '投诉量（件）' },
+    series: [
+      { name: '2024年', type: 'line', data: data2024, smooth: true, itemStyle: { color: '#bfbfbf' }, lineStyle: { type: 'dashed' } },
+      { name: '2025年', type: 'line', data: data2025, smooth: true, itemStyle: { color: '#fa8c16' } },
+      { name: '2026年', type: 'line', data: data2026, smooth: true, itemStyle: { color: color }, lineStyle: { width: 3 } }
+    ]
+  });
+  return chart;
+}
+
+var charts = [];
+charts.push(createChart('chart1', '停车管理',
+  [341,211,395,404,377,413,430,466,448,380,430,411],
+  [301,251,375,285,322,299,347,360,365,287,324,272],
+  [227,117,274,217,235,255,0,0,0,0,0,0], '#0050b3'));
+
+charts.push(createChart('chart2', '房屋维修',
+  [389,238,420,436,401,421,440,472,451,382,431,387],
+  [298,198,320,275,248,246,289,295,290,238,272,202],
+  [259,134,280,218,240,255,272,0,0,0,0,0], '#722ed1'));
+
+charts.push(createChart('chart3', '邻里纠纷',
+  [230,168,265,272,248,252,265,278,272,218,253,230],
+  [208,155,240,225,210,208,223,230,225,185,220,173],
+  [228,136,268,245,242,265,311,0,0,0,0,0], '#d4380d'));
+
+charts.push(createChart('chart4', '房屋违规使用',
+  [258,165,295,305,278,282,300,318,305,258,288,271],
+  [198,135,228,210,195,192,210,215,210,178,198,185],
+  [152,85,195,168,160,165,213,0,0,0,0,0], '#fa541c'));
+
+charts.push(createChart('chart5', '业主大会/业委会',
+  [245,160,275,282,258,262,280,295,288,235,275,252],
+  [180,130,210,195,180,178,195,200,195,165,185,167],
+  [152,78,195,168,170,175,176,0,0,0,0,0], '#08979c'));
+
+window.addEventListener('resize', function() { charts.forEach(function(c) { c.resize(); }); });
+</script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高风险小区预警清单</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+  .header { background:linear-gradient(135deg,#a8071a 0%,#d4380d 100%); color:#fff; padding:36px 0; text-align:center; }
+  .header h1 { font-size:24px; font-weight:700; }
+  .header .subtitle { font-size:13px; margin-top:8px; opacity:0.8; }
+  .header .meta { font-size:12px; margin-top:10px; opacity:0.6; }
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px; }
+  .section { background:#fff; border-radius:10px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .section-title { font-size:18px; font-weight:700; color:#a8071a; margin-bottom:14px; display:flex; align-items:center; }
+  .section-title::before { content:''; width:5px; height:22px; background:#d4380d; border-radius:3px; margin-right:10px; }
+  p { margin-bottom:10px; color:#444; font-size:14px; }
+  .stat-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin:16px 0; }
+  .stat-card { border-radius:8px; padding:18px 10px; text-align:center; border:2px solid; }
+  .stat-card.red { border-color:#ffa39e; background:#fff1f0; }
+  .stat-card.orange { border-color:#ffd591; background:#fff7e6; }
+  .stat-card.yellow { border-color:#ffe58f; background:#fffbe6; }
+  .stat-card.blue { border-color:#91d5ff; background:#e6f7ff; }
+  .stat-card.green { border-color:#b7eb8f; background:#f6ffed; }
+  .stat-card .num { font-size:30px; font-weight:700; }
+  .stat-card.red .num { color:#f5222d; }
+  .stat-card.orange .num { color:#fa8c16; }
+  .stat-card.yellow .num { color:#faad14; }
+  .stat-card.blue .num { color:#1890ff; }
+  .stat-card .label { font-size:12px; color:#888; margin-top:2px; }
+  .stat-card .action { font-size:11px; margin-top:4px; }
+  .chart-box { width:100%; height:350px; }
+  .data-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:12px; }
+  .data-table th { background:#a8071a; color:#fff; padding:7px 8px; text-align:center; font-weight:600; white-space:nowrap; }
+  .data-table td { padding:5px 8px; border-bottom:1px solid #e8e8e8; text-align:center; }
+  .data-table tr:nth-child(even) { background:#fafafa; }
+  .data-table tr:hover { background:#fff1f0; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .badge.red { background:#fff1f0; color:#f5222d; border:1px solid #ffa39e; }
+  .badge.orange { background:#fff7e6; color:#fa8c16; border:1px solid #ffd591; }
+  .badge.yellow { background:#fffbe6; color:#faad14; border:1px solid #ffe58f; }
+  .score-bar { display:inline-block; width:60px; height:8px; background:#f0f0f0; border-radius:4px; overflow:hidden; vertical-align:middle; }
+  .score-fill { height:100%; border-radius:4px; }
+  .model-dim { background:#f6f8fa; border-left:4px solid #d4380d; border-radius:6px; padding:12px 16px; margin:8px 0; display:flex; align-items:center; }
+  .model-dim .dim-weight { font-size:24px; font-weight:700; color:#d4380d; margin-right:12px; min-width:60px; }
+  .model-dim .dim-name { font-weight:700; font-size:14px; color:#1a3a5f; }
+  .model-dim .dim-desc { font-size:12px; color:#888; }
+  .action-card { background:#f6f8fa; border-left:4px solid #d4380d; border-radius:6px; padding:14px 18px; margin-bottom:10px; }
+  .action-card .ac-title { font-weight:700; color:#a8071a; margin-bottom:4px; font-size:14px; }
+  .action-card .ac-desc { font-size:13px; color:#555; }
+  .excel-link { display:inline-block; background:#52c41a; color:#fff; padding:8px 20px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:600; margin:12px 0; }
+  .footer { text-align:center; padding:24px 0; font-size:12px; color:#999; }
+  .note { font-size:12px; color:#999; margin-top:8px; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>高风险小区预警清单</h1>
+  <div class="subtitle">五维风险评分模型 · 799个小区参评 · 红橙黄蓝四级预警</div>
+  <div class="meta">徐汇物业课题一期 · 深度分析成果 | 2026年8月</div>
+</div>
+
+<div class="container">
+
+  <!-- 一、总体概况 -->
+  <div class="section">
+    <div class="section-title">一、总体概况</div>
+    <p>基于2024-2026年12345热线物业投诉数据，构建五维风险评分模型，对全区799个投诉量≥10件的小区进行系统性风险评估，输出红橙黄蓝四级预警清单。预警结果可作为物业监管资源分配的优先级依据。</p>
+    <div class="stat-grid">
+      <div class="stat-card red"><div class="num">236</div><div class="label">红色预警</div><div class="action" style="color:#f5222d;">紧急处置</div></div>
+      <div class="stat-card orange"><div class="num">426</div><div class="label">橙色预警</div><div class="action" style="color:#fa8c16;">重点关注</div></div>
+      <div class="stat-card yellow"><div class="num">112</div><div class="label">黄色预警</div><div class="action" style="color:#faad14;">常规关注</div></div>
+      <div class="stat-card blue"><div class="num">25</div><div class="label">蓝色预警</div><div class="action" style="color:#1890ff;">一般跟踪</div></div>
+      <div class="stat-card" style="border-color:#d9d9d9;background:#fafafa;"><div class="num" style="color:#333;">799</div><div class="label">参评小区</div><div class="action" style="color:#888;">总量</div></div>
+    </div>
+    <a class="excel-link" href="computer:///Users/macbookpro/Desktop/8-24%20徐汇课题一期/高风险小区预警清单.xlsx">下载完整清单（799条 Excel）</a>
+  </div>
+
+  <!-- 二、风险评分模型 -->
+  <div class="section">
+    <div class="section-title">二、五维风险评分模型</div>
+    <p>模型从投诉总量、增长率、重复率、集中度、波动度五个维度对小区进行评分，总分100分，分数越高代表风险越大。</p>
+
+    <div class="model-dim">
+      <div class="dim-weight">25分</div>
+      <div>
+        <div class="dim-name">维度一：投诉总量</div>
+        <div class="dim-desc">对数缩放，投诉总量越大得分越高。反映小区问题的绝对严重程度。</div>
+      </div>
+    </div>
+    <div class="model-dim">
+      <div class="dim-weight">25分</div>
+      <div>
+        <div class="dim-name">维度二：同比增长率</div>
+        <div class="dim-desc">2026年1-7月 vs 2025年同期对比。正增长=问题在恶化=高风险。仅当基数≥5时计算，避免小样本失真。</div>
+      </div>
+    </div>
+    <div class="model-dim">
+      <div class="dim-weight">20分</div>
+      <div>
+        <div class="dim-name">维度三：重复投诉率</div>
+        <div class="dim-desc">同小区同类投诉≥3次的占比。反映问题长期未解决的积压程度。</div>
+      </div>
+    </div>
+    <div class="model-dim">
+      <div class="dim-weight">15分</div>
+      <div>
+        <div class="dim-name">维度四：类别集中度</div>
+        <div class="dim-desc">主要问题类别占比越高风险越大。单一问题主导的小区比分散问题的小区更需要专项治理。</div>
+      </div>
+    </div>
+    <div class="model-dim">
+      <div class="dim-weight">15分</div>
+      <div>
+        <div class="dim-name">维度五：月度波动度</div>
+        <div class="dim-desc">月度投诉量标准差/均值。波动越大=问题不稳定=潜在爆发风险。</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>风险等级</th><th>评分区间</th><th>处置要求</th><th>响应时限</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge red">红色</span></td><td>≥70分</td><td>紧急处置，街道牵头制定"一小区一方案"</td><td>15个工作日内</td></tr>
+        <tr><td><span class="badge orange">橙色</span></td><td>55-69分</td><td>重点关注，纳入月度督办清单</td><td>30个工作日内</td></tr>
+        <tr><td><span class="badge yellow">黄色</span></td><td>40-54分</td><td>常规关注，季度复查</td><td>季度</td></tr>
+        <tr><td><span class="badge blue">蓝色</span></td><td><25-39分</td><td>一般跟踪，半年复查</td><td>半年</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 三、风险等级分布 -->
+  <div class="section">
+    <div class="section-title">三、风险等级分布</div>
+    <div id="chart-level" class="chart-box"></div>
+    <p>红色预警236个（29.5%），橙色预警426个（53.3%），两者合计占比82.8%。说明全区超过八成的小区存在一定程度的风险，需要关注。红色预警占比近三成，数量较多，建议按风险评分排序，优先处置Top50。</p>
+  </div>
+
+  <!-- 四、街道风险分布 -->
+  <div class="section">
+    <div class="section-title">四、街道风险分布</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>街道</th><th>参评小区</th><th>红色</th><th>橙色</th><th>黄色</th><th>蓝色</th><th>红色占比</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="text-align:left;font-weight:600;">徐家汇</td><td>100</td><td><span class="badge red">33</span></td><td>45</td><td>18</td><td>4</td><td>33.0%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">漕河泾</td><td>90</td><td><span class="badge red">27</span></td><td>50</td><td>11</td><td>2</td><td>30.0%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">天平路</td><td>85</td><td><span class="badge red">23</span></td><td>48</td><td>12</td><td>2</td><td>27.1%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">枫林路</td><td>81</td><td>15</td><td><span class="badge orange">45</span></td><td>18</td><td>3</td><td>18.5%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">斜土路</td><td>62</td><td>16</td><td><span class="badge orange">36</span></td><td>9</td><td>1</td><td>25.8%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">田林</td><td>62</td><td><span class="badge red">20</span></td><td>30</td><td>9</td><td>3</td><td>32.3%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">康健新村</td><td>61</td><td><span class="badge red">19</span></td><td>34</td><td>7</td><td>1</td><td>31.1%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">湖南路</td><td>60</td><td>16</td><td><span class="badge orange">31</span></td><td>8</td><td>5</td><td>26.7%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">龙华</td><td>55</td><td><span class="badge red">20</span></td><td>27</td><td>5</td><td>3</td><td style="color:#f5222d;font-weight:600;">36.4%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">长桥</td><td>55</td><td>16</td><td><span class="badge orange">32</span></td><td>7</td><td>0</td><td>29.1%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">凌云路</td><td>47</td><td>13</td><td><span class="badge orange">27</span></td><td>6</td><td>1</td><td>27.7%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">华泾</td><td>21</td><td><span class="badge red">12</span></td><td>9</td><td>0</td><td>0</td><td style="color:#f5222d;font-weight:600;">57.1%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">虹梅路</td><td>20</td><td>6</td><td><span class="badge orange">12</span></td><td>2</td><td>0</td><td>30.0%</td></tr>
+      </tbody>
+    </table>
+    <p style="color:#f5222d;font-weight:600;">重点关注：华泾镇红色预警占比57.1%（全区最高），龙华街道36.4%，这两个街道的小区风险最为集中。</p>
+  </div>
+
+  <!-- 五、红色预警小区Top30 -->
+  <div class="section">
+    <div class="section-title">五、红色预警小区Top30（紧急处置）</div>
+    <p>以下30个小区风险评分最高，建议优先制定"一小区一方案"专项治理计划。完整236个红色预警小区见附件Excel。</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>排名</th><th>小区名称</th><th>街道</th><th>总分</th>
+          <th>投诉<br>总量</th><th>同比<br>增长率</th><th>重复<br>投诉率</th>
+          <th>主要问题</th><th>物业</th><th>预警</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td style="text-align:left;font-weight:700;">海珀旭晖</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">92.6</td><td>114</td><td style="color:#f5222d;font-weight:600;">+537.5%</td><td>72.8%</td><td>业主大会</td><td>绿地物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:700;">嘉俊庭</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">92.2</td><td>67</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>65.7%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:700;">玖珑庭</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">92.2</td><td>108</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>68.5%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;font-weight:700;">汇宁花园</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">91.8</td><td>57</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>61.4%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;font-weight:700;">家乐苑</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">91.7</td><td>207</td><td style="color:#f5222d;font-weight:600;">+205%</td><td>74.9%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;font-weight:700;">尚海湾二期</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">91.3</td><td>494</td><td style="color:#f5222d;font-weight:600;">+82.9%</td><td>60.3%</td><td>业主大会</td><td>阳光投资</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;font-weight:700;">汇东小区</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">91.2</td><td>53</td><td style="color:#f5222d;font-weight:600;">+228.6%</td><td>67.9%</td><td>群租管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;font-weight:700;">永福一区</td><td>湖南路</td><td style="font-weight:700;color:#f5222d;">90.9</td><td>58</td><td style="color:#f5222d;font-weight:600;">+966.7%</td><td>56.9%</td><td>房屋违规</td><td>衡复物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;font-weight:700;">华泾五村</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">90.7</td><td>151</td><td style="color:#f5222d;font-weight:600;">+109.1%</td><td>62.3%</td><td>停车管理</td><td>秀澜物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;font-weight:700;">建国西路581弄</td><td>天平路</td><td style="font-weight:700;color:#f5222d;">90.7</td><td>47</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>63.8%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>11</td><td style="text-align:left;">明佳苑</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">90.5</td><td>112</td><td style="color:#f5222d;">+160%</td><td>64.3%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>12</td><td style="text-align:left;">秀水苑</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">90.0</td><td>56</td><td style="color:#f5222d;">+85.7%</td><td>67.9%</td><td>物业安保</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>13</td><td style="text-align:left;">宜德苑</td><td>田林</td><td style="font-weight:700;color:#f5222d;">89.9</td><td>89</td><td style="color:#f5222d;">+300%</td><td>58.4%</td><td>房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>14</td><td style="text-align:left;">凯旋新村</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">89.7</td><td>86</td><td style="color:#f5222d;">+62.5%</td><td>58.1%</td><td>旧住房改造</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>15</td><td style="text-align:left;">良友公寓</td><td>湖南路</td><td style="font-weight:700;color:#f5222d;">89.6</td><td>36</td><td style="color:#f5222d;">+100%</td><td>58.3%</td><td>邻里纠纷</td><td>衡复物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>16</td><td style="text-align:left;">乐山大楼</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">89.4</td><td>51</td><td style="color:#f5222d;">+100%</td><td>64.7%</td><td>房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>17</td><td style="text-align:left;">欣嘉苑1-3期</td><td>虹梅路</td><td style="font-weight:700;color:#f5222d;">89.4</td><td>205</td><td style="color:#f5222d;">+305.3%</td><td>62.4%</td><td>停车管理</td><td>锦龙物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>18</td><td style="text-align:left;">天悦</td><td>康健新村</td><td style="font-weight:700;color:#f5222d;">89.1</td><td>76</td><td style="color:#f5222d;">+114.3%</td><td>57.9%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>19</td><td style="text-align:left;">恒昌花园</td><td>枫林路</td><td style="font-weight:700;color:#f5222d;">88.9</td><td>74</td><td style="color:#f5222d;">+114.3%</td><td>66.2%</td><td>邻里纠纷</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>20</td><td style="text-align:left;">寿祥坊</td><td>康健新村</td><td style="font-weight:700;color:#f5222d;">88.5</td><td>85</td><td style="color:#f5222d;">+140%</td><td>61.2%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>21</td><td style="text-align:left;">尚海湾一期</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">88.4</td><td>154</td><td style="color:#f5222d;">+111.8%</td><td>59.7%</td><td>消防管理</td><td>金地物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>22</td><td style="text-align:left;">尊园</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">88.0</td><td>42</td><td style="color:#f5222d;">+140%</td><td>61.9%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>23</td><td style="text-align:left;">化工一四村</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>122</td><td style="color:#f5222d;">+81.2%</td><td>60.7%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>24</td><td style="text-align:left;">华建二街坊</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>60</td><td style="color:#f5222d;">+112.5%</td><td>61.7%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>25</td><td style="text-align:left;">平江路170弄</td><td>枫林路</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>51</td><td style="color:#f5222d;">+80%</td><td>62.7%</td><td>房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>26</td><td style="text-align:left;">明园小安桥</td><td>田林</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>48</td><td style="color:#f5222d;">+100%</td><td>58.3%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>27</td><td style="text-align:left;">习勤小区</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">87.8</td><td>59</td><td style="color:#f5222d;">+75%</td><td>62.7%</td><td>旧住房改造</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>28</td><td style="text-align:left;">明丰新纪苑</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">87.7</td><td>170</td><td style="color:#f5222d;">+87%</td><td>60.6%</td><td>停车管理</td><td>泾鸿物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>29</td><td style="text-align:left;">永兆豪庭</td><td>虹梅路</td><td style="font-weight:700;color:#f5222d;">86.6</td><td>108</td><td style="color:#f5222d;">+281.8%</td><td>78.7%</td><td>业主大会</td><td>盛熙物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>30</td><td style="text-align:left;">康兴花园</td><td>康健</td><td style="font-weight:700;color:#f5222d;">86.5</td><td>46</td><td style="color:#f5222d;">+33.3%</td><td>65.2%</td><td>停车管理</td><td>同进物业</td><td><span class="badge red">红</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 六、风险因素分析 -->
+  <div class="section">
+    <div class="section-title">六、风险因素分析</div>
+    <div id="chart-factor" class="chart-box"></div>
+
+    <p style="margin-top:16px;font-weight:600;">Top30红色预警小区风险特征：</p>
+    <table class="data-table">
+      <thead><tr><th>风险特征</th><th>典型小区</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left;font-weight:600;color:#f5222d;">爆发式增长</td>
+          <td style="text-align:left;">海珀旭晖(+537.5%)、欣嘉苑(+305.3%)、永福一区(+966.7%)</td>
+          <td style="text-align:left;">投诉量突然暴增，通常有事件性诱因（业委会换届、物业合同纠纷等），需紧急介入</td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:600;color:#fa8c16;">持续高发+高重复</td>
+          <td style="text-align:left;">尚海湾二期(494件,60.3%重复)、家乐苑(207件,74.9%重复)</td>
+          <td style="text-align:left;">投诉量大且重复率高，说明问题长期未解决，积压严重，需专项治理</td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:600;color:#fa8c16;">新现问题</td>
+          <td style="text-align:left;">嘉俊庭、玖珑庭、汇宁花园等(+100%增长)</td>
+          <td style="text-align:left;">2025年同期几乎无投诉，2026年突然出现，可能是新交付小区或新出现问题</td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:600;color:#faad14;">华泾片区集中</td>
+          <td style="text-align:left;">嘉俊庭、华泾五村、华建二街坊、明丰新纪苑</td>
+          <td style="text-align:left;">华泾镇红色预警占比57.1%（全区最高），停车管理问题集中爆发</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 七、预警机制建议 -->
+  <div class="section">
+    <div class="section-title">七、预警机制建议</div>
+
+    <div class="action-card">
+      <div class="ac-title">建议一：建立月度风险评分更新机制</div>
+      <div class="ac-desc">每月新数据入库后自动运行风险评分模型，更新799个小区的风险等级。当小区从橙色升至红色时自动触发预警，推送至街道物业管理部门和区房管局。建议以本模型为基础，开发自动化预警系统。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">建议二：Top30红色预警小区限期治理</div>
+      <div class="ac-desc">对Top30红色预警小区，由街道牵头，区房管局、城管、物业科联合制定"一小区一方案"，限期30个工作日内给出解决方案。重点处置尚海湾二期（494件，斜土路）、家乐苑（207件，凌云路）、欣嘉苑（205件，虹梅路）三个投诉量最大的小区。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">建议三：华泾镇停车问题专项督办</div>
+      <div class="ac-desc">华泾镇红色预警占比57.1%（全区最高），Top30中5个位于华泾，全部为停车管理问题。建议华泾镇制定《停车管理专项治理方案》，全区推广斜土路街道的治理经验。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">建议四：建立"风险-资源"联动分配机制</div>
+      <div class="ac-desc">将小区风险评分与物业监管资源分配挂钩：红色预警小区每月巡查1次、橙色每季度1次、黄色半年1次。执法资源向高风险小区倾斜，实现"精准监管"而非"平均用力"。</div>
+    </div>
+    <div class="action-card">
+      <div class="ac-title">建议五：建立风险评分下降激励机制</div>
+      <div class="ac-desc">将风险评分下降幅度纳入物业企业考核。小区从红色降至橙色、橙色降至黄色，给予物业企业正向激励（考核加分、评优优先）。形成"高风险被督办、降风险有奖励"的正向循环。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 深度分析成果 · 2026年8月<br>
+  完整799条预警清单见附件Excel文件
+</div>
+
+<script>
+// 风险等级分布饼图
+var chart1 = echarts.init(document.getElementById('chart-level'));
+chart1.setOption({
+  tooltip: { trigger: 'item', formatter: '{a}<br/>{b}: {c}个 ({d}%)' },
+  legend: { orient: 'vertical', left: 'left', top: 30 },
+  series: [{
+    name: '风险等级',
+    type: 'pie',
+    radius: ['35%', '65%'],
+    center: ['55%', '50%'],
+    data: [
+      { value: 236, name: '红色（紧急处置）', itemStyle: { color: '#f5222d' } },
+      { value: 426, name: '橙色（重点关注）', itemStyle: { color: '#fa8c16' } },
+      { value: 112, name: '黄色（常规关注）', itemStyle: { color: '#faad14' } },
+      { value: 25, name: '蓝色（一般跟踪）', itemStyle: { color: '#1890ff' } },
+    ],
+    label: { formatter: '{b}\n{c}个 ({d}%)', fontSize: 11 }
+  }]
+});
+
+// 风险因素雷达图（Top30均值）
+var chart2 = echarts.init(document.getElementById('chart-factor'));
+chart2.setOption({
+  tooltip: { trigger: 'item' },
+  radar: {
+    indicator: [
+      { name: '投诉总量', max: 25 },
+      { name: '增长率', max: 25 },
+      { name: '重复率', max: 20 },
+      { name: '集中度', max: 15 },
+      { name: '波动度', max: 15 },
+    ],
+    radius: '65%',
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [24.8, 24.2, 18.5, 8.1, 13.8],
+        name: 'Top30红色预警小区均值',
+        itemStyle: { color: '#f5222d' },
+        areaStyle: { color: 'rgba(245,34,45,0.2)' },
+        lineStyle: { width: 2 }
+      },
+      {
+        value: [18.2, 12.5, 12.3, 6.8, 9.1],
+        name: '全区799个小区均值',
+        itemStyle: { color: '#fa8c16' },
+        areaStyle: { color: 'rgba(250,140,22,0.15)' },
+        lineStyle: { width: 2, type: 'dashed' }
+      }
+    ]
+  }],
+  legend: { data: ['Top30红色预警小区均值', '全区799个小区均值'], bottom: 0 }
+});
+
+window.addEventListener('resize', function() { chart1.resize(); chart2.resize(); });
+</script>
+</body>
+</html>
