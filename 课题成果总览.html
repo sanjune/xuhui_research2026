@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>徐汇区物业课题一期 · 成果总览</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+
+  /* ===== Header ===== */
+  .header { background:linear-gradient(135deg,#0d47a1 0%,#1565c0 40%,#1976d2 100%); color:#fff; padding:48px 0 44px; text-align:center; position:relative; overflow:hidden; }
+  .header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#ff6f00,#ffca28,#4fc3f7,#66bb6a); }
+  .header h1 { font-size:28px; font-weight:800; letter-spacing:2px; }
+  .header .subtitle { font-size:14px; margin-top:10px; opacity:0.85; }
+  .header .meta { font-size:12px; margin-top:8px; opacity:0.6; }
+  .header .stats { display:flex; justify-content:center; gap:40px; margin-top:24px; }
+  .header .stat-item { text-align:center; }
+  .header .stat-item .num { font-size:32px; font-weight:800; color:#ffca28; }
+  .header .stat-item .label { font-size:12px; opacity:0.7; margin-top:2px; }
+
+  /* ===== Container ===== */
+  .container { max-width:1100px; margin:0 auto; padding:28px 16px 48px; }
+
+  /* ===== Progress Bar ===== */
+  .progress-wrap { background:#fff; border-radius:10px; padding:20px 24px; margin-bottom:24px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+  .progress-title { font-size:14px; font-weight:700; color:#333; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; }
+  .progress-title .pct { font-size:20px; color:#1565c0; font-weight:800; }
+  .progress-bar { width:100%; height:14px; background:#e8e8e8; border-radius:7px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,#4fc3f7,#1976d2,#0d47a1); border-radius:7px; transition:width 1s ease; }
+
+  /* ===== Category Section ===== */
+  .cat-section { margin-bottom:28px; }
+  .cat-header { display:flex; align-items:center; margin-bottom:14px; }
+  .cat-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; color:#fff; margin-right:12px; flex-shrink:0; }
+  .cat-title { font-size:17px; font-weight:700; color:#333; }
+  .cat-count { font-size:12px; color:#999; margin-left:8px; }
+
+  /* ===== Card Grid ===== */
+  .card-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .card { background:#fff; border-radius:10px; padding:0; box-shadow:0 2px 10px rgba(0,0,0,0.07); transition:transform 0.2s,box-shadow 0.2s; overflow:hidden; text-decoration:none; color:inherit; display:flex; flex-direction:column; }
+  .card:hover { transform:translateY(-3px); box-shadow:0 6px 20px rgba(0,0,0,0.12); }
+  .card-header { padding:16px 18px 10px; border-left:5px solid; }
+  .card-header .num-badge { font-size:11px; color:#999; margin-bottom:4px; }
+  .card-header .card-title { font-size:15px; font-weight:700; color:#333; line-height:1.5; }
+  .card-body { padding:0 18px 14px; flex:1; }
+  .card-body .card-desc { font-size:12px; color:#888; line-height:1.6; }
+  .card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .card-tag { font-size:10px; padding:2px 8px; border-radius:8px; background:#f0f2f5; color:#666; }
+  .card-footer { padding:8px 18px; border-top:1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center; }
+  .card-status { font-size:11px; font-weight:600; }
+  .card-link { font-size:12px; color:#1976d2; font-weight:600; text-decoration:none; }
+  .card:hover .card-link { color:#0d47a1; }
+
+  /* Status colors */
+  .status-done { color:#43a047; }
+  .status-progress { color:#ff8f00; }
+  .status-pending { color:#999; }
+
+  /* Card accent colors */
+  .accent-blue { border-left-color:#1976d2; }
+  .accent-blue .cat-icon-bg { background:#1976d2; }
+  .accent-green { border-left-color:#43a047; }
+  .accent-green .cat-icon-bg { background:#43a047; }
+  .accent-orange { border-left-color:#ff8f00; }
+  .accent-orange .cat-icon-bg { background:#ff8f00; }
+  .accent-purple { border-left-color:#7b1fa2; }
+  .accent-purple .cat-icon-bg { background:#7b1fa2; }
+  .accent-teal { border-left-color:#00897b; }
+  .accent-teal .cat-icon-bg { background:#00897b; }
+
+  /* Pending card */
+  .card.pending { opacity:0.6; }
+  .card.pending:hover { transform:none; box-shadow:0 2px 10px rgba(0,0,0,0.07); cursor:default; }
+  .card.pending .card-link { color:#999; }
+
+  /* ===== Footer ===== */
+  .footer { text-align:center; padding:32px 0; font-size:12px; color:#999; }
+
+  /* ===== Nav ===== */
+  .nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:100; box-shadow:0 1px 4px rgba(0,0,0,0.04); }
+  .nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:48px; }
+  .nav-logo { font-size:14px; font-weight:700; color:#0d47a1; }
+  .nav-links { margin-left:auto; display:flex; gap:16px; }
+  .nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .nav-links a:hover { color:#0d47a1; }
+
+  /* ===== Responsive ===== */
+  @media(max-width:768px) {
+    .card-grid { grid-template-columns:1fr; }
+    .header .stats { flex-direction:column; gap:12px; }
+  }
+
+  /* ===== Floating AI Button ===== */
+  .float-ai { position:fixed; bottom:32px; right:32px; width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,#0d47a1,#1976d2); box-shadow:0 4px 20px rgba(13,71,161,0.4); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:999; text-decoration:none; transition:transform 0.3s,box-shadow 0.3s; }
+  .float-ai:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(13,71,161,0.5); }
+  .float-ai svg { width:30px; height:30px; fill:#fff; }
+  .float-ai::before { content:''; position:absolute; inset:-4px; border-radius:50%; border:2px solid rgba(25,118,210,0.3); animation:pulse 2s ease-out infinite; }
+  .float-ai::after { content:''; position:absolute; inset:-8px; border-radius:50%; border:2px solid rgba(25,118,210,0.15); animation:pulse 2s ease-out infinite 0.5s; }
+  @keyframes pulse { 0% { transform:scale(1); opacity:1; } 100% { transform:scale(1.5); opacity:0; } }
+  .float-ai-label { position:absolute; right:72px; top:50%; transform:translateY(-50%); background:#fff; color:#0d47a1; font-size:12px; font-weight:700; padding:6px 14px; border-radius:20px; box-shadow:0 2px 10px rgba(0,0,0,0.1); white-space:nowrap; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+  .float-ai:hover .float-ai-label { opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- ===== Top Nav ===== -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <div class="nav-logo">徐汇物业课题一期</div>
+    <div class="nav-links">
+      <a href="#core">核心成果</a>
+      <a href="#analysis">深度分析</a>
+      <a href="#tools">工具成果</a>
+      <a href="#consulting">咨询成果</a>
+      <a href="#docs">验收文档</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <h1>徐汇区物业课题一期 · 成果总览</h1>
+  <div class="subtitle">基于12345热线全量数据的小区物业监管分析体系</div>
+  <div class="meta">2024-2026年 · 29,070+23,618+11,484件投诉 · 635个小区 · 13个街道 · 14类问题</div>
+  <div class="stats">
+    <div class="stat-item"><div class="num">10</div><div class="label">已完成成果</div></div>
+    <div class="stat-item"><div class="num">5</div><div class="label">待推进成果</div></div>
+    <div class="stat-item"><div class="num">15</div><div class="label">成果总数</div></div>
+    <div class="stat-item"><div class="num">-18.8%</div><div class="label">投诉量同比降幅</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== Progress ===== -->
+  <div class="progress-wrap">
+    <div class="progress-title">
+      <span>成果完成进度</span>
+      <span class="pct">12 / 15 · 80%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:80%;"></div>
+    </div>
+  </div>
+
+  <!-- ===== 一、核心成果 ===== -->
+  <div class="cat-section" id="core">
+    <div class="cat-header">
+      <div class="cat-icon cat-icon-bg" style="background:#1976d2;">一</div>
+      <div class="cat-title">核心硬成果</div>
+      <div class="cat-count">3项已完成</div>
+    </div>
+    <div class="card-grid">
+
+      <a class="card accent-blue" href="12345投诉量下降数据报告.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #1</div>
+          <div class="card-title">12345投诉量下降数据报告</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">核心数据卡片、月度趋势图、同比对比、十四类明细、街道与物业企业分析、归因分析</div>
+          <div class="card-tags">
+            <span class="card-tag">月度趋势</span>
+            <span class="card-tag">同比-18.8%</span>
+            <span class="card-tag">十四类</span>
+            <span class="card-tag">13街道</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-blue" href="投诉去重识别方法论说明.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #2</div>
+          <div class="card-title">投诉去重识别方法论说明</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">四重识别策略（精确/催办/高频/相似）、流程图、识别结果、数据质量控制、市局复核机制、技术参数表</div>
+          <div class="card-tags">
+            <span class="card-tag">去重率44.9%</span>
+            <span class="card-tag">4217件重复</span>
+            <span class="card-tag">四重策略</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-blue" href="2026年6月投诉去重建议清单.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #2 · 附件A</div>
+          <div class="card-title">2026年6月投诉去重建议清单</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">单月去重成果，含精确重复、催办重复、高频重复、相似重复四类清单，按优先级排序</div>
+          <div class="card-tags">
+            <span class="card-tag">月度清单</span>
+            <span class="card-tag">含Excel</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-blue" href="2026年1-6月投诉去重建议清单.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #2 · 附件B</div>
+          <div class="card-title">2026年1-6月投诉去重建议清单</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">上半年汇总去重成果，按月汇总趋势，Top重复小区/类别/街道分布</div>
+          <div class="card-tags">
+            <span class="card-tag">半年度汇总</span>
+            <span class="card-tag">含Excel</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-blue" href="数据质量优化专项报告.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #3</div>
+          <div class="card-title">数据质量优化专项报告</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">排查字段结构差异、日期格式、分类值域、缺失值、物业公司名称五类问题，给出标准化方案与接口对接规范</div>
+          <div class="card-tags">
+            <span class="card-tag">5类问题</span>
+            <span class="card-tag">标准化方案</span>
+            <span class="card-tag">接口规范</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ===== 二、深度分析 ===== -->
+  <div class="cat-section" id="analysis">
+    <div class="cat-header">
+      <div class="cat-icon cat-icon-bg" style="background:#43a047;">二</div>
+      <div class="cat-title">深度分析成果</div>
+      <div class="cat-count">5项已完成</div>
+    </div>
+    <div class="card-grid">
+
+      <a class="card accent-green" href="物业投诉根因分析报告.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #4</div>
+          <div class="card-title">物业投诉根因分析报告</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">多源数据碰撞（投诉 × 房屋 × 物业 × 旧改），从根源剖析投诉高发原因，关联房屋属性、物业资质、旧改进度等维度</div>
+          <div class="card-tags">
+            <span class="card-tag">六维根因模型</span>
+            <span class="card-tag">968小区实证</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-green" href="重点问题专题分析报告（5份）.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #5</div>
+          <div class="card-title">重点问题专题分析报告（5份）</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">停车管理、房屋维修、邻里纠纷、房屋违规使用、业主大会/业委会五大专题，统一6节格式：概况统计/月度趋势/街道分布/热点小区/根因分析/治理建议</div>
+          <div class="card-tags">
+            <span class="card-tag">5个专题</span>
+            <span class="card-tag">统一格式</span>
+            <span class="card-tag">根因+建议</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-green" href="高风险小区预警清单.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #6</div>
+          <div class="card-title">高风险小区预警清单</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">五维评分模型（投诉量25分+增长率25分+重复率20分+集中度15分+波动性15分），799个小区参评，红色236/橙色426/黄色112/蓝色25，Top30详细清单</div>
+          <div class="card-tags">
+            <span class="card-tag">五维模型</span>
+            <span class="card-tag">799小区</span>
+            <span class="card-tag">含Excel</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-green" href="治理效果追踪分析报告.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #7</div>
+          <div class="card-title">治理效果追踪分析报告</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">635个小区全周期追踪（2024→2025→2026），成功269个(42.4%)、反弹74个(11.7%)、恶化158个(24.9%)，闭环模型、类别/街道效果、成功/反弹/恶化案例、机制建议</div>
+          <div class="card-tags">
+            <span class="card-tag">635小区追踪</span>
+            <span class="card-tag">闭环模型</span>
+            <span class="card-tag">三类案例</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-green" href="底部抬升小区热线数据分析报告.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #7·附</div>
+          <div class="card-title">底部抬升小区同比热线数据分析</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">84个党建引领物业治理重点小区全周期追踪，2024-2026年同比分析，13街道排名、三类矛盾分析、Top改善/恶化榜单、治理建议</div>
+          <div class="card-tags">
+            <span class="card-tag">84个重点小区</span>
+            <span class="card-tag">同比分析</span>
+            <span class="card-tag">三类矛盾</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ===== 三、工具成果 ===== -->
+  <div class="cat-section" id="tools">
+    <div class="cat-header">
+      <div class="cat-icon cat-icon-bg" style="background:#ff8f00;">三</div>
+      <div class="cat-title">工具成果</div>
+      <div class="cat-count">2项已完成</div>
+    </div>
+    <div class="card-grid">
+
+      <a class="card accent-orange" href="徐汇AI智能体.html" style="border-left-color:#ff8f00;">
+        <div class="card-header" style="border-left-color:#ff8f00;">
+          <div class="num-badge">成果 #8</div>
+          <div class="card-title">物业数据AI智能体（演示版）</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">基于大模型的智能问答与分析助手，支持自然语言查询投诉数据、自动生成分析报告、风险预警推送</div>
+          <div class="card-tags">
+            <span class="card-tag">AI引擎</span>
+            <span class="card-tag">智能问答</span>
+            <span class="card-tag">自动报告</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">进入智能体 →</span>
+        </div>
+      </a>
+
+      <a class="card accent-orange" href="数据分析月报合集.html">
+        <div class="card-header">
+          <div class="num-badge">成果 #9</div>
+          <div class="card-title">数据分析月报合集</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">汇编31份月度数据分析报告，覆盖2024-2026年各月，含投诉趋势图、街道排名、小区Top10、分类分布、环比同比分析等</div>
+          <div class="card-tags">
+            <span class="card-tag">31期月报</span>
+            <span class="card-tag">交互查阅</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ===== 四、咨询成果 ===== -->
+  <div class="cat-section" id="consulting">
+    <div class="cat-header">
+      <div class="cat-icon cat-icon-bg" style="background:#7b1fa2;">四</div>
+      <div class="cat-title">咨询成果</div>
+      <div class="cat-count">1项已完成 · 2项待推进</div>
+    </div>
+    <div class="card-grid">
+
+      <a class="card" href="多源数据清洗与关联分析报告.html" style="border-left-color:#7b1fa2;">
+        <div class="card-header" style="border-left-color:#7b1fa2;">
+          <div class="num-badge">成果 #10·前置</div>
+          <div class="card-title">多源数据清洗与关联分析</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">9类业务数据全量清洗，以纳统小区(994个)为基准关联电梯、修缮、失信、底部抬升、热线、征收、拆房、测绘，构建小区级45字段+街道级24字段数据底座</div>
+          <div class="card-tags">
+            <span class="card-tag">9类数据源</span>
+            <span class="card-tag">994小区</span>
+            <span class="card-tag">数据底座</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-done">● 已完成</span>
+          <span class="card-link">查看报告 →</span>
+        </div>
+      </a>
+
+      <div class="card pending" style="border-left-color:#999;">
+        <div class="card-header" style="border-left-color:#999;">
+          <div class="num-badge">成果 #10</div>
+          <div class="card-title">房屋数据资产梳理与建设建议报告</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">系统盘点全区房屋数据资产现状，梳理数据治理路径，提出数字化建设方向与数据标准体系</div>
+          <div class="card-tags">
+            <span class="card-tag">资产盘点</span>
+            <span class="card-tag">数据治理</span>
+            <span class="card-tag">数字化</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-pending">○ 待推进</span>
+          <span class="card-link">敬请期待</span>
+        </div>
+      </div>
+
+      <div class="card pending" style="border-left-color:#999;">
+        <div class="card-header" style="border-left-color:#999;">
+          <div class="num-badge">成果 #11</div>
+          <div class="card-title">物业监管数字化转型路线图</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">短中长期建设规划，涵盖数据底座、AI赋能、闭环治理、公众参与四大方向，分阶段实施路径</div>
+          <div class="card-tags">
+            <span class="card-tag">路线图</span>
+            <span class="card-tag">短中长期</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-pending">○ 待推进</span>
+          <span class="card-link">敬请期待</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== 五、方法论与验收文档 ===== -->
+  <div class="cat-section" id="docs">
+    <div class="cat-header">
+      <div class="cat-icon cat-icon-bg" style="background:#00897b;">五</div>
+      <div class="cat-title">方法论与验收文档</div>
+      <div class="cat-count">0项已完成 · 3项待推进</div>
+    </div>
+    <div class="card-grid">
+
+      <div class="card pending" style="border-left-color:#999;">
+        <div class="card-header" style="border-left-color:#999;">
+          <div class="num-badge">成果 #12</div>
+          <div class="card-title">物业投诉治理工作法手册</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">提炼"发现-识别-分析-治理"四步法等可复制方法论，形成标准化治理工作手册</div>
+          <div class="card-tags">
+            <span class="card-tag">四步法</span>
+            <span class="card-tag">可复制</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-pending">○ 待推进</span>
+          <span class="card-link">敬请期待</span>
+        </div>
+      </div>
+
+      <div class="card pending" style="border-left-color:#999;">
+        <div class="card-header" style="border-left-color:#999;">
+          <div class="num-badge">成果 #13</div>
+          <div class="card-title">项目验收总报告</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">背景/过程/成果/效益/展望全维度覆盖，PPT+Word双格式交付</div>
+          <div class="card-tags">
+            <span class="card-tag">PPT+Word</span>
+            <span class="card-tag">验收文档</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-pending">○ 待推进</span>
+          <span class="card-link">敬请期待</span>
+        </div>
+      </div>
+
+      <div class="card pending" style="border-left-color:#999;">
+        <div class="card-header" style="border-left-color:#999;">
+          <div class="num-badge">成果 #14</div>
+          <div class="card-title">项目过程档案</div>
+        </div>
+        <div class="card-body">
+          <div class="card-desc">会议纪要、周报、沟通记录、阶段确认单等全过程文档汇编</div>
+          <div class="card-tags">
+            <span class="card-tag">过程档案</span>
+            <span class="card-tag">汇编</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-status status-pending">○ 待推进</span>
+          <span class="card-link">敬请期待</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Summary ===== -->
+  <div style="background:#fff; border-radius:10px; padding:24px; margin-top:12px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+    <div style="font-size:16px; font-weight:700; color:#0d47a1; margin-bottom:12px;">项目核心数据</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; text-align:center;">
+      <div><div style="font-size:24px; font-weight:800; color:#1976d2;">29,070</div><div style="font-size:11px; color:#999;">2024年投诉量</div></div>
+      <div><div style="font-size:24px; font-weight:800; color:#43a047;">-18.8%</div><div style="font-size:11px; color:#999;">2025年同比降幅</div></div>
+      <div><div style="font-size:24px; font-weight:800; color:#ff8f00;">-15.7%</div><div style="font-size:11px; color:#999;">2026年上半年同比</div></div>
+      <div><div style="font-size:24px; font-weight:800; color:#7b1fa2;">635</div><div style="font-size:11px; color:#999;">追踪小区数</div></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 成果总览 · 2026年8月
+</div>
+
+<!-- ===== Floating AI Button ===== -->
+<a class="float-ai" href="徐汇AI智能体.html">
+  <span class="float-ai-label">AI智能助手</span>
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+</a>
+
+</body>
+</html>

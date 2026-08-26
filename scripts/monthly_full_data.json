@@ -1,0 +1,3643 @@
+{
+  "months": [
+    {
+      "month": "2024-01",
+      "total": 2074,
+      "communities": 497,
+      "streets": 14,
+      "mom": null,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 307
+        },
+        {
+          "name": "凌云路",
+          "count": 222
+        },
+        {
+          "name": "枫林路",
+          "count": 200
+        },
+        {
+          "name": "徐家汇",
+          "count": 192
+        },
+        {
+          "name": "天平路",
+          "count": 180
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 61
+        },
+        {
+          "name": "日晖六村",
+          "count": 35
+        },
+        {
+          "name": "茶花园",
+          "count": 26
+        },
+        {
+          "name": "梅陇三村",
+          "count": 25
+        },
+        {
+          "name": "天钥新村",
+          "count": 22
+        },
+        {
+          "name": "罗秀三村",
+          "count": 19
+        },
+        {
+          "name": "玉兰花苑",
+          "count": 18
+        },
+        {
+          "name": "田林十二村",
+          "count": 18
+        },
+        {
+          "name": "江南新村",
+          "count": 18
+        },
+        {
+          "name": "梅陇十一村（A块）",
+          "count": 16
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1542
+        },
+        {
+          "name": "城管执法",
+          "count": 342
+        },
+        {
+          "name": "其他",
+          "count": 97
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 37
+        },
+        {
+          "name": "生态环境局",
+          "count": 24
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 752
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 626
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 304
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 149
+        },
+        {
+          "name": "其他业务",
+          "count": 84
+        }
+      ]
+    },
+    {
+      "month": "2024-02",
+      "total": 1340,
+      "communities": 412,
+      "streets": 14,
+      "mom": -35.4,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 235
+        },
+        {
+          "name": "徐家汇",
+          "count": 125
+        },
+        {
+          "name": "凌云路",
+          "count": 118
+        },
+        {
+          "name": "天平路",
+          "count": 115
+        },
+        {
+          "name": "枫林路",
+          "count": 110
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 74
+        },
+        {
+          "name": "日晖六村",
+          "count": 20
+        },
+        {
+          "name": "凌云新村",
+          "count": 19
+        },
+        {
+          "name": "康乐小区",
+          "count": 15
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 14
+        },
+        {
+          "name": "滨江小区",
+          "count": 14
+        },
+        {
+          "name": "长桥四村",
+          "count": 12
+        },
+        {
+          "name": "茶花园",
+          "count": 12
+        },
+        {
+          "name": "舒乐小区",
+          "count": 11
+        },
+        {
+          "name": "华悦家园",
+          "count": 11
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 894
+        },
+        {
+          "name": "城管执法",
+          "count": 315
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 74
+        },
+        {
+          "name": "其他",
+          "count": 37
+        },
+        {
+          "name": "生态环境局",
+          "count": 10
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 432
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 419
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 300
+        },
+        {
+          "name": "火灾隐患",
+          "count": 55
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 35
+        }
+      ]
+    },
+    {
+      "month": "2024-03",
+      "total": 2424,
+      "communities": 524,
+      "streets": 14,
+      "mom": 80.9,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 265
+        },
+        {
+          "name": "徐家汇",
+          "count": 258
+        },
+        {
+          "name": "枫林路",
+          "count": 236
+        },
+        {
+          "name": "天平路",
+          "count": 235
+        },
+        {
+          "name": "田林",
+          "count": 210
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 45
+        },
+        {
+          "name": "汇翠花园",
+          "count": 29
+        },
+        {
+          "name": "凌云新村",
+          "count": 27
+        },
+        {
+          "name": "田林三街坊",
+          "count": 24
+        },
+        {
+          "name": "西木小区",
+          "count": 23
+        },
+        {
+          "name": "谨斜小区",
+          "count": 23
+        },
+        {
+          "name": "名人花苑",
+          "count": 23
+        },
+        {
+          "name": "茶花园",
+          "count": 22
+        },
+        {
+          "name": "宛龙小区",
+          "count": 22
+        },
+        {
+          "name": "日晖六村",
+          "count": 21
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1666
+        },
+        {
+          "name": "城管执法",
+          "count": 520
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 106
+        },
+        {
+          "name": "其他",
+          "count": 96
+        },
+        {
+          "name": "生态环境局",
+          "count": 19
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 792
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 700
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 479
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 160
+        },
+        {
+          "name": "火灾隐患",
+          "count": 87
+        }
+      ]
+    },
+    {
+      "month": "2024-04",
+      "total": 2435,
+      "communities": 565,
+      "streets": 14,
+      "mom": 0.5,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "凌云路",
+          "count": 266
+        },
+        {
+          "name": "长桥",
+          "count": 263
+        },
+        {
+          "name": "漕河泾",
+          "count": 230
+        },
+        {
+          "name": "天平路",
+          "count": 218
+        },
+        {
+          "name": "枫林路",
+          "count": 210
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 49
+        },
+        {
+          "name": "华悦家园",
+          "count": 30
+        },
+        {
+          "name": "西木小区",
+          "count": 28
+        },
+        {
+          "name": "田林三街坊",
+          "count": 27
+        },
+        {
+          "name": "龙南五村",
+          "count": 26
+        },
+        {
+          "name": "日晖六村",
+          "count": 26
+        },
+        {
+          "name": "华欣家园",
+          "count": 26
+        },
+        {
+          "name": "安亭直管公房",
+          "count": 24
+        },
+        {
+          "name": "书香逸居",
+          "count": 24
+        },
+        {
+          "name": "松风花园",
+          "count": 24
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1650
+        },
+        {
+          "name": "城管执法",
+          "count": 528
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 111
+        },
+        {
+          "name": "其他",
+          "count": 88
+        },
+        {
+          "name": "绿化市容局",
+          "count": 28
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 790
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 689
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 506
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 151
+        },
+        {
+          "name": "其他业务",
+          "count": 87
+        }
+      ]
+    },
+    {
+      "month": "2024-05",
+      "total": 2441,
+      "communities": 552,
+      "streets": 14,
+      "mom": 0.2,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 316
+        },
+        {
+          "name": "凌云路",
+          "count": 254
+        },
+        {
+          "name": "天平路",
+          "count": 227
+        },
+        {
+          "name": "徐家汇",
+          "count": 222
+        },
+        {
+          "name": "漕河泾",
+          "count": 189
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 91
+        },
+        {
+          "name": "梅陇十一村（A块）",
+          "count": 50
+        },
+        {
+          "name": "华悦家园",
+          "count": 41
+        },
+        {
+          "name": "家乐苑",
+          "count": 31
+        },
+        {
+          "name": "日晖六村",
+          "count": 30
+        },
+        {
+          "name": "宛龙小区",
+          "count": 27
+        },
+        {
+          "name": "安福直管公房",
+          "count": 27
+        },
+        {
+          "name": "长桥四村",
+          "count": 20
+        },
+        {
+          "name": "华欣家园",
+          "count": 19
+        },
+        {
+          "name": "爱建园",
+          "count": 19
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1706
+        },
+        {
+          "name": "城管执法",
+          "count": 527
+        },
+        {
+          "name": "其他",
+          "count": 104
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 57
+        },
+        {
+          "name": "绿化市容局",
+          "count": 27
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 849
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 674
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 477
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 165
+        },
+        {
+          "name": "其他业务",
+          "count": 100
+        }
+      ]
+    },
+    {
+      "month": "2024-06",
+      "total": 2532,
+      "communities": 589,
+      "streets": 14,
+      "mom": 3.7,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 274
+        },
+        {
+          "name": "天平路",
+          "count": 249
+        },
+        {
+          "name": "漕河泾",
+          "count": 248
+        },
+        {
+          "name": "徐家汇",
+          "count": 236
+        },
+        {
+          "name": "凌云路",
+          "count": 221
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "尚海湾二期",
+          "count": 47
+        },
+        {
+          "name": "中海瀛台",
+          "count": 38
+        },
+        {
+          "name": "华悦家园",
+          "count": 34
+        },
+        {
+          "name": "石龙路33弄",
+          "count": 33
+        },
+        {
+          "name": "华泾绿苑",
+          "count": 23
+        },
+        {
+          "name": "梅陇三村",
+          "count": 23
+        },
+        {
+          "name": "安福直管公房",
+          "count": 22
+        },
+        {
+          "name": "日晖六村",
+          "count": 21
+        },
+        {
+          "name": "田林三街坊",
+          "count": 21
+        },
+        {
+          "name": "绿邑翠苑",
+          "count": 21
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1867
+        },
+        {
+          "name": "城管执法",
+          "count": 447
+        },
+        {
+          "name": "其他",
+          "count": 127
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 43
+        },
+        {
+          "name": "绿化市容局",
+          "count": 30
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 866
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 785
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 395
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 178
+        },
+        {
+          "name": "其他业务",
+          "count": 112
+        }
+      ]
+    },
+    {
+      "month": "2024-07",
+      "total": 2683,
+      "communities": 619,
+      "streets": 14,
+      "mom": 6.0,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 273
+        },
+        {
+          "name": "凌云路",
+          "count": 246
+        },
+        {
+          "name": "漕河泾",
+          "count": 245
+        },
+        {
+          "name": "枫林路",
+          "count": 244
+        },
+        {
+          "name": "天平路",
+          "count": 234
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "梅陇三村",
+          "count": 43
+        },
+        {
+          "name": "徐汇新城",
+          "count": 33
+        },
+        {
+          "name": "凌云新村",
+          "count": 32
+        },
+        {
+          "name": "华龙新苑",
+          "count": 30
+        },
+        {
+          "name": "田林三街坊",
+          "count": 30
+        },
+        {
+          "name": "百汇园",
+          "count": 26
+        },
+        {
+          "name": "华悦家园",
+          "count": 23
+        },
+        {
+          "name": "安福直管公房",
+          "count": 22
+        },
+        {
+          "name": "西木小区",
+          "count": 22
+        },
+        {
+          "name": "太原直管公房",
+          "count": 21
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 2009
+        },
+        {
+          "name": "城管执法",
+          "count": 424
+        },
+        {
+          "name": "其他",
+          "count": 154
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 54
+        },
+        {
+          "name": "绿化市容局",
+          "count": 18
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 926
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 828
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 371
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 209
+        },
+        {
+          "name": "其他业务",
+          "count": 143
+        }
+      ]
+    },
+    {
+      "month": "2024-08",
+      "total": 2474,
+      "communities": 582,
+      "streets": 14,
+      "mom": -7.8,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "天平路",
+          "count": 274
+        },
+        {
+          "name": "长桥",
+          "count": 269
+        },
+        {
+          "name": "枫林路",
+          "count": 265
+        },
+        {
+          "name": "康健新村",
+          "count": 217
+        },
+        {
+          "name": "漕河泾",
+          "count": 211
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "杜鹃园",
+          "count": 83
+        },
+        {
+          "name": "中海瀛台",
+          "count": 58
+        },
+        {
+          "name": "田林三街坊",
+          "count": 33
+        },
+        {
+          "name": "梅陇十一村（A块）",
+          "count": 30
+        },
+        {
+          "name": "华欣家园",
+          "count": 27
+        },
+        {
+          "name": "滨江小区",
+          "count": 27
+        },
+        {
+          "name": "盛华景苑",
+          "count": 27
+        },
+        {
+          "name": "安亭直管公房",
+          "count": 26
+        },
+        {
+          "name": "三江小区",
+          "count": 23
+        },
+        {
+          "name": "华龙新苑",
+          "count": 21
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1906
+        },
+        {
+          "name": "城管执法",
+          "count": 346
+        },
+        {
+          "name": "其他",
+          "count": 156
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 36
+        },
+        {
+          "name": "生态环境局",
+          "count": 18
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 922
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 718
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 303
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 209
+        },
+        {
+          "name": "其他业务",
+          "count": 150
+        }
+      ]
+    },
+    {
+      "month": "2024-09",
+      "total": 3070,
+      "communities": 638,
+      "streets": 14,
+      "mom": 24.1,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 341
+        },
+        {
+          "name": "漕河泾",
+          "count": 289
+        },
+        {
+          "name": "枫林路",
+          "count": 276
+        },
+        {
+          "name": "田林",
+          "count": 256
+        },
+        {
+          "name": "华泾镇",
+          "count": 246
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 57
+        },
+        {
+          "name": "金色港湾公寓",
+          "count": 48
+        },
+        {
+          "name": "鑫桂苑·侨高中心",
+          "count": 45
+        },
+        {
+          "name": "杜鹃园",
+          "count": 34
+        },
+        {
+          "name": "上海望族城",
+          "count": 33
+        },
+        {
+          "name": "西木小区",
+          "count": 33
+        },
+        {
+          "name": "华泾绿苑",
+          "count": 32
+        },
+        {
+          "name": "盛华景苑",
+          "count": 32
+        },
+        {
+          "name": "江南裕德",
+          "count": 31
+        },
+        {
+          "name": "田林三街坊",
+          "count": 31
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 2357
+        },
+        {
+          "name": "城管执法",
+          "count": 432
+        },
+        {
+          "name": "其他",
+          "count": 212
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 40
+        },
+        {
+          "name": "绿化市容局",
+          "count": 17
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "住宅物业服务管理",
+          "count": 1098
+        },
+        {
+          "name": "小区综合治理",
+          "count": 988
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 379
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 236
+        },
+        {
+          "name": "其他业务",
+          "count": 169
+        }
+      ]
+    },
+    {
+      "month": "2024-10",
+      "total": 2532,
+      "communities": 578,
+      "streets": 14,
+      "mom": -17.5,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 315
+        },
+        {
+          "name": "枫林路",
+          "count": 251
+        },
+        {
+          "name": "斜土路",
+          "count": 241
+        },
+        {
+          "name": "凌云路",
+          "count": 235
+        },
+        {
+          "name": "漕河泾",
+          "count": 228
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 80
+        },
+        {
+          "name": "金色港湾公寓",
+          "count": 48
+        },
+        {
+          "name": "茶花园",
+          "count": 26
+        },
+        {
+          "name": "东安四村",
+          "count": 26
+        },
+        {
+          "name": "大木小区",
+          "count": 26
+        },
+        {
+          "name": "尚海湾二期",
+          "count": 24
+        },
+        {
+          "name": "日晖六村",
+          "count": 23
+        },
+        {
+          "name": "松风花园",
+          "count": 22
+        },
+        {
+          "name": "龙南五村",
+          "count": 22
+        },
+        {
+          "name": "百汇园",
+          "count": 21
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1874
+        },
+        {
+          "name": "城管执法",
+          "count": 425
+        },
+        {
+          "name": "其他",
+          "count": 137
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 46
+        },
+        {
+          "name": "绿化市容局",
+          "count": 29
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 858
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 835
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 357
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 162
+        },
+        {
+          "name": "其他业务",
+          "count": 126
+        }
+      ]
+    },
+    {
+      "month": "2024-11",
+      "total": 2926,
+      "communities": 593,
+      "streets": 14,
+      "mom": 15.6,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "斜土路",
+          "count": 428
+        },
+        {
+          "name": "长桥",
+          "count": 332
+        },
+        {
+          "name": "枫林路",
+          "count": 319
+        },
+        {
+          "name": "徐家汇",
+          "count": 243
+        },
+        {
+          "name": "天平路",
+          "count": 238
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "尚海湾二期",
+          "count": 194
+        },
+        {
+          "name": "中海瀛台",
+          "count": 70
+        },
+        {
+          "name": "东安二村",
+          "count": 44
+        },
+        {
+          "name": "江南裕德",
+          "count": 39
+        },
+        {
+          "name": "金色港湾公寓",
+          "count": 35
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 32
+        },
+        {
+          "name": "田林三街坊",
+          "count": 28
+        },
+        {
+          "name": "宝能华庭",
+          "count": 27
+        },
+        {
+          "name": "龙山新村",
+          "count": 25
+        },
+        {
+          "name": "余庆直管公房",
+          "count": 25
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 2265
+        },
+        {
+          "name": "城管执法",
+          "count": 437
+        },
+        {
+          "name": "其他",
+          "count": 129
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 47
+        },
+        {
+          "name": "绿化市容局",
+          "count": 24
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 1118
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 914
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 381
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 186
+        },
+        {
+          "name": "其他业务",
+          "count": 121
+        }
+      ]
+    },
+    {
+      "month": "2024-12",
+      "total": 2537,
+      "communities": 568,
+      "streets": 14,
+      "mom": -13.3,
+      "yoy": null,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 325
+        },
+        {
+          "name": "枫林路",
+          "count": 249
+        },
+        {
+          "name": "徐家汇",
+          "count": 243
+        },
+        {
+          "name": "漕河泾",
+          "count": 225
+        },
+        {
+          "name": "凌云路",
+          "count": 215
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 52
+        },
+        {
+          "name": "日晖六村",
+          "count": 46
+        },
+        {
+          "name": "鑫桂苑·侨高中心",
+          "count": 37
+        },
+        {
+          "name": "阳光绿园",
+          "count": 33
+        },
+        {
+          "name": "长汇景苑",
+          "count": 32
+        },
+        {
+          "name": "石龙路33弄",
+          "count": 31
+        },
+        {
+          "name": "印象欧洲（滨江108）",
+          "count": 28
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 27
+        },
+        {
+          "name": "西木小区",
+          "count": 26
+        },
+        {
+          "name": "华欣家园",
+          "count": 23
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1925
+        },
+        {
+          "name": "城管执法",
+          "count": 391
+        },
+        {
+          "name": "其他",
+          "count": 133
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 55
+        },
+        {
+          "name": "绿化市容局",
+          "count": 17
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 951
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 765
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 325
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 154
+        },
+        {
+          "name": "其他业务",
+          "count": 127
+        }
+      ]
+    },
+    {
+      "month": "2025-01",
+      "total": 1777,
+      "communities": 501,
+      "streets": 14,
+      "mom": -30.0,
+      "yoy": -14.3,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 285
+        },
+        {
+          "name": "枫林路",
+          "count": 167
+        },
+        {
+          "name": "漕河泾",
+          "count": 139
+        },
+        {
+          "name": "徐家汇",
+          "count": 137
+        },
+        {
+          "name": "龙华",
+          "count": 132
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 57
+        },
+        {
+          "name": "鑫桂苑·侨高中心",
+          "count": 42
+        },
+        {
+          "name": "龙南七村",
+          "count": 24
+        },
+        {
+          "name": "宛龙小区",
+          "count": 22
+        },
+        {
+          "name": "田林三街坊",
+          "count": 20
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 19
+        },
+        {
+          "name": "西木小区",
+          "count": 19
+        },
+        {
+          "name": "凌云新村",
+          "count": 18
+        },
+        {
+          "name": "华滨家园",
+          "count": 18
+        },
+        {
+          "name": "日晖六村",
+          "count": 16
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1306
+        },
+        {
+          "name": "城管执法",
+          "count": 290
+        },
+        {
+          "name": "其他",
+          "count": 122
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 33
+        },
+        {
+          "name": "生态环境局",
+          "count": 15
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 676
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 545
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 255
+        },
+        {
+          "name": "其他业务",
+          "count": 115
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 85
+        }
+      ]
+    },
+    {
+      "month": "2025-02",
+      "total": 1419,
+      "communities": 454,
+      "streets": 14,
+      "mom": -20.1,
+      "yoy": 5.9,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 191
+        },
+        {
+          "name": "枫林路",
+          "count": 151
+        },
+        {
+          "name": "徐家汇",
+          "count": 134
+        },
+        {
+          "name": "田林",
+          "count": 118
+        },
+        {
+          "name": "漕河泾",
+          "count": 114
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 35
+        },
+        {
+          "name": "江南裕德",
+          "count": 21
+        },
+        {
+          "name": "宛龙小区",
+          "count": 19
+        },
+        {
+          "name": "东方巴黎霞飞苑",
+          "count": 19
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 18
+        },
+        {
+          "name": "华欣家园",
+          "count": 17
+        },
+        {
+          "name": "日晖六村",
+          "count": 17
+        },
+        {
+          "name": "华滨家园",
+          "count": 16
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 16
+        },
+        {
+          "name": "余庆直管公房",
+          "count": 15
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1086
+        },
+        {
+          "name": "城管执法",
+          "count": 215
+        },
+        {
+          "name": "其他",
+          "count": 63
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 36
+        },
+        {
+          "name": "生态环境局",
+          "count": 11
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 570
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 464
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 195
+        },
+        {
+          "name": "其他业务",
+          "count": 60
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 52
+        }
+      ]
+    },
+    {
+      "month": "2025-03",
+      "total": 2157,
+      "communities": 521,
+      "streets": 14,
+      "mom": 52.0,
+      "yoy": -11.0,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 263
+        },
+        {
+          "name": "枫林路",
+          "count": 215
+        },
+        {
+          "name": "凌云路",
+          "count": 199
+        },
+        {
+          "name": "徐家汇",
+          "count": 196
+        },
+        {
+          "name": "斜土路",
+          "count": 195
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "中海瀛台",
+          "count": 46
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 38
+        },
+        {
+          "name": "日晖六村",
+          "count": 37
+        },
+        {
+          "name": "梅陇十一村（A块）",
+          "count": 35
+        },
+        {
+          "name": "长桥四村",
+          "count": 32
+        },
+        {
+          "name": "汇翠花园",
+          "count": 27
+        },
+        {
+          "name": "日晖二村",
+          "count": 25
+        },
+        {
+          "name": "东湾小区",
+          "count": 25
+        },
+        {
+          "name": "凌云新村",
+          "count": 23
+        },
+        {
+          "name": "西木小区",
+          "count": 22
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1588
+        },
+        {
+          "name": "城管执法",
+          "count": 395
+        },
+        {
+          "name": "其他",
+          "count": 106
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 41
+        },
+        {
+          "name": "绿化市容局",
+          "count": 17
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 825
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 639
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 344
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 124
+        },
+        {
+          "name": "其他业务",
+          "count": 97
+        }
+      ]
+    },
+    {
+      "month": "2025-04",
+      "total": 2094,
+      "communities": 557,
+      "streets": 14,
+      "mom": -2.9,
+      "yoy": -14.0,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 333
+        },
+        {
+          "name": "枫林路",
+          "count": 205
+        },
+        {
+          "name": "徐家汇",
+          "count": 197
+        },
+        {
+          "name": "漕河泾",
+          "count": 187
+        },
+        {
+          "name": "湖南路",
+          "count": 157
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "悦汇长庭",
+          "count": 62
+        },
+        {
+          "name": "中海瀛台",
+          "count": 45
+        },
+        {
+          "name": "三江小区",
+          "count": 30
+        },
+        {
+          "name": "日晖六村",
+          "count": 28
+        },
+        {
+          "name": "长汇景苑",
+          "count": 25
+        },
+        {
+          "name": "华泾绿苑",
+          "count": 24
+        },
+        {
+          "name": "华悦家园",
+          "count": 21
+        },
+        {
+          "name": "宛龙小区",
+          "count": 20
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 20
+        },
+        {
+          "name": "茶花园",
+          "count": 20
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1452
+        },
+        {
+          "name": "城管执法",
+          "count": 462
+        },
+        {
+          "name": "其他",
+          "count": 112
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 37
+        },
+        {
+          "name": "绿化市容局",
+          "count": 16
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 735
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 609
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 403
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 108
+        },
+        {
+          "name": "其他业务",
+          "count": 105
+        }
+      ]
+    },
+    {
+      "month": "2025-05",
+      "total": 1994,
+      "communities": 550,
+      "streets": 14,
+      "mom": -4.8,
+      "yoy": -18.3,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 299
+        },
+        {
+          "name": "徐家汇",
+          "count": 197
+        },
+        {
+          "name": "漕河泾",
+          "count": 172
+        },
+        {
+          "name": "天平路",
+          "count": 167
+        },
+        {
+          "name": "枫林路",
+          "count": 164
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "长汇景苑",
+          "count": 40
+        },
+        {
+          "name": "中海瀛台",
+          "count": 29
+        },
+        {
+          "name": "余庆直管公房",
+          "count": 29
+        },
+        {
+          "name": "日晖六村",
+          "count": 23
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 20
+        },
+        {
+          "name": "大木小区",
+          "count": 18
+        },
+        {
+          "name": "百汇园小区",
+          "count": 18
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 17
+        },
+        {
+          "name": "紫阳花苑",
+          "count": 16
+        },
+        {
+          "name": "东湾小区",
+          "count": 15
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1450
+        },
+        {
+          "name": "城管执法",
+          "count": 391
+        },
+        {
+          "name": "其他",
+          "count": 90
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 38
+        },
+        {
+          "name": "绿化市容局",
+          "count": 17
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 706
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 650
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 341
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 94
+        },
+        {
+          "name": "其他业务",
+          "count": 87
+        }
+      ]
+    },
+    {
+      "month": "2025-06",
+      "total": 2075,
+      "communities": 532,
+      "streets": 14,
+      "mom": 4.1,
+      "yoy": -18.0,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 241
+        },
+        {
+          "name": "斜土路",
+          "count": 195
+        },
+        {
+          "name": "天平路",
+          "count": 185
+        },
+        {
+          "name": "徐家汇",
+          "count": 178
+        },
+        {
+          "name": "枫林路",
+          "count": 163
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "鑫桂苑·侨高中心",
+          "count": 37
+        },
+        {
+          "name": "漓江山水花园",
+          "count": 36
+        },
+        {
+          "name": "日晖六村",
+          "count": 27
+        },
+        {
+          "name": "华悦家园",
+          "count": 26
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 23
+        },
+        {
+          "name": "天钥新村",
+          "count": 21
+        },
+        {
+          "name": "长汇景苑",
+          "count": 20
+        },
+        {
+          "name": "紫阳花苑",
+          "count": 19
+        },
+        {
+          "name": "斜土小区",
+          "count": 18
+        },
+        {
+          "name": "凌云新村",
+          "count": 17
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1544
+        },
+        {
+          "name": "城管执法",
+          "count": 388
+        },
+        {
+          "name": "其他",
+          "count": 83
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 31
+        },
+        {
+          "name": "生态环境局",
+          "count": 14
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 747
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 693
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 321
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 104
+        },
+        {
+          "name": "其他业务",
+          "count": 78
+        }
+      ]
+    },
+    {
+      "month": "2025-07",
+      "total": 2102,
+      "communities": 534,
+      "streets": 14,
+      "mom": 1.3,
+      "yoy": -21.7,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 242
+        },
+        {
+          "name": "天平路",
+          "count": 214
+        },
+        {
+          "name": "斜土路",
+          "count": 205
+        },
+        {
+          "name": "枫林路",
+          "count": 194
+        },
+        {
+          "name": "徐家汇",
+          "count": 191
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "东湾小区",
+          "count": 33
+        },
+        {
+          "name": "名人花苑",
+          "count": 32
+        },
+        {
+          "name": "悦汇长庭",
+          "count": 31
+        },
+        {
+          "name": "日晖六村",
+          "count": 30
+        },
+        {
+          "name": "滨江小区",
+          "count": 27
+        },
+        {
+          "name": "大木小区",
+          "count": 23
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 22
+        },
+        {
+          "name": "金牛苑",
+          "count": 21
+        },
+        {
+          "name": "华悦家园",
+          "count": 21
+        },
+        {
+          "name": "田林三街坊",
+          "count": 18
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1602
+        },
+        {
+          "name": "城管执法",
+          "count": 365
+        },
+        {
+          "name": "其他",
+          "count": 75
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 28
+        },
+        {
+          "name": "绿化市容局",
+          "count": 16
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 795
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 685
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 321
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 121
+        },
+        {
+          "name": "其他业务",
+          "count": 66
+        }
+      ]
+    },
+    {
+      "month": "2025-08",
+      "total": 2180,
+      "communities": 555,
+      "streets": 14,
+      "mom": 3.7,
+      "yoy": -11.9,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 281
+        },
+        {
+          "name": "枫林路",
+          "count": 239
+        },
+        {
+          "name": "徐家汇",
+          "count": 228
+        },
+        {
+          "name": "斜土路",
+          "count": 200
+        },
+        {
+          "name": "天平路",
+          "count": 183
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "东湾小区",
+          "count": 39
+        },
+        {
+          "name": "日晖六村",
+          "count": 38
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 34
+        },
+        {
+          "name": "汇宁花园",
+          "count": 30
+        },
+        {
+          "name": "龙山新村",
+          "count": 28
+        },
+        {
+          "name": "宛龙小区",
+          "count": 26
+        },
+        {
+          "name": "大木小区",
+          "count": 25
+        },
+        {
+          "name": "梅陇五村(多层)",
+          "count": 23
+        },
+        {
+          "name": "天钥新村",
+          "count": 21
+        },
+        {
+          "name": "田林三街坊",
+          "count": 19
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1638
+        },
+        {
+          "name": "城管执法",
+          "count": 388
+        },
+        {
+          "name": "其他",
+          "count": 96
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 28
+        },
+        {
+          "name": "生态环境局",
+          "count": 15
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 815
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 715
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 350
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 108
+        },
+        {
+          "name": "其他业务",
+          "count": 86
+        }
+      ]
+    },
+    {
+      "month": "2025-09",
+      "total": 2176,
+      "communities": 555,
+      "streets": 14,
+      "mom": -0.2,
+      "yoy": -29.1,
+      "street_top5": [
+        {
+          "name": "枫林路",
+          "count": 226
+        },
+        {
+          "name": "徐家汇",
+          "count": 224
+        },
+        {
+          "name": "斜土路",
+          "count": 204
+        },
+        {
+          "name": "华泾镇",
+          "count": 191
+        },
+        {
+          "name": "长桥",
+          "count": 190
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "东湾小区",
+          "count": 49
+        },
+        {
+          "name": "尚海湾二期",
+          "count": 44
+        },
+        {
+          "name": "尚海湾一期",
+          "count": 22
+        },
+        {
+          "name": "龙山新村",
+          "count": 22
+        },
+        {
+          "name": "华欣家园",
+          "count": 22
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 20
+        },
+        {
+          "name": "宛龙小区",
+          "count": 19
+        },
+        {
+          "name": "雍汇名邸",
+          "count": 19
+        },
+        {
+          "name": "爱建园",
+          "count": 18
+        },
+        {
+          "name": "日晖六村",
+          "count": 17
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1618
+        },
+        {
+          "name": "城管执法",
+          "count": 387
+        },
+        {
+          "name": "其他",
+          "count": 106
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 47
+        },
+        {
+          "name": "生态环境局",
+          "count": 8
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 841
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 655
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 353
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 122
+        },
+        {
+          "name": "其他业务",
+          "count": 101
+        }
+      ]
+    },
+    {
+      "month": "2025-10",
+      "total": 1855,
+      "communities": 508,
+      "streets": 14,
+      "mom": -14.8,
+      "yoy": -26.7,
+      "street_top5": [
+        {
+          "name": "漕河泾",
+          "count": 212
+        },
+        {
+          "name": "枫林路",
+          "count": 209
+        },
+        {
+          "name": "徐家汇",
+          "count": 187
+        },
+        {
+          "name": "长桥",
+          "count": 161
+        },
+        {
+          "name": "天平路",
+          "count": 151
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "玖珑庭",
+          "count": 40
+        },
+        {
+          "name": "珺汇名邸",
+          "count": 32
+        },
+        {
+          "name": "龙华花园",
+          "count": 25
+        },
+        {
+          "name": "光华绿苑",
+          "count": 24
+        },
+        {
+          "name": "日晖六村",
+          "count": 23
+        },
+        {
+          "name": "天钥新村",
+          "count": 20
+        },
+        {
+          "name": "东安四村",
+          "count": 19
+        },
+        {
+          "name": "龙山新村",
+          "count": 19
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 18
+        },
+        {
+          "name": "华欣家园",
+          "count": 18
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1343
+        },
+        {
+          "name": "城管执法",
+          "count": 373
+        },
+        {
+          "name": "其他",
+          "count": 93
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 35
+        },
+        {
+          "name": "绿化市容局",
+          "count": 9
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 692
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 547
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 342
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 103
+        },
+        {
+          "name": "其他业务",
+          "count": 76
+        }
+      ]
+    },
+    {
+      "month": "2025-11",
+      "total": 1975,
+      "communities": 512,
+      "streets": 14,
+      "mom": 6.5,
+      "yoy": -32.5,
+      "street_top5": [
+        {
+          "name": "徐家汇",
+          "count": 229
+        },
+        {
+          "name": "枫林路",
+          "count": 226
+        },
+        {
+          "name": "长桥",
+          "count": 225
+        },
+        {
+          "name": "漕河泾",
+          "count": 190
+        },
+        {
+          "name": "天平路",
+          "count": 155
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "华悦家园",
+          "count": 32
+        },
+        {
+          "name": "东安四村",
+          "count": 30
+        },
+        {
+          "name": "日晖六村",
+          "count": 25
+        },
+        {
+          "name": "东湾小区",
+          "count": 25
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 25
+        },
+        {
+          "name": "华滨家园",
+          "count": 24
+        },
+        {
+          "name": "永新城",
+          "count": 22
+        },
+        {
+          "name": "龙山新村",
+          "count": 21
+        },
+        {
+          "name": "医高小区",
+          "count": 21
+        },
+        {
+          "name": "寿祥坊",
+          "count": 20
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1447
+        },
+        {
+          "name": "城管执法",
+          "count": 356
+        },
+        {
+          "name": "其他",
+          "count": 102
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 51
+        },
+        {
+          "name": "绿化市容局",
+          "count": 11
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 742
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 578
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 324
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 127
+        },
+        {
+          "name": "其他业务",
+          "count": 79
+        }
+      ]
+    },
+    {
+      "month": "2025-12",
+      "total": 1814,
+      "communities": 548,
+      "streets": 13,
+      "mom": -8.2,
+      "yoy": -28.5,
+      "street_top5": [
+        {
+          "name": "徐家汇",
+          "count": 226
+        },
+        {
+          "name": "长桥",
+          "count": 204
+        },
+        {
+          "name": "枫林路",
+          "count": 177
+        },
+        {
+          "name": "斜土路",
+          "count": 175
+        },
+        {
+          "name": "漕河泾",
+          "count": 150
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "日晖六村",
+          "count": 32
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 22
+        },
+        {
+          "name": "虹桥大仕馆",
+          "count": 22
+        },
+        {
+          "name": "斜土小区",
+          "count": 20
+        },
+        {
+          "name": "华悦家园",
+          "count": 19
+        },
+        {
+          "name": "东安四村",
+          "count": 18
+        },
+        {
+          "name": "鑫桂苑·侨高中心",
+          "count": 17
+        },
+        {
+          "name": "珺汇名邸",
+          "count": 14
+        },
+        {
+          "name": "东湾小区",
+          "count": 14
+        },
+        {
+          "name": "宛龙小区",
+          "count": 14
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1335
+        },
+        {
+          "name": "城管执法",
+          "count": 299
+        },
+        {
+          "name": "其他",
+          "count": 107
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 55
+        },
+        {
+          "name": "生态环境局",
+          "count": 10
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 687
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 549
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 269
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 99
+        },
+        {
+          "name": "其他业务",
+          "count": 88
+        }
+      ]
+    },
+    {
+      "month": "2026-01",
+      "total": 1485,
+      "communities": 482,
+      "streets": 14,
+      "mom": -18.1,
+      "yoy": -16.4,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 179
+        },
+        {
+          "name": "枫林路",
+          "count": 154
+        },
+        {
+          "name": "漕河泾",
+          "count": 142
+        },
+        {
+          "name": "徐家汇",
+          "count": 141
+        },
+        {
+          "name": "田林",
+          "count": 132
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "龙山新村",
+          "count": 18
+        },
+        {
+          "name": "日晖六村",
+          "count": 18
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 17
+        },
+        {
+          "name": "周家湾",
+          "count": 17
+        },
+        {
+          "name": "宛龙小区",
+          "count": 17
+        },
+        {
+          "name": "紫阳花苑",
+          "count": 15
+        },
+        {
+          "name": "田林三四村",
+          "count": 14
+        },
+        {
+          "name": "滨江小区",
+          "count": 14
+        },
+        {
+          "name": "华泾绿苑",
+          "count": 14
+        },
+        {
+          "name": "东湾小区",
+          "count": 13
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1145
+        },
+        {
+          "name": "城管执法",
+          "count": 228
+        },
+        {
+          "name": "其他",
+          "count": 60
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 28
+        },
+        {
+          "name": "生态环境局",
+          "count": 13
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 602
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 471
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 208
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 72
+        },
+        {
+          "name": "其他业务",
+          "count": 54
+        }
+      ]
+    },
+    {
+      "month": "2026-02",
+      "total": 888,
+      "communities": 373,
+      "streets": 13,
+      "mom": -40.2,
+      "yoy": -37.4,
+      "street_top5": [
+        {
+          "name": "田林",
+          "count": 109
+        },
+        {
+          "name": "长桥",
+          "count": 109
+        },
+        {
+          "name": "龙华",
+          "count": 97
+        },
+        {
+          "name": "徐家汇",
+          "count": 78
+        },
+        {
+          "name": "天平路",
+          "count": 72
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "盛大花园",
+          "count": 28
+        },
+        {
+          "name": "上海新村直管公房",
+          "count": 10
+        },
+        {
+          "name": "华沁家园",
+          "count": 9
+        },
+        {
+          "name": "馨宁公寓",
+          "count": 9
+        },
+        {
+          "name": "日晖六村",
+          "count": 9
+        },
+        {
+          "name": "吴东小区",
+          "count": 9
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 8
+        },
+        {
+          "name": "钦州花苑",
+          "count": 8
+        },
+        {
+          "name": "南丹小区",
+          "count": 8
+        },
+        {
+          "name": "紫竹园",
+          "count": 8
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 679
+        },
+        {
+          "name": "城管执法",
+          "count": 136
+        },
+        {
+          "name": "其他",
+          "count": 39
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 23
+        },
+        {
+          "name": "生态环境局",
+          "count": 8
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 336
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 309
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 122
+        },
+        {
+          "name": "其他业务",
+          "count": 36
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 34
+        }
+      ]
+    },
+    {
+      "month": "2026-03",
+      "total": 1682,
+      "communities": 507,
+      "streets": 13,
+      "mom": 89.4,
+      "yoy": -22.0,
+      "street_top5": [
+        {
+          "name": "徐家汇",
+          "count": 195
+        },
+        {
+          "name": "长桥",
+          "count": 185
+        },
+        {
+          "name": "田林",
+          "count": 147
+        },
+        {
+          "name": "斜土路",
+          "count": 136
+        },
+        {
+          "name": "天平路",
+          "count": 135
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "家乐苑",
+          "count": 31
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 26
+        },
+        {
+          "name": "华悦家园",
+          "count": 25
+        },
+        {
+          "name": "吴东小区",
+          "count": 20
+        },
+        {
+          "name": "华泾绿苑",
+          "count": 20
+        },
+        {
+          "name": "御江瑞庭、徐汇复星中心",
+          "count": 20
+        },
+        {
+          "name": "日晖六村",
+          "count": 18
+        },
+        {
+          "name": "创世纪花园",
+          "count": 18
+        },
+        {
+          "name": "梅陇五村(多层)",
+          "count": 15
+        },
+        {
+          "name": "紫阳花苑",
+          "count": 14
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1252
+        },
+        {
+          "name": "城管执法",
+          "count": 307
+        },
+        {
+          "name": "其他",
+          "count": 73
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 38
+        },
+        {
+          "name": "生态环境局",
+          "count": 11
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 651
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 520
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 273
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 81
+        },
+        {
+          "name": "其他业务",
+          "count": 62
+        }
+      ]
+    },
+    {
+      "month": "2026-04",
+      "total": 1704,
+      "communities": 518,
+      "streets": 13,
+      "mom": 1.3,
+      "yoy": -18.6,
+      "street_top5": [
+        {
+          "name": "徐家汇",
+          "count": 197
+        },
+        {
+          "name": "漕河泾",
+          "count": 184
+        },
+        {
+          "name": "田林",
+          "count": 171
+        },
+        {
+          "name": "斜土路",
+          "count": 160
+        },
+        {
+          "name": "天平路",
+          "count": 153
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "尚海湾二期",
+          "count": 32
+        },
+        {
+          "name": "吴东小区",
+          "count": 16
+        },
+        {
+          "name": "陕西直管公房",
+          "count": 16
+        },
+        {
+          "name": "华滨家园",
+          "count": 16
+        },
+        {
+          "name": "紫阳花苑",
+          "count": 16
+        },
+        {
+          "name": "日晖六村",
+          "count": 16
+        },
+        {
+          "name": "华欣家园",
+          "count": 15
+        },
+        {
+          "name": "田林三街坊",
+          "count": 14
+        },
+        {
+          "name": "冶金小区",
+          "count": 14
+        },
+        {
+          "name": "凌云新村",
+          "count": 14
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1240
+        },
+        {
+          "name": "城管执法",
+          "count": 315
+        },
+        {
+          "name": "其他",
+          "count": 103
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 28
+        },
+        {
+          "name": "绿化市容局",
+          "count": 8
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 606
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 535
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 290
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 98
+        },
+        {
+          "name": "其他业务",
+          "count": 95
+        }
+      ]
+    },
+    {
+      "month": "2026-05",
+      "total": 1772,
+      "communities": 506,
+      "streets": 13,
+      "mom": 4.0,
+      "yoy": -11.1,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 195
+        },
+        {
+          "name": "漕河泾",
+          "count": 169
+        },
+        {
+          "name": "田林",
+          "count": 160
+        },
+        {
+          "name": "枫林路",
+          "count": 157
+        },
+        {
+          "name": "徐家汇",
+          "count": 150
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "凌云新村",
+          "count": 25
+        },
+        {
+          "name": "华悦家园",
+          "count": 20
+        },
+        {
+          "name": "安福直管公房",
+          "count": 20
+        },
+        {
+          "name": "延庆直管公房",
+          "count": 18
+        },
+        {
+          "name": "华沁家园",
+          "count": 17
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 16
+        },
+        {
+          "name": "欣嘉苑1-3期",
+          "count": 15
+        },
+        {
+          "name": "华欣家园",
+          "count": 15
+        },
+        {
+          "name": "珺汇名邸",
+          "count": 15
+        },
+        {
+          "name": "汇东小区",
+          "count": 14
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1295
+        },
+        {
+          "name": "城管执法",
+          "count": 352
+        },
+        {
+          "name": "其他",
+          "count": 73
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 33
+        },
+        {
+          "name": "生态环境局",
+          "count": 8
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 634
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 600
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 321
+        },
+        {
+          "name": "其他业务",
+          "count": 69
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 60
+        }
+      ]
+    },
+    {
+      "month": "2026-06",
+      "total": 1856,
+      "communities": 503,
+      "streets": 13,
+      "mom": 4.7,
+      "yoy": -10.6,
+      "street_top5": [
+        {
+          "name": "长桥",
+          "count": 191
+        },
+        {
+          "name": "田林",
+          "count": 186
+        },
+        {
+          "name": "斜土路",
+          "count": 180
+        },
+        {
+          "name": "徐家汇",
+          "count": 180
+        },
+        {
+          "name": "漕河泾",
+          "count": 177
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "华欣家园",
+          "count": 22
+        },
+        {
+          "name": "明丰新纪苑",
+          "count": 22
+        },
+        {
+          "name": "宝能华庭",
+          "count": 20
+        },
+        {
+          "name": "长桥四村",
+          "count": 19
+        },
+        {
+          "name": "华悦家园",
+          "count": 19
+        },
+        {
+          "name": "海珀旭晖",
+          "count": 19
+        },
+        {
+          "name": "尚海湾一期",
+          "count": 18
+        },
+        {
+          "name": "欣嘉苑1-3期",
+          "count": 18
+        },
+        {
+          "name": "长桥八村",
+          "count": 17
+        },
+        {
+          "name": "盛华景苑",
+          "count": 17
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1417
+        },
+        {
+          "name": "城管执法",
+          "count": 305
+        },
+        {
+          "name": "其他",
+          "count": 74
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 46
+        },
+        {
+          "name": "生态环境局",
+          "count": 8
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 686
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 630
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 263
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 101
+        },
+        {
+          "name": "其他业务",
+          "count": 69
+        }
+      ]
+    },
+    {
+      "month": "2026-07",
+      "total": 2097,
+      "communities": 550,
+      "streets": 13,
+      "mom": 13.0,
+      "yoy": -0.2,
+      "street_top5": [
+        {
+          "name": "漕河泾",
+          "count": 226
+        },
+        {
+          "name": "长桥",
+          "count": 214
+        },
+        {
+          "name": "徐家汇",
+          "count": 204
+        },
+        {
+          "name": "斜土路",
+          "count": 197
+        },
+        {
+          "name": "枫林路",
+          "count": 172
+        }
+      ],
+      "community_top10": [
+        {
+          "name": "俞一小区",
+          "count": 32
+        },
+        {
+          "name": "罗秀新二村",
+          "count": 28
+        },
+        {
+          "name": "钦州公寓",
+          "count": 24
+        },
+        {
+          "name": "海珀旭晖",
+          "count": 24
+        },
+        {
+          "name": "新湖云庭",
+          "count": 20
+        },
+        {
+          "name": "日晖二村",
+          "count": 20
+        },
+        {
+          "name": "化工一、四村",
+          "count": 18
+        },
+        {
+          "name": "嘉俊庭",
+          "count": 16
+        },
+        {
+          "name": "华悦家园",
+          "count": 16
+        },
+        {
+          "name": "番禺路801弄",
+          "count": 16
+        }
+      ],
+      "category_top5": [
+        {
+          "name": "住房保障",
+          "count": 1603
+        },
+        {
+          "name": "城管执法",
+          "count": 296
+        },
+        {
+          "name": "其他",
+          "count": 126
+        },
+        {
+          "name": "公安（消防）局",
+          "count": 44
+        },
+        {
+          "name": "生态环境局",
+          "count": 15
+        }
+      ],
+      "l3_top5": [
+        {
+          "name": "小区综合治理",
+          "count": 754
+        },
+        {
+          "name": "住宅物业服务管理",
+          "count": 751
+        },
+        {
+          "name": "房屋违规使用执法",
+          "count": 267
+        },
+        {
+          "name": "其他业务",
+          "count": 112
+        },
+        {
+          "name": "房屋安全管理",
+          "count": 97
+        }
+      ]
+    }
+  ],
+  "month_list": [
+    "2024-01",
+    "2024-02",
+    "2024-03",
+    "2024-04",
+    "2024-05",
+    "2024-06",
+    "2024-07",
+    "2024-08",
+    "2024-09",
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07"
+  ],
+  "2024_total": 29468,
+  "2024_months": 12,
+  "2024_avg": 2456.0,
+  "2025_total": 23618,
+  "2025_months": 12,
+  "2025_avg": 1968.0,
+  "2026_total": 11484,
+  "2026_months": 7,
+  "2026_avg": 1641.0,
+  "yoy_2025_vs_2024": -19.9
+}

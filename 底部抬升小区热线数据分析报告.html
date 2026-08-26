@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>底部抬升小区同比热线数据分析报告</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+
+  .header { background:linear-gradient(135deg,#bf360c 0%,#e64a19 40%,#ff5722 100%); color:#fff; padding:36px 0 32px; text-align:center; position:relative; }
+  .header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#ffd54f,#ff8f00,#e64a19,#bf360c); }
+  .header h1 { font-size:24px; font-weight:800; letter-spacing:1px; }
+  .header .subtitle { font-size:13px; margin-top:8px; opacity:0.85; }
+  .header .meta { font-size:11px; margin-top:6px; opacity:0.6; }
+
+  .stats-row { display:flex; justify-content:center; gap:24px; margin-top:20px; flex-wrap:wrap; padding:0 16px; }
+  .stat-card { background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border-radius:10px; padding:12px 20px; min-width:120px; text-align:center; }
+  .stat-card .num { font-size:26px; font-weight:800; color:#fff; }
+  .stat-card .num.down { color:#a5d6a7; }
+  .stat-card .num.up { color:#ffccbc; }
+  .stat-card .label { font-size:11px; opacity:0.9; margin-top:2px; }
+
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+
+  .section { background:#fff; border-radius:10px; padding:22px 24px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
+  .section-title { font-size:17px; font-weight:700; color:#bf360c; margin-bottom:14px; display:flex; align-items:center; gap:8px; border-left:4px solid #e64a19; padding-left:10px; }
+  .section-title .icon { font-size:18px; }
+
+  .desc { font-size:13px; color:#555; margin-bottom:14px; }
+  .highlight { background:#fff3e0; border-left:3px solid #ff9800; padding:10px 14px; margin:12px 0; font-size:13px; border-radius:0 6px 6px 0; }
+  .highlight strong { color:#e65100; }
+
+  /* KPI Cards */
+  .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:14px; }
+  .kpi-card { background:linear-gradient(135deg,#fafafa,#f5f5f5); border-radius:8px; padding:14px; text-align:center; border:1px solid #eee; }
+  .kpi-card .kpi-val { font-size:24px; font-weight:800; }
+  .kpi-card .kpi-val.green { color:#2e7d32; }
+  .kpi-card .kpi-val.red { color:#c62828; }
+  .kpi-card .kpi-val.orange { color:#e65100; }
+  .kpi-card .kpi-val.blue { color:#1565c0; }
+  .kpi-card .kpi-label { font-size:11px; color:#888; margin-top:4px; }
+  .kpi-card .kpi-sub { font-size:10px; color:#aaa; margin-top:2px; }
+
+  /* Chart */
+  .chart-box { background:#fafafa; border-radius:8px; padding:16px; margin:12px 0; }
+  .chart-title { font-size:12px; font-weight:700; color:#555; margin-bottom:8px; text-align:center; }
+  .bar-chart { display:flex; align-items:flex-end; gap:6px; height:180px; padding:0 8px; }
+  .bar-group { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .bar-wrap { display:flex; gap:3px; align-items:flex-end; height:150px; width:100%; justify-content:center; }
+  .bar { width:18px; border-radius:3px 3px 0 0; transition:height 0.6s ease; position:relative; }
+  .bar.ba-2024 { background:#90caf9; }
+  .bar.ba-2025 { background:#ff8a65; }
+  .bar.ba-2026 { background:#81c784; }
+  .bar-label { font-size:10px; color:#888; }
+
+  /* Comparison table */
+  table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+  th { background:#bf360c; color:#fff; padding:8px 10px; text-align:center; font-weight:600; font-size:12px; }
+  td { padding:7px 10px; border-bottom:1px solid #f0f0f0; text-align:center; }
+  td:first-child { text-align:left; font-weight:600; }
+  tr:hover { background:#fff8f5; }
+  .trend-up { color:#c62828; font-weight:700; }
+  .trend-down { color:#2e7d32; font-weight:700; }
+  .trend-flat { color:#999; font-weight:700; }
+
+  /* Two col */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+  /* Category list */
+  .cat-list { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+  .cat-item { display:flex; align-items:center; gap:8px; padding:8px 10px; background:#fafafa; border-radius:6px; font-size:12px; }
+  .cat-item .cat-name { flex:1; font-weight:600; }
+  .cat-item .cat-bar { width:80px; height:6px; background:#eee; border-radius:3px; overflow:hidden; }
+  .cat-item .cat-bar-fill { height:100%; background:#e64a19; border-radius:3px; }
+  .cat-item .cat-val { font-weight:700; font-size:11px; min-width:50px; text-align:right; }
+
+  /* Community list */
+  .comm-table { font-size:12px; }
+  .comm-table th { font-size:11px; padding:6px 8px; }
+  .comm-table td { padding:5px 8px; }
+  .comm-rank { width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; }
+  .rank-1 { background:#ff6f00; }
+  .rank-2 { background:#ff8f00; }
+  .rank-3 { background:#ffa726; }
+  .rank-other { background:#bdbdbd; }
+
+  /* Legend */
+  .legend { display:flex; justify-content:center; gap:16px; margin:10px 0; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:#666; }
+  .legend-dot { width:12px; height:12px; border-radius:3px; }
+
+  /* Progress card */
+  .progress-section { background:linear-gradient(135deg,#fff3e0,#ffe0b2); border-radius:10px; padding:18px; margin:12px 0; }
+  .progress-title { font-size:14px; font-weight:700; color:#e65100; margin-bottom:12px; }
+  .progress-bar-wrap { margin:10px 0; }
+  .progress-bar-label { display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; }
+  .progress-bar-label .val { font-weight:700; }
+  .progress-bar-bg { width:100%; height:12px; background:rgba(255,255,255,0.6); border-radius:6px; overflow:hidden; }
+  .progress-bar-fill { height:100%; border-radius:6px; transition:width 1s ease; }
+  .pb-green { background:linear-gradient(90deg,#66bb6a,#388e3c); }
+  .pb-red { background:linear-gradient(90deg,#ef5350,#c62828); }
+  .pb-yellow { background:linear-gradient(90deg,#ffd54f,#ffa000); }
+
+  /* Contradiction types */
+  .contra-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .contra-card { background:#fafafa; border-radius:8px; padding:14px; text-align:center; border-top:3px solid; }
+  .contra-card.t1 { border-top-color:#1565c0; }
+  .contra-card.t2 { border-top-color:#e64a19; }
+  .contra-card.t3 { border-top-color:#7b1fa2; }
+  .contra-card .contra-num { font-size:22px; font-weight:800; }
+  .contra-card .contra-name { font-size:13px; font-weight:700; margin:4px 0; }
+  .contra-card .contra-desc { font-size:11px; color:#888; }
+  .contra-card .contra-change { font-size:12px; margin-top:6px; font-weight:600; }
+
+  .footer { text-align:center; padding:24px 0; font-size:11px; color:#999; }
+
+  @media(max-width:768px) {
+    .kpi-grid { grid-template-columns:repeat(2,1fr); }
+    .two-col { grid-template-columns:1fr; }
+    .cat-list { grid-template-columns:1fr; }
+    .contra-grid { grid-template-columns:1fr; }
+    .stats-row { gap:10px; }
+    .stat-card { min-width:90px; padding:8px 12px; }
+    .stat-card .num { font-size:20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sub Nav -->
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <h1>底部抬升小区同比热线数据分析报告</h1>
+  <div class="subtitle">党建引领物业治理重点小区 · 84个小区全周期追踪分析</div>
+  <div class="meta">数据周期：2024年-2026年6月 · 匹配成功78个小区 · 占全区投诉量18.0%</div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="num">84</div><div class="label">重点小区数</div></div>
+    <div class="stat-card"><div class="num down">-5.5%</div><div class="label">2025年同比</div></div>
+    <div class="stat-card"><div class="num down">-19.2%</div><div class="label">2026上半年同比</div></div>
+    <div class="stat-card"><div class="num up">18.0%</div><div class="label">占全区投诉比重</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== 一、总体概况 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span>一、总体概况</div>
+    <p class="desc">徐汇区党建引领物业治理重点小区（"底部抬升"）共84个，涵盖13个街道/镇。本报告基于12345热线全量投诉数据，对这些小区2024-2026年的投诉量进行同比分析，评估治理成效。</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-val blue">4,510</div>
+        <div class="kpi-label">2024年投诉总量</div>
+        <div class="kpi-sub">占全区15.3%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val orange">4,263</div>
+        <div class="kpi-label">2025年投诉总量</div>
+        <div class="kpi-sub">占全区18.0%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val green">-5.5%</div>
+        <div class="kpi-label">2025年同比降幅</div>
+        <div class="kpi-sub">低于全区-19.9%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val green">-19.2%</div>
+        <div class="kpi-label">2026上半年同比</div>
+        <div class="kpi-sub">追平全区-18.5%</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>核心发现：</strong>底部抬升小区2025年同比仅降5.5%，远低于全区19.9%的降幅，说明"硬骨头"治理难度大。但2026年上半年降幅扩大至19.2%，首次追平全区水平，治理攻坚成效开始显现。
+    </div>
+
+    <h4 style="font-size:13px; color:#555; margin:14px 0 8px;">底部抬升小区 vs 全区对比</h4>
+    <table>
+      <tr>
+        <th>指标</th>
+        <th>底部抬升84小区</th>
+        <th>全区</th>
+        <th>差距</th>
+        <th>评价</th>
+      </tr>
+      <tr>
+        <td>2024年投诉量</td>
+        <td>4,510件</td>
+        <td>29,468件</td>
+        <td>占比15.3%</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>2025年投诉量</td>
+        <td>4,263件</td>
+        <td>23,618件</td>
+        <td>占比18.0%</td>
+        <td>集中度上升</td>
+      </tr>
+      <tr>
+        <td>2025年同比</td>
+        <td class="trend-down">-5.5%</td>
+        <td class="trend-down">-19.9%</td>
+        <td class="trend-up">+14.4pp</td>
+        <td>治理滞后</td>
+      </tr>
+      <tr>
+        <td>2025年上半年</td>
+        <td>2,057件</td>
+        <td>11,516件</td>
+        <td>占比17.9%</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>2026年上半年</td>
+        <td>1,662件</td>
+        <td>9,387件</td>
+        <td>占比17.7%</td>
+        <td>占比微降</td>
+      </tr>
+      <tr>
+        <td>2026上半年同比</td>
+        <td class="trend-down">-19.2%</td>
+        <td class="trend-down">-18.5%</td>
+        <td class="trend-down">-0.7pp</td>
+        <td>追平全区</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ===== 二、月度趋势 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📈</span>二、月度投诉趋势</div>
+    <p class="desc">2024-2026年各月投诉量变化趋势，观察底部抬升小区的季节性波动与治理节奏。</p>
+
+    <div class="chart-box">
+      <div class="chart-title">底部抬升小区月度投诉量（2024 vs 2025 vs 2026）</div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#90caf9;"></div>2024年</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ff8a65;"></div>2025年</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#81c784;"></div>2026年</div>
+      </div>
+      <div class="bar-chart" id="monthlyChart"></div>
+    </div>
+
+    <div class="highlight">
+      <strong>趋势解读：</strong>① 2024年投诉量"前低后高"，11月达峰值538件；② 2025年治理介入后呈"中间高两端低"，3-4月仍高位；③ 2026年上半年整体下行，5-6月略有抬头，需持续关注。
+    </div>
+  </div>
+
+  <!-- ===== 三、街道分布 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏘️</span>三、街道分布与治理效果</div>
+    <p class="desc">13个街道底部抬升小区的数量、投诉总量及同比变化，反映各街道治理攻坚成效。</p>
+
+    <table>
+      <tr>
+        <th>街道</th>
+        <th>重点小区数</th>
+        <th>2024年</th>
+        <th>2025年</th>
+        <th>2025同比</th>
+        <th>2026上半年同比</th>
+        <th>治理评价</th>
+      </tr>
+      <tr>
+        <td>凌云路</td>
+        <td>5个</td>
+        <td>413</td>
+        <td>228</td>
+        <td class="trend-down">-44.8%</td>
+        <td class="trend-down">-34.3%</td>
+        <td><span style="color:#2e7d32; font-weight:700;">⭐ 成效显著</span></td>
+      </tr>
+      <tr>
+        <td>漕河泾</td>
+        <td>7个</td>
+        <td>483</td>
+        <td>334</td>
+        <td class="trend-down">-30.8%</td>
+        <td class="trend-down">-25.3%</td>
+        <td><span style="color:#2e7d32; font-weight:700;">⭐ 成效显著</span></td>
+      </tr>
+      <tr>
+        <td>康健新村</td>
+        <td>7个</td>
+        <td>473</td>
+        <td>350</td>
+        <td class="trend-down">-26.0%</td>
+        <td class="trend-down">-54.3%</td>
+        <td><span style="color:#2e7d32; font-weight:700;">⭐ 成效显著</span></td>
+      </tr>
+      <tr>
+        <td>斜土路</td>
+        <td>9个</td>
+        <td>746</td>
+        <td>580</td>
+        <td class="trend-down">-22.3%</td>
+        <td class="trend-down">-13.2%</td>
+        <td><span style="color:#388e3c; font-weight:700;">✓ 效果良好</span></td>
+      </tr>
+      <tr>
+        <td>湖南路</td>
+        <td>2个</td>
+        <td>27</td>
+        <td>59</td>
+        <td class="trend-up">+118.5%</td>
+        <td class="trend-down">-55.3%</td>
+        <td><span style="color:#f57c00; font-weight:700;">⚡ 快速改善</span></td>
+      </tr>
+      <tr>
+        <td>徐家汇</td>
+        <td>6个</td>
+        <td>188</td>
+        <td>244</td>
+        <td class="trend-up">+29.8%</td>
+        <td class="trend-down">-36.9%</td>
+        <td><span style="color:#f57c00; font-weight:700;">⚡ 快速改善</span></td>
+      </tr>
+      <tr>
+        <td>华泾</td>
+        <td>4个</td>
+        <td>479</td>
+        <td>540</td>
+        <td class="trend-up">+12.7%</td>
+        <td class="trend-down">-30.5%</td>
+        <td><span style="color:#f57c00; font-weight:700;">⚡ 快速改善</span></td>
+      </tr>
+      <tr>
+        <td>长桥</td>
+        <td>9个</td>
+        <td>816</td>
+        <td>1,022</td>
+        <td class="trend-up">+25.2%</td>
+        <td class="trend-down">-11.7%</td>
+        <td><span style="color:#fbc02d; font-weight:700;">⚠ 初见成效</span></td>
+      </tr>
+      <tr>
+        <td>田林</td>
+        <td>9个</td>
+        <td>179</td>
+        <td>200</td>
+        <td class="trend-up">+11.7%</td>
+        <td class="trend-down">-6.1%</td>
+        <td><span style="color:#fbc02d; font-weight:700;">⚠ 初见成效</span></td>
+      </tr>
+      <tr>
+        <td>枫林路</td>
+        <td>6个</td>
+        <td>457</td>
+        <td>466</td>
+        <td class="trend-up">+2.0%</td>
+        <td class="trend-down">-15.1%</td>
+        <td><span style="color:#fbc02d; font-weight:700;">⚠ 初见成效</span></td>
+      </tr>
+      <tr>
+        <td>天平路</td>
+        <td>5个</td>
+        <td>14</td>
+        <td>22</td>
+        <td class="trend-up">+57.1%</td>
+        <td class="trend-flat">0.0%</td>
+        <td><span style="color:#e65100; font-weight:700;">🔴 需关注</span></td>
+      </tr>
+      <tr>
+        <td>龙华</td>
+        <td>6个</td>
+        <td>150</td>
+        <td>117</td>
+        <td class="trend-down">-22.0%</td>
+        <td class="trend-up">+20.5%</td>
+        <td><span style="color:#e65100; font-weight:700;">🔴 出现反弹</span></td>
+      </tr>
+      <tr>
+        <td>虹梅路</td>
+        <td>3个</td>
+        <td>85</td>
+        <td>101</td>
+        <td class="trend-up">+18.8%</td>
+        <td class="trend-up">+156.7%</td>
+        <td><span style="color:#c62828; font-weight:700;">🚨 严重恶化</span></td>
+      </tr>
+    </table>
+
+    <div class="highlight">
+      <strong>街道梯队：</strong>
+      第一梯队（降幅>30%）：凌云路、漕河泾、康健新村 — 治理经验可复制推广；
+      第二梯队（降幅10-30%）：斜土路 — 稳步推进；
+      第三梯队（先升后降）：湖南路、徐家汇、华泾 — 2026年发力见效；
+      需关注：长桥、田林、枫林路、天平路 — 降幅有限；
+      预警：龙华（反弹）、虹梅路（严重恶化）— 需重点督导。
+    </div>
+  </div>
+
+  <!-- ===== 四、问题类别分析 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>四、问题类别分布</div>
+    <p class="desc">底部抬升小区的投诉类别分布，识别主要矛盾领域，为精准治理提供方向。</p>
+
+    <div class="cat-list" id="catList"></div>
+
+    <div style="margin-top:16px;">
+      <h4 style="font-size:13px; color:#555; margin-bottom:8px;">各类别同比变化</h4>
+      <table>
+        <tr>
+          <th>问题类别</th>
+          <th>2024年</th>
+          <th>2025年</th>
+          <th>2026上半年</th>
+          <th>2025同比</th>
+          <th>治理难度</th>
+        </tr>
+        <tr><td>停车管理</td><td>827</td><td>846</td><td>383</td><td class="trend-up">+2.3%</td><td><span style="color:#e65100;">★★★★★ 最难</span></td></tr>
+        <tr><td>房屋维修</td><td>619</td><td>513</td><td>240</td><td class="trend-down">-17.1%</td><td><span style="color:#f57c00;">★★★☆☆ 较难</span></td></tr>
+        <tr><td>邻里纠纷</td><td>423</td><td>417</td><td>246</td><td class="trend-down">-1.4%</td><td><span style="color:#e65100;">★★★★★ 最难</span></td></tr>
+        <tr><td>业主大会/业委会</td><td>469</td><td>377</td><td>214</td><td class="trend-down">-19.6%</td><td><span style="color:#f57c00;">★★★☆☆ 较难</span></td></tr>
+        <tr><td>消防管理</td><td>388</td><td>362</td><td>176</td><td class="trend-down">-6.7%</td><td><span style="color:#fbc02d;">★★★☆☆ 中等</span></td></tr>
+        <tr><td>房屋违规使用</td><td>323</td><td>366</td><td>132</td><td class="trend-up">+13.3%</td><td><span style="color:#e65100;">★★★★☆ 难</span></td></tr>
+        <tr><td>物业安保</td><td>294</td><td>269</td><td>133</td><td class="trend-down">-8.5%</td><td><span style="color:#fbc02d;">★★☆☆☆ 中等</span></td></tr>
+        <tr><td>旧住房改造</td><td>282</td><td>290</td><td>97</td><td class="trend-up">+2.8%</td><td><span style="color:#388e3c;">★★☆☆☆ 易解</span></td></tr>
+        <tr><td>群租管理</td><td>212</td><td>244</td><td>90</td><td class="trend-up">+15.1%</td><td><span style="color:#e65100;">★★★★☆ 难</span></td></tr>
+        <tr><td>清洁卫生</td><td>217</td><td>199</td><td>102</td><td class="trend-down">-8.3%</td><td><span style="color:#388e3c;">★☆☆☆☆ 最易</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== 五、矛盾类型分析 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">⚖️</span>五、矛盾类型分析</div>
+    <p class="desc">根据小区主要矛盾划分为三类，不同类型的治理难度和策略差异显著。</p>
+
+    <div class="contra-grid">
+      <div class="contra-card t1">
+        <div class="contra-num" style="color:#1565c0;">23个</div>
+        <div class="contra-name">一类矛盾</div>
+        <div class="contra-desc">物业收费 / 服务质量类</div>
+        <div class="contra-change trend-down">2025同比 -15.2%</div>
+      </div>
+      <div class="contra-card t2">
+        <div class="contra-num" style="color:#e64a19;">39个</div>
+        <div class="contra-name">二类矛盾</div>
+        <div class="contra-desc">设施设备 / 房屋本体类</div>
+        <div class="contra-change trend-down">2025同比 -2.0%</div>
+      </div>
+      <div class="contra-card t3">
+        <div class="contra-num" style="color:#7b1fa2;">22个</div>
+        <div class="contra-name">三类矛盾</div>
+        <div class="contra-desc">业委会 / 社区治理类</div>
+        <div class="contra-change trend-down">2025同比 -12.2%</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <h4 style="font-size:13px; color:#555; margin-bottom:8px;">三类矛盾投诉量对比</h4>
+      <table>
+        <tr>
+          <th>矛盾类型</th>
+          <th>小区数</th>
+          <th>2024年</th>
+          <th>2025年</th>
+          <th>2026上半年</th>
+          <th>2025同比</th>
+          <th>治理特征</th>
+        </tr>
+        <tr>
+          <td>一类（收费/服务）</td>
+          <td>23个</td>
+          <td>435</td>
+          <td>369</td>
+          <td>180</td>
+          <td class="trend-down">-15.2%</td>
+          <td>约谈物业、强化履约、引入竞争</td>
+        </tr>
+        <tr>
+          <td>二类（设施/房屋）</td>
+          <td>39个</td>
+          <td>2,896</td>
+          <td>2,838</td>
+          <td>1,139</td>
+          <td class="trend-down">-2.0%</td>
+          <td>量大面广、旧改带动、维修资金</td>
+        </tr>
+        <tr>
+          <td>三类（业委会/治理）</td>
+          <td>22个</td>
+          <td>1,135</td>
+          <td>996</td>
+          <td>670</td>
+          <td class="trend-down">-12.2%</td>
+          <td>街道介入、依法换届、能力建设</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="highlight">
+      <strong>结论：</strong>二类矛盾小区数量最多（39个）、投诉量最大（占66.6%），但同比降幅最小（-2.0%），是底部抬升的"主战场"和"硬骨头"。一类矛盾降幅最大（-15.2%），说明物业收费和服务质量问题通过约谈和强化管理较易改善。
+    </div>
+  </div>
+
+  <!-- ===== 六、小区级变化 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📉</span>六、小区级变化分析</div>
+
+    <div class="two-col">
+      <div class="progress-section">
+        <div class="progress-title">2025年 vs 2024年（75个有效对比）</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>投诉下降（改善）</span><span class="val">38个 · 50.7%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill pb-green" style="width:50.7%;"></div></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>投诉上升（恶化）</span><span class="val">35个 · 46.7%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill pb-red" style="width:46.7%;"></div></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>基本持平</span><span class="val">2个 · 2.6%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill pb-yellow" style="width:2.6%;"></div></div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-title">2026上半年 vs 2025上半年（74个有效对比）</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>投诉下降（改善）</span><span class="val">43个 · 58.1%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill pb-green" style="width:58.1%;"></div></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>投诉上升（恶化）</span><span class="val">29个 · 39.2%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill pb-red" style="width:39.2%;"></div></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>基本持平</span><span class="val">2个 · 2.7%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill pb-yellow" style="width:2.7%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:14px;">
+      <strong>关键转折：</strong>改善小区比例从2025年的50.7%提升至2026上半年的58.1%，恶化小区从46.7%降至39.2%。底部抬升攻坚行动正在由"点上突破"转向"面上见效"。
+    </div>
+  </div>
+
+  <!-- ===== 七、Top榜单 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏆</span>七、重点小区榜单</div>
+
+    <div class="two-col">
+      <div>
+        <h4 style="font-size:13px; color:#c62828; margin-bottom:8px;">🚨 投诉量Top10（2025年）</h4>
+        <table class="comm-table">
+          <tr><th>排名</th><th>小区</th><th>街道</th><th>2024</th><th>2025</th><th>同比</th></tr>
+          <tr><td><span class="comm-rank rank-1">1</span></td><td>日晖六村</td><td>斜土路</td><td>297</td><td>313</td><td class="trend-up">+5.4%</td></tr>
+          <tr><td><span class="comm-rank rank-2">2</span></td><td>东湾小区</td><td>华泾</td><td>153</td><td>256</td><td class="trend-up">+67.3%</td></tr>
+          <tr><td><span class="comm-rank rank-3">3</span></td><td>罗秀新二村</td><td>长桥</td><td>—</td><td>233</td><td>—</td></tr>
+          <tr><td><span class="comm-rank rank-other">4</span></td><td>宛龙小区</td><td>枫林路</td><td>168</td><td>198</td><td class="trend-up">+17.9%</td></tr>
+          <tr><td><span class="comm-rank rank-other">5</span></td><td>龙山新村</td><td>枫林路</td><td>157</td><td>193</td><td class="trend-up">+22.9%</td></tr>
+          <tr><td><span class="comm-rank rank-other">6</span></td><td>华欣家园</td><td>华泾</td><td>205</td><td>154</td><td class="trend-down">-24.9%</td></tr>
+          <tr><td><span class="comm-rank rank-other">7</span></td><td>华滨家园</td><td>长桥</td><td>157</td><td>153</td><td class="trend-down">-2.5%</td></tr>
+          <tr><td><span class="comm-rank rank-other">8</span></td><td>凌云新村</td><td>凌云路</td><td>207</td><td>138</td><td class="trend-down">-33.3%</td></tr>
+          <tr><td><span class="comm-rank rank-other">9</span></td><td>楼园</td><td>长桥</td><td>88</td><td>129</td><td class="trend-up">+46.6%</td></tr>
+          <tr><td><span class="comm-rank rank-other">10</span></td><td>长桥四村</td><td>长桥</td><td>157</td><td>122</td><td class="trend-down">-22.3%</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h4 style="font-size:13px; color:#2e7d32; margin-bottom:8px;">✅ 改善幅度Top10（2026上半年）</h4>
+        <table class="comm-table">
+          <tr><th>排名</th><th>小区</th><th>街道</th><th>2025H1</th><th>2026H1</th><th>降幅</th></tr>
+          <tr><td><span class="comm-rank rank-1">1</span></td><td>康健路100弄</td><td>康健新村</td><td>55</td><td>3</td><td class="trend-down">-94.5%</td></tr>
+          <tr><td><span class="comm-rank rank-2">2</span></td><td>西樱花园</td><td>康健新村</td><td>47</td><td>7</td><td class="trend-down">-85.1%</td></tr>
+          <tr><td><span class="comm-rank rank-3">3</span></td><td>迎春园</td><td>漕河泾</td><td>40</td><td>8</td><td class="trend-down">-80.0%</td></tr>
+          <tr><td><span class="comm-rank rank-other">4</span></td><td>华轻大厦</td><td>徐家汇</td><td>27</td><td>6</td><td class="trend-down">-77.8%</td></tr>
+          <tr><td><span class="comm-rank rank-other">5</span></td><td>田林十二村</td><td>田林</td><td>30</td><td>7</td><td class="trend-down">-76.7%</td></tr>
+          <tr><td><span class="comm-rank rank-other">6</span></td><td>金轩公寓</td><td>徐家汇</td><td>19</td><td>5</td><td class="trend-down">-73.7%</td></tr>
+          <tr><td><span class="comm-rank rank-other">7</span></td><td>虹梅小区</td><td>康健新村</td><td>26</td><td>7</td><td class="trend-down">-73.1%</td></tr>
+          <tr><td><span class="comm-rank rank-other">8</span></td><td>华理苑</td><td>凌云路</td><td>29</td><td>9</td><td class="trend-down">-69.0%</td></tr>
+          <tr><td><span class="comm-rank rank-other">9</span></td><td>桂林苑</td><td>漕河泾</td><td>29</td><td>9</td><td class="trend-down">-69.0%</td></tr>
+          <tr><td><span class="comm-rank rank-other">10</span></td><td>九弄小区</td><td>湖南路</td><td>16</td><td>5</td><td class="trend-down">-68.8%</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 八、结论与建议 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>八、结论与建议</div>
+
+    <h4 style="font-size:14px; color:#bf360c; margin:12px 0 8px;">主要结论</h4>
+    <ol style="font-size:13px; color:#444; padding-left:20px; line-height:2;">
+      <li><strong>底部抬升见效慢但正在加速。</strong>2025年同比仅降5.5%，2026上半年扩大至19.2%，改善小区比例从50.7%升至58.1%，攻坚行动逐步显效。</li>
+      <li><strong>占比不降反升，仍是投诉"主力军"。</strong>84个重点小区占全区投诉比重从2024年15.3%升至2025年18.0%，说明普通小区降得更快，底部小区是治理深水区。</li>
+      <li><strong>二类矛盾是"硬骨头"。</strong>设施设备/房屋本体类矛盾占66.6%的投诉量，但降幅仅-2.0%，需要旧改、维修资金等系统性方案。</li>
+      <li><strong>街道差距显著。</strong>凌云路(-44.8%)、漕河泾(-30.8%)、康健(-26.0%)三街道成效显著，而虹梅路(+156.7%)、龙华(+20.5%)出现反弹，需督导。</li>
+      <li><strong>停车管理和邻里纠纷最难治。</strong>两类问题在底部小区中投诉量大且几乎没有下降，需要创新治理手段。</li>
+    </ol>
+
+    <h4 style="font-size:14px; color:#bf360c; margin:16px 0 8px;">工作建议</h4>
+    <div class="two-col">
+      <div class="highlight">
+        <strong>一、分类施策精准攻坚</strong><br>
+        一类矛盾：强化物业履约考核，推广"红黑榜"<br>
+        二类矛盾：对接旧改计划，加快维修资金续筹<br>
+        三类矛盾：街道牵头组建业委会换届工作专班
+      </div>
+      <div class="highlight">
+        <strong>二、街道间经验复制推广</strong><br>
+        总结凌云路、漕河泾、康健新村的成功经验<br>
+        对虹梅路、龙华等反弹街道开展专项督导<br>
+        建立"好街道帮差街道"结对机制
+      </div>
+      <div class="highlight">
+        <strong>三、重点问题专项突破</strong><br>
+        停车管理：推广"潮汐共享+智能管理"模式<br>
+        邻里纠纷：引入社区调解+心理服务资源<br>
+        群租管理：强化执法联动，建立快速处置机制
+      </div>
+      <div class="highlight">
+        <strong>四、建立长效跟踪机制</strong><br>
+        每月监测底部小区投诉量变化<br>
+        季度评估治理成效，动态调整名单<br>
+        年底验收"脱帽"标准，形成闭环
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期 · 底部抬升小区同比热线数据分析报告 · 2026年8月
+</div>
+
+<script>
+// Monthly bar chart
+var monthlyData = {
+  1: { '2024': 303, '2025': 318, '2026': 254 },
+  2: { '2024': 168, '2025': 276, '2026': 164 },
+  3: { '2024': 374, '2025': 434, '2026': 269 },
+  4: { '2024': 360, '2025': 364, '2026': 283 },
+  5: { '2024': 369, '2025': 317, '2026': 333 },
+  6: { '2024': 414, '2025': 320, '2026': 342 },
+  7: { '2024': 368, '2025': 376, '2026': 344 },
+  8: { '2024': 320, '2025': 389, '2026': 0 },
+  9: { '2024': 411, '2025': 416, '2026': 0 },
+  10: { '2024': 382, '2025': 330, '2026': 0 },
+  11: { '2024': 538, '2025': 358, '2026': 0 },
+  12: { '2024': 459, '2025': 305, '2026': 0 }
+};
+var maxVal = 538;
+var chart = document.getElementById('monthlyChart');
+for (var m = 1; m <= 12; m++) {
+  var d = monthlyData[m];
+  var h24 = (d['2024'] / maxVal * 150).toFixed(1);
+  var h25 = (d['2025'] / maxVal * 150).toFixed(1);
+  var h26 = d['2026'] > 0 ? (d['2026'] / maxVal * 150).toFixed(1) : 0;
+  var group = document.createElement('div');
+  group.className = 'bar-group';
+  group.innerHTML = '<div class="bar-wrap">' +
+    '<div class="bar ba-2024" style="height:' + h24 + 'px;" title="2024年: ' + d['2024'] + '件"></div>' +
+    '<div class="bar ba-2025" style="height:' + h25 + 'px;" title="2025年: ' + d['2025'] + '件"></div>' +
+    '<div class="bar ba-2026" style="height:' + h26 + 'px;' + (d['2026']==0?'opacity:0.3;':'') + '" title="2026年: ' + d['2026'] + '件"></div>' +
+    '</div><div class="bar-label">' + m + '月</div>';
+  chart.appendChild(group);
+}
+
+// Category list
+var cats = [
+  { name: '停车管理', total: 2056, pct: 23.7 },
+  { name: '房屋维修', total: 1372, pct: 15.8 },
+  { name: '邻里纠纷', total: 1086, pct: 12.5 },
+  { name: '业主大会/业委会', total: 1060, pct: 12.2 },
+  { name: '消防管理', total: 926, pct: 10.7 },
+  { name: '房屋违规使用', total: 821, pct: 9.5 },
+  { name: '物业安保', total: 696, pct: 8.0 },
+  { name: '旧住房改造', total: 669, pct: 7.7 },
+  { name: '群租管理', total: 546, pct: 6.3 },
+  { name: '清洁卫生', total: 518, pct: 6.0 }
+];
+var catList = document.getElementById('catList');
+cats.forEach(function(c) {
+  var div = document.createElement('div');
+  div.className = 'cat-item';
+  div.innerHTML = '<span class="cat-name">' + c.name + '</span>' +
+    '<span class="cat-bar"><span class="cat-bar-fill" style="width:' + (c.pct * 3) + '%"></span></span>' +
+    '<span class="cat-val">' + c.total + '件</span>';
+  catList.appendChild(div);
+});
+</script>
+
+</body>
+</html>

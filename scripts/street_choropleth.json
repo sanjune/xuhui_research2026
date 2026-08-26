@@ -1,0 +1,80 @@
+{
+  "华泾": {
+    "avg_complaint": 183.8,
+    "per_hh": 11.4,
+    "avg_yoy": 13.4,
+    "count": 22
+  },
+  "长桥": {
+    "avg_complaint": 140.1,
+    "per_hh": 12.9,
+    "avg_yoy": 323.2,
+    "count": 52
+  },
+  "虹梅路": {
+    "avg_complaint": 99.3,
+    "per_hh": 12.6,
+    "avg_yoy": 38.9,
+    "count": 21
+  },
+  "凌云路": {
+    "avg_complaint": 83.6,
+    "per_hh": 11.8,
+    "avg_yoy": -5.8,
+    "count": 57
+  },
+  "龙华": {
+    "avg_complaint": 70.1,
+    "per_hh": 9.0,
+    "avg_yoy": 2.4,
+    "count": 58
+  },
+  "田林": {
+    "avg_complaint": 69.6,
+    "per_hh": 10.2,
+    "avg_yoy": -2.4,
+    "count": 69
+  },
+  "斜土路": {
+    "avg_complaint": 67.5,
+    "per_hh": 12.2,
+    "avg_yoy": 26.4,
+    "count": 71
+  },
+  "康健新村": {
+    "avg_complaint": 63.0,
+    "per_hh": 10.1,
+    "avg_yoy": 18.7,
+    "count": 65
+  },
+  "枫林路": {
+    "avg_complaint": 62.7,
+    "per_hh": 13.7,
+    "avg_yoy": 19.4,
+    "count": 88
+  },
+  "漕河泾": {
+    "avg_complaint": 53.2,
+    "per_hh": 10.6,
+    "avg_yoy": 23.2,
+    "count": 102
+  },
+  "徐家汇": {
+    "avg_complaint": 43.7,
+    "per_hh": 10.2,
+    "avg_yoy": 31.5,
+    "count": 133
+  },
+  "湖南路": {
+    "avg_complaint": 40.2,
+    "per_hh": 19.1,
+    "avg_yoy": 20.6,
+    "count": 87
+  },
+  "天平路": {
+    "avg_complaint": 35.8,
+    "per_hh": 16.9,
+    "avg_yoy": -1.1,
+    "count": 143
+  }
+}

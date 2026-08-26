@@ -1,0 +1,573 @@
+{
+  "fee_stats": [
+    {
+      "fee_group": "1元以下",
+      "count": 347,
+      "avg_complaint": 74.89625360230548,
+      "avg_yoy": 1.0256484149855907,
+      "total": 25989
+    },
+    {
+      "fee_group": "1-2元",
+      "count": 269,
+      "avg_complaint": 70.43122676579925,
+      "avg_yoy": 20.052044609665426,
+      "total": 18946
+    },
+    {
+      "fee_group": "2-3元",
+      "count": 109,
+      "avg_complaint": 49.79816513761468,
+      "avg_yoy": 12.188073394495413,
+      "total": 5428
+    },
+    {
+      "fee_group": "3-5元",
+      "count": 82,
+      "avg_complaint": 47.670731707317074,
+      "avg_yoy": 21.053658536585367,
+      "total": 3909
+    },
+    {
+      "fee_group": "5元以上",
+      "count": 79,
+      "avg_complaint": 60.58227848101266,
+      "avg_yoy": 60.778481012658226,
+      "total": 4786
+    },
+    {
+      "fee_group": "未知",
+      "count": 82,
+      "avg_complaint": 27.304878048780488,
+      "avg_yoy": 206.76951219512193,
+      "total": 2239
+    }
+  ],
+  "fee_mode_stats": [
+    {
+      "fee_mode": "包干制",
+      "count": 821,
+      "avg_complaint": 66.90986601705238,
+      "avg_yoy": 11.10584652862363
+    },
+    {
+      "fee_mode": "包干制+酬金制",
+      "count": 10,
+      "avg_complaint": 62.5,
+      "avg_yoy": -2.249999999999999
+    },
+    {
+      "fee_mode": "酬金制",
+      "count": 88,
+      "avg_complaint": 49.10227272727273,
+      "avg_yoy": 49.23977272727273
+    }
+  ],
+  "qual_stats": [
+    {
+      "property_qualification": 1.0,
+      "count": 142,
+      "avg_complaint": 90.69718309859155,
+      "avg_yoy": 137.743661971831
+    },
+    {
+      "property_qualification": 2.0,
+      "count": 390,
+      "avg_complaint": 69.44102564102565,
+      "avg_yoy": -1.588974358974359
+    },
+    {
+      "property_qualification": 4.0,
+      "count": 36,
+      "avg_complaint": 54.30555555555556,
+      "avg_yoy": 41.09166666666667
+    },
+    {
+      "property_qualification": 3.0,
+      "count": 158,
+      "avg_complaint": 41.151898734177216,
+      "avg_yoy": 19.41898734177215
+    },
+    {
+      "property_qualification": 5.0,
+      "count": 2,
+      "avg_complaint": 14.0,
+      "avg_yoy": -52.85
+    },
+    {
+      "property_qualification": 9.0,
+      "count": 1,
+      "avg_complaint": 10.0,
+      "avg_yoy": -60.0
+    }
+  ],
+  "company_top20": [
+    {
+      "property_company": "上海高建物业有限公司",
+      "community_count": 78,
+      "total_complaint": 6874,
+      "avg_complaint": 88.12820512820512,
+      "avg_yoy": -2.871794871794872
+    },
+    {
+      "property_company": "上海衡复物业有限公司",
+      "community_count": 100,
+      "total_complaint": 6355,
+      "avg_complaint": 63.55,
+      "avg_yoy": -17.348
+    },
+    {
+      "property_company": "上海徐房物业有限公司",
+      "community_count": 50,
+      "total_complaint": 4251,
+      "avg_complaint": 85.02,
+      "avg_yoy": -13.444
+    },
+    {
+      "property_company": "上海中鹊物业服务有限公司",
+      "community_count": 19,
+      "total_complaint": 2291,
+      "avg_complaint": 120.57894736842105,
+      "avg_yoy": 20.978947368421053
+    },
+    {
+      "property_company": "上海汇成物业有限公司",
+      "community_count": 13,
+      "total_complaint": 1908,
+      "avg_complaint": 146.76923076923077,
+      "avg_yoy": -26.676923076923078
+    },
+    {
+      "property_company": "上海中海物业管理有限公司",
+      "community_count": 8,
+      "total_complaint": 1500,
+      "avg_complaint": 187.5,
+      "avg_yoy": -22.6125
+    },
+    {
+      "property_company": "上海安得物业管理有限公司",
+      "community_count": 12,
+      "total_complaint": 1430,
+      "avg_complaint": 119.16666666666667,
+      "avg_yoy": 47.96666666666667
+    },
+    {
+      "property_company": "秀澜（上海）物业管理有限公司",
+      "community_count": 12,
+      "total_complaint": 1338,
+      "avg_complaint": 111.5,
+      "avg_yoy": -16.8
+    },
+    {
+      "property_company": "上海轻工物业管理有限公司",
+      "community_count": 14,
+      "total_complaint": 1268,
+      "avg_complaint": 90.57142857142857,
+      "avg_yoy": 11.792857142857141
+    },
+    {
+      "property_company": "上海中星集团申城物业有限公司",
+      "community_count": 8,
+      "total_complaint": 1122,
+      "avg_complaint": 140.25,
+      "avg_yoy": 1.8999999999999995
+    },
+    {
+      "property_company": "上海华泾泾鸿物业管理有限公司",
+      "community_count": 3,
+      "total_complaint": 970,
+      "avg_complaint": 323.3333333333333,
+      "avg_yoy": -26.066666666666666
+    },
+    {
+      "property_company": "上海阳光投资（集团）物业管理有限公司",
+      "community_count": 8,
+      "total_complaint": 956,
+      "avg_complaint": 119.5,
+      "avg_yoy": -37.65
+    },
+    {
+      "property_company": "上海晏鑫物业有限公司",
+      "community_count": 4,
+      "total_complaint": 902,
+      "avg_complaint": 225.5,
+      "avg_yoy": -28.849999999999998
+    },
+    {
+      "property_company": "上海中誉物业管理有限公司",
+      "community_count": 11,
+      "total_complaint": 858,
+      "avg_complaint": 78.0,
+      "avg_yoy": -3.209090909090911
+    },
+    {
+      "property_company": "上海旭程物业管理有限公司",
+      "community_count": 13,
+      "total_complaint": 763,
+      "avg_complaint": 58.69230769230769,
+      "avg_yoy": 2.2230769230769227
+    },
+    {
+      "property_company": "好伙伴（上海）物业服务管理有限公司",
+      "community_count": 8,
+      "total_complaint": 759,
+      "avg_complaint": 94.875,
+      "avg_yoy": -23.7125
+    },
+    {
+      "property_company": "上海复欣物业管理发展有限公司",
+      "community_count": 6,
+      "total_complaint": 745,
+      "avg_complaint": 124.16666666666667,
+      "avg_yoy": 82.51666666666667
+    },
+    {
+      "property_company": "上海金辉物业有限公司",
+      "community_count": 6,
+      "total_complaint": 627,
+      "avg_complaint": 104.5,
+      "avg_yoy": -25.5
+    },
+    {
+      "property_company": "上海益镇物业管理有限公司",
+      "community_count": 15,
+      "total_complaint": 618,
+      "avg_complaint": 41.2,
+      "avg_yoy": 42.72666666666667
+    },
+    {
+      "property_company": "上海市工联物业公司",
+      "community_count": 6,
+      "total_complaint": 597,
+      "avg_complaint": 99.5,
+      "avg_yoy": -6.983333333333333
+    }
+  ],
+  "elevator_stats": [
+    {
+      "has_elevator": false,
+      "count": 713,
+      "avg_complaint": 46.513323983169705,
+      "avg_yoy": 43.40336605890603
+    },
+    {
+      "has_elevator": true,
+      "count": 255,
+      "avg_complaint": 110.32549019607843,
+      "avg_yoy": -1.5105882352941176
+    }
+  ],
+  "elevator_count_stats": [
+    {
+      "elev_group": "无电梯",
+      "count": 713,
+      "avg_complaint": 46.513323983169705
+    },
+    {
+      "elev_group": "1-5台",
+      "count": 182,
+      "avg_complaint": 77.9065934065934
+    },
+    {
+      "elev_group": "6-10台",
+      "count": 33,
+      "avg_complaint": 174.84848484848484
+    },
+    {
+      "elev_group": "11-20台",
+      "count": 22,
+      "avg_complaint": 199.45454545454547
+    },
+    {
+      "elev_group": "20台以上",
+      "count": 18,
+      "avg_complaint": 210.88888888888889
+    }
+  ],
+  "parking_stats": [
+    {
+      "parking_group": "严重不足(<0.3)",
+      "count": 267,
+      "avg_complaint": 76.2059925093633,
+      "avg_yoy": 18.284644194756556
+    },
+    {
+      "parking_group": "不足(0.3-0.5)",
+      "count": 112,
+      "avg_complaint": 59.11607142857143,
+      "avg_yoy": 34.09642857142857
+    },
+    {
+      "parking_group": "一般(0.5-0.8)",
+      "count": 60,
+      "avg_complaint": 48.916666666666664,
+      "avg_yoy": -2.2416666666666676
+    },
+    {
+      "parking_group": "充足(>0.8)",
+      "count": 13,
+      "avg_complaint": 21.692307692307693,
+      "avg_yoy": 16.138461538461538
+    },
+    {
+      "parking_group": "未知/无",
+      "count": 516,
+      "avg_complaint": 60.29457364341085,
+      "avg_yoy": 42.21957364341086
+    }
+  ],
+  "repair_stats": [
+    {
+      "has_repair": false,
+      "count": 689,
+      "avg_complaint": 52.3933236574746,
+      "avg_2024": 23.25979680696662,
+      "avg_2025": 19.242380261248186,
+      "avg_yoy": 44.05007256894049
+    },
+    {
+      "has_repair": true,
+      "count": 279,
+      "avg_complaint": 90.31541218637993,
+      "avg_2024": 41.30107526881721,
+      "avg_2025": 32.83512544802868,
+      "avg_yoy": 0.7559139784946236
+    }
+  ],
+  "repair_group_stats": [
+    {
+      "repair_group": "无修缮",
+      "count": 689,
+      "avg_complaint": 52.3933236574746,
+      "avg_yoy": 44.05007256894049
+    },
+    {
+      "repair_group": "1个项目",
+      "count": 234,
+      "avg_complaint": 77.28632478632478,
+      "avg_yoy": 3.7905982905982905
+    },
+    {
+      "repair_group": "2个项目",
+      "count": 39,
+      "avg_complaint": 139.46153846153845,
+      "avg_yoy": -18.815384615384612
+    },
+    {
+      "repair_group": "3-5个项目",
+      "count": 6,
+      "avg_complaint": 279.0,
+      "avg_yoy": 9.616666666666667
+    },
+    {
+      "repair_group": "5个以上",
+      "count": 0,
+      "avg_complaint": NaN,
+      "avg_yoy": NaN
+    }
+  ],
+  "committee_stats": [
+    {
+      "has_committee": false,
+      "count": 119,
+      "avg_complaint": 72.09243697478992,
+      "avg_yoy": 158.05210084033615
+    },
+    {
+      "has_committee": true,
+      "count": 849,
+      "avg_complaint": 62.0942285041225,
+      "avg_yoy": 13.843580683156656
+    }
+  ],
+  "bottom_lift_stats": [
+    {
+      "is_bottom_lift": false,
+      "count": 891,
+      "avg_complaint": 56.65768799102133,
+      "avg_yoy": 33.297755331088666,
+      "avg_households": 503.0482603815937
+    },
+    {
+      "is_bottom_lift": true,
+      "count": 77,
+      "avg_complaint": 140.45454545454547,
+      "avg_yoy": 11.598701298701297,
+      "avg_households": 900.0649350649351
+    }
+  ],
+  "street_stats": [
+    {
+      "street": "华泾",
+      "count": 22,
+      "total_complaint": 4044,
+      "avg_complaint": 183.8181818181818,
+      "avg_yoy": 13.381818181818181,
+      "avg_households": 1610.2727272727273,
+      "complaint_per_hh": 11.415344662112572
+    },
+    {
+      "street": "长桥",
+      "count": 52,
+      "total_complaint": 7284,
+      "avg_complaint": 140.07692307692307,
+      "avg_yoy": 323.1557692307693,
+      "avg_households": 1086.0192307692307,
+      "complaint_per_hh": 12.898199139411753
+    },
+    {
+      "street": "虹梅路",
+      "count": 21,
+      "total_complaint": 2086,
+      "avg_complaint": 99.33333333333333,
+      "avg_yoy": 38.90952380952381,
+      "avg_households": 790.7142857142857,
+      "complaint_per_hh": 12.56248118036736
+    },
+    {
+      "street": "凌云路",
+      "count": 57,
+      "total_complaint": 4763,
+      "avg_complaint": 83.56140350877193,
+      "avg_yoy": -5.761403508771931,
+      "avg_households": 707.9824561403509,
+      "complaint_per_hh": 11.802750588526823
+    },
+    {
+      "street": "龙华",
+      "count": 58,
+      "total_complaint": 4066,
+      "avg_complaint": 70.10344827586206,
+      "avg_yoy": 2.4413793103448276,
+      "avg_households": 782.1206896551724,
+      "complaint_per_hh": 8.963251989506867
+    },
+    {
+      "street": "田林",
+      "count": 69,
+      "total_complaint": 4802,
+      "avg_complaint": 69.59420289855072,
+      "avg_yoy": -2.4217391304347826,
+      "avg_households": 680.0579710144928,
+      "complaint_per_hh": 10.233569175688347
+    },
+    {
+      "street": "斜土路",
+      "count": 71,
+      "total_complaint": 4790,
+      "avg_complaint": 67.46478873239437,
+      "avg_yoy": 26.446478873239435,
+      "avg_households": 550.9859154929577,
+      "complaint_per_hh": 12.24437627811861
+    },
+    {
+      "street": "康健新村",
+      "count": 65,
+      "total_complaint": 4095,
+      "avg_complaint": 63.0,
+      "avg_yoy": 18.701538461538462,
+      "avg_households": 621.723076923077,
+      "complaint_per_hh": 10.133128773631594
+    },
+    {
+      "street": "枫林路",
+      "count": 88,
+      "total_complaint": 5514,
+      "avg_complaint": 62.65909090909091,
+      "avg_yoy": 19.443181818181817,
+      "avg_households": 457.0568181818182,
+      "complaint_per_hh": 13.709256358618632
+    },
+    {
+      "street": "漕河泾",
+      "count": 102,
+      "total_complaint": 5423,
+      "avg_complaint": 53.166666666666664,
+      "avg_yoy": 23.225490196078432,
+      "avg_households": 499.72549019607845,
+      "complaint_per_hh": 10.639174448716943
+    },
+    {
+      "street": "徐家汇",
+      "count": 133,
+      "total_complaint": 5808,
+      "avg_complaint": 43.669172932330824,
+      "avg_yoy": 31.46766917293233,
+      "avg_households": 428.4736842105263,
+      "complaint_per_hh": 10.191798129397933
+    },
+    {
+      "street": "湖南路",
+      "count": 87,
+      "total_complaint": 3498,
+      "avg_complaint": 40.206896551724135,
+      "avg_yoy": 20.602298850574712,
+      "avg_households": 210.24137931034483,
+      "complaint_per_hh": 19.124159422666885
+    },
+    {
+      "street": "天平路",
+      "count": 143,
+      "total_complaint": 5124,
+      "avg_complaint": 35.83216783216783,
+      "avg_yoy": -1.0573426573426568,
+      "avg_households": 212.3916083916084,
+      "complaint_per_hh": 16.870802054523903
+    }
+  ],
+  "correlation": {
+    "total_households_num": 0.782,
+    "total_build_area": 0.622,
+    "parking_total": 0.405,
+    "elevator_total": 0.385,
+    "repair_project_count": 0.281,
+    "build_year": 0.033,
+    "complaint_yoy_2025": 0.03,
+    "dishonest_count": -0.01,
+    "fee_avg": -0.075
+  },
+  "age_stats": [
+    {
+      "age_group": "10年以内",
+      "count": 27,
+      "avg_complaint": 77.81481481481481,
+      "avg_yoy": 760.1814814814815,
+      "per_hh": 6.929190989743082
+    },
+    {
+      "age_group": "10-20年",
+      "count": 60,
+      "avg_complaint": 107.66666666666667,
+      "avg_yoy": 12.573333333333334,
+      "per_hh": 9.129193635001837
+    },
+    {
+      "age_group": "20-30年",
+      "count": 400,
+      "avg_complaint": 53.0525,
+      "avg_yoy": 10.97975,
+      "per_hh": 12.251036266438822
+    },
+    {
+      "age_group": "30-40年",
+      "count": 294,
+      "avg_complaint": 70.64625850340136,
+      "avg_yoy": 18.116326530612245,
+      "per_hh": 11.82970240637904
+    },
+    {
+      "age_group": "40年以上",
+      "count": 184,
+      "avg_complaint": 58.17934782608695,
+      "avg_yoy": -1.8260869565217395,
+      "per_hh": 16.36099648479291
+    },
+    {
+      "age_group": "未知",
+      "count": 3,
+      "avg_complaint": 13.333333333333334,
+      "avg_yoy": -33.333333333333336,
+      "per_hh": 1.805869074492099
+    }
+  ]
+}

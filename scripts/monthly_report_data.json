@@ -1,0 +1,529 @@
+[
+  {
+    "month": "2024-01",
+    "total": 2074,
+    "communities": 497,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 307,
+    "top_community": "中海瀛台",
+    "top_community_count": 61,
+    "top_categories": {
+      "住房保障": 1542,
+      "城管执法": 342,
+      "其他": 97
+    },
+    "mom": null,
+    "yoy": null
+  },
+  {
+    "month": "2024-02",
+    "total": 1340,
+    "communities": 412,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 235,
+    "top_community": "中海瀛台",
+    "top_community_count": 74,
+    "top_categories": {
+      "住房保障": 894,
+      "城管执法": 315,
+      "公安（消防）局": 74
+    },
+    "mom": -35.4,
+    "yoy": null
+  },
+  {
+    "month": "2024-03",
+    "total": 2424,
+    "communities": 524,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 265,
+    "top_community": "中海瀛台",
+    "top_community_count": 45,
+    "top_categories": {
+      "住房保障": 1666,
+      "城管执法": 520,
+      "公安（消防）局": 106
+    },
+    "mom": 80.9,
+    "yoy": null
+  },
+  {
+    "month": "2024-04",
+    "total": 2435,
+    "communities": 565,
+    "streets": 14,
+    "top_street": "凌云路",
+    "top_street_count": 266,
+    "top_community": "中海瀛台",
+    "top_community_count": 49,
+    "top_categories": {
+      "住房保障": 1650,
+      "城管执法": 528,
+      "公安（消防）局": 111
+    },
+    "mom": 0.5,
+    "yoy": null
+  },
+  {
+    "month": "2024-05",
+    "total": 2441,
+    "communities": 552,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 316,
+    "top_community": "中海瀛台",
+    "top_community_count": 91,
+    "top_categories": {
+      "住房保障": 1706,
+      "城管执法": 527,
+      "其他": 104
+    },
+    "mom": 0.2,
+    "yoy": null
+  },
+  {
+    "month": "2024-06",
+    "total": 2532,
+    "communities": 589,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 274,
+    "top_community": "尚海湾二期",
+    "top_community_count": 47,
+    "top_categories": {
+      "住房保障": 1867,
+      "城管执法": 447,
+      "其他": 127
+    },
+    "mom": 3.7,
+    "yoy": null
+  },
+  {
+    "month": "2024-07",
+    "total": 2683,
+    "communities": 619,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 273,
+    "top_community": "梅陇三村",
+    "top_community_count": 43,
+    "top_categories": {
+      "住房保障": 2009,
+      "城管执法": 424,
+      "其他": 154
+    },
+    "mom": 6.0,
+    "yoy": null
+  },
+  {
+    "month": "2024-08",
+    "total": 2474,
+    "communities": 582,
+    "streets": 14,
+    "top_street": "天平路",
+    "top_street_count": 274,
+    "top_community": "杜鹃园",
+    "top_community_count": 83,
+    "top_categories": {
+      "住房保障": 1906,
+      "城管执法": 346,
+      "其他": 156
+    },
+    "mom": -7.8,
+    "yoy": null
+  },
+  {
+    "month": "2024-09",
+    "total": 3070,
+    "communities": 638,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 341,
+    "top_community": "中海瀛台",
+    "top_community_count": 57,
+    "top_categories": {
+      "住房保障": 2357,
+      "城管执法": 432,
+      "其他": 212
+    },
+    "mom": 24.1,
+    "yoy": null
+  },
+  {
+    "month": "2024-10",
+    "total": 2532,
+    "communities": 578,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 315,
+    "top_community": "中海瀛台",
+    "top_community_count": 80,
+    "top_categories": {
+      "住房保障": 1874,
+      "城管执法": 425,
+      "其他": 137
+    },
+    "mom": -17.5,
+    "yoy": null
+  },
+  {
+    "month": "2024-11",
+    "total": 2926,
+    "communities": 593,
+    "streets": 14,
+    "top_street": "斜土路",
+    "top_street_count": 428,
+    "top_community": "尚海湾二期",
+    "top_community_count": 194,
+    "top_categories": {
+      "住房保障": 2265,
+      "城管执法": 437,
+      "其他": 129
+    },
+    "mom": 15.6,
+    "yoy": null
+  },
+  {
+    "month": "2024-12",
+    "total": 2537,
+    "communities": 568,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 325,
+    "top_community": "中海瀛台",
+    "top_community_count": 52,
+    "top_categories": {
+      "住房保障": 1925,
+      "城管执法": 391,
+      "其他": 133
+    },
+    "mom": -13.3,
+    "yoy": null
+  },
+  {
+    "month": "2025-01",
+    "total": 1777,
+    "communities": 501,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 285,
+    "top_community": "中海瀛台",
+    "top_community_count": 57,
+    "top_categories": {
+      "住房保障": 1306,
+      "城管执法": 290,
+      "其他": 122
+    },
+    "mom": -30.0,
+    "yoy": -14.3
+  },
+  {
+    "month": "2025-02",
+    "total": 1419,
+    "communities": 454,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 191,
+    "top_community": "中海瀛台",
+    "top_community_count": 35,
+    "top_categories": {
+      "住房保障": 1086,
+      "城管执法": 215,
+      "其他": 63
+    },
+    "mom": -20.1,
+    "yoy": 5.9
+  },
+  {
+    "month": "2025-03",
+    "total": 2157,
+    "communities": 521,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 263,
+    "top_community": "中海瀛台",
+    "top_community_count": 46,
+    "top_categories": {
+      "住房保障": 1588,
+      "城管执法": 395,
+      "其他": 106
+    },
+    "mom": 52.0,
+    "yoy": -11.0
+  },
+  {
+    "month": "2025-04",
+    "total": 2094,
+    "communities": 557,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 333,
+    "top_community": "悦汇长庭",
+    "top_community_count": 62,
+    "top_categories": {
+      "住房保障": 1452,
+      "城管执法": 462,
+      "其他": 112
+    },
+    "mom": -2.9,
+    "yoy": -14.0
+  },
+  {
+    "month": "2025-05",
+    "total": 1994,
+    "communities": 550,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 299,
+    "top_community": "长汇景苑",
+    "top_community_count": 40,
+    "top_categories": {
+      "住房保障": 1450,
+      "城管执法": 391,
+      "其他": 90
+    },
+    "mom": -4.8,
+    "yoy": -18.3
+  },
+  {
+    "month": "2025-06",
+    "total": 2075,
+    "communities": 532,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 241,
+    "top_community": "鑫桂苑·侨高中心",
+    "top_community_count": 37,
+    "top_categories": {
+      "住房保障": 1544,
+      "城管执法": 388,
+      "其他": 83
+    },
+    "mom": 4.1,
+    "yoy": -18.0
+  },
+  {
+    "month": "2025-07",
+    "total": 2102,
+    "communities": 534,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 242,
+    "top_community": "东湾小区",
+    "top_community_count": 33,
+    "top_categories": {
+      "住房保障": 1602,
+      "城管执法": 365,
+      "其他": 75
+    },
+    "mom": 1.3,
+    "yoy": -21.7
+  },
+  {
+    "month": "2025-08",
+    "total": 2180,
+    "communities": 555,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 281,
+    "top_community": "东湾小区",
+    "top_community_count": 39,
+    "top_categories": {
+      "住房保障": 1638,
+      "城管执法": 388,
+      "其他": 96
+    },
+    "mom": 3.7,
+    "yoy": -11.9
+  },
+  {
+    "month": "2025-09",
+    "total": 2176,
+    "communities": 555,
+    "streets": 14,
+    "top_street": "枫林路",
+    "top_street_count": 226,
+    "top_community": "东湾小区",
+    "top_community_count": 49,
+    "top_categories": {
+      "住房保障": 1618,
+      "城管执法": 387,
+      "其他": 106
+    },
+    "mom": -0.2,
+    "yoy": -29.1
+  },
+  {
+    "month": "2025-10",
+    "total": 1855,
+    "communities": 508,
+    "streets": 14,
+    "top_street": "漕河泾",
+    "top_street_count": 212,
+    "top_community": "玖珑庭",
+    "top_community_count": 40,
+    "top_categories": {
+      "住房保障": 1343,
+      "城管执法": 373,
+      "其他": 93
+    },
+    "mom": -14.8,
+    "yoy": -26.7
+  },
+  {
+    "month": "2025-11",
+    "total": 1975,
+    "communities": 512,
+    "streets": 14,
+    "top_street": "徐家汇",
+    "top_street_count": 229,
+    "top_community": "华悦家园",
+    "top_community_count": 32,
+    "top_categories": {
+      "住房保障": 1447,
+      "城管执法": 356,
+      "其他": 102
+    },
+    "mom": 6.5,
+    "yoy": -32.5
+  },
+  {
+    "month": "2025-12",
+    "total": 1814,
+    "communities": 548,
+    "streets": 13,
+    "top_street": "徐家汇",
+    "top_street_count": 226,
+    "top_community": "日晖六村",
+    "top_community_count": 32,
+    "top_categories": {
+      "住房保障": 1335,
+      "城管执法": 299,
+      "其他": 107
+    },
+    "mom": -8.2,
+    "yoy": -28.5
+  },
+  {
+    "month": "2026-01",
+    "total": 1485,
+    "communities": 482,
+    "streets": 14,
+    "top_street": "长桥",
+    "top_street_count": 179,
+    "top_community": "龙山新村",
+    "top_community_count": 18,
+    "top_categories": {
+      "住房保障": 1145,
+      "城管执法": 228,
+      "其他": 60
+    },
+    "mom": -18.1,
+    "yoy": -16.4
+  },
+  {
+    "month": "2026-02",
+    "total": 888,
+    "communities": 373,
+    "streets": 13,
+    "top_street": "田林",
+    "top_street_count": 109,
+    "top_community": "盛大花园",
+    "top_community_count": 28,
+    "top_categories": {
+      "住房保障": 679,
+      "城管执法": 136,
+      "其他": 39
+    },
+    "mom": -40.2,
+    "yoy": -37.4
+  },
+  {
+    "month": "2026-03",
+    "total": 1682,
+    "communities": 507,
+    "streets": 13,
+    "top_street": "徐家汇",
+    "top_street_count": 195,
+    "top_community": "家乐苑",
+    "top_community_count": 31,
+    "top_categories": {
+      "住房保障": 1252,
+      "城管执法": 307,
+      "其他": 73
+    },
+    "mom": 89.4,
+    "yoy": -22.0
+  },
+  {
+    "month": "2026-04",
+    "total": 1704,
+    "communities": 518,
+    "streets": 13,
+    "top_street": "徐家汇",
+    "top_street_count": 197,
+    "top_community": "尚海湾二期",
+    "top_community_count": 32,
+    "top_categories": {
+      "住房保障": 1240,
+      "城管执法": 315,
+      "其他": 103
+    },
+    "mom": 1.3,
+    "yoy": -18.6
+  },
+  {
+    "month": "2026-05",
+    "total": 1772,
+    "communities": 506,
+    "streets": 13,
+    "top_street": "长桥",
+    "top_street_count": 195,
+    "top_community": "凌云新村",
+    "top_community_count": 25,
+    "top_categories": {
+      "住房保障": 1295,
+      "城管执法": 352,
+      "其他": 73
+    },
+    "mom": 4.0,
+    "yoy": -11.1
+  },
+  {
+    "month": "2026-06",
+    "total": 1856,
+    "communities": 503,
+    "streets": 13,
+    "top_street": "长桥",
+    "top_street_count": 191,
+    "top_community": "华欣家园",
+    "top_community_count": 22,
+    "top_categories": {
+      "住房保障": 1417,
+      "城管执法": 305,
+      "其他": 74
+    },
+    "mom": 4.7,
+    "yoy": -10.6
+  },
+  {
+    "month": "2026-07",
+    "total": 2097,
+    "communities": 550,
+    "streets": 13,
+    "top_street": "漕河泾",
+    "top_street_count": 226,
+    "top_community": "俞一小区",
+    "top_community_count": 32,
+    "top_categories": {
+      "住房保障": 1603,
+      "城管执法": 296,
+      "其他": 126
+    },
+    "mom": 13.0,
+    "yoy": -0.2
+  }
+]

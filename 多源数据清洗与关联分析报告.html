@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多源数据清洗与关联分析报告</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+
+  .header { background:linear-gradient(135deg,#1a237e 0%,#283593 40%,#3949ab 100%); color:#fff; padding:36px 0 32px; text-align:center; position:relative; }
+  .header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#7c4dff,#536dfe,#448aff,#40c4ff); }
+  .header h1 { font-size:24px; font-weight:800; letter-spacing:1px; }
+  .header .subtitle { font-size:13px; margin-top:8px; opacity:0.85; }
+  .header .meta { font-size:11px; margin-top:6px; opacity:0.6; }
+
+  .stats-row { display:flex; justify-content:center; gap:20px; margin-top:20px; flex-wrap:wrap; padding:0 16px; }
+  .stat-card { background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border-radius:10px; padding:12px 18px; min-width:110px; text-align:center; }
+  .stat-card .num { font-size:24px; font-weight:800; color:#fff; }
+  .stat-card .label { font-size:11px; opacity:0.9; margin-top:2px; }
+
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+
+  .section { background:#fff; border-radius:10px; padding:22px 24px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
+  .section-title { font-size:17px; font-weight:700; color:#1a237e; margin-bottom:14px; display:flex; align-items:center; gap:8px; border-left:4px solid #3949ab; padding-left:10px; }
+  .section-title .icon { font-size:18px; }
+  .desc { font-size:13px; color:#555; margin-bottom:14px; }
+  .highlight { background:#e8eaf6; border-left:3px solid #3949ab; padding:10px 14px; margin:12px 0; font-size:13px; border-radius:0 6px 6px 0; }
+  .highlight strong { color:#1a237e; }
+
+  /* Data source cards */
+  .source-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .source-card { background:#fafafa; border-radius:8px; padding:14px; border-top:3px solid #3949ab; transition:transform 0.2s; }
+  .source-card:hover { transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  .source-card.level-street { border-top-color:#ff9800; }
+  .source-card.level-community { border-top-color:#4caf50; }
+  .source-card .src-icon { font-size:24px; margin-bottom:6px; }
+  .source-card .src-name { font-size:13px; font-weight:700; color:#333; margin-bottom:6px; }
+  .source-card .src-meta { font-size:11px; color:#888; line-height:1.8; }
+  .source-card .src-meta .val { font-weight:700; color:#1a237e; }
+  .source-card .match-rate { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700; margin-top:4px; }
+  .rate-high { background:#c8e6c9; color:#2e7d32; }
+  .rate-mid { background:#fff3e0; color:#e65100; }
+  .rate-low { background:#ffcdd2; color:#c62828; }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+  th { background:#1a237e; color:#fff; padding:8px 10px; text-align:center; font-weight:600; font-size:12px; }
+  td { padding:7px 10px; border-bottom:1px solid #f0f0f0; text-align:center; }
+  td:first-child { text-align:left; font-weight:600; }
+  tr:hover { background:#e8eaf6; }
+  .trend-up { color:#c62828; font-weight:700; }
+  .trend-down { color:#2e7d32; font-weight:700; }
+
+  /* Model diagram */
+  .model-diagram { background:#f5f5f5; border-radius:10px; padding:20px; margin:14px 0; }
+  .model-center { background:#1a237e; color:#fff; padding:16px 20px; border-radius:10px; text-align:center; font-weight:700; font-size:15px; margin:0 auto 16px; max-width:300px; }
+  .model-layers { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:14px; }
+  .model-item { background:#fff; border-radius:8px; padding:10px; text-align:center; border:1px solid #e0e0e0; font-size:12px; }
+  .model-item .mi-icon { font-size:20px; margin-bottom:4px; }
+  .model-item .mi-name { font-weight:700; color:#1a237e; font-size:12px; }
+  .model-item .mi-desc { font-size:10px; color:#888; margin-top:2px; }
+  .model-arrow { text-align:center; color:#9e9e9e; font-size:18px; margin:8px 0; }
+
+  /* Fields overview */
+  .field-cats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .field-cat { background:#fafafa; border-radius:8px; padding:12px; }
+  .field-cat .fc-title { font-size:12px; font-weight:700; color:#1a237e; margin-bottom:6px; }
+  .field-cat ul { list-style:none; font-size:11px; color:#666; line-height:1.9; }
+  .field-cat li::before { content:'• '; color:#3949ab; font-weight:700; }
+
+  /* Quality bar */
+  .quality-item { margin:10px 0; }
+  .quality-label { display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; }
+  .quality-label .ql-name { font-weight:600; }
+  .quality-bar { width:100%; height:10px; background:#eee; border-radius:5px; overflow:hidden; }
+  .quality-fill { height:100%; border-radius:5px; background:linear-gradient(90deg,#7c4dff,#3949ab); }
+  .qf-green { background:linear-gradient(90deg,#66bb6a,#2e7d32); }
+  .qf-orange { background:linear-gradient(90deg,#ffb74d,#e65100); }
+  .qf-red { background:linear-gradient(90deg,#ef5350,#c62828); }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+  .footer { text-align:center; padding:24px 0; font-size:11px; color:#999; }
+
+  @media(max-width:768px) {
+    .source-grid { grid-template-columns:1fr 1fr; }
+    .model-layers { grid-template-columns:repeat(2,1fr); }
+    .field-cats { grid-template-columns:1fr; }
+    .two-col { grid-template-columns:1fr; }
+    .stats-row { gap:10px; }
+    .stat-card { min-width:80px; padding:8px 12px; }
+    .stat-card .num { font-size:18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sub Nav -->
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <h1>多源数据清洗与关联分析报告</h1>
+  <div class="subtitle">以纳统小区为基础 · 9类业务数据全关联 · 为根因分析提供数据底座</div>
+  <div class="meta">数据来源：9个科室业务系统 + 12345热线 · 994个小区 · 13个街道</div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="num">994</div><div class="label">纳统小区</div></div>
+    <div class="stat-card"><div class="num">9</div><div class="label">数据源</div></div>
+    <div class="stat-card"><div class="num">45</div><div class="label">小区级字段</div></div>
+    <div class="stat-card"><div class="num">24</div><div class="label">街道级字段</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== 一、数据关联模型 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔗</span>一、数据关联模型</div>
+    <p class="desc">以纳统小区数据库为主表（994个小区，57个字段），通过小区名称、小区ID、街道三个维度，将电梯、修缮、检查、底部抬升、热线投诉等业务数据进行关联，构建小区级和街道级两张宽表。</p>
+
+    <div class="model-diagram">
+      <div class="model-center">🏛️ 纳统小区（主表）<br><span style="font-size:11px;opacity:0.7;font-weight:400;">994小区 · 57字段 · 13街道</span></div>
+      <div class="model-arrow">↕ 小区ID / 小区名称 / 街道 关联 ↕</div>
+      <div class="model-layers">
+        <div class="model-item">
+          <div class="mi-icon">🛗</div>
+          <div class="mi-name">电梯基本信息</div>
+          <div class="mi-desc">1617条 · 加装状态</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">🏗️</div>
+          <div class="mi-name">修缮项目</div>
+          <div class="mi-desc">553条 · 投资/面积</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">📋</div>
+          <div class="mi-name">五查/失信计分</div>
+          <div class="mi-desc">37条 · 检查/记分</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">📈</div>
+          <div class="mi-name">底部抬升小区</div>
+          <div class="mi-desc">84个 · 矛盾类型</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">📞</div>
+          <div class="mi-name">12345热线投诉</div>
+          <div class="mi-desc">6.5万条 · 14类</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">🏚️</div>
+          <div class="mi-name">征收基地</div>
+          <div class="mi-desc">105条 · 街道级</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">🔨</div>
+          <div class="mi-name">拆房信息</div>
+          <div class="mi-desc">51条 · 街道级</div>
+        </div>
+        <div class="model-item">
+          <div class="mi-icon">📐</div>
+          <div class="mi-name">测绘基本信息</div>
+          <div class="mi-desc">115条 · 街道级</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>两层关联体系：</strong>① 小区级（通过小区ID+名称匹配）：电梯、修缮、失信、底部抬升、热线投诉；② 街道级（通过街道名称匹配）：征收、拆房、测绘。两层数据共同支撑根因分析的多维度数据需求。
+    </div>
+  </div>
+
+  <!-- ===== 二、数据来源盘点 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📊</span>二、数据来源盘点</div>
+    <p class="desc">共整合9类数据源，涵盖小区基础属性、物业监管、房屋修缮、电梯加装、投诉热线、征收拆迁等维度。</p>
+
+    <div class="source-grid">
+      <div class="source-card level-community">
+        <div class="src-icon">🏛️</div>
+        <div class="src-name">纳统小区（主表）</div>
+        <div class="src-meta">
+          记录数: <span class="val">994</span><br>
+          字段数: <span class="val">57</span><br>
+          层级: <span class="val">小区级</span><br>
+        </div>
+        <span class="match-rate rate-high">主表 · 100%</span>
+      </div>
+
+      <div class="source-card level-community">
+        <div class="src-icon">🛗</div>
+        <div class="src-name">电梯基本信息</div>
+        <div class="src-meta">
+          记录数: <span class="val">1,617</span><br>
+          涉及小区: <span class="val">268</span><br>
+          匹配数: <span class="val">256</span><br>
+        </div>
+        <span class="match-rate rate-high">匹配率 95.5%</span>
+      </div>
+
+      <div class="source-card level-community">
+        <div class="src-icon">🏗️</div>
+        <div class="src-name">修缮项目</div>
+        <div class="src-meta">
+          记录数: <span class="val">553</span><br>
+          涉及小区: <span class="val">339</span><br>
+          匹配数: <span class="val">284</span><br>
+        </div>
+        <span class="match-rate rate-mid">匹配率 83.8%</span>
+      </div>
+
+      <div class="source-card level-community">
+        <div class="src-icon">⚠️</div>
+        <div class="src-name">失信计分</div>
+        <div class="src-meta">
+          记录数: <span class="val">37</span><br>
+          涉及小区: <span class="val">18</span><br>
+          匹配数: <span class="val">18</span><br>
+        </div>
+        <span class="match-rate rate-high">匹配率 100%</span>
+      </div>
+
+      <div class="source-card level-community">
+        <div class="src-icon">📈</div>
+        <div class="src-name">底部抬升小区</div>
+        <div class="src-meta">
+          小区数: <span class="val">84</span><br>
+          匹配数: <span class="val">82</span><br>
+          矛盾类型: <span class="val">3类</span><br>
+        </div>
+        <span class="match-rate rate-high">匹配率 97.6%</span>
+      </div>
+
+      <div class="source-card level-community">
+        <div class="src-icon">📞</div>
+        <div class="src-name">12345热线投诉</div>
+        <div class="src-meta">
+          记录数: <span class="val">64,570</span><br>
+          ID匹配: <span class="val">1,049</span><br>
+          名称匹配: <span class="val">967</span><br>
+        </div>
+        <span class="match-rate rate-high">小区覆盖率 97.4%</span>
+      </div>
+
+      <div class="source-card level-street">
+        <div class="src-icon">🏚️</div>
+        <div class="src-name">征收基地</div>
+        <div class="src-meta">
+          记录数: <span class="val">105</span><br>
+          涉及街道: <span class="val">12</span><br>
+          层级: <span class="val">街道级</span><br>
+        </div>
+        <span class="match-rate rate-high">街道覆盖 92.3%</span>
+      </div>
+
+      <div class="source-card level-street">
+        <div class="src-icon">🔨</div>
+        <div class="src-name">拆房信息</div>
+        <div class="src-meta">
+          记录数: <span class="val">51</span><br>
+          涉及街道: <span class="val">11</span><br>
+          层级: <span class="val">街道级</span><br>
+        </div>
+        <span class="match-rate rate-mid">街道覆盖 84.6%</span>
+      </div>
+
+      <div class="source-card level-street">
+        <div class="src-icon">📐</div>
+        <div class="src-name">测绘基本信息</div>
+        <div class="src-meta">
+          记录数: <span class="val">115</span><br>
+          涉及街道: <span class="val">12</span><br>
+          层级: <span class="val">街道级</span><br>
+        </div>
+        <span class="match-rate rate-high">街道覆盖 92.3%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 三、字段体系 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🗂️</span>三、字段体系</div>
+    <p class="desc">关联后的数据包含小区级45个字段、街道级24个字段，覆盖六大维度，可支撑多维度根因分析。</p>
+
+    <h4 style="font-size:14px; color:#1a237e; margin:8px 0 10px;">小区级字段（45个）</h4>
+    <div class="field-cats">
+      <div class="field-cat">
+        <div class="fc-title">🏛️ 基础属性（11个）</div>
+        <ul>
+          <li>小区ID / 小区名称</li>
+          <li>街道 / 片区</li>
+          <li>小区性质 / 类型</li>
+          <li>竣工年份</li>
+          <li>总建筑面积</li>
+          <li>总户数 / 总门牌数</li>
+          <li>商品房面积占比</li>
+          <li>封闭与否</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">🏢 物业管理（7个）</div>
+        <ul>
+          <li>物业公司名称</li>
+          <li>物业资质等级</li>
+          <li>物业服务类型</li>
+          <li>收费模式</li>
+          <li>高层/多层/小高层收费</li>
+          <li>物业合同起止日期</li>
+          <li>小区经理</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">👥 业委会（3个）</div>
+        <ul>
+          <li>业主大会名称</li>
+          <li>业主委员会届数</li>
+          <li>业主大会地址</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">🛗 设施设备（6个）</div>
+        <ul>
+          <li>电梯总数</li>
+          <li>电梯完工数</li>
+          <li>电梯施工中数</li>
+          <li>地上/地下车位数</li>
+          <li>总车位数</li>
+          <li>修缮项目数</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">🏗️ 修缮改造（4个）</div>
+        <ul>
+          <li>修缮项目数</li>
+          <li>修缮总投资</li>
+          <li>修缮总面积</li>
+          <li>修缮年份/类型</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">📞 投诉数据（5个）</div>
+        <ul>
+          <li>投诉总量</li>
+          <li>2024/2025/2026年</li>
+          <li>2025年同比</li>
+          <li>2025年热线工单(底部抬升)</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">⚠️ 监管与重点（9个）</div>
+        <ul>
+          <li>失信记录数</li>
+          <li>失信记分值</li>
+          <li>是否底部抬升</li>
+          <li>底部抬升矛盾类型</li>
+          <li>5类问题标签</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 style="font-size:14px; color:#1a237e; margin:16px 0 10px;">街道级字段（24个）</h4>
+    <div class="field-cats">
+      <div class="field-cat">
+        <div class="fc-title">📊 基础统计（6个）</div>
+        <ul>
+          <li>小区数量</li>
+          <li>总户数</li>
+          <li>总建筑面积</li>
+          <li>平均竣工年份</li>
+          <li>总车位数</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">📞 投诉数据（5个）</div>
+        <ul>
+          <li>投诉总量</li>
+          <li>2024/2025/2026年</li>
+          <li>2025年同比</li>
+          <li>底部抬升小区数</li>
+        </ul>
+      </div>
+      <div class="field-cat">
+        <div class="fc-title">🏗️ 建设改造（6个）</div>
+        <ul>
+          <li>修缮项目数</li>
+          <li>修缮总投资</li>
+          <li>电梯总数</li>
+          <li>征收基地数/户数/面积</li>
+          <li>拆房项目数/面积</li>
+          <li>测绘项目数/面积/车位</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 四、数据质量评估 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">✅</span>四、数据质量评估</div>
+
+    <h4 style="font-size:14px; color:#1a237e; margin:8px 0 10px;">数据匹配率</h4>
+    <div class="quality-item">
+      <div class="quality-label"><span class="ql-name">电梯基本信息</span><span>95.5% (256/268)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:95.5%;"></div></div>
+    </div>
+    <div class="quality-item">
+      <div class="quality-label"><span class="ql-name">底部抬升小区</span><span>97.6% (82/84)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:97.6%;"></div></div>
+    </div>
+    <div class="quality-item">
+      <div class="quality-label"><span class="ql-name">失信计分</span><span>100% (18/18)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:100%;"></div></div>
+    </div>
+    <div class="quality-item">
+      <div class="quality-label"><span class="ql-name">修缮项目</span><span>83.8% (284/339)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-orange" style="width:83.8%;"></div></div>
+    </div>
+    <div class="quality-item">
+      <div class="quality-label"><span class="ql-name">热线投诉（覆盖率）</span><span>97.4% (968/994)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:97.4%;"></div></div>
+    </div>
+
+    <div class="highlight" style="margin-top:16px;">
+      <strong>质量总结：</strong>整体数据匹配率良好，5类数据中4类匹配率超过95%。修缮项目匹配率相对较低（83.8%），主要原因是修缮项目名称与小区标准名称存在差异（如"XX路XX弄"与小区正式名称不对应），以及部分修缮项目涉及非纳统小区。建议后续建立项目-小区映射表提升匹配精度。
+    </div>
+
+    <h4 style="font-size:14px; color:#1a237e; margin:16px 0 10px;">主要清洗工作</h4>
+    <table>
+      <tr><th>清洗类别</th><th>处理内容</th><th>涉及数据源</th></tr>
+      <tr><td>街道名称标准化</td><td>统一去除"街道""镇""住房保障和房屋管理所"等后缀，13个街道统一命名</td><td>全部9类数据</td></tr>
+      <tr><td>小区名称标准化</td><td>全角转半角、去除空格、括号统一、去除冗余字符</td><td>电梯/修缮/失信/底部抬升/热线</td></tr>
+      <tr><td>双维度匹配</td><td>优先按小区ID精确匹配，再按小区名称模糊匹配补充</td><td>热线投诉数据</td></tr>
+      <tr><td>缺失值处理</td><td>数值型字段填充0，文本字段保留空值，布尔型填充False</td><td>全部关联数据</td></tr>
+      <tr><td>数据类型统一</td><td>community_id统一为字符串类型，避免类型不匹配</td><td>纳统小区/热线</td></tr>
+      <tr><td>别名匹配</td><td>利用纳统小区别名扩展名称索引，提升匹配率</td><td>纳统小区</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== 五、根因分析支撑 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🔍</span>五、根因分析支撑能力</div>
+    <p class="desc">关联后的数据可支撑以下根因分析维度，为后续根因分析报告提供完整的数据基础。</p>
+
+    <div class="two-col">
+      <div>
+        <h4 style="font-size:13px; color:#1a237e; margin-bottom:8px;">🏗️ 硬件因素分析</h4>
+        <ul style="font-size:12px; color:#555; padding-left:18px; line-height:2;">
+          <li><strong>房龄与投诉关系</strong>：竣工年份 vs 投诉量/投诉类型</li>
+          <li><strong>房屋类型影响</strong>：商品房/公房/混合等不同性质投诉差异</li>
+          <li><strong>规模效应</strong>：户数/建筑面积与投诉量的相关性</li>
+          <li><strong>电梯加装与投诉</strong>：电梯数量/状态 vs 房屋维修投诉</li>
+          <li><strong>车位供给与停车投诉</strong>：车位数 vs 停车管理投诉量</li>
+          <li><strong>修缮效果评估</strong>：修缮前后投诉量变化对比</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size:13px; color:#1a237e; margin-bottom:8px;">🏢 管理因素分析</h4>
+        <ul style="font-size:12px; color:#555; padding-left:18px; line-height:2;">
+          <li><strong>物业公司与投诉</strong>：不同物业公司服务质量差异</li>
+          <li><strong>物业费与投诉关系</strong>：收费标准 vs 投诉量/类型</li>
+          <li><strong>物业资质影响</strong>：资质等级与投诉率相关性</li>
+          <li><strong>失信计分关联</strong>：失信记录 vs 投诉量变化</li>
+          <li><strong>业委会作用评估</strong>：有/无业委会小区投诉差异</li>
+          <li><strong>底部抬升治理效果</strong>：重点小区治理前后变化</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:14px;">
+      <strong>下一步建议：</strong>基于此数据底座，可开展物业投诉根因分析报告（成果#4），从房屋属性、物业资质、收费水平、设施状况、业委会状态、旧改进度等多维度进行相关性分析和回归建模，识别投诉高发的核心驱动因素。
+    </div>
+  </div>
+
+  <!-- ===== 六、数据产出 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📁</span>六、数据产出物</div>
+
+    <table>
+      <tr><th>产出物</th><th>格式</th><th>规模</th><th>用途</th></tr>
+      <tr><td>小区级关联数据</td><td>PKL + CSV</td><td>994条 × 45字段</td><td>小区维度根因分析</td></tr>
+      <tr><td>街道级关联数据</td><td>PKL + CSV</td><td>13条 × 24字段</td><td>街道维度宏观分析</td></tr>
+      <tr><td>数据质量报告</td><td>JSON</td><td>—</td><td>质量评估与审计</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期 · 多源数据清洗与关联分析报告 · 2026年8月
+</div>
+
+</body>
+</html>

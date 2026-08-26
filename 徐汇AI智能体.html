@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>徐汇物业AI智能体</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { height:100%; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+
+  /* ===== Header ===== */
+  .chat-header { background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; padding:12px 16px; display:flex; align-items:center; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.15); z-index:10; }
+  .chat-back { width:32px; height:32px; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:20px; border-radius:8px; transition:background 0.2s; }
+  .chat-back:hover { background:rgba(255,255,255,0.15); }
+  .chat-avatar { width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; margin:0 10px 0 14px; font-size:18px; }
+  .chat-title { flex:1; }
+  .chat-title .name { font-size:15px; font-weight:700; }
+  .chat-title .status { font-size:11px; opacity:0.7; display:flex; align-items:center; gap:4px; }
+  .chat-title .status::before { content:''; width:6px; height:6px; border-radius:50%; background:#4fc3f7; display:inline-block; }
+  .chat-action { width:32px; height:32px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; cursor:pointer; border-radius:8px; transition:background 0.2s; }
+  .chat-action:hover { background:rgba(255,255,255,0.15); }
+
+  /* ===== Messages ===== */
+  .chat-body { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:14px; }
+  .msg-row { display:flex; gap:8px; max-width:88%; animation:msgIn 0.3s ease; }
+  .msg-row.ai { align-self:flex-start; }
+  .msg-row.user { align-self:flex-end; flex-direction:row-reverse; }
+  .msg-avatar { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .msg-row.ai .msg-avatar { background:linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; }
+  .msg-row.user .msg-avatar { background:#43a047; color:#fff; }
+  .msg-bubble { padding:10px 14px; border-radius:14px; font-size:14px; line-height:1.7; word-break:break-word; }
+  .msg-row.ai .msg-bubble { background:#fff; color:#333; border-top-left-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+  .msg-row.user .msg-bubble { background:#1976d2; color:#fff; border-top-right-radius:4px; }
+  .msg-bubble strong { font-weight:700; }
+  .msg-bubble .data-card { background:#f6f8fa; border-radius:8px; padding:10px 12px; margin:8px 0; border-left:3px solid #1976d2; }
+  .msg-bubble .data-card .dc-title { font-size:12px; color:#0d47a1; font-weight:700; margin-bottom:4px; }
+  .msg-bubble .data-card .dc-row { display:flex; justify-content:space-between; font-size:12px; padding:2px 0; }
+  .msg-bubble .data-card .dc-row .dc-val { font-weight:700; }
+  .msg-bubble .dc-green { color:#43a047; }
+  .msg-bubble .dc-red { color:#f5222d; }
+  .msg-bubble .dc-orange { color:#ff8f00; }
+  .msg-bubble table { width:100%; border-collapse:collapse; margin:6px 0; font-size:12px; }
+  .msg-bubble th { background:#0d47a1; color:#fff; padding:4px 6px; text-align:center; font-weight:600; }
+  .msg-bubble td { padding:3px 6px; border-bottom:1px solid #e8e8e8; text-align:center; }
+  .msg-bubble td:first-child { text-align:left; }
+  .msg-bubble .tag { display:inline-block; padding:1px 6px; border-radius:4px; font-size:11px; font-weight:600; }
+  .msg-bubble .tag.green { background:#f6ffed; color:#43a047; }
+  .msg-bubble .tag.red { background:#fff1f0; color:#f5222d; }
+  .msg-bubble .tag.orange { background:#fff7e6; color:#ff8f00; }
+  .msg-bubble .link-btn { display:inline-block; margin-top:8px; padding:6px 14px; background:#e3f2fd; color:#0d47a1; border-radius:6px; text-decoration:none; font-size:12px; font-weight:600; }
+
+  /* Typing indicator */
+  .typing { display:flex; gap:4px; padding:4px 0; }
+  .typing span { width:7px; height:7px; border-radius:50%; background:#bbb; animation:typing 1.4s infinite; }
+  .typing span:nth-child(2) { animation-delay:0.2s; }
+  .typing span:nth-child(3) { animation-delay:0.4s; }
+  @keyframes typing { 0%,60%,100% { opacity:0.3; transform:translateY(0); } 30% { opacity:1; transform:translateY(-4px); } }
+
+  /* ===== Quick Actions ===== */
+  .quick-scroll { flex-shrink:0; padding:8px 12px; background:#fff; border-top:1px solid #e8e8e8; overflow-x:auto; display:flex; gap:8px; scrollbar-width:none; }
+  .quick-scroll::-webkit-scrollbar { display:none; }
+  .quick-btn { white-space:nowrap; padding:6px 14px; border-radius:16px; font-size:12px; color:#0d47a1; background:#e3f2fd; border:1px solid #bbdefb; cursor:pointer; transition:all 0.2s; flex-shrink:0; }
+  .quick-btn:hover { background:#1976d2; color:#fff; border-color:#1976d2; }
+
+  /* ===== Input ===== */
+  .chat-input { flex-shrink:0; padding:8px 12px; background:#fff; border-top:1px solid #e8e8e8; display:flex; gap:8px; align-items:center; }
+  .chat-input input { flex:1; border:1px solid #e8e8e8; border-radius:20px; padding:8px 16px; font-size:14px; outline:none; font-family:inherit; transition:border-color 0.2s; }
+  .chat-input input:focus { border-color:#1976d2; }
+  .chat-send { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:16px; transition:transform 0.2s; flex-shrink:0; }
+  .chat-send:hover { transform:scale(1.05); }
+  .chat-send:active { transform:scale(0.95); }
+
+  /* Animations */
+  @keyframes msgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* Sub nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); flex-shrink:0; }
+  .sub-nav-inner { max-width:600px; margin:0 auto; padding:0 12px; display:flex; align-items:center; height:40px; }
+  .sub-nav-logo { font-size:12px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:11px; color:#666; text-decoration:none; padding:3px 10px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:10px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:10px; }
+  .sub-nav-links a { font-size:11px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+
+  /* Welcome screen */
+  .welcome-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:8px; }
+  .welcome-item { background:#f6f8fa; border-radius:8px; padding:10px; text-align:center; cursor:pointer; transition:all 0.2s; border:1px solid #e8e8e8; }
+  .welcome-item:hover { background:#e3f2fd; border-color:#bbdefb; }
+  .welcome-item .wi-icon { font-size:20px; margin-bottom:4px; }
+  .welcome-item .wi-label { font-size:11px; color:#555; font-weight:600; }
+</style>
+</head>
+<body>
+
+<!-- Sub Nav -->
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+</div>
+</div>
+</div>
+
+<!-- Chat Header -->
+<div class="chat-header">
+  <a class="chat-back" href="课题成果总览.html">‹</a>
+  <div class="chat-avatar">🤖</div>
+  <div class="chat-title">
+    <div class="name">徐汇物业AI智能体</div>
+    <div class="status">在线 · 数据更新至2026年7月</div>
+  </div>
+  <div class="chat-action" onclick="clearChat()" title="清空对话">⟲</div>
+</div>
+
+<!-- Chat Body -->
+<div class="chat-body" id="chatBody">
+  <!-- Messages will be inserted here -->
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-scroll" id="quickScroll">
+  <button class="quick-btn" onclick="ask('投诉量趋势')">📊 投诉量趋势</button>
+  <button class="quick-btn" onclick="ask('十四类排名')">📋 十四类排名</button>
+  <button class="quick-btn" onclick="ask('街道排名')">🏘️ 街道排名</button>
+  <button class="quick-btn" onclick="ask('高风险小区')">🚨 高风险小区</button>
+  <button class="quick-btn" onclick="ask('治理效果')">✅ 治理效果</button>
+  <button class="quick-btn" onclick="ask('去重识别')">🔍 去重识别</button>
+  <button class="quick-btn" onclick="ask('成功案例')">🏆 成功案例</button>
+  <button class="quick-btn" onclick="ask('反弹案例')">⚠️ 反弹案例</button>
+  <button class="quick-btn" onclick="ask('数据质量')">🔧 数据质量</button>
+  <button class="quick-btn" onclick="ask('项目成果总览')">📁 项目成果</button>
+</div>
+
+<!-- Input -->
+<div class="chat-input">
+  <input type="text" id="chatInput" placeholder="输入您的问题，如"凌云路街道投诉情况"…" onkeydown="if(event.key==='Enter')sendMsg()">
+  <button class="chat-send" onclick="sendMsg()">➤</button>
+</div>
+
+<script>
+var chatBody = document.getElementById('chatBody');
+var chatInput = document.getElementById('chatInput');
+
+// ===== Knowledge Base =====
+var KB = {
+  overview: {
+    title: '投诉量总览',
+    rows: [
+      ['2024年全年', '29,070件', ''],
+      ['2025年全年', '23,618件', 'dc-green'],
+      ['2025年同比', '-18.8%', 'dc-green'],
+      ['2026年1-7月', '11,484件', ''],
+      ['2026年同比', '-15.7%', 'dc-green']
+    ]
+  },
+  categories: [
+    {name:'房屋维修', y2024:4591, change:'-26.2%', level:'green'},
+    {name:'停车管理', y2024:4590, change:'-18.9%', level:'green'},
+    {name:'房屋违规使用', y2024:2925, change:'-19.3%', level:'green'},
+    {name:'业主大会/业委会', y2024:2877, change:'-22.1%', level:'green'},
+    {name:'邻里纠纷', y2024:2761, change:'-7.3%', level:'orange'},
+    {name:'旧住房改造', y2024:1933, change:'-37.2%', level:'green'},
+    {name:'消防管理', y2024:1801, change:'-7.8%', level:'orange'},
+    {name:'群租管理', y2024:1476, change:'-4.1%', level:'orange'},
+    {name:'物业安保', y2024:1485, change:'-6.7%', level:'orange'},
+    {name:'清洁卫生', y2024:1375, change:'-22.0%', level:'green'},
+    {name:'绿化管理', y2024:930, change:'-23.4%', level:'green'},
+    {name:'物业服务态度', y2024:575, change:'+7.0%', level:'red'},
+    {name:'物业收费', y2024:443, change:'+11.5%', level:'red'}
+  ],
+  streets: [
+    {name:'凌云路', y2024:2521, change:'-40.1%', level:'green'},
+    {name:'康健新村', y2024:2006, change:'-27.6%', level:'green'},
+    {name:'天平路', y2024:2419, change:'-25.6%', level:'green'},
+    {name:'田林', y2024:2120, change:'-22.5%', level:'green'},
+    {name:'漕河泾', y2024:2379, change:'-17.0%', level:'green'},
+    {name:'湖南路', y2024:1517, change:'-16.0%', level:'green'},
+    {name:'长桥', y2024:3415, change:'-15.9%', level:'green'},
+    {name:'斜土路', y2024:2219, change:'-14.1%', level:'green'},
+    {name:'枫林路', y2024:2599, change:'-11.1%', level:'green'},
+    {name:'龙华', y2024:1711, change:'-10.3%', level:'green'},
+    {name:'华泾', y2024:1718, change:'-7.2%', level:'orange'},
+    {name:'徐家汇', y2024:2410, change:'-6.1%', level:'orange'},
+    {name:'虹梅路', y2024:814, change:'+0.1%', level:'red'}
+  ],
+  risk: {
+    total: 799, red: 236, orange: 426, yellow: 112, blue: 25,
+    model: '五维评分（投诉量25分 + 增长率25分 + 重复率20分 + 集中度15分 + 波动性15分）',
+    levels: '红色≥70分（紧急处置）｜橙色55-69分（重点关注）｜黄色40-54分（常规关注）｜蓝色25-39分（一般跟踪）'
+  },
+  governance: {
+    total: 635, success: 269, successPct: '42.4%',
+    rebound: 74, reboundPct: '11.7%',
+    worsening: 158, worseningPct: '24.9%',
+    stable: 93, stablePct: '14.6%'
+  },
+  dedup: {
+    total: 9387, repeats: 4217, rate: '44.9%',
+    strategies: '四重识别策略：①精确匹配（同一工单号）②催办识别（7日内催办）③高频识别（同小区同类≥3件）④相似识别（文本相似度≥0.85）',
+    monthly: '2026年6月：总工单1485件，重复584件，去重率39.3%'
+  },
+  dataQuality: '排查5类问题：①字段结构差异（3份Excel字段不一致）②日期格式混用（文本/数字/标准日期）③分类值域不统一（"群租问题"vs"群租管理"）④缺失值（小区名称缺失率3.2%）⑤物业公司名称不统一（同一公司多种写法）。已给出标准化方案与接口对接规范。'
+};
+
+// ===== AI Response Engine =====
+function getResponse(query) {
+  var q = query.toLowerCase().replace(/\s/g,'');
+
+  // 投诉量趋势
+  if (match(q, ['投诉量','投诉趋势','总量','总览','概况','趋势','下降','降幅'])) {
+    var d = KB.overview;
+    var html = '<strong>📊 投诉量趋势分析</strong><br>2024-2026年12345热线物业类投诉全量数据：';
+    html += '<div class="data-card"><div class="dc-title">核心指标</div>';
+    d.rows.forEach(function(r) {
+      html += '<div class="dc-row"><span>' + r[0] + '</span><span class="dc-val ' + (r[2]||'') + '">' + r[1] + '</span></div>';
+    });
+    html += '</div>';
+    html += '投诉量连续两年下降，<strong>2025年同比下降18.8%</strong>，2026年上半年同比继续下降15.7%，治理成效显著。';
+    html += '<br><span class="link-btn" onclick="ask(\'月度趋势\')">查看月度趋势 →</span>';
+    return html;
+  }
+
+  // 月度趋势
+  if (match(q, ['月度','每月','月份','月趋势'])) {
+    var months = [
+      [1,2057,1777,1485], [2,1332,1419,888], [3,2410,2157,1682],
+      [4,2414,2094,1704], [5,2423,1994,1772], [6,2489,2075,1856], [7,2634,2102,2097]
+    ];
+    var html = '<strong>📈 月度投诉量趋势</strong><br>2024年 vs 2025年 vs 2026年（1-7月）：';
+    html += '<table><tr><th>月份</th><th>2024</th><th>2025</th><th>2026</th><th>同比</th></tr>';
+    months.forEach(function(m) {
+      var yoy = ((m[3]-m[2])/m[2]*100).toFixed(1);
+      html += '<tr><td>' + m[0] + '月</td><td>' + m[1] + '</td><td>' + m[2] + '</td><td>' + m[3] + '</td><td class="' + (yoy<0?'dc-green':'dc-red') + '">' + yoy + '%</td></tr>';
+    });
+    html += '</table>2026年2月降幅最大（-37.4%），7月降幅最小（-0.2%），需关注暑期投诉回升。';
+    return html;
+  }
+
+  // 十四类排名
+  if (match(q, ['十四类','类别','分类','问题类型','类型排名'])) {
+    var html = '<strong>📋 十四类问题投诉量及改善率排名</strong><br>按2024年投诉量降序：';
+    html += '<table><tr><th>类别</th><th>2024年</th><th>改善率</th><th>评价</th></tr>';
+    KB.categories.forEach(function(c) {
+      var tag = c.level==='green' ? '<span class="tag green">效果良好</span>' : c.level==='orange' ? '<span class="tag orange">效果一般</span>' : '<span class="tag red">效果不佳</span>';
+      html += '<tr><td>' + c.name + '</td><td>' + c.y2024 + '</td><td class="' + (c.change.startsWith('-')?'dc-green':'dc-red') + '">' + c.change + '</td><td>' + tag + '</td></tr>';
+    });
+    html += '</table>改善最佳：<strong>旧住房改造（-37.2%）</strong>；改善最差：<strong>物业收费（+11.5%）</strong>。';
+    return html;
+  }
+
+  // 街道排名
+  if (match(q, ['街道','街道排名','街道情况'])) {
+    var html = '<strong>🏘️ 十三街道投诉量及改善率排名</strong><br>按2025年改善率降序：';
+    html += '<table><tr><th>排名</th><th>街道</th><th>2024年</th><th>改善率</th></tr>';
+    KB.streets.forEach(function(s, i) {
+      html += '<tr><td>' + (i+1) + '</td><td>' + s.name + '</td><td>' + s.y2024 + '</td><td class="' + (s.change.startsWith('-')?'dc-green':'dc-red') + '">' + s.change + '</td></tr>';
+    });
+    html += '</table>治理最佳：<strong>凌云路街道（-40.1%）</strong>，全区唯一降幅超40%。<br>需关注：<strong>虹梅路（+0.1%）</strong>基本持平。';
+    return html;
+  }
+
+  // 特定街道
+  for (var i=0; i<KB.streets.length; i++) {
+    var s = KB.streets[i];
+    if (q.indexOf(s.name.toLowerCase().replace('街道','')) >= 0) {
+      var html = '<strong>🏘️ ' + s.name + '街道投诉情况</strong>';
+      html += '<div class="data-card"><div class="dc-title">' + s.name + '街道</div>';
+      html += '<div class="dc-row"><span>2024年投诉量</span><span class="dc-val">' + s.y2024 + '件</span></div>';
+      html += '<div class="dc-row"><span>2025年改善率</span><span class="dc-val ' + (s.change.startsWith('-')?'dc-green':'dc-red') + '">' + s.change + '</span></div>';
+      html += '</div>';
+      if (s.change.startsWith('-40')) html += '🏆 全区治理最佳街道！';
+      else if (s.change.startsWith('-2') || s.change.startsWith('-3')) html += '✅ 治理效果良好。';
+      else if (s.change.startsWith('-1') || s.change.startsWith('-0')) html += '⚠️ 治理效果一般，需加强。';
+      else html += '🔴 需重点关注，投诉量未下降。';
+      return html;
+    }
+  }
+
+  // 高风险小区
+  if (match(q, ['高风险','风险','预警','红色','评分'])) {
+    var r = KB.risk;
+    var html = '<strong>🚨 高风险小区预警清单</strong>';
+    html += '<div class="data-card"><div class="dc-title">五维评分模型</div>';
+    html += '<div class="dc-row"><span>参评小区</span><span class="dc-val">' + r.total + '个</span></div>';
+    html += '<div class="dc-row"><span class="dc-red">🔴 红色（≥70分）</span><span class="dc-val dc-red">' + r.red + '个</span></div>';
+    html += '<div class="dc-row"><span class="dc-orange">🟠 橙色（55-69分）</span><span class="dc-val dc-orange">' + r.orange + '个</span></div>';
+    html += '<div class="dc-row"><span>🟡 黄色（40-54分）</span><span class="dc-val">' + r.yellow + '个</span></div>';
+    html += '<div class="dc-row"><span>🔵 蓝色（25-39分）</span><span class="dc-val">' + r.blue + '个</span></div>';
+    html += '</div>';
+    html += '<strong>评分维度：</strong>' + r.model + '<br>';
+    html += '<strong>预警等级：</strong>' + r.levels + '<br>';
+    html += '236个红色小区需紧急介入，426个橙色小区需重点关注。';
+    html += '<br><a class="link-btn" href="高风险小区预警清单.html">查看完整清单 →</a>';
+    return html;
+  }
+
+  // 治理效果
+  if (match(q, ['治理效果','治理','追踪','闭环','效果追踪','成功','改善'])) {
+    var g = KB.governance;
+    var html = '<strong>✅ 治理效果追踪分析</strong><br>对635个投诉量≥15件的小区进行全周期追踪：';
+    html += '<div class="data-card"><div class="dc-title">治理闭环统计</div>';
+    html += '<div class="dc-row"><span class="dc-green">✅ 显著改善（>30%）</span><span class="dc-val dc-green">' + g.success + '个 (' + g.successPct + ')</span></div>';
+    html += '<div class="dc-row"><span class="dc-orange">⚠️ 改善后反弹</span><span class="dc-val dc-orange">' + g.rebound + '个 (' + g.reboundPct + ')</span></div>';
+    html += '<div class="dc-row"><span class="dc-red">🔴 持续恶化</span><span class="dc-val dc-red">' + g.worsening + '个 (' + g.worseningPct + ')</span></div>';
+    html += '<div class="dc-row"><span>🔵 基本稳定</span><span class="dc-val">' + g.stable + '个 (' + g.stablePct + ')</span></div>';
+    html += '</div>';
+    html += '<strong>核心发现：</strong><br>1. 42.4%小区治理显著，但24.9%持续恶化<br>2. 业委会纠纷最易反弹（Top5中3个）<br>3. 房屋维修靠旧改，清洁卫生见效最快';
+    html += '<br><a class="link-btn" href="治理效果追踪分析报告.html">查看完整报告 →</a>';
+    return html;
+  }
+
+  // 成功案例
+  if (match(q, ['成功案例','成功','最佳','标杆','经验','示范'])) {
+    var html = '<strong>🏆 治理成功案例Top5</strong>';
+    var cases = [
+      {name:'松风花园', street:'凌云路', cat:'业主大会/业委会', data:'145→0→0', pct:'100%', exp:'街道办介入调解，重新组织业委会选举'},
+      {name:'百汇园', street:'龙华', cat:'房屋维修', data:'127→0→0', pct:'100%', exp:'纳入旧住房改造计划，集中修缮'},
+      {name:'罗秀二村', street:'长桥', cat:'清洁卫生', data:'79→1→0', pct:'98.7%', exp:'更换保洁公司，增加清扫频次'},
+      {name:'长桥三村西区', street:'长桥', cat:'消防管理', data:'70→1→0', pct:'98.6%', exp:'消防部门联合物业整治通道堵塞'},
+      {name:'长桥三村东区', street:'长桥', cat:'停车管理', data:'64→2→0', pct:'96.9%', exp:'业委会重制停车规约，重新分配车位'}
+    ];
+    cases.forEach(function(c, i) {
+      html += '<div class="data-card"><div class="dc-title">案例' + (i+1) + '：' + c.name + '（' + c.street + '）</div>';
+      html += '<div class="dc-row"><span>问题类型</span><span class="dc-val">' + c.cat + '</span></div>';
+      html += '<div class="dc-row"><span>投诉变化</span><span class="dc-val">' + c.data + '</span></div>';
+      html += '<div class="dc-row"><span>改善率</span><span class="dc-val dc-green">' + c.pct + '</span></div>';
+      html += '<div class="dc-row"><span>成功经验</span><span style="font-size:11px">' + c.exp + '</span></div>';
+      html += '</div>';
+    });
+    html += '<strong>可推广经验：</strong>清洁卫生最"可治"，业委会纠纷需街道介入，房屋维修应纳入旧改。';
+    return html;
+  }
+
+  // 反弹案例
+  if (match(q, ['反弹','反复','回潮','恶化'])) {
+    var html = '<strong>⚠️ 治理反弹案例Top5</strong><br>2025年改善→2026年恶化的典型小区：';
+    var cases = [
+      {name:'海珀旭晖', street:'斜土路', cat:'业主大会/业委会', data:'51→12→51', pct:'-537.5%', exp:'业委会运作机制未根本解决'},
+      {name:'薛家宅', street:'漕河泾', cat:'停车管理', data:'27→21→32', pct:'-433.3%', exp:'车位供给不足，规约调整只是暂时平衡'},
+      {name:'新湖云庭', street:'枫林路', cat:'业主大会/业委会', data:'62→42→74', pct:'-221.7%', exp:'业委会纠纷调解后反弹'},
+      {name:'万科华尔兹花园', street:'田林', cat:'业主大会/业委会', data:'37→12→19', pct:'-216.7%', exp:'调解只是暂时压下矛盾'},
+      {name:'中科新苑', street:'斜土路', cat:'房屋维修', data:'25→13→19', pct:'-216.7%', exp:'只修表象未解决结构性问题'}
+    ];
+    cases.forEach(function(c, i) {
+      html += '<div class="data-card"><div class="dc-title">案例' + (i+1) + '：' + c.name + '（' + c.street + '）</div>';
+      html += '<div class="dc-row"><span>问题类型</span><span class="dc-val">' + c.cat + '</span></div>';
+      html += '<div class="dc-row"><span>投诉变化</span><span class="dc-val">' + c.data + '</span></div>';
+      html += '<div class="dc-row"><span>反弹幅度</span><span class="dc-val dc-red">' + c.pct + '</span></div>';
+      html += '<div class="dc-row"><span>反弹原因</span><span style="font-size:11px">' + c.exp + '</span></div>';
+      html += '</div>';
+    });
+    html += '<strong>核心教训：</strong>反弹Top5中3个是业委会问题，调解不能代替机制改革。';
+    return html;
+  }
+
+  // 去重识别
+  if (match(q, ['去重','重复','识别','方法论'])) {
+    var d = KB.dedup;
+    var html = '<strong>🔍 投诉去重识别方法论</strong>';
+    html += '<div class="data-card"><div class="dc-title">去重识别统计</div>';
+    html += '<div class="dc-row"><span>总工单数</span><span class="dc-val">' + d.total + '件</span></div>';
+    html += '<div class="dc-row"><span>重复工单</span><span class="dc-val dc-orange">' + d.repeats + '件</span></div>';
+    html += '<div class="dc-row"><span>整体去重率</span><span class="dc-val dc-orange">' + d.rate + '</span></div>';
+    html += '</div>';
+    html += '<strong>' + d.strategies + '</strong><br>';
+    html += '<br><strong>月度示例：</strong>' + d.monthly;
+    html += '<br><a class="link-btn" href="投诉去重识别方法论说明.html">查看完整方法论 →</a>';
+    return html;
+  }
+
+  // 数据质量
+  if (match(q, ['数据质量','质量','字段','格式','标准化','清洗'])) {
+    var html = '<strong>🔧 数据质量优化专项报告</strong>';
+    html += '<div class="data-card"><div class="dc-title">五类质量问题</div>';
+    html += '<div class="dc-row"><span>① 字段结构差异</span><span style="font-size:11px">3份Excel字段不一致</span></div>';
+    html += '<div class="dc-row"><span>② 日期格式混用</span><span style="font-size:11px">文本/数字/标准日期</span></div>';
+    html += '<div class="dc-row"><span>③ 分类值域不统一</span><span style="font-size:11px">群租问题 vs 群租管理</span></div>';
+    html += '<div class="dc-row"><span>④ 缺失值</span><span style="font-size:11px">小区名称缺失率3.2%</span></div>';
+    html += '<div class="dc-row"><span>⑤ 物业名称不统一</span><span style="font-size:11px">同一公司多种写法</span></div>';
+    html += '</div>';
+    html += KB.dataQuality;
+    html += '<br><a class="link-btn" href="数据质量优化专项报告.html">查看完整报告 →</a>';
+    return html;
+  }
+
+  // 专题分析
+  if (match(q, ['专题','停车','维修','邻里','违规','业委会','群租'])) {
+    var topics = {
+      '停车': {name:'停车管理', total:10082, change:'-18.9%', hot:'东湾小区(169件)、华欣家园(168件)'},
+      '维修': {name:'房屋维修', total:10000, change:'-26.2%', hot:'百汇园(127件→0件)、乐山大楼'},
+      '邻里': {name:'邻里纠纷', total:6500, change:'-7.3%', hot:'2026年不降反升，传统手段效果有限'},
+      '违规': {name:'房屋违规使用', total:6300, change:'-19.3%', hot:'宫霄小区(8→46件)持续恶化'},
+      '业委会': {name:'业主大会/业委会', total:6100, change:'-22.1%', hot:'松风花园(145→0) vs 海珀旭晖(51→12→51)'},
+      '群租': {name:'群租管理', total:3600, change:'-4.1%', hot:'中原新村(6→23件)恶化'}
+    };
+    for (var key in topics) {
+      if (q.indexOf(key) >= 0) {
+        var t = topics[key];
+        var html = '<strong>📋 ' + t.name + '专题分析</strong>';
+        html += '<div class="data-card"><div class="dc-title">' + t.name + '</div>';
+        html += '<div class="dc-row"><span>投诉总量</span><span class="dc-val">' + t.total + '件</span></div>';
+        html += '<div class="dc-row"><span>2025改善率</span><span class="dc-val ' + (t.change.startsWith('-')?'dc-green':'dc-red') + '">' + t.change + '</span></div>';
+        html += '</div>';
+        html += '<strong>热点小区：</strong>' + t.hot + '<br>';
+        html += '<a class="link-btn" href="重点问题专题分析报告（5份）.html">查看5份专题报告 →</a>';
+        return html;
+      }
+    }
+  }
+
+  // 项目成果
+  if (match(q, ['成果','项目','总览','目录','清单','交付','验收'])) {
+    var html = '<strong>📁 徐汇物业课题一期成果总览</strong><br>共15项成果，已完成8项（53.3%）：';
+    html += '<div class="data-card"><div class="dc-title">已完成成果（8项）</div>';
+    html += '<div class="dc-row"><span>#1 投诉量下降数据报告</span><span class="tag green">完成</span></div>';
+    html += '<div class="dc-row"><span>#2 投诉去重识别方法论</span><span class="tag green">完成</span></div>';
+    html += '<div class="dc-row"><span>#3 数据质量优化专项报告</span><span class="tag green">完成</span></div>';
+    html += '<div class="dc-row"><span>#5 重点问题专题分析(5份)</span><span class="tag green">完成</span></div>';
+    html += '<div class="dc-row"><span>#6 高风险小区预警清单</span><span class="tag green">完成</span></div>';
+    html += '<div class="dc-row"><span>#7 治理效果追踪分析</span><span class="tag green">完成</span></div>';
+    html += '<div class="dc-row"><span>#8 AI智能体(演示版)</span><span class="tag green">完成</span></div>';
+    html += '</div>';
+    html += '<div class="data-card"><div class="dc-title">待推进成果（7项）</div>';
+    html += '<div class="dc-row"><span>#4 根因分析报告</span><span class="tag orange">待推进</span></div>';
+    html += '<div class="dc-row"><span>#9 月报合集</span><span class="tag orange">待推进</span></div>';
+    html += '<div class="dc-row"><span>#10 数据资产梳理</span><span class="tag orange">待推进</span></div>';
+    html += '<div class="dc-row"><span>#11 数字化转型路线图</span><span class="tag orange">待推进</span></div>';
+    html += '<div class="dc-row"><span>#12 治理工作法手册</span><span class="tag orange">待推进</span></div>';
+    html += '<div class="dc-row"><span>#13 验收总报告</span><span class="tag orange">待推进</span></div>';
+    html += '<div class="dc-row"><span>#14 过程档案</span><span class="tag orange">待推进</span></div>';
+    html += '</div>';
+    html += '<a class="link-btn" href="课题成果总览.html">返回成果总览 →</a>';
+    return html;
+  }
+
+  // 帮助
+  if (match(q, ['帮助','help','怎么用','功能','能做什么','你是谁'])) {
+    var html = '<strong>🤖 我是徐汇物业AI智能体</strong><br>我可以帮您查询和分析徐汇区12345热线物业投诉数据，包括：';
+    html += '<div class="data-card"><div class="dc-title">我的能力</div>';
+    html += '<div class="dc-row"><span>📊 投诉量趋势</span><span class="dc-val">总量/月度/同比</span></div>';
+    html += '<div class="dc-row"><span>📋 十四类排名</span><span class="dc-val">分类别投诉量</span></div>';
+    html += '<div class="dc-row"><span>🏘️ 街道排名</span><span class="dc-val">13个街道对比</span></div>';
+    html += '<div class="dc-row"><span>🚨 高风险预警</span><span class="dc-val">五维评分模型</span></div>';
+    html += '<div class="dc-row"><span>✅ 治理效果</span><span class="dc-val">635小区追踪</span></div>';
+    html += '<div class="dc-row"><span>🏆 成功/反弹案例</span><span class="dc-val">典型小区分析</span></div>';
+    html += '<div class="dc-row"><span>🔍 去重识别</span><span class="dc-val">四重策略</span></div>';
+    html += '<div class="dc-row"><span>📁 项目成果</span><span class="dc-val">15项成果</span></div>';
+    html += '</div>';
+    html += '试试点击下方快捷按钮，或直接输入问题，如<strong>"凌云路街道情况"</strong>、<strong>"停车管理分析"</strong>。';
+    return html;
+  }
+
+  // Default
+  return '抱歉，我还没有理解您的问题。您可以试试以下问题：<br>• "投诉量趋势"<br>• "十四类排名"<br>• "街道排名"<br>• "高风险小区"<br>• "治理效果"<br>• "成功案例"<br>• "去重识别"<br>• "停车管理分析"<br><br>或点击下方快捷按钮快速查询。';
+}
+
+function match(str, keywords) {
+  for (var i=0; i<keywords.length; i++) {
+    if (str.indexOf(keywords[i]) >= 0) return true;
+  }
+  return false;
+}
+
+// ===== Chat Functions =====
+function addMsg(text, isUser) {
+  var row = document.createElement('div');
+  row.className = 'msg-row ' + (isUser ? 'user' : 'ai');
+  row.innerHTML = '<div class="msg-avatar">' + (isUser ? '我' : '🤖') + '</div>' +
+    '<div class="msg-bubble">' + text + '</div>';
+  chatBody.appendChild(row);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return row;
+}
+
+function showTyping() {
+  var row = document.createElement('div');
+  row.className = 'msg-row ai';
+  row.id = 'typingRow';
+  row.innerHTML = '<div class="msg-avatar">🤖</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>';
+  chatBody.appendChild(row);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function removeTyping() {
+  var t = document.getElementById('typingRow');
+  if (t) t.remove();
+}
+
+function ask(query) {
+  chatInput.value = '';
+  addMsg(query, true);
+  showTyping();
+  setTimeout(function() {
+    removeTyping();
+    var resp = getResponse(query);
+    addMsg(resp, false);
+  }, 600 + Math.random() * 600);
+}
+
+function sendMsg() {
+  var text = chatInput.value.trim();
+  if (!text) return;
+  ask(text);
+}
+
+function clearChat() {
+  chatBody.innerHTML = '';
+  initWelcome();
+}
+
+function initWelcome() {
+  var html = '<strong>👋 欢迎使用徐汇物业AI智能体</strong><br>我是基于课题全量数据构建的智能问答助手，可以帮您快速查询和分析12345热线物业投诉数据。<br><br>请选择您想了解的内容：';
+  html += '<div class="welcome-grid">';
+  html += '<div class="welcome-item" onclick="ask(\'投诉量趋势\')"><div class="wi-icon">📊</div><div class="wi-label">投诉量趋势</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'十四类排名\')"><div class="wi-icon">📋</div><div class="wi-label">十四类排名</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'街道排名\')"><div class="wi-icon">🏘️</div><div class="wi-label">街道排名</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'高风险小区\')"><div class="wi-icon">🚨</div><div class="wi-label">高风险小区</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'治理效果\')"><div class="wi-icon">✅</div><div class="wi-label">治理效果</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'成功案例\')"><div class="wi-icon">🏆</div><div class="wi-label">成功案例</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'去重识别\')"><div class="wi-icon">🔍</div><div class="wi-label">去重识别</div></div>';
+  html += '<div class="welcome-item" onclick="ask(\'项目成果总览\')"><div class="wi-icon">📁</div><div class="wi-label">项目成果</div></div>';
+  html += '</div>';
+  addMsg(html, false);
+}
+
+// Init
+initWelcome();
+chatInput.focus();
+</script>
+
+</body>
+</html>

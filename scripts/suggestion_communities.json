@@ -1,0 +1,1031 @@
+{
+  "suggestion1": {
+    "title": "小型小区（200户以下）高投诉Top20",
+    "total_count": 393,
+    "total_complaint": 6507,
+    "avg_complaint": 16.6,
+    "list": [
+      {
+        "community_name": "振兴小区",
+        "street": "枫林路",
+        "households": 152,
+        "complaint_total": 145,
+        "complaint_yoy_2025": -46.6
+      },
+      {
+        "community_name": "兰桂坊",
+        "street": "田林",
+        "households": 175,
+        "complaint_total": 143,
+        "complaint_yoy_2025": 5.0
+      },
+      {
+        "community_name": "紫元大厦",
+        "street": "徐家汇",
+        "households": 123,
+        "complaint_total": 108,
+        "complaint_yoy_2025": 85.3
+      },
+      {
+        "community_name": "尚谊小区",
+        "street": "枫林路",
+        "households": 127,
+        "complaint_total": 101,
+        "complaint_yoy_2025": -35.8
+      },
+      {
+        "community_name": "瑞嘉公寓",
+        "street": "斜土路",
+        "households": 184,
+        "complaint_total": 93,
+        "complaint_yoy_2025": -44.1
+      },
+      {
+        "community_name": "五福小区",
+        "street": "湖南路",
+        "households": 165,
+        "complaint_total": 83,
+        "complaint_yoy_2025": -58.9
+      },
+      {
+        "community_name": "艺术公寓",
+        "street": "天平路",
+        "households": 92,
+        "complaint_total": 81,
+        "complaint_yoy_2025": -3.4
+      },
+      {
+        "community_name": "美晶佳园",
+        "street": "枫林路",
+        "households": 192,
+        "complaint_total": 75,
+        "complaint_yoy_2025": -39.5
+      },
+      {
+        "community_name": "宫霄小区",
+        "street": "湖南路",
+        "households": 66,
+        "complaint_total": 67,
+        "complaint_yoy_2025": 475.0
+      },
+      {
+        "community_name": "龙华花园",
+        "street": "漕河泾",
+        "households": 80,
+        "complaint_total": 63,
+        "complaint_yoy_2025": 175.0
+      },
+      {
+        "community_name": "乾骏苑",
+        "street": "漕河泾",
+        "households": 164,
+        "complaint_total": 63,
+        "complaint_yoy_2025": -53.7
+      },
+      {
+        "community_name": "长桥六村",
+        "street": "长桥",
+        "households": 169,
+        "complaint_total": 62,
+        "complaint_yoy_2025": -35.3
+      },
+      {
+        "community_name": "医高小区",
+        "street": "枫林路",
+        "households": 196,
+        "complaint_total": 59,
+        "complaint_yoy_2025": 462.5
+      },
+      {
+        "community_name": "懿园",
+        "street": "天平路",
+        "households": 28,
+        "complaint_total": 58,
+        "complaint_yoy_2025": -45.2
+      },
+      {
+        "community_name": "龙漕路160弄",
+        "street": "漕河泾",
+        "households": 146,
+        "complaint_total": 54,
+        "complaint_yoy_2025": -52.8
+      },
+      {
+        "community_name": "龙山公寓",
+        "street": "枫林路",
+        "households": 139,
+        "complaint_total": 51,
+        "complaint_yoy_2025": 58.8
+      },
+      {
+        "community_name": "平江路170弄",
+        "street": "枫林路",
+        "households": 170,
+        "complaint_total": 51,
+        "complaint_yoy_2025": -72.7
+      },
+      {
+        "community_name": "龙南公寓",
+        "street": "龙华",
+        "households": 119,
+        "complaint_total": 51,
+        "complaint_yoy_2025": -13.6
+      },
+      {
+        "community_name": "睿园",
+        "street": "天平路",
+        "households": 118,
+        "complaint_total": 50,
+        "complaint_yoy_2025": -77.4
+      },
+      {
+        "community_name": "铁路新村",
+        "street": "徐家汇",
+        "households": 111,
+        "complaint_total": 50,
+        "complaint_yoy_2025": -72.0
+      }
+    ]
+  },
+  "suggestion2a": {
+    "title": "车位严重不足（配比<0.3）高投诉小区Top20",
+    "total_count": 783,
+    "avg_ratio": 0.06,
+    "list": [
+      {
+        "community_name": "日晖六村",
+        "street": "斜土路",
+        "households": 2919,
+        "complaint_total": 711,
+        "complaint_yoy_2025": 5.4
+      },
+      {
+        "community_name": "华悦家园",
+        "street": "虹梅路",
+        "households": 3655,
+        "complaint_total": 567,
+        "complaint_yoy_2025": -17.2
+      },
+      {
+        "community_name": "田林三街坊",
+        "street": "田林",
+        "households": 2531,
+        "complaint_total": 502,
+        "complaint_yoy_2025": -35.5
+      },
+      {
+        "community_name": "东湾小区",
+        "street": "华泾",
+        "households": 2445,
+        "complaint_total": 459,
+        "complaint_yoy_2025": 67.3
+      },
+      {
+        "community_name": "华欣家园",
+        "street": "华泾",
+        "households": 2693,
+        "complaint_total": 444,
+        "complaint_yoy_2025": -24.9
+      },
+      {
+        "community_name": "宛龙小区",
+        "street": "枫林路",
+        "households": 2656,
+        "complaint_total": 435,
+        "complaint_yoy_2025": 17.9
+      },
+      {
+        "community_name": "罗秀新二村",
+        "street": "长桥",
+        "households": 2494,
+        "complaint_total": 432,
+        "complaint_yoy_2025": 196.2
+      },
+      {
+        "community_name": "凌云新村",
+        "street": "凌云路",
+        "households": 2414,
+        "complaint_total": 429,
+        "complaint_yoy_2025": -33.3
+      },
+      {
+        "community_name": "龙山新村",
+        "street": "枫林路",
+        "households": 2572,
+        "complaint_total": 424,
+        "complaint_yoy_2025": 22.9
+      },
+      {
+        "community_name": "西木小区",
+        "street": "枫林路",
+        "households": 2543,
+        "complaint_total": 410,
+        "complaint_yoy_2025": -32.7
+      },
+      {
+        "community_name": "华滨家园",
+        "street": "长桥",
+        "households": 2561,
+        "complaint_total": 381,
+        "complaint_yoy_2025": -2.5
+      },
+      {
+        "community_name": "天钥新村",
+        "street": "枫林路",
+        "households": 3066,
+        "complaint_total": 377,
+        "complaint_yoy_2025": 12.1
+      },
+      {
+        "community_name": "长桥四村",
+        "street": "长桥",
+        "households": 2909,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -22.3
+      },
+      {
+        "community_name": "盛华景苑",
+        "street": "华泾",
+        "households": 3363,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -40.1
+      },
+      {
+        "community_name": "安福直管公房",
+        "street": "湖南路",
+        "households": 949,
+        "complaint_total": 351,
+        "complaint_yoy_2025": -33.3
+      },
+      {
+        "community_name": "梅陇三村",
+        "street": "凌云路",
+        "households": 2196,
+        "complaint_total": 338,
+        "complaint_yoy_2025": -62.2
+      },
+      {
+        "community_name": "紫阳花苑",
+        "street": "华泾",
+        "households": 2858,
+        "complaint_total": 338,
+        "complaint_yoy_2025": -8.2
+      },
+      {
+        "community_name": "日晖二村",
+        "street": "斜土路",
+        "households": 2048,
+        "complaint_total": 325,
+        "complaint_yoy_2025": 16.7
+      },
+      {
+        "community_name": "斜土小区",
+        "street": "斜土路",
+        "households": 2125,
+        "complaint_total": 320,
+        "complaint_yoy_2025": -8.6
+      },
+      {
+        "community_name": "茶花园",
+        "street": "康健新村",
+        "households": 1335,
+        "complaint_total": 319,
+        "complaint_yoy_2025": -61.8
+      }
+    ]
+  },
+  "suggestion2b": {
+    "title": "20年以上房龄且无修缮项目的高投诉小区Top20",
+    "total_count": 616,
+    "list": [
+      {
+        "community_name": "华欣家园",
+        "street": "华泾",
+        "households": 2693,
+        "complaint_total": 444,
+        "complaint_yoy_2025": -24.9
+      },
+      {
+        "community_name": "长桥四村",
+        "street": "长桥",
+        "households": 2909,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -22.3
+      },
+      {
+        "community_name": "紫阳花苑",
+        "street": "华泾",
+        "households": 2858,
+        "complaint_total": 338,
+        "complaint_yoy_2025": -8.2
+      },
+      {
+        "community_name": "梅陇十一村(A块)",
+        "street": "凌云路",
+        "households": 970,
+        "complaint_total": 310,
+        "complaint_yoy_2025": -54.3
+      },
+      {
+        "community_name": "阳光绿园",
+        "street": "凌云路",
+        "households": 1229,
+        "complaint_total": 301,
+        "complaint_yoy_2025": -54.4
+      },
+      {
+        "community_name": "东安四村",
+        "street": "枫林路",
+        "households": 1070,
+        "complaint_total": 291,
+        "complaint_yoy_2025": -7.0
+      },
+      {
+        "community_name": "华东花苑",
+        "street": "长桥",
+        "households": 2086,
+        "complaint_total": 275,
+        "complaint_yoy_2025": -19.8
+      },
+      {
+        "community_name": "三江小区",
+        "street": "漕河泾",
+        "households": 1472,
+        "complaint_total": 257,
+        "complaint_yoy_2025": -45.5
+      },
+      {
+        "community_name": "金色港湾公寓",
+        "street": "斜土路",
+        "households": 992,
+        "complaint_total": 244,
+        "complaint_yoy_2025": -74.9
+      },
+      {
+        "community_name": "太原直管公房",
+        "street": "天平路",
+        "households": 1004,
+        "complaint_total": 244,
+        "complaint_yoy_2025": -19.6
+      },
+      {
+        "community_name": "陕新直管公房",
+        "street": "湖南路",
+        "households": 1042,
+        "complaint_total": 240,
+        "complaint_yoy_2025": -51.2
+      },
+      {
+        "community_name": "江南裕德",
+        "street": "徐家汇",
+        "households": 493,
+        "complaint_total": 234,
+        "complaint_yoy_2025": -39.2
+      },
+      {
+        "community_name": "龙南五村",
+        "street": "龙华",
+        "households": 2958,
+        "complaint_total": 229,
+        "complaint_yoy_2025": -30.8
+      },
+      {
+        "community_name": "闵朱小区",
+        "street": "凌云路",
+        "households": 892,
+        "complaint_total": 228,
+        "complaint_yoy_2025": -59.7
+      },
+      {
+        "community_name": "建新直管公房",
+        "street": "天平路",
+        "households": 1344,
+        "complaint_total": 213,
+        "complaint_yoy_2025": -28.3
+      },
+      {
+        "community_name": "永太直管公房",
+        "street": "天平路",
+        "households": 1169,
+        "complaint_total": 212,
+        "complaint_yoy_2025": -49.6
+      },
+      {
+        "community_name": "盛大花园",
+        "street": "龙华",
+        "households": 2452,
+        "complaint_total": 210,
+        "complaint_yoy_2025": -11.0
+      },
+      {
+        "community_name": "淮中直管公房",
+        "street": "湖南路",
+        "households": 696,
+        "complaint_total": 201,
+        "complaint_yoy_2025": -44.3
+      },
+      {
+        "community_name": "余庆直管公房",
+        "street": "天平路",
+        "households": 357,
+        "complaint_total": 194,
+        "complaint_yoy_2025": 2.2
+      },
+      {
+        "community_name": "罗秀三村",
+        "street": "长桥",
+        "households": 1951,
+        "complaint_total": 194,
+        "complaint_yoy_2025": -17.1
+      }
+    ]
+  },
+  "suggestion3": {
+    "title": "低收费（物业费<1元/㎡）高投诉小区Top20",
+    "total_count": 347,
+    "avg_fee": 0.57,
+    "list": [
+      {
+        "community_name": "田林三街坊",
+        "street": "田林",
+        "households": 2531,
+        "complaint_total": 502,
+        "complaint_yoy_2025": -35.5
+      },
+      {
+        "community_name": "东湾小区",
+        "street": "华泾",
+        "households": 2445,
+        "complaint_total": 459,
+        "complaint_yoy_2025": 67.3
+      },
+      {
+        "community_name": "华欣家园",
+        "street": "华泾",
+        "households": 2693,
+        "complaint_total": 444,
+        "complaint_yoy_2025": -24.9
+      },
+      {
+        "community_name": "宛龙小区",
+        "street": "枫林路",
+        "households": 2656,
+        "complaint_total": 435,
+        "complaint_yoy_2025": 17.9
+      },
+      {
+        "community_name": "凌云新村",
+        "street": "凌云路",
+        "households": 2414,
+        "complaint_total": 429,
+        "complaint_yoy_2025": -33.3
+      },
+      {
+        "community_name": "长桥四村",
+        "street": "长桥",
+        "households": 2909,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -22.3
+      },
+      {
+        "community_name": "盛华景苑",
+        "street": "华泾",
+        "households": 3363,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -40.1
+      },
+      {
+        "community_name": "安福直管公房",
+        "street": "湖南路",
+        "households": 949,
+        "complaint_total": 351,
+        "complaint_yoy_2025": -33.3
+      },
+      {
+        "community_name": "梅陇三村",
+        "street": "凌云路",
+        "households": 2196,
+        "complaint_total": 338,
+        "complaint_yoy_2025": -62.2
+      },
+      {
+        "community_name": "紫阳花苑",
+        "street": "华泾",
+        "households": 2858,
+        "complaint_total": 338,
+        "complaint_yoy_2025": -8.2
+      },
+      {
+        "community_name": "斜土小区",
+        "street": "斜土路",
+        "households": 2125,
+        "complaint_total": 320,
+        "complaint_yoy_2025": -8.6
+      },
+      {
+        "community_name": "茶花园",
+        "street": "康健新村",
+        "households": 1335,
+        "complaint_total": 319,
+        "complaint_yoy_2025": -61.8
+      },
+      {
+        "community_name": "梅陇十一村(A块)",
+        "street": "凌云路",
+        "households": 970,
+        "complaint_total": 310,
+        "complaint_yoy_2025": -54.3
+      },
+      {
+        "community_name": "滨江小区",
+        "street": "龙华",
+        "households": 2116,
+        "complaint_total": 310,
+        "complaint_yoy_2025": -24.2
+      },
+      {
+        "community_name": "阳光绿园",
+        "street": "凌云路",
+        "households": 1229,
+        "complaint_total": 301,
+        "complaint_yoy_2025": -54.4
+      },
+      {
+        "community_name": "华东花苑",
+        "street": "长桥",
+        "households": 2086,
+        "complaint_total": 275,
+        "complaint_yoy_2025": -19.8
+      },
+      {
+        "community_name": "古美小区",
+        "street": "虹梅路",
+        "households": 3201,
+        "complaint_total": 274,
+        "complaint_yoy_2025": -5.3
+      },
+      {
+        "community_name": "太原直管公房",
+        "street": "天平路",
+        "households": 1004,
+        "complaint_total": 244,
+        "complaint_yoy_2025": -19.6
+      },
+      {
+        "community_name": "大木小区",
+        "street": "斜土路",
+        "households": 407,
+        "complaint_total": 242,
+        "complaint_yoy_2025": 14.6
+      },
+      {
+        "community_name": "陕新直管公房",
+        "street": "湖南路",
+        "households": 1042,
+        "complaint_total": 240,
+        "complaint_yoy_2025": -51.2
+      }
+    ]
+  },
+  "suggestion4": {
+    "title": "40年以上房龄老旧小区高投诉Top20",
+    "total_count": 204,
+    "avg_age": 58.0,
+    "list": [
+      {
+        "community_name": "日晖六村",
+        "street": "斜土路",
+        "households": 2919,
+        "complaint_total": 711,
+        "complaint_yoy_2025": 5.4
+      },
+      {
+        "community_name": "田林三街坊",
+        "street": "田林",
+        "households": 2531,
+        "complaint_total": 502,
+        "complaint_yoy_2025": -35.5
+      },
+      {
+        "community_name": "宛龙小区",
+        "street": "枫林路",
+        "households": 2656,
+        "complaint_total": 435,
+        "complaint_yoy_2025": 17.9
+      },
+      {
+        "community_name": "龙山新村",
+        "street": "枫林路",
+        "households": 2572,
+        "complaint_total": 424,
+        "complaint_yoy_2025": 22.9
+      },
+      {
+        "community_name": "西木小区",
+        "street": "枫林路",
+        "households": 2543,
+        "complaint_total": 410,
+        "complaint_yoy_2025": -32.7
+      },
+      {
+        "community_name": "天钥新村",
+        "street": "枫林路",
+        "households": 3066,
+        "complaint_total": 377,
+        "complaint_yoy_2025": 12.1
+      },
+      {
+        "community_name": "日晖二村",
+        "street": "斜土路",
+        "households": 2048,
+        "complaint_total": 325,
+        "complaint_yoy_2025": 16.7
+      },
+      {
+        "community_name": "斜土小区",
+        "street": "斜土路",
+        "households": 2125,
+        "complaint_total": 320,
+        "complaint_yoy_2025": -8.6
+      },
+      {
+        "community_name": "东安四村",
+        "street": "枫林路",
+        "households": 1070,
+        "complaint_total": 291,
+        "complaint_yoy_2025": -7.0
+      },
+      {
+        "community_name": "零陵小区",
+        "street": "徐家汇",
+        "households": 867,
+        "complaint_total": 269,
+        "complaint_yoy_2025": -11.3
+      },
+      {
+        "community_name": "田林三四村",
+        "street": "田林",
+        "households": 1386,
+        "complaint_total": 243,
+        "complaint_yoy_2025": -11.1
+      },
+      {
+        "community_name": "大木小区",
+        "street": "斜土路",
+        "households": 407,
+        "complaint_total": 242,
+        "complaint_yoy_2025": 14.6
+      },
+      {
+        "community_name": "谨斜小区",
+        "street": "枫林路",
+        "households": 1240,
+        "complaint_total": 227,
+        "complaint_yoy_2025": -63.5
+      },
+      {
+        "community_name": "余庆直管公房",
+        "street": "天平路",
+        "households": 357,
+        "complaint_total": 194,
+        "complaint_yoy_2025": 2.2
+      },
+      {
+        "community_name": "田林六街坊",
+        "street": "田林",
+        "households": 275,
+        "complaint_total": 193,
+        "complaint_yoy_2025": -21.7
+      },
+      {
+        "community_name": "田林五街坊",
+        "street": "田林",
+        "households": 1144,
+        "complaint_total": 185,
+        "complaint_yoy_2025": -31.2
+      },
+      {
+        "community_name": "田林一街坊",
+        "street": "田林",
+        "households": 911,
+        "complaint_total": 161,
+        "complaint_yoy_2025": -44.4
+      },
+      {
+        "community_name": "漕冠小区",
+        "street": "漕河泾",
+        "households": 1057,
+        "complaint_total": 158,
+        "complaint_yoy_2025": -1.6
+      },
+      {
+        "community_name": "田林十三村",
+        "street": "田林",
+        "households": 923,
+        "complaint_total": 152,
+        "complaint_yoy_2025": -71.0
+      },
+      {
+        "community_name": "振兴小区",
+        "street": "枫林路",
+        "households": 152,
+        "complaint_total": 145,
+        "complaint_yoy_2025": -46.6
+      }
+    ]
+  },
+  "suggestion5": {
+    "title": "无业主大会/业委会的高投诉小区Top20",
+    "total_count": 119,
+    "list": [
+      {
+        "community_name": "尚海湾二期",
+        "street": "斜土路",
+        "households": 2049,
+        "complaint_total": 502,
+        "complaint_yoy_2025": -63.1
+      },
+      {
+        "community_name": "安福直管公房",
+        "street": "湖南路",
+        "households": 949,
+        "complaint_total": 351,
+        "complaint_yoy_2025": -33.3
+      },
+      {
+        "community_name": "鑫桂苑·侨高中心",
+        "street": "虹梅路",
+        "households": 1756,
+        "complaint_total": 315,
+        "complaint_yoy_2025": 14.3
+      },
+      {
+        "community_name": "百汇园小区",
+        "street": "龙华",
+        "households": 4310,
+        "complaint_total": 255,
+        "complaint_yoy_2025": -20.5
+      },
+      {
+        "community_name": "太原直管公房",
+        "street": "天平路",
+        "households": 1004,
+        "complaint_total": 244,
+        "complaint_yoy_2025": -19.6
+      },
+      {
+        "community_name": "陕新直管公房",
+        "street": "湖南路",
+        "households": 1042,
+        "complaint_total": 240,
+        "complaint_yoy_2025": -51.2
+      },
+      {
+        "community_name": "陕西直管公房",
+        "street": "天平路",
+        "households": 810,
+        "complaint_total": 225,
+        "complaint_yoy_2025": -65.4
+      },
+      {
+        "community_name": "建新直管公房",
+        "street": "天平路",
+        "households": 1344,
+        "complaint_total": 213,
+        "complaint_yoy_2025": -28.3
+      },
+      {
+        "community_name": "永太直管公房",
+        "street": "天平路",
+        "households": 1169,
+        "complaint_total": 212,
+        "complaint_yoy_2025": -49.6
+      },
+      {
+        "community_name": "欣嘉苑1-3期",
+        "street": "虹梅路",
+        "households": 777,
+        "complaint_total": 205,
+        "complaint_yoy_2025": 9.8
+      },
+      {
+        "community_name": "淮中直管公房",
+        "street": "湖南路",
+        "households": 696,
+        "complaint_total": 201,
+        "complaint_yoy_2025": -44.3
+      },
+      {
+        "community_name": "余庆直管公房",
+        "street": "天平路",
+        "households": 357,
+        "complaint_total": 194,
+        "complaint_yoy_2025": 2.2
+      },
+      {
+        "community_name": "桃源村直管公房",
+        "street": "天平路",
+        "households": 986,
+        "complaint_total": 192,
+        "complaint_yoy_2025": -37.4
+      },
+      {
+        "community_name": "悦汇长庭",
+        "street": "长桥",
+        "households": 1513,
+        "complaint_total": 190,
+        "complaint_yoy_2025": 16900.0
+      },
+      {
+        "community_name": "安亭直管公房",
+        "street": "天平路",
+        "households": 543,
+        "complaint_total": 187,
+        "complaint_yoy_2025": -63.6
+      },
+      {
+        "community_name": "息村直管公房",
+        "street": "天平路",
+        "households": 769,
+        "complaint_total": 171,
+        "complaint_yoy_2025": -28.6
+      },
+      {
+        "community_name": "复永直管公房",
+        "street": "湖南路",
+        "households": 458,
+        "complaint_total": 161,
+        "complaint_yoy_2025": -11.8
+      },
+      {
+        "community_name": "漕冠小区",
+        "street": "漕河泾",
+        "households": 1057,
+        "complaint_total": 158,
+        "complaint_yoy_2025": -1.6
+      },
+      {
+        "community_name": "爱建园",
+        "street": "田林",
+        "households": 2654,
+        "complaint_total": 152,
+        "complaint_yoy_2025": -28.1
+      },
+      {
+        "community_name": "延庆直管公房",
+        "street": "湖南路",
+        "households": 1148,
+        "complaint_total": 152,
+        "complaint_yoy_2025": 46.3
+      }
+    ]
+  },
+  "suggestion6": {
+    "title": "华泾/长桥街道高投诉小区Top20",
+    "total_count": 74,
+    "huajing_count": 22,
+    "changqiao_count": 52,
+    "list": [
+      {
+        "community_name": "中海瀛台",
+        "street": "长桥",
+        "households": 3208,
+        "complaint_total": 996,
+        "complaint_yoy_2025": -61.7
+      },
+      {
+        "community_name": "馨宁公寓",
+        "street": "华泾",
+        "households": 4822,
+        "complaint_total": 477,
+        "complaint_yoy_2025": -6.0
+      },
+      {
+        "community_name": "东湾小区",
+        "street": "华泾",
+        "households": 2445,
+        "complaint_total": 459,
+        "complaint_yoy_2025": 67.3
+      },
+      {
+        "community_name": "华欣家园",
+        "street": "华泾",
+        "households": 2693,
+        "complaint_total": 444,
+        "complaint_yoy_2025": -24.9
+      },
+      {
+        "community_name": "罗秀新二村",
+        "street": "长桥",
+        "households": 2494,
+        "complaint_total": 432,
+        "complaint_yoy_2025": 196.2
+      },
+      {
+        "community_name": "华滨家园",
+        "street": "长桥",
+        "households": 2561,
+        "complaint_total": 381,
+        "complaint_yoy_2025": -2.5
+      },
+      {
+        "community_name": "华泾绿苑",
+        "street": "华泾",
+        "households": 2366,
+        "complaint_total": 371,
+        "complaint_yoy_2025": -22.8
+      },
+      {
+        "community_name": "长桥四村",
+        "street": "长桥",
+        "households": 2909,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -22.3
+      },
+      {
+        "community_name": "盛华景苑",
+        "street": "华泾",
+        "households": 3363,
+        "complaint_total": 356,
+        "complaint_yoy_2025": -40.1
+      },
+      {
+        "community_name": "紫阳花苑",
+        "street": "华泾",
+        "households": 2858,
+        "complaint_total": 338,
+        "complaint_yoy_2025": -8.2
+      },
+      {
+        "community_name": "长汇景苑",
+        "street": "长桥",
+        "households": 1695,
+        "complaint_total": 298,
+        "complaint_yoy_2025": -14.3
+      },
+      {
+        "community_name": "华东花苑",
+        "street": "长桥",
+        "households": 2086,
+        "complaint_total": 275,
+        "complaint_yoy_2025": -19.8
+      },
+      {
+        "community_name": "园南一村",
+        "street": "长桥",
+        "households": 1372,
+        "complaint_total": 274,
+        "complaint_yoy_2025": -24.8
+      },
+      {
+        "community_name": "楼园",
+        "street": "长桥",
+        "households": 1823,
+        "complaint_total": 267,
+        "complaint_yoy_2025": 46.6
+      },
+      {
+        "community_name": "华沁家园",
+        "street": "长桥",
+        "households": 3517,
+        "complaint_total": 253,
+        "complaint_yoy_2025": -9.5
+      },
+      {
+        "community_name": "长桥八村",
+        "street": "长桥",
+        "households": 1301,
+        "complaint_total": 247,
+        "complaint_yoy_2025": 31.6
+      },
+      {
+        "community_name": "名人花苑",
+        "street": "华泾",
+        "households": 855,
+        "complaint_total": 222,
+        "complaint_yoy_2025": -4.9
+      },
+      {
+        "community_name": "长桥一村",
+        "street": "长桥",
+        "households": 1691,
+        "complaint_total": 207,
+        "complaint_yoy_2025": -33.0
+      },
+      {
+        "community_name": "汇成四村",
+        "street": "长桥",
+        "households": 1693,
+        "complaint_total": 205,
+        "complaint_yoy_2025": -4.4
+      },
+      {
+        "community_name": "徐汇新城",
+        "street": "长桥",
+        "households": 2306,
+        "complaint_total": 201,
+        "complaint_yoy_2025": -35.8
+      }
+    ]
+  }
+}

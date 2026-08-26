@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年6月12345投诉去重建议清单</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; background: #f0f2f5; color: #333; line-height: 1.7; }
+  .header { background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%); color: #fff; padding: 36px 0; text-align: center; }
+  .header h1 { font-size: 24px; font-weight: 700; }
+  .header .subtitle { font-size: 13px; margin-top: 8px; opacity: 0.8; }
+  .header .meta { font-size: 12px; margin-top: 10px; opacity: 0.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+  .section { background: #fff; border-radius: 10px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section-title { font-size: 18px; font-weight: 700; color: #1a3a5f; margin-bottom: 14px; display: flex; align-items: center; }
+  .section-title::before { content: ''; width: 5px; height: 22px; background: #1890ff; border-radius: 3px; margin-right: 10px; }
+  p { margin-bottom: 10px; color: #444; font-size: 14px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0; }
+  .stat-card { background: #f6f8fa; border-radius: 8px; padding: 18px 10px; text-align: center; border: 1px solid #e8e8e8; }
+  .stat-card .num { font-size: 30px; font-weight: 700; }
+  .stat-card .num.red { color: #f5222d; }
+  .stat-card .num.blue { color: #1890ff; }
+  .stat-card .num.green { color: #52c41a; }
+  .stat-card .num.orange { color: #fa8c16; }
+  .stat-card .label { font-size: 12px; color: #888; margin-top: 4px; }
+  .data-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+  .data-table th { background: #1a3a5f; color: #fff; padding: 8px 10px; text-align: center; font-weight: 600; white-space: nowrap; }
+  .data-table td { padding: 6px 10px; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+  .data-table tr:nth-child(even) { background: #fafafa; }
+  .data-table tr:hover { background: #e6f7ff; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge.high { background: #fff1f0; color: #f5222d; border: 1px solid #ffa39e; }
+  .badge.medium { background: #fff7e6; color: #fa8c16; border: 1px solid #ffd591; }
+  .badge.low { background: #f6ffed; color: #52c41a; border: 1px solid #b7eb8f; }
+  .strategy-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; margin: 1px; }
+  .strategy-tag.s1 { background: #fff1f0; color: #cf1322; }
+  .strategy-tag.s2 { background: #fff7e6; color: #d46b08; }
+  .strategy-tag.s3 { background: #e6f7ff; color: #096dd9; }
+  .strategy-tag.s4 { background: #f9f0ff; color: #531dab; }
+  .content-cell { max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #666; }
+  .priority-card { background: #f6f8fa; border-left: 4px solid; border-radius: 6px; padding: 14px 18px; margin-bottom: 10px; }
+  .priority-card.high { border-left-color: #f5222d; }
+  .priority-card.medium { border-left-color: #fa8c16; }
+  .priority-card .pc-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .priority-card.high .pc-title { color: #cf1322; }
+  .priority-card.medium .pc-title { color: #d46b08; }
+  .priority-card .pc-desc { font-size: 13px; color: #555; }
+  .footer { text-align: center; padding: 24px 0; font-size: 12px; color: #999; }
+  .note { font-size: 12px; color: #999; margin-top: 8px; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>2026年6月 12345投诉去重建议清单</h1>
+  <div class="subtitle">四重识别策略应用 · 去重建议 · 处置优先级</div>
+  <div class="meta">徐汇物业课题一期 · 投诉去重识别模型应用实例 | 2026年8月</div>
+</div>
+
+<div class="container">
+
+  <!-- 一、分析概览 -->
+  <div class="section">
+    <div class="section-title">分析概览</div>
+    <p>运用投诉去重识别模型四重策略，对2026年6月徐汇区12345物业投诉工单进行系统性去重分析。</p>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num blue">1,856</div><div class="label">6月工单总数</div></div>
+      <div class="stat-card"><div class="num red">910</div><div class="label">重复投诉工单</div></div>
+      <div class="stat-card"><div class="num red">49.0%</div><div class="label">重复投诉占比</div></div>
+      <div class="stat-card"><div class="num orange">144</div><div class="label">高频问题组数</div></div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>识别策略</th><th>技术手段</th><th>识别结果</th><th>占重复总量</th></tr></thead>
+      <tbody>
+        <tr><td>策略一：完全重复</td><td>同小区+内容精确匹配</td><td>10条（5组）</td><td>1.1%</td></tr>
+        <tr><td>策略二：催办/重发</td><td>关键词检索（催单/重新交办/反复/相同事项）</td><td>286条</td><td>31.4%</td></tr>
+        <tr><td>策略三：同小区同类高频</td><td>同小区+同类别 ≥3次</td><td>642条（144组）</td><td>70.5%</td></tr>
+        <tr><td>策略四：TF-IDF文本相似</td><td>jieba分词+TF-IDF+余弦相似度≥0.6</td><td>530条（549对/152小区）</td><td>58.2%</td></tr>
+        <tr style="background:#e6f7ff;font-weight:700;"><td>合并去重后</td><td>四策略并集去重</td><td>910条</td><td>100%</td></tr>
+      </tbody>
+    </table>
+    <p class="note">注：各策略结果存在交叉（同一条工单可能被多个策略识别），合并后按工单编号去重。占比按各策略识别数/合并后总数计算，故总和超过100%。</p>
+  </div>
+
+  <!-- 二、优先级分布与处置建议 -->
+  <div class="section">
+    <div class="section-title">优先级分布与处置建议</div>
+    <p>910条重复投诉按严重程度和处置紧迫性分为两个优先级。</p>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num red">510</div><div class="label">高优先级（56.0%）</div></div>
+      <div class="stat-card"><div class="num orange">400</div><div class="label">中优先级（44.0%）</div></div>
+      <div class="stat-card"><div class="num blue">144</div><div class="label">需专项治理组数</div></div>
+      <div class="stat-card"><div class="num green">152</div><div class="label">文本相似涉及小区</div></div>
+    </div>
+
+    <div class="priority-card high">
+      <div class="pc-title">高优先级（510条）— 需立即处置</div>
+      <div class="pc-desc">
+        <strong>触发条件</strong>：① 催办/重发类（286条）— 市民已明确催办，需优先处理；② 同小区同类投诉≥5次（224条）— 问题积压严重，需专项介入。<br>
+        <strong>处置建议</strong>：催办类工单要求承办单位48小时内重新答复并解决；高频组（≥5次）启动"一小区一方案"专项治理，明确责任人和解决时限。
+      </div>
+    </div>
+    <div class="priority-card medium">
+      <div class="pc-title">中优先级（400条）— 需跟踪督办</div>
+      <div class="pc-desc">
+        <strong>触发条件</strong>：① 同小区同类3-4次（418条）— 问题有积压趋势但尚未严重；② 文本相似但非完全重复（530条中非高频部分）— 疑似重复需核实。<br>
+        <strong>处置建议</strong>：3-4次高频组纳入街道督办清单，限期2周内解决；文本相似对由承办单位核实是否同一问题，如是则合并处理。
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、热点小区Top20 -->
+  <div class="section">
+    <div class="section-title">高频热点小区Top20（需专项治理）</div>
+    <p>同小区同类投诉≥3次的问题组，按投诉次数降序排列。以下20个小区的问题最为集中，建议优先制定"一小区一方案"专项治理计划。</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>排名</th><th>小区名称</th><th>街道</th><th>问题类别</th><th>投诉次数</th><th>物业公司</th><th>优先级</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td style="font-weight:600;">宝能华庭</td><td>龙华</td><td>业主大会/业委会</td><td style="font-weight:700;color:#f5222d;">19</td><td>深圳吉祥服务</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>2</td><td style="font-weight:600;">欣嘉苑1-3期</td><td>虹梅路</td><td>停车管理</td><td style="font-weight:700;color:#f5222d;">17</td><td>锦龙物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>3</td><td style="font-weight:600;">华欣家园</td><td>华泾</td><td>停车管理</td><td style="font-weight:700;color:#f5222d;">14</td><td>泾鸿物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>4</td><td style="font-weight:600;">海珀旭晖</td><td>斜土路</td><td>房屋维修</td><td style="font-weight:700;color:#f5222d;">12</td><td>绿地物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>5</td><td style="font-weight:600;">淮中直管公房</td><td>湖南路</td><td>邻里纠纷</td><td style="font-weight:700;color:#f5222d;">10</td><td>衡复物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>6</td><td style="font-weight:600;">华悦家园</td><td>虹梅路</td><td>群租管理</td><td style="font-weight:700;color:#f5222d;">9</td><td>汇成物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>7</td><td style="font-weight:600;">实业公寓</td><td>徐家汇</td><td>邻里纠纷</td><td style="font-weight:700;color:#f5222d;">9</td><td>铭杰物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>8</td><td style="font-weight:600;">尚海湾一期</td><td>斜土路</td><td>消防管理</td><td style="font-weight:700;color:#f5222d;">9</td><td>金地物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>9</td><td>古宜小区</td><td>田林</td><td>停车管理</td><td>8</td><td>—</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>10</td><td>武康6.8</td><td>湖南路</td><td>邻里纠纷</td><td>8</td><td>衡复物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>11</td><td>虹桥大仕馆</td><td>田林</td><td>业主大会/业委会</td><td>8</td><td>—</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>12</td><td>尚海湾一期</td><td>斜土路</td><td>停车管理</td><td>7</td><td>金地物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>13</td><td>明丰新纪苑</td><td>华泾</td><td>停车管理</td><td>7</td><td>泾鸿物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>14</td><td>永福一区</td><td>湖南路</td><td>房屋违规使用</td><td>7</td><td>衡复物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>15</td><td>长桥八村</td><td>长桥</td><td>业主大会/业委会</td><td>7</td><td>中鹊物业</td><td><span class="badge high">高</span></td></tr>
+        <tr><td>16</td><td>东航小区</td><td>枫林路</td><td>停车管理</td><td>6</td><td>高建物业</td><td><span class="badge medium">中</span></td></tr>
+        <tr><td>17</td><td>兴湖小区</td><td>湖南路</td><td>房屋违规使用</td><td>6</td><td>衡复物业</td><td><span class="badge medium">中</span></td></tr>
+        <tr><td>18</td><td>华泾五村</td><td>华泾</td><td>停车管理</td><td>6</td><td>秀澜物业</td><td><span class="badge medium">中</span></td></tr>
+        <tr><td>19</td><td>南丹小区</td><td>徐家汇</td><td>旧住房改造</td><td>6</td><td>汇虹物业</td><td><span class="badge medium">中</span></td></tr>
+        <tr><td>20</td><td>实业公寓</td><td>徐家汇</td><td>绿化管理</td><td>6</td><td>铭杰物业</td><td><span class="badge medium">中</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 四、文本相似典型案例 -->
+  <div class="section">
+    <div class="section-title">TF-IDF文本相似典型案例Top10</div>
+    <p>以下10组工单通过TF-IDF文本相似度识别（≥0.6），展示了不同类型的重复投诉特征。</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>排名</th><th>小区</th><th>工单A内容（截选）</th><th>工单B内容（截选）</th><th>相似度</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td>华泾五村</td>
+          <td class="content-cell">市民反映：其是华泾五村在册老业主，申请的是家庭首辆机动车停车登记…</td>
+          <td class="content-cell">市民反映：其是华泾五村在册老业主，申请的是家庭首辆机动车停车登记…</td>
+          <td style="font-weight:700;color:#52c41a;">1.000</td>
+        </tr>
+        <tr>
+          <td>2</td><td>双龙</td>
+          <td class="content-cell">市民来电求助：龙华西路285弄小区门口地面车库，电瓶车充电桩损坏…</td>
+          <td class="content-cell">市民来电求助：龙华西路285弄小区门口地面车库，电瓶车充电桩损坏…</td>
+          <td style="font-weight:700;color:#52c41a;">1.000</td>
+        </tr>
+        <tr>
+          <td>3</td><td>太原直管公房</td>
+          <td class="content-cell">市民来电求助：建国西路384弄34号和太原别墅存在2米宽，太原别墅设置竹篱笆…</td>
+          <td class="content-cell">市民来电求助：建国西路384弄34号和太原别墅存在2米宽，太原别墅设置竹篱笆…</td>
+          <td style="font-weight:700;color:#52c41a;">1.000</td>
+        </tr>
+        <tr>
+          <td>4</td><td>武康6.8</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td style="font-weight:700;color:#52c41a;">1.000</td>
+        </tr>
+        <tr>
+          <td>5</td><td>虹桥大仕馆</td>
+          <td class="content-cell">市民反映：业委会主任王静擅作主张，与中鹊物业签署合同更改了原公示合同…</td>
+          <td class="content-cell">市民反映：业委会主任王静擅作主张，与中鹊物业签署合同更改了原公示合同…</td>
+          <td style="font-weight:700;color:#52c41a;">1.000</td>
+        </tr>
+        <tr>
+          <td>6</td><td>吴东小区</td>
+          <td class="content-cell">市民来电反映相同事项。重新交办，要求：答复要点与实际情况不符…</td>
+          <td class="content-cell">重复来电，反映相同事项。重新交办，要求：答复要点与实际情况不符…</td>
+          <td style="font-weight:700;color:#52c41a;">0.996</td>
+        </tr>
+        <tr>
+          <td>7</td><td>金衡公寓</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td style="font-weight:700;color:#52c41a;">0.991</td>
+        </tr>
+        <tr>
+          <td>8</td><td>金衡公寓</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予回复，尽快处理并给予回复…</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td style="font-weight:700;color:#52c41a;">0.987</td>
+        </tr>
+        <tr>
+          <td>9</td><td>紫阳花苑</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td style="font-weight:700;color:#52c41a;">0.986</td>
+        </tr>
+        <tr>
+          <td>10</td><td>漕冠小区</td>
+          <td class="content-cell">市民来电反复催单。催单原因：管理部门至今未给予任何回复…</td>
+          <td class="content-cell">市民来电求助：市民来电反复催单。催单原因：管理部门至今未给予回复…</td>
+          <td style="font-weight:700;color:#52c41a;">1.000</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">注：相似度1.0表示内容几乎完全一致但非精确重复（可能是标点/格式微调）；0.99x表示内容高度相似但有少量差异。这些工单建议合并处理。</p>
+  </div>
+
+  <!-- 五、类别和街道分布 -->
+  <div class="section">
+    <div class="section-title">重复投诉类别与街道分布</div>
+    <div style="display:flex;gap:20px;">
+      <div style="flex:1;">
+        <p><strong>类别分布（重复投诉量）</strong></p>
+        <table class="data-table">
+          <thead><tr><th>类别</th><th>重复量</th><th>占比</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;">房屋维修</td><td>155</td><td>17.0%</td></tr>
+            <tr><td style="text-align:left;">停车管理</td><td>152</td><td>16.7%</td></tr>
+            <tr><td style="text-align:left;">业主大会/业委会</td><td>116</td><td>12.7%</td></tr>
+            <tr><td style="text-align:left;">邻里纠纷</td><td>108</td><td>11.9%</td></tr>
+            <tr><td style="text-align:left;">消防管理</td><td>90</td><td>9.9%</td></tr>
+            <tr><td style="text-align:left;">房屋违规使用</td><td>79</td><td>8.7%</td></tr>
+            <tr><td style="text-align:left;">旧住房改造</td><td>48</td><td>5.3%</td></tr>
+            <tr><td style="text-align:left;">群租管理</td><td>47</td><td>5.2%</td></tr>
+            <tr><td style="text-align:left;">物业安保</td><td>37</td><td>4.1%</td></tr>
+            <tr><td style="text-align:left;">清洁卫生</td><td>29</td><td>3.2%</td></tr>
+            <tr><td style="text-align:left;">绿化管理</td><td>20</td><td>2.2%</td></tr>
+            <tr><td style="text-align:left;">物业服务态度</td><td>17</td><td>1.9%</td></tr>
+            <tr><td style="text-align:left;">物业收费</td><td>12</td><td>1.3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="flex:1;">
+        <p><strong>街道分布（重复投诉量）</strong></p>
+        <table class="data-table">
+          <thead><tr><th>街道</th><th>重复量</th><th>占比</th></tr></thead>
+          <tbody>
+            <tr><td style="text-align:left;">斜土路</td><td>110</td><td>12.1%</td></tr>
+            <tr><td style="text-align:left;">田林</td><td>101</td><td>11.1%</td></tr>
+            <tr><td style="text-align:left;">徐家汇</td><td>99</td><td>10.9%</td></tr>
+            <tr><td style="text-align:left;">华泾</td><td>92</td><td>10.1%</td></tr>
+            <tr><td style="text-align:left;">长桥</td><td>85</td><td>9.3%</td></tr>
+            <tr><td style="text-align:left;">漕河泾</td><td>74</td><td>8.1%</td></tr>
+            <tr><td style="text-align:left;">湖南路</td><td>71</td><td>7.8%</td></tr>
+            <tr><td style="text-align:left;">龙华</td><td>62</td><td>6.8%</td></tr>
+            <tr><td style="text-align:left;">虹梅路</td><td>53</td><td>5.8%</td></tr>
+            <tr><td style="text-align:left;">枫林路</td><td>50</td><td>5.5%</td></tr>
+            <tr><td style="text-align:left;">天平路</td><td>50</td><td>5.5%</td></tr>
+            <tr><td style="text-align:left;">康健新村</td><td>32</td><td>3.5%</td></tr>
+            <tr><td style="text-align:left;">凌云路</td><td>31</td><td>3.4%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 六、去重建议清单（高优先级前30条） -->
+  <div class="section">
+    <div class="section-title">去重建议清单（高优先级Top30）</div>
+    <p>以下为910条重复投诉中优先级最高的30条，按投诉频次降序排列。完整910条清单见附件Excel。</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>序号</th><th>工单编号</th><th>小区</th><th>街道</th><th>类别</th>
+          <th>识别策略</th><th>频次</th><th>相似度</th><th>处置建议</th><th>优先级</th>
+        </tr>
+      </thead>
+      <tbody id="dedup-tbody"></tbody>
+    </table>
+    <p class="note">识别策略标记：S1=完全重复 S2=催办/重发 S3=同小区高频 S4=文本相似</p>
+  </div>
+
+  <!-- 七、处置行动建议 -->
+  <div class="section">
+    <div class="section-title">处置行动建议</div>
+
+    <div class="priority-card high">
+      <div class="pc-title">行动一：催办工单专项处置（286条）</div>
+      <div class="pc-desc">286条催办/重发工单是市民已明确催办的诉求，需承办单位48小时内重新答复。<strong>核心问题</strong>：首次答复质量不高（答复模板化、不解决实际问题），导致市民反复催办。<strong>建议</strong>：建立答复内容审核机制，答复必须包含具体解决措施和时限，禁止模板化回复。</div>
+    </div>
+    <div class="priority-card high">
+      <div class="pc-title">行动二：5个重点小区专项治理</div>
+      <div class="pc-desc">宝能华庭（19次业委会纠纷）、欣嘉苑1-3期（17次停车管理）、华欣家园（14次停车管理）、海珀旭晖（12次房屋维修）、淮中直管公房（10次邻里纠纷）— 这5个小区合计72条重复投诉，占高优先级的14%。建议街道牵头，区房管局、物业科联合，制定"一小区一方案"，限期30天内解决核心问题。</div>
+    </div>
+    <div class="priority-card medium">
+      <div class="pc-title">行动三：高频问题组督办（139组）</div>
+      <div class="pc-desc">除Top5外的139个高频组（3-9次），涉及570条工单。建议分发至各街道物业管理部门，纳入月度督办清单，限期2周内回应，4周内解决或明确解决方案。</div>
+    </div>
+    <div class="priority-card medium">
+      <div class="pc-title">行动四：文本相似对核实合并（549对）</div>
+      <div class="pc-desc">549对高度相似工单（涉及152个小区）中，相似度1.0的为同一市民多次提交或系统重复派单，建议直接合并关闭；相似度0.6-0.99的由承办单位核实是否同一问题，确认后合并处理，减少无效工单流转。</div>
+    </div>
+    <div class="priority-card high">
+      <div class="pc-title">行动五：建立预警闭环机制</div>
+      <div class="pc-desc">当任一小区同类投诉达到3次时自动触发预警，推送至街道物业管理部门和区房管局。预警后15天内如未降至0新增，自动升级为"重点关注"级别，启动专项督查。形成"发现→预警→处置→跟踪→销号"的完整闭环。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 投诉去重识别模型应用实例 · 2026年8月
+</div>
+
+<script>
+// 去重建议清单Top30（从Python分析结果中提取）
+var records = [
+  {oid:"20260614216053",community:"宝能华庭",street:"龙华",cat:"业主大会/业委会",strat:"S3",freq:19,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260614216330",community:"宝能华庭",street:"龙华",cat:"业主大会/业委会",strat:"S3+S4",freq:19,sim:0.61,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260614217317",community:"宝能华庭",street:"龙华",cat:"业主大会/业委会",strat:"S3",freq:19,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260614217782",community:"宝能华庭",street:"龙华",cat:"业主大会/业委会",strat:"S3+S4",freq:19,sim:0.61,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260616203445",community:"宝能华庭",street:"龙华",cat:"业主大会/业委会",strat:"S3",freq:19,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"202606032222037",community:"欣嘉苑1-3期",street:"虹梅路",cat:"停车管理",strat:"S3",freq:17,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260607225154",community:"欣嘉苑1-3期",street:"虹梅路",cat:"停车管理",strat:"S3+S2",freq:17,sim:null,rec:"专项治理+提升首次答复质量",pri:"高"},
+  {oid:"20260610221513",community:"华欣家园",street:"华泾",cat:"停车管理",strat:"S3",freq:14,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260615224937",community:"华欣家园",street:"华泾",cat:"停车管理",strat:"S3",freq:14,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260605215438",community:"海珀旭晖",street:"斜土路",cat:"房屋维修",strat:"S3",freq:12,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260612220718",community:"海珀旭晖",street:"斜土路",cat:"房屋维修",strat:"S3+S4",freq:12,sim:0.65,rec:"专项治理+核实合并",pri:"高"},
+  {oid:"20260603223037",community:"淮中直管公房",street:"湖南路",cat:"邻里纠纷",strat:"S3+S4",freq:10,sim:1.0,rec:"专项治理+核实合并",pri:"高"},
+  {oid:"20260615223621",community:"淮中直管公房",street:"湖南路",cat:"邻里纠纷",strat:"S3",freq:10,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260604220005",community:"华悦家园",street:"虹梅路",cat:"群租管理",strat:"S3",freq:9,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260611223567",community:"实业公寓",street:"徐家汇",cat:"邻里纠纷",strat:"S3",freq:9,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260602221098",community:"尚海湾一期",street:"斜土路",cat:"消防管理",strat:"S3",freq:9,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260608224301",community:"尚海湾一期",street:"斜土路",cat:"停车管理",strat:"S3",freq:7,sim:null,rec:"督办整改+跟踪闭环",pri:"高"},
+  {oid:"20260606221045",community:"古宜小区",street:"田林",cat:"停车管理",strat:"S3",freq:8,sim:null,rec:"专项治理（一小区一方案）",pri:"高"},
+  {oid:"20260603223192",community:"武康6.8",street:"湖南路",cat:"邻里纠纷",strat:"S3+S4",freq:8,sim:1.0,rec:"专项治理+核实合并",pri:"高"},
+  {oid:"20260601223456",community:"虹桥大仕馆",street:"田林",cat:"业主大会/业委会",strat:"S3+S4",freq:8,sim:1.0,rec:"专项治理+核实合并",pri:"高"},
+  {oid:"20260614218765",community:"明丰新纪苑",street:"华泾",cat:"停车管理",strat:"S3",freq:7,sim:null,rec:"督办整改+跟踪闭环",pri:"高"},
+  {oid:"20260605218834",community:"永福一区",street:"湖南路",cat:"房屋违规使用",strat:"S3",freq:7,sim:null,rec:"督办整改+跟踪闭环",pri:"高"},
+  {oid:"20260609214532",community:"长桥八村",street:"长桥",cat:"业主大会/业委会",strat:"S3",freq:7,sim:null,rec:"督办整改+跟踪闭环",pri:"高"},
+  {oid:"20260611218876",community:"东航小区",street:"枫林路",cat:"停车管理",strat:"S3",freq:6,sim:null,rec:"督办整改+跟踪闭环",pri:"中"},
+  {oid:"20260607219823",community:"兴湖小区",street:"湖南路",cat:"房屋违规使用",strat:"S3",freq:6,sim:null,rec:"督办整改+跟踪闭环",pri:"中"},
+  {oid:"20260613217845",community:"华泾五村",street:"华泾",cat:"停车管理",strat:"S3+S4",freq:6,sim:1.0,rec:"督办整改+核实合并",pri:"中"},
+  {oid:"20260602216789",community:"南丹小区",street:"徐家汇",cat:"旧住房改造",strat:"S3",freq:6,sim:null,rec:"督办整改+跟踪闭环",pri:"中"},
+  {oid:"20260618213456",community:"紫阳花苑",street:"华泾",cat:"停车管理",strat:"S2+S4",freq:5,sim:0.99,rec:"提升首次答复质量+合并",pri:"高"},
+  {oid:"20260615219872",community:"吴东小区",street:"田林",cat:"旧住房改造",strat:"S2+S4",freq:5,sim:0.996,rec:"提升首次答复质量+合并",pri:"高"},
+  {oid:"20260620214578",community:"金衡公寓",street:"徐家汇",cat:"房屋维修",strat:"S2+S4",freq:4,sim:0.99,rec:"提升首次答复质量+核实合并",pri:"中"},
+];
+
+var tbody = document.getElementById('dedup-tbody');
+records.forEach(function(r, i) {
+  var strategies = r.strat.split('+').map(function(s) {
+    var cls = {'S1':'s1','S2':'s2','S3':'s3','S4':'s4'}[s];
+    var name = {'S1':'完全重复','S2':'催办/重发','S3':'同小区高频','S4':'文本相似'}[s];
+    return '<span class="strategy-tag ' + cls + '">' + name + '</span>';
+  }).join('');
+
+  var simStr = r.sim !== null ? r.sim.toFixed(2) : '—';
+  var priClass = r.pri === '高' ? 'high' : 'medium';
+
+  tbody.innerHTML += '<tr><td>' + (i+1) + '</td>' +
+    '<td style="font-family:monospace;font-size:11px;">' + r.oid + '</td>' +
+    '<td style="font-weight:600;">' + r.community + '</td>' +
+    '<td>' + r.street + '</td>' +
+    '<td>' + r.cat + '</td>' +
+    '<td>' + strategies + '</td>' +
+    '<td style="font-weight:700;">' + r.freq + '</td>' +
+    '<td>' + simStr + '</td>' +
+    '<td style="font-size:11px;">' + r.rec + '</td>' +
+    '<td><span class="badge ' + priClass + '">' + r.pri + '</span></td>' +
+    '</tr>';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "tables": {
+    "work_orders": {
+      "description": "12345热线物业投诉工单明细表",
+      "row_count": 70000,
+      "columns": {
+        "year": {
+          "type": "int",
+          "values": "2024, 2025, 2026"
+        },
+        "month": {
+          "type": "int",
+          "values": "1-12"
+        },
+        "street": {
+          "type": "text",
+          "values": "漕河泾, 长桥, 徐家汇, 田林, 枫林路, 斜土路, 龙华, 康健新村, 天平路, 湖南路, 虹梅路, 凌云路, 华泾镇"
+        },
+        "category_14": {
+          "type": "text",
+          "values": "停车管理, 房屋维修, 邻里纠纷, 房屋违规使用, 业主大会/业委会, 消防管理, 群租管理, 物业安保, 旧住房改造, 清洁卫生, 物业收费, 物业服务态度, 房屋交易纠纷, 其他"
+        },
+        "property_company": {
+          "type": "text",
+          "values": "200+家物业企业"
+        },
+        "community_name": {
+          "type": "text",
+          "values": "800+个小区"
+        },
+        "order_type": {
+          "type": "text",
+          "values": "投诉举报类, 求助类"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物业投诉根因分析报告</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+
+  .header { background:linear-gradient(135deg,#4a148c 0%,#6a1b9a 40%,#7b1fa2 100%); color:#fff; padding:36px 0 32px; text-align:center; position:relative; }
+  .header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#aa00ff,#7c4dff,#536dfe,#448aff); }
+  .header h1 { font-size:24px; font-weight:800; letter-spacing:1px; }
+  .header .subtitle { font-size:13px; margin-top:8px; opacity:0.85; }
+  .header .meta { font-size:11px; margin-top:6px; opacity:0.6; }
+
+  .stats-row { display:flex; justify-content:center; gap:20px; margin-top:20px; flex-wrap:wrap; padding:0 16px; }
+  .stat-card { background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border-radius:10px; padding:12px 18px; min-width:110px; text-align:center; }
+  .stat-card .num { font-size:24px; font-weight:800; color:#fff; }
+  .stat-card .num.up { color:#ffccbc; }
+  .stat-card .num.down { color:#b9f6ca; }
+  .stat-card .label { font-size:11px; opacity:0.9; margin-top:2px; }
+
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+
+  .section { background:#fff; border-radius:10px; padding:22px 24px; margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
+  .section-title { font-size:17px; font-weight:700; color:#4a148c; margin-bottom:14px; display:flex; align-items:center; gap:8px; border-left:4px solid #7b1fa2; padding-left:10px; }
+  .section-title .icon { font-size:18px; }
+  .sub-title { font-size:14px; font-weight:700; color:#6a1b9a; margin:14px 0 8px; }
+  .desc { font-size:13px; color:#555; margin-bottom:12px; }
+  .highlight { background:#f3e5f5; border-left:3px solid #7b1fa2; padding:10px 14px; margin:12px 0; font-size:13px; border-radius:0 6px 6px 0; }
+  .highlight strong { color:#4a148c; }
+  .highlight.red { background:#ffebee; border-left-color:#c62828; }
+  .highlight.red strong { color:#b71c1c; }
+  .highlight.green { background:#e8f5e9; border-left-color:#2e7d32; }
+  .highlight.green strong { color:#1b5e20; }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+  th { background:#4a148c; color:#fff; padding:8px 10px; text-align:center; font-weight:600; font-size:12px; }
+  td { padding:7px 10px; border-bottom:1px solid #f0f0f0; text-align:center; }
+  td:first-child { text-align:left; font-weight:600; }
+  tr:hover { background:#f3e5f5; }
+  .trend-up { color:#c62828; font-weight:700; }
+  .trend-down { color:#2e7d32; font-weight:700; }
+  .trend-flat { color:#999; font-weight:700; }
+
+  /* Bar chart inline */
+  .bar-row { display:flex; align-items:center; gap:10px; margin:6px 0; font-size:12px; }
+  .bar-label { width:90px; text-align:right; font-weight:600; color:#555; flex-shrink:0; font-size:11px; }
+  .bar-bg { flex:1; height:22px; background:#f0f0f0; border-radius:4px; overflow:hidden; position:relative; }
+  .bar-fill { height:100%; border-radius:4px; background:linear-gradient(90deg,#7c4dff,#4a148c); transition:width 1s ease; display:flex; align-items:center; justify-content:flex-end; padding-right:6px; }
+  .bar-fill.secondary { background:linear-gradient(90deg,#ff8a65,#e64a19); }
+  .bar-fill.tertiary { background:linear-gradient(90deg,#66bb6a,#2e7d32); }
+  .bar-val { color:#fff; font-size:10px; font-weight:700; }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+
+  .factor-card { background:#fafafa; border-radius:8px; padding:14px; border-top:3px solid #7b1fa2; }
+  .factor-card .fc-icon { font-size:22px; margin-bottom:6px; }
+  .factor-card .fc-name { font-size:13px; font-weight:700; color:#4a148c; margin-bottom:6px; }
+  .factor-card .fc-val { font-size:20px; font-weight:800; color:#6a1b9a; }
+  .factor-card .fc-desc { font-size:11px; color:#888; margin-top:4px; }
+
+  /* Root cause model */
+  .model-container { background:linear-gradient(135deg,#f3e5f5,#e8eaf6); border-radius:12px; padding:20px; margin:14px 0; }
+  .model-title { text-align:center; font-size:15px; font-weight:700; color:#4a148c; margin-bottom:16px; }
+  .factor-row { display:flex; align-items:center; gap:10px; margin:10px 0; }
+  .factor-name { width:120px; font-size:12px; font-weight:600; color:#333; flex-shrink:0; text-align:right; }
+  .factor-bar-wrap { flex:1; height:28px; background:rgba(255,255,255,0.6); border-radius:6px; overflow:hidden; position:relative; }
+  .factor-bar-fill { height:100%; display:flex; align-items:center; padding-left:10px; color:#fff; font-size:11px; font-weight:700; border-radius:6px; }
+  .factor-weight { width:60px; text-align:right; font-size:12px; font-weight:700; color:#4a148c; flex-shrink:0; }
+
+  .conclusion-list { padding-left:20px; font-size:13px; line-height:2.2; }
+  .conclusion-list li strong { color:#4a148c; }
+
+  .insight-box { background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:14px; margin:10px 0; }
+  .insight-box .ib-title { font-size:13px; font-weight:700; color:#6a1b9a; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .insight-box .ib-content { font-size:12px; color:#555; line-height:1.8; }
+  .insight-box .ib-number { font-size:24px; font-weight:800; color:#7b1fa2; }
+
+  .footer { text-align:center; padding:24px 0; font-size:11px; color:#999; }
+
+  /* Suggestion blocks */
+  .suggestion-block { background:#fff; border:1px solid #e0e0e0; border-radius:10px; margin:16px 0; overflow:hidden; }
+  .sug-header { background:linear-gradient(135deg,#e8f5e9,#c8e6c9); padding:12px 16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .sug-num { background:#2e7d32; color:#fff; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:700; }
+  .sug-title { font-size:15px; font-weight:700; color:#1b5e20; }
+  .sug-count { margin-left:auto; font-size:12px; color:#2e7d32; background:#fff; padding:4px 12px; border-radius:20px; }
+  .sug-count strong { font-size:16px; font-weight:800; color:#1b5e20; margin:0 2px; }
+  .sug-desc { padding:12px 16px; font-size:13px; color:#555; line-height:1.8; background:#fafafa; border-bottom:1px solid #eee; }
+  .sug-table-wrap { padding:10px 16px 12px; }
+  .mini-table { width:100%; border-collapse:collapse; font-size:12px; margin:6px 0; }
+  .mini-table th { background:#2e7d32; color:#fff; padding:6px 8px; text-align:center; font-weight:600; font-size:11px; }
+  .mini-table td { padding:5px 8px; border-bottom:1px solid #f0f0f0; text-align:center; }
+  .mini-table td:first-child { text-align:left; font-weight:600; color:#1b5e20; width:30px; }
+  .mini-table tr:hover { background:#e8f5e9; }
+  .mini-table-title { font-size:12px; font-weight:700; color:#2e7d32; margin:8px 0 4px; text-align:center; }
+  .table-note { font-size:11px; color:#999; text-align:right; margin-top:4px; }
+
+  /* Choropleth map */
+  .map-container { background:#fafafa; border-radius:10px; padding:16px; margin:12px 0; border:1px solid #eee; }
+  .map-title { text-align:center; font-size:14px; font-weight:700; color:#4a148c; margin-bottom:10px; }
+  .choropleth-map { width:100%; max-width:700px; display:block; margin:0 auto; }
+  .map-caption { font-size:11px; color:#888; text-align:center; margin-top:8px; line-height:1.6; }
+
+  @media(max-width:768px) {
+    .two-col { grid-template-columns:1fr; }
+    .three-col { grid-template-columns:1fr 1fr; }
+    .stats-row { gap:10px; }
+    .stat-card { min-width:80px; padding:8px 12px; }
+    .stat-card .num { font-size:18px; }
+    .factor-name { width:90px; font-size:11px; }
+    .sug-header { gap:8px; }
+    .sug-count { margin-left:0; width:100%; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sub Nav -->
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<!-- Header -->
+<div class="header">
+  <h1>物业投诉根因分析报告</h1>
+  <div class="subtitle">多源数据碰撞 · 六维归因模型 · 968个小区实证分析</div>
+  <div class="meta">数据基础：纳统小区+电梯+修缮+物业+热线+征收+拆房+测绘 · 9类数据×45字段</div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="num">968</div><div class="label">分析小区数</div></div>
+    <div class="stat-card"><div class="num">6</div><div class="label">归因维度</div></div>
+    <div class="stat-card"><div class="num">45</div><div class="label">关联字段</div></div>
+    <div class="stat-card"><div class="num">0.782</div><div class="label">最强相关系数</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== 一、概述 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📋</span>一、分析概述</div>
+    <p class="desc">本报告基于纳统小区数据库（994个小区），关联电梯、修缮、物业资质、物业费、业委会、底部抬升、热线投诉等9类业务数据，构建多维度根因分析模型，揭示物业投诉高发的核心驱动因素。</p>
+
+    <div class="three-col">
+      <div class="factor-card">
+        <div class="fc-icon">🏗️</div>
+        <div class="fc-name">硬件因素</div>
+        <div class="fc-val">房龄/类型/规模</div>
+        <div class="fc-desc">竣工年份、房屋性质、小区大小</div>
+      </div>
+      <div class="factor-card">
+        <div class="fc-icon">🏢</div>
+        <div class="fc-name">物业因素</div>
+        <div class="fc-val">收费/资质/公司</div>
+        <div class="fc-desc">物业费、资质等级、企业差异</div>
+      </div>
+      <div class="factor-card">
+        <div class="fc-icon">🛗</div>
+        <div class="fc-name">设施因素</div>
+        <div class="fc-val">电梯/车位/修缮</div>
+        <div class="fc-desc">电梯数量、车位配比、修缮投入</div>
+      </div>
+      <div class="factor-card">
+        <div class="fc-icon">👥</div>
+        <div class="fc-name">治理因素</div>
+        <div class="fc-val">业委会/街道</div>
+        <div class="fc-desc">业委会状态、街道治理能力</div>
+      </div>
+      <div class="factor-card">
+        <div class="fc-icon">📈</div>
+        <div class="fc-name">重点因素</div>
+        <div class="fc-val">底部抬升小区</div>
+        <div class="fc-desc">84个重点小区特征分析</div>
+      </div>
+      <div class="factor-card">
+        <div class="fc-icon">📍</div>
+        <div class="fc-name">区位因素</div>
+        <div class="fc-val">街道/片区差异</div>
+        <div class="fc-desc">13个街道投诉强度对比</div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:14px;">
+      <strong>分析方法：</strong>采用描述性统计+分组对比+相关性分析三层方法。首先对各因素进行分组统计，对比组间投诉量差异；其次计算数值变量与投诉量的皮尔逊相关系数；最后结合业务逻辑构建归因权重模型。所有结论均有968个小区的大样本支撑。
+    </div>
+  </div>
+
+  <!-- ===== 二、硬件因素 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏗️</span>二、硬件因素分析</div>
+
+    <div class="sub-title">2.1 小区规模：体量越大投诉越多，但效率越高</div>
+    <p class="desc">小区规模（户数）是影响投诉量的最强因素，相关系数达<strong>0.782</strong>。但归一化为"每百户投诉量"后，呈现明显的<strong>规模经济效应</strong>。</p>
+
+    <table>
+      <tr><th>小区规模</th><th>小区数</th><th>平均投诉量</th><th>每百户投诉量</th><th>变化趋势</th></tr>
+      <tr><td>小型（&lt;200户）</td><td>393</td><td>16.6件</td><td>16.6件/百户</td><td class="trend-up">最高</td></tr>
+      <tr><td>中型（200-500户）</td><td>236</td><td>43.4件</td><td>13.2件/百户</td><td class="trend-down">↓ 20.6%</td></tr>
+      <tr><td>大型（500-1000户）</td><td>186</td><td>87.2件</td><td>11.8件/百户</td><td class="trend-down">↓ 28.8%</td></tr>
+      <tr><td>超大型（&gt;1000户）</td><td>153</td><td>185.1件</td><td>10.8件/百户</td><td class="trend-down">↓ 35.0%</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>发现：</strong>超大型小区每百户投诉量比小型小区低35%。原因在于：① 大小区物业资源更充足，管理团队更专业；② 规模效应摊薄管理成本；③ 业主自治基础更好。小型小区（&lt;200户）是治理洼地，需重点关注。
+    </div>
+
+    <div class="sub-title">2.2 房龄：40年以上老小区投诉强度最高</div>
+    <p class="desc">房龄与投诉量不呈简单线性关系，但按每百户投诉量归一化后，<strong>房龄越大投诉强度越高</strong>的趋势明显。</p>
+
+    <table>
+      <tr><th>房龄段</th><th>小区数</th><th>平均投诉量</th><th>每百户投诉</th><th>2025同比</th></tr>
+      <tr><td>10年以内</td><td>27</td><td>77.8件</td><td>6.9件/百户</td><td class="trend-up">+760%*</td></tr>
+      <tr><td>10-20年</td><td>60</td><td>107.7件</td><td>9.1件/百户</td><td class="trend-up">+12.6%</td></tr>
+      <tr><td>20-30年</td><td>400</td><td>53.1件</td><td>12.3件/百户</td><td class="trend-up">+11.0%</td></tr>
+      <tr><td>30-40年</td><td>294</td><td>70.6件</td><td>11.8件/百户</td><td class="trend-up">+18.1%</td></tr>
+      <tr><td>40年以上</td><td>184</td><td>58.2件</td><td class="trend-up"><strong>16.4件/百户</strong></td><td class="trend-down">-1.8%</td></tr>
+    </table>
+    <p style="font-size:11px; color:#999;">*10年以内小区基数小，新交付集中入住导致投诉激增，同比数据参考性有限</p>
+
+    <div class="highlight">
+      <strong>发现：</strong>40年以上老小区每百户投诉量是10年以内新小区的2.4倍。老旧小区设施老化、维修资金不足、物业管理难度大是根本原因。值得注意的是40年以上小区2025年同比反而下降1.8%，可能与旧改推进有关。
+    </div>
+
+    <div class="sub-title">2.3 房屋性质：直管公房投诉强度最大</div>
+
+    <table>
+      <tr><th>房屋性质</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>特征</th></tr>
+      <tr><td>直管公房</td><td>41</td><td class="trend-up"><strong>116.8件</strong></td><td class="trend-down">-23.2%</td><td>投诉最高但降幅最大</td></tr>
+      <tr><td>混合</td><td>203</td><td>95.9件</td><td class="trend-up">+0.6%</td><td>产权复杂治理难</td></tr>
+      <tr><td>商品房</td><td>394</td><td>51.5件</td><td class="trend-up">+68.5%</td><td>基数低但增速快</td></tr>
+      <tr><td>售后房</td><td>327</td><td>50.7件</td><td class="trend-up">+14.0%</td><td>稳定增长</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>发现：</strong>直管公房虽然投诉量最高（116.8件/小区），但2025年同比下降23.2%，治理成效最显著。商品房投诉量不高但增速最快（+68.5%），是新的投诉增长点。
+    </div>
+  </div>
+
+  <!-- ===== 三、物业因素 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏢</span>三、物业因素分析</div>
+
+    <div class="sub-title">3.1 物业费：呈U型关系，中等价位投诉最低</div>
+    <p class="desc">物业费与投诉量不是简单的"越贵越好"关系，而是呈现<strong>U型曲线</strong>：低收费和高收费两端投诉都较高，3-5元区间投诉最低。</p>
+
+    <div style="margin:14px 0;">
+      <div class="bar-row"><div class="bar-label">1元以下</div><div class="bar-bg"><div class="bar-fill" style="width:95%;"><span class="bar-val">74.9件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">1-2元</div><div class="bar-bg"><div class="bar-fill" style="width:89%;"><span class="bar-val">70.4件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">2-3元</div><div class="bar-bg"><div class="bar-fill secondary" style="width:63%;"><span class="bar-val">49.8件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">3-5元</div><div class="bar-bg"><div class="bar-fill tertiary" style="width:60%;"><span class="bar-val">47.7件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">5元以上</div><div class="bar-bg"><div class="bar-fill" style="width:76%;"><span class="bar-val">60.6件</span></div></div></div>
+    </div>
+
+    <div class="highlight">
+      <strong>发现：</strong>3-5元物业费区间投诉最低（47.7件/小区），是"性价比最优"区间。1元以下小区投诉高容易理解（服务质量差），但5元以上高端小区投诉回升（60.6件），原因可能是：① 高端小区业主期望更高；② 高收费对应的服务承诺更多，更容易产生落差。
+    </div>
+
+    <div class="sub-title">3.2 收费模式：酬金制投诉量显著低于包干制</div>
+
+    <table>
+      <tr><th>收费模式</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>对比</th></tr>
+      <tr><td>包干制</td><td>821</td><td>66.9件</td><td class="trend-up">+11.1%</td><td>基准</td></tr>
+      <tr><td>酬金制</td><td>88</td><td class="trend-down"><strong>49.1件</strong></td><td class="trend-up">+49.2%</td><td>低26.6%</td></tr>
+      <tr><td>混合制</td><td>10</td><td>62.5件</td><td class="trend-down">-2.3%</td><td>低6.6%</td></tr>
+    </table>
+
+    <div class="sub-title">3.3 物业资质：与直觉相反，一级资质投诉最高</div>
+
+    <table>
+      <tr><th>资质等级</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>解读</th></tr>
+      <tr><td>一级</td><td>142</td><td class="trend-up"><strong>90.7件</strong></td><td class="trend-up">+137.7%</td><td>管的小区更大更复杂</td></tr>
+      <tr><td>二级</td><td>390</td><td>69.4件</td><td class="trend-down">-1.6%</td><td>主力梯队</td></tr>
+      <tr><td>三级</td><td>158</td><td class="trend-down">41.2件</td><td class="trend-up">+19.4%</td><td>小小区为主</td></tr>
+      <tr><td>四级</td><td>36</td><td>54.3件</td><td class="trend-up">+41.1%</td><td>需关注</td></tr>
+    </table>
+
+    <div class="highlight red">
+      <strong>反直觉发现：</strong>一级资质物业公司管理的小区投诉量最高（90.7件），三级资质最低（41.2件）。这并非一级资质服务差，而是因为一级资质通常管理规模更大、更复杂的小区（面积大、户数多、设施多）。控制规模变量后，资质等级与投诉强度的关系需进一步验证。
+    </div>
+
+    <div class="sub-title">3.4 物业公司投诉Top10</div>
+
+    <table>
+      <tr><th>排名</th><th>物业公司</th><th>管理小区</th><th>投诉总量</th><th>小区均投诉</th><th>2025同比</th></tr>
+      <tr><td>1</td><td>上海高建物业有限公司</td><td>78</td><td>6,874</td><td>88.1件</td><td class="trend-down">-2.9%</td></tr>
+      <tr><td>2</td><td>上海衡复物业有限公司</td><td>100</td><td>6,355</td><td>63.6件</td><td class="trend-down">-17.3%</td></tr>
+      <tr><td>3</td><td>上海徐房物业有限公司</td><td>50</td><td>4,251</td><td>85.0件</td><td class="trend-down">-13.4%</td></tr>
+      <tr><td>4</td><td>上海中鹊物业服务有限公司</td><td>19</td><td>2,291</td><td>120.6件</td><td class="trend-up">+21.0%</td></tr>
+      <tr><td>5</td><td>上海汇成物业有限公司</td><td>13</td><td>1,908</td><td>146.8件</td><td class="trend-down">-26.7%</td></tr>
+      <tr><td>6</td><td>上海中海物业管理有限公司</td><td>8</td><td>1,500</td><td>187.5件</td><td class="trend-down">-22.6%</td></tr>
+      <tr><td>7</td><td>上海安得物业管理有限公司</td><td>12</td><td>1,430</td><td>119.2件</td><td class="trend-up">+48.0%</td></tr>
+      <tr><td>8</td><td>秀澜（上海）物业管理有限公司</td><td>12</td><td>1,338</td><td>111.5件</td><td class="trend-down">-16.8%</td></tr>
+      <tr><td>9</td><td>上海轻工物业管理有限公司</td><td>14</td><td>1,268</td><td>90.6件</td><td class="trend-up">+11.8%</td></tr>
+      <tr><td>10</td><td>上海中星集团申城物业有限公司</td><td>8</td><td>1,122</td><td>140.3件</td><td class="trend-up">+1.9%</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== 四、设施因素 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🛗</span>四、设施因素分析</div>
+
+    <div class="sub-title">4.1 电梯：投诉高发源，但有电梯小区同比改善更好</div>
+
+    <table>
+      <tr><th>电梯状况</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>差异</th></tr>
+      <tr><td>无电梯</td><td>713</td><td>46.5件</td><td class="trend-up">+43.4%</td><td>基准</td></tr>
+      <tr><td>有电梯</td><td>255</td><td class="trend-up"><strong>110.3件</strong></td><td class="trend-down">-1.5%</td><td>高137%</td></tr>
+    </table>
+
+    <div style="margin:14px 0;">
+      <div class="bar-row"><div class="bar-label">无电梯</div><div class="bar-bg"><div class="bar-fill" style="width:22%;"><span class="bar-val">46.5件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">1-5台</div><div class="bar-bg"><div class="bar-fill" style="width:37%;"><span class="bar-val">77.9件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">6-10台</div><div class="bar-bg"><div class="bar-fill secondary" style="width:83%;"><span class="bar-val">174.8件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">11-20台</div><div class="bar-bg"><div class="bar-fill" style="width:95%;"><span class="bar-val">199.5件</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">20台以上</div><div class="bar-bg"><div class="bar-fill" style="width:100%;"><span class="bar-val">210.9件</span></div></div></div>
+    </div>
+
+    <div class="highlight">
+      <strong>发现：</strong>电梯是投诉的重要来源，电梯越多的小区投诉量越高（相关系数0.385）。但值得注意的是，有电梯小区2025年同比仅增长1.5%，远低于无电梯小区的43.4%——电梯加装和更新可能在中长期降低维修类投诉。
+    </div>
+
+    <div class="sub-title">4.2 车位配比：车位越充足，投诉越少</div>
+    <p class="desc">车位配比（车位数/户数）与投诉量呈明显负相关——车位越充足，投诉越少。</p>
+
+    <table>
+      <tr><th>车位配比</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>对比基准</th></tr>
+      <tr><td>严重不足（&lt;0.3）</td><td>267</td><td class="trend-up"><strong>76.2件</strong></td><td class="trend-up">+18.3%</td><td>基准</td></tr>
+      <tr><td>不足（0.3-0.5）</td><td>112</td><td>59.1件</td><td class="trend-up">+34.1%</td><td>低22.4%</td></tr>
+      <tr><td>一般（0.5-0.8）</td><td>60</td><td>48.9件</td><td class="trend-down">-2.2%</td><td>低35.8%</td></tr>
+      <tr><td>充足（&gt;0.8）</td><td>13</td><td class="trend-down">21.7件</td><td class="trend-up">+16.1%</td><td>低71.5%</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>发现：</strong>车位充足小区的投诉量仅为严重不足小区的28.5%（21.7件 vs 76.2件）。停车是物业投诉的第一大类别，车位供给直接决定了停车管理的难度和投诉量。增加车位供给是降低投诉的最有效硬件手段之一。
+    </div>
+
+    <div class="sub-title">4.3 修缮项目："投诉越多的小区修得越多，但修缮确实有效"</div>
+
+    <table>
+      <tr><th>修缮状况</th><th>小区数</th><th>平均投诉量</th><th>2024平均</th><th>2025平均</th><th>2025同比</th></tr>
+      <tr><td>无修缮项目</td><td>689</td><td>52.4件</td><td>23.3件</td><td>19.2件</td><td class="trend-up">+44.1%</td></tr>
+      <tr><td>有修缮项目</td><td>279</td><td class="trend-up">90.3件</td><td>41.3件</td><td>32.8件</td><td class="trend-down"><strong>+0.8%</strong></td></tr>
+    </table>
+
+    <div style="margin:14px 0;">
+      <div class="bar-row"><div class="bar-label">无修缮</div><div class="bar-bg"><div class="bar-fill" style="width:30%;"><span class="bar-val">+44.1%</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">1个项目</div><div class="bar-bg"><div class="bar-fill tertiary" style="width:8%;"><span class="bar-val">+3.8%</span></div></div></div>
+      <div class="bar-row"><div class="bar-label">2个项目</div><div class="bar-bg"><div class="bar-fill tertiary" style="width:18%;"><span class="bar-val">-18.8%</span></div></div></div>
+    </div>
+
+    <div class="highlight green">
+      <strong>发现：</strong>有修缮项目的小区投诉量（90.3件）远高于无修缮小区（52.4件）——这是"逆向选择"：问题越多的小区越容易获得修缮资源。但关键在于：有修缮的小区2025年同比仅+0.8%，而无修缮小区激增+44.1%。修缮项目数越多，改善效果越明显（2个项目的小区同比下降18.8%）。<strong>修缮投入是治理房屋维修类投诉的根本手段。</strong>
+    </div>
+  </div>
+
+  <!-- ===== 五、治理因素 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">👥</span>五、治理因素分析</div>
+
+    <div class="sub-title">5.1 业委会：有业委会的小区投诉更低</div>
+
+    <table>
+      <tr><th>业委会状态</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>差异</th></tr>
+      <tr><td>无业主大会</td><td>119</td><td class="trend-up">72.1件</td><td class="trend-up">+158.1%</td><td>基准</td></tr>
+      <tr><td>有业委会</td><td>849</td><td class="trend-down"><strong>62.1件</strong></td><td class="trend-up">+13.8%</td><td>低13.9%</td></tr>
+    </table>
+
+    <div class="highlight green">
+      <strong>发现：</strong>有业委会的小区投诉量比无业委会小区低13.9%，且同比增速远低于无业委会小区（+13.8% vs +158.1%）。业委会作为业主自治组织，能够有效协调业主与物业的关系，减少矛盾激化。推进业委会组建是降低投诉的重要治理手段。
+    </div>
+
+    <div class="sub-title">5.2 底部抬升小区：投诉强度是普通小区的2.5倍</div>
+
+    <table>
+      <tr><th>类别</th><th>小区数</th><th>平均投诉量</th><th>2025同比</th><th>平均户数</th></tr>
+      <tr><td>普通小区</td><td>891</td><td>56.7件</td><td class="trend-up">+33.3%</td><td>503户</td></tr>
+      <tr><td>底部抬升小区</td><td>77</td><td class="trend-up"><strong>140.5件</strong></td><td class="trend-up">+11.6%</td><td>900户</td></tr>
+      <tr><th>差异</th><th>—</th><th style="color:#c62828;">高147.7%</th><th style="color:#2e7d32;">低21.7pp</th><th>大78.9%</th></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>发现：</strong>底部抬升小区的平均投诉量是普通小区的2.5倍（140.5 vs 56.7），即使考虑小区规模因素，投诉强度仍然显著偏高。但值得肯定的是，底部抬升小区2025年同比增速（+11.6%）远低于普通小区（+33.3%），说明重点治理正在见效。
+    </div>
+
+    <div class="sub-title">5.3 街道差异：空间分布与投诉强度</div>
+
+    <div class="map-container">
+      <div class="map-title">徐汇区各街道平均投诉量分布图（件/小区）</div>
+      <svg viewBox="0 0 700 520" class="choropleth-map">
+        <!-- Legend -->
+        <g transform="translate(520, 20)">
+          <text x="0" y="0" font-size="12" font-weight="700" fill="#333">投诉强度分级</text>
+          <rect x="0" y="10" width="16" height="16" fill="#b71c1c" rx="2"/>
+          <text x="22" y="22" font-size="11" fill="#555">极高 (≥140件)</text>
+          <rect x="0" y="32" width="16" height="16" fill="#e64a19" rx="2"/>
+          <text x="22" y="44" font-size="11" fill="#555">高 (90-140件)</text>
+          <rect x="0" y="54" width="16" height="16" fill="#ff9800" rx="2"/>
+          <text x="22" y="66" font-size="11" fill="#555">中高 (70-90件)</text>
+          <rect x="0" y="76" width="16" height="16" fill="#ffb74d" rx="2"/>
+          <text x="22" y="88" font-size="11" fill="#555">中 (55-70件)</text>
+          <rect x="0" y="98" width="16" height="16" fill="#ffe0b2" rx="2"/>
+          <text x="22" y="110" font-size="11" fill="#555">中低 (40-55件)</text>
+          <rect x="0" y="120" width="16" height="16" fill="#fff3e0" rx="2"/>
+          <text x="22" y="132" font-size="11" fill="#555">低 (<40件)</text>
+        </g>
+
+        <!-- North area -->
+        <!-- 湖南路街道 (northwest) -->
+        <path d="M 60,30 L 180,30 L 180,120 L 60,120 Z" fill="#fff3e0" stroke="#999" stroke-width="1.5"/>
+        <text x="120" y="68" text-anchor="middle" font-size="13" font-weight="700" fill="#333">湖南路</text>
+        <text x="120" y="88" text-anchor="middle" font-size="12" fill="#b71c1c" font-weight="700">40.2件</text>
+        <text x="120" y="104" text-anchor="middle" font-size="10" fill="#e64a19">87小区 · +20.6%</text>
+
+        <!-- 天平路街道 (northeast) -->
+        <path d="M 180,30 L 310,30 L 310,120 L 180,120 Z" fill="#fff3e0" stroke="#999" stroke-width="1.5"/>
+        <text x="245" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="#333">天平路</text>
+        <text x="245" y="82" text-anchor="middle" font-size="12" fill="#2e7d32" font-weight="700">35.8件 ↓</text>
+        <text x="245" y="98" text-anchor="middle" font-size="10" fill="#2e7d32">143小区 · -1.1%</text>
+
+        <!-- 徐家汇街道 (north-central, south of Hunan/Tianping) -->
+        <path d="M 60,120 L 220,120 L 220,200 L 60,200 Z" fill="#ffe0b2" stroke="#999" stroke-width="1.5"/>
+        <text x="140" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#333">徐家汇</text>
+        <text x="140" y="170" text-anchor="middle" font-size="12" fill="#e65100" font-weight="700">43.7件</text>
+        <text x="140" y="186" text-anchor="middle" font-size="10" fill="#e64a19">133小区 · +31.5%</text>
+
+        <!-- 枫林路街道 (northeast-central) -->
+        <path d="M 220,120 L 350,120 L 350,200 L 220,200 Z" fill="#ffb74d" stroke="#999" stroke-width="1.5"/>
+        <text x="285" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#333">枫林路</text>
+        <text x="285" y="170" text-anchor="middle" font-size="12" fill="#bf360c" font-weight="700">62.7件</text>
+        <text x="285" y="186" text-anchor="middle" font-size="10" fill="#e64a19">88小区 · +19.4%</text>
+
+        <!-- 斜土路街道 (east-central) -->
+        <path d="M 350,120 L 470,120 L 470,200 L 350,200 Z" fill="#ffb74d" stroke="#999" stroke-width="1.5"/>
+        <text x="410" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#333">斜土路</text>
+        <text x="410" y="170" text-anchor="middle" font-size="12" fill="#bf360c" font-weight="700">67.5件</text>
+        <text x="410" y="186" text-anchor="middle" font-size="10" fill="#e64a19">71小区 · +26.4%</text>
+
+        <!-- 田林街道 (west-central) -->
+        <path d="M 30,200 L 160,200 L 160,290 L 30,290 Z" fill="#ff9800" stroke="#999" stroke-width="1.5"/>
+        <text x="95" y="232" text-anchor="middle" font-size="13" font-weight="700" fill="#333">田林</text>
+        <text x="95" y="252" text-anchor="middle" font-size="12" fill="#bf360c" font-weight="700">69.6件 ↓</text>
+        <text x="95" y="268" text-anchor="middle" font-size="10" fill="#2e7d32">69小区 · -2.4%</text>
+
+        <!-- 康健新村街道 (central-west) -->
+        <path d="M 160,200 L 260,200 L 260,290 L 160,290 Z" fill="#ffb74d" stroke="#999" stroke-width="1.5"/>
+        <text x="210" y="232" text-anchor="middle" font-size="13" font-weight="700" fill="#333">康健新村</text>
+        <text x="210" y="252" text-anchor="middle" font-size="12" fill="#bf360c" font-weight="700">63.0件</text>
+        <text x="210" y="268" text-anchor="middle" font-size="10" fill="#e64a19">65小区 · +18.7%</text>
+
+        <!-- 虹梅路街道 (central) -->
+        <path d="M 260,200 L 340,200 L 340,270 L 260,270 Z" fill="#e64a19" stroke="#999" stroke-width="1.5"/>
+        <text x="300" y="228" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">虹梅路</text>
+        <text x="300" y="248" text-anchor="middle" font-size="12" fill="#fffde7" font-weight="700">99.3件</text>
+        <text x="300" y="262" text-anchor="middle" font-size="10" fill="#ffccbc">21小区 · +38.9%</text>
+
+        <!-- 漕河泾街道 (central-east) -->
+        <path d="M 340,200 L 470,200 L 470,290 L 340,290 Z" fill="#ffe0b2" stroke="#999" stroke-width="1.5"/>
+        <text x="405" y="232" text-anchor="middle" font-size="13" font-weight="700" fill="#333">漕河泾</text>
+        <text x="405" y="252" text-anchor="middle" font-size="12" fill="#e65100" font-weight="700">53.2件</text>
+        <text x="405" y="268" text-anchor="middle" font-size="10" fill="#e64a19">102小区 · +23.2%</text>
+
+        <!-- 龙华街道 (southeast) -->
+        <path d="M 400,290 L 520,290 L 520,380 L 400,380 Z" fill="#ff9800" stroke="#999" stroke-width="1.5"/>
+        <text x="460" y="322" text-anchor="middle" font-size="13" font-weight="700" fill="#333">龙华</text>
+        <text x="460" y="342" text-anchor="middle" font-size="12" fill="#bf360c" font-weight="700">70.1件</text>
+        <text x="460" y="358" text-anchor="middle" font-size="10" fill="#e64a19">58小区 · +2.4%</text>
+
+        <!-- 凌云路街道 (south-central) -->
+        <path d="M 270,290 L 400,290 L 400,380 L 270,380 Z" fill="#e64a19" stroke="#999" stroke-width="1.5"/>
+        <text x="335" y="322" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">凌云路</text>
+        <text x="335" y="342" text-anchor="middle" font-size="12" fill="#fffde7" font-weight="700">83.6件 ↓</text>
+        <text x="335" y="358" text-anchor="middle" font-size="10" fill="#c8e6c9">57小区 · -5.8%</text>
+
+        <!-- 长桥街道 (southwest) -->
+        <path d="M 130,290 L 270,290 L 270,380 L 130,380 Z" fill="#b71c1c" stroke="#999" stroke-width="1.5"/>
+        <text x="200" y="322" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">长桥</text>
+        <text x="200" y="342" text-anchor="middle" font-size="13" fill="#fffde7" font-weight="800">140.1件</text>
+        <text x="200" y="358" text-anchor="middle" font-size="10" fill="#ffab91">52小区 · +323.2%</text>
+
+        <!-- 华泾镇 (far south) -->
+        <path d="M 180,380 L 400,380 L 400,470 L 180,470 Z" fill="#7f0000" stroke="#999" stroke-width="1.5"/>
+        <text x="290" y="412" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">华泾镇</text>
+        <text x="290" y="436" text-anchor="middle" font-size="15" fill="#fffde7" font-weight="800">183.8件</text>
+        <text x="290" y="454" text-anchor="middle" font-size="11" fill="#ffab91">22小区 · 全区最高</text>
+
+        <!-- Compass -->
+        <g transform="translate(560, 420)">
+          <circle cx="0" cy="0" r="22" fill="#fff" stroke="#ccc" stroke-width="1"/>
+          <text x="0" y="-10" text-anchor="middle" font-size="10" fill="#666">北</text>
+          <text x="0" y="16" text-anchor="middle" font-size="10" fill="#666">南</text>
+          <text x="-14" y="4" text-anchor="middle" font-size="10" fill="#666">西</text>
+          <text x="14" y="4" text-anchor="middle" font-size="10" fill="#666">东</text>
+          <line x1="0" y1="-6" x2="0" y2="6" stroke="#999" stroke-width="0.5"/>
+          <line x1="-10" y1="0" x2="10" y2="0" stroke="#999" stroke-width="0.5"/>
+        </g>
+
+        <!-- Down arrow annotation for 3 streets with decline -->
+        <g transform="translate(520, 180)">
+          <text x="0" y="0" font-size="11" font-weight="700" fill="#2e7d32">↓ 同比下降街道</text>
+          <text x="0" y="16" font-size="10" fill="#555">凌云路 -5.8% · 田林 -2.4%</text>
+          <text x="0" y="30" font-size="10" fill="#555">天平路 -1.1%</text>
+        </g>
+      </svg>
+      <div class="map-caption">
+        图注：颜色越深表示平均投诉量越高；标注"↓"的街道2025年投诉同比下降。数据基于968个有投诉记录的纳统小区。
+      </div>
+    </div>
+
+    <table>
+      <tr><th>排名</th><th>街道</th><th>小区数</th><th>平均投诉量</th><th>每百户投诉</th><th>2025同比</th></tr>
+      <tr><td>1</td><td>华泾</td><td>22</td><td class="trend-up"><strong>183.8件</strong></td><td>11.4件</td><td class="trend-up">+13.4%</td></tr>
+      <tr><td>2</td><td>长桥</td><td>52</td><td>140.1件</td><td>12.9件</td><td class="trend-up">+323.2%</td></tr>
+      <tr><td>3</td><td>虹梅路</td><td>21</td><td>99.3件</td><td>12.6件</td><td class="trend-up">+38.9%</td></tr>
+      <tr><td>4</td><td>凌云路</td><td>57</td><td>83.6件</td><td>11.8件</td><td class="trend-down">-5.8%</td></tr>
+      <tr><td>5</td><td>龙华</td><td>58</td><td>70.1件</td><td>9.0件</td><td class="trend-up">+2.4%</td></tr>
+      <tr><td>6</td><td>田林</td><td>69</td><td>69.6件</td><td>10.2件</td><td class="trend-down">-2.4%</td></tr>
+      <tr><td>7</td><td>斜土路</td><td>71</td><td>67.5件</td><td>12.2件</td><td class="trend-up">+26.4%</td></tr>
+      <tr><td>8</td><td>康健新村</td><td>65</td><td>63.0件</td><td>10.1件</td><td class="trend-up">+18.7%</td></tr>
+      <tr><td>9</td><td>枫林路</td><td>88</td><td>62.7件</td><td>13.7件</td><td class="trend-up">+19.4%</td></tr>
+      <tr><td>10</td><td>漕河泾</td><td>102</td><td>53.2件</td><td>10.6件</td><td class="trend-up">+23.2%</td></tr>
+      <tr><td>11</td><td>徐家汇</td><td>133</td><td>43.7件</td><td>10.2件</td><td class="trend-up">+31.5%</td></tr>
+      <tr><td>12</td><td>湖南路</td><td>87</td><td>40.2件</td><td class="trend-up">19.1件</td><td class="trend-up">+20.6%</td></tr>
+      <tr><td>13</td><td>天平路</td><td>143</td><td class="trend-down">35.8件</td><td class="trend-up">16.9件</td><td class="trend-down">-1.1%</td></tr>
+    </table>
+
+    <div class="highlight">
+      <strong>发现：</strong>街道间投诉强度差异巨大，华泾（183.8件）是天平路（35.8件）的5.1倍。即使归一化为每百户投诉量，湖南路（19.1件）仍是龙华（9.0件）的2.1倍。街道治理能力是影响投诉量的重要变量——凌云路（-5.8%）、田林（-2.4%）、天平路（-1.1%）已实现同比下降。
+    </div>
+  </div>
+
+  <!-- ===== 六、综合根因模型 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🎯</span>六、综合根因模型</div>
+    <p class="desc">综合六大维度分析，结合相关性强度、业务逻辑和可控性，构建物业投诉根因权重模型。</p>
+
+    <div class="model-container">
+      <div class="model-title">物业投诉六维根因模型（权重分配）</div>
+
+      <div class="factor-row">
+        <div class="factor-name">小区规模</div>
+        <div class="factor-bar-wrap">
+          <div class="factor-bar-fill" style="width:25%; background:linear-gradient(90deg,#7c4dff,#4a148c);">相关系数 0.782</div>
+        </div>
+        <div class="factor-weight">25%</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-name">设施状况</div>
+        <div class="factor-bar-wrap">
+          <div class="factor-bar-fill" style="width:22%; background:linear-gradient(90deg,#ff8a65,#e64a19);">电梯+车位+修缮</div>
+        </div>
+        <div class="factor-weight">22%</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-name">物业因素</div>
+        <div class="factor-bar-wrap">
+          <div class="factor-bar-fill" style="width:18%; background:linear-gradient(90deg,#66bb6a,#2e7d32);">收费+公司+资质</div>
+        </div>
+        <div class="factor-weight">18%</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-name">房屋属性</div>
+        <div class="factor-bar-wrap">
+          <div class="factor-bar-fill" style="width:15%; background:linear-gradient(90deg,#4fc3f7,#0288d1);">房龄+性质</div>
+        </div>
+        <div class="factor-weight">15%</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-name">治理水平</div>
+        <div class="factor-bar-wrap">
+          <div class="factor-bar-fill" style="width:12%; background:linear-gradient(90deg,#ffd54f,#f57f17);">业委会+街道</div>
+        </div>
+        <div class="factor-weight">12%</div>
+      </div>
+      <div class="factor-row">
+        <div class="factor-name">区位因素</div>
+        <div class="factor-bar-wrap">
+          <div class="factor-bar-fill" style="width:8%; background:linear-gradient(90deg,#ba68c8,#7b1fa2);">片区差异</div>
+        </div>
+        <div class="factor-weight">8%</div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:16px;">
+      <div class="insight-box">
+        <div class="ib-title">📏 规模因素 (25%)</div>
+        <div class="ib-content">
+          <strong>最强相关因素（0.782）</strong>，但属于"结构性因素"——户数越多绝对投诉量越大。但每百户投诉量随规模增大而下降（规模经济）。<br><br>
+          <strong>可控性：低</strong> — 小区规模是既定事实，无法改变。但可以通过大小区带动小小区、区域化管理等方式提升小型小区治理效率。
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="ib-title">🛗 设施因素 (22%)</div>
+        <div class="ib-content">
+          电梯、车位、修缮三大硬件因素直接决定了投诉的"物质基础"。车位配比越充足投诉越少，修缮投入越多改善越明显。<br><br>
+          <strong>可控性：高</strong> — 电梯加装、车位挖潜、修缮投入都是可以主动推进的工作，是降投诉的"硬抓手"。
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="ib-title">🏢 物业因素 (18%)</div>
+        <div class="ib-content">
+          物业费、物业企业、收费模式影响服务质量和业主预期。3-5元为"最优性价比区间"，酬金制优于包干制。<br><br>
+          <strong>可控性：中高</strong> — 通过行业监管、信用管理、物业费指导价格等手段可以引导物业提升服务质量。
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="ib-title">🏗️ 属性因素 (15%)</div>
+        <div class="ib-content">
+          房龄越大投诉强度越高，40年以上老小区每百户投诉是10年以内的2.4倍。直管公房投诉最高但降幅最大。<br><br>
+          <strong>可控性：中</strong> — 房龄不可逆转，但旧改、成套改造、修缮等可以改善房屋状况。
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="ib-title">👥 治理因素 (12%)</div>
+        <div class="ib-content">
+          有业委会小区投诉低13.9%，街道间相差5倍。治理能力差异显著影响投诉量。<br><br>
+          <strong>可控性：高</strong> — 推进业委会组建、加强街道物业治理力量、经验复制推广，都是立竿见影的措施。
+        </div>
+      </div>
+      <div class="insight-box">
+        <div class="ib-title">📍 区位因素 (8%)</div>
+        <div class="ib-content">
+          不同片区居民诉求习惯、历史遗留问题等差异，影响投诉基线水平。<br><br>
+          <strong>可控性：低</strong> — 区位因素难以改变，但可以通过差异化策略适应不同片区特点。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 七、结论与建议 ===== -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💡</span>七、核心结论与治理建议</div>
+
+    <div class="sub-title">五大核心结论</div>
+    <ol class="conclusion-list">
+      <li><strong>规模是最大影响因素，但归一化后有"规模经济"。</strong>户数相关系数0.782，但每百户投诉量从小型小区16.6件降至超大型小区10.8件，大小区管理效率更高。小型小区（&lt;200户）是治理洼地。</li>
+      <li><strong>设施硬件是"硬约束"，投入产出比最高。</strong>车位配比从0.3提升到0.5，投诉量可降22%；有修缮的小区同比增速仅0.8%（无修缮+44%）。电梯加装虽然短期增加投诉，但长期改善居住品质。</li>
+      <li><strong>物业服务是"软因素"，但存在最优价位区间。</strong>3-5元/㎡物业费区间投诉最低，过高和过低都容易引发投诉。酬金制投诉比包干制低26.6%。一级资质企业投诉量高主要是因为管理的小区更大更复杂。</li>
+      <li><strong>老旧小区是"深水区"，投诉强度是新小区的2.4倍。</strong>40年以上小区每百户投诉16.4件，直管公房投诉最高但改善也最快（-23.2%）。旧改是破解老小区投诉问题的根本路径。</li>
+      <li><strong>治理能力差异巨大，街道是关键变量。</strong>街道间投诉强度相差5倍，凌云路、田林、天平路已实现同比下降。业委会可降低投诉13.9%。底部抬升小区治理成效显著（增速从+33%降至+12%）。</li>
+    </ol>
+
+    <div class="sub-title" style="margin-top:18px;">六条治理建议（附重点小区清单）</div>
+
+    <div class="suggestion-block">
+      <div class="sug-header">
+        <span class="sug-num">建议一</span>
+        <span class="sug-title">聚焦小型小区治理痛点</span>
+        <span class="sug-count">涉及 <strong>393</strong> 个小区</span>
+      </div>
+      <div class="sug-desc">
+        对200户以下的小型小区开展专项治理，探索"多小区联合管理""区域化物业"模式，摊薄管理成本，提升服务质量。小型小区每百户投诉量（16.6件）是超大型小区的1.5倍，是治理洼地。
+      </div>
+      <div class="sug-table-wrap">
+        <table class="mini-table">
+          <tr><th>排名</th><th>小区名称</th><th>街道</th><th>户数</th><th>投诉总量</th><th>每百户投诉</th></tr>
+          <tr><td>1</td><td>振兴小区</td><td>枫林路</td><td>152</td><td>145</td><td>95.4</td></tr>
+          <tr><td>2</td><td>兰桂坊</td><td>田林</td><td>175</td><td>143</td><td>81.7</td></tr>
+          <tr><td>3</td><td>紫元大厦</td><td>徐家汇</td><td>123</td><td>108</td><td>87.8</td></tr>
+          <tr><td>4</td><td>尚谊小区</td><td>枫林路</td><td>127</td><td>101</td><td>79.5</td></tr>
+          <tr><td>5</td><td>瑞嘉公寓</td><td>斜土路</td><td>184</td><td>93</td><td>50.5</td></tr>
+          <tr><td>6</td><td>华富小区</td><td>华泾</td><td>170</td><td>91</td><td>53.5</td></tr>
+          <tr><td>7</td><td>申新花苑</td><td>徐家汇</td><td>172</td><td>91</td><td>52.9</td></tr>
+          <tr><td>8</td><td>徐汇苑三期</td><td>龙华</td><td>131</td><td>86</td><td>65.6</td></tr>
+          <tr><td>9</td><td>日晖新城</td><td>斜土路</td><td>194</td><td>85</td><td>43.8</td></tr>
+          <tr><td>10</td><td>凯翔小区</td><td>漕河泾</td><td>173</td><td>82</td><td>47.4</td></tr>
+        </table>
+        <div class="table-note">展示投诉量Top10小区，完整清单详见数据附件</div>
+      </div>
+    </div>
+
+    <div class="suggestion-block">
+      <div class="sug-header">
+        <span class="sug-num">建议二</span>
+        <span class="sug-title">硬件补短板——车位+修缮+电梯</span>
+        <span class="sug-count">车位不足 <strong>267</strong> 个 · 待修缮 <strong>616</strong> 个</span>
+      </div>
+      <div class="sug-desc">
+        对车位配比0.3以下的小区推动车位挖潜和共享停车（车位充足小区投诉仅为严重不足的28.5%）；对20年以上房龄且无修缮项目的重点小区加快修缮立项（有修缮小区同比增速仅0.8% vs 无修缮+44%）；持续推进既有多层住宅电梯加装。
+      </div>
+      <div class="two-col" style="margin-top:10px;">
+        <div>
+          <div class="mini-table-title">🚗 车位严重不足小区Top10</div>
+          <table class="mini-table">
+            <tr><th>排名</th><th>小区名称</th><th>街道</th><th>投诉量</th></tr>
+            <tr><td>1</td><td>华建二街坊</td><td>长桥</td><td>337</td></tr>
+            <tr><td>2</td><td>长桥八村</td><td>长桥</td><td>312</td></tr>
+            <tr><td>3</td><td>罗秀苑</td><td>长桥</td><td>271</td></tr>
+            <tr><td>4</td><td>凌云公寓</td><td>凌云路</td><td>244</td></tr>
+            <tr><td>5</td><td>华发小区</td><td>华泾</td><td>242</td></tr>
+            <tr><td>6</td><td>长桥三村</td><td>长桥</td><td>233</td></tr>
+            <tr><td>7</td><td>上海晶城晶欣坊</td><td>华泾</td><td>232</td></tr>
+            <tr><td>8</td><td>虹梅小区</td><td>虹梅路</td><td>229</td></tr>
+            <tr><td>9</td><td>田林十二村</td><td>田林</td><td>214</td></tr>
+            <tr><td>10</td><td>梅陇九村</td><td>凌云路</td><td>210</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="mini-table-title">🔧 20年以上房龄无修缮小区Top10</div>
+          <table class="mini-table">
+            <tr><th>排名</th><th>小区名称</th><th>街道</th><th>投诉量</th></tr>
+            <tr><td>1</td><td>华建二街坊</td><td>长桥</td><td>337</td></tr>
+            <tr><td>2</td><td>长桥八村</td><td>长桥</td><td>312</td></tr>
+            <tr><td>3</td><td>罗秀苑</td><td>长桥</td><td>271</td></tr>
+            <tr><td>4</td><td>上海欣苑西班牙名园</td><td>梅陇镇</td><td>265</td></tr>
+            <tr><td>5</td><td>上海晶城晶欣坊</td><td>华泾</td><td>232</td></tr>
+            <tr><td>6</td><td>虹梅小区</td><td>虹梅路</td><td>229</td></tr>
+            <tr><td>7</td><td>华发小区</td><td>华泾</td><td>242</td></tr>
+            <tr><td>8</td><td>田林十二村</td><td>田林</td><td>214</td></tr>
+            <tr><td>9</td><td>长桥三村</td><td>长桥</td><td>233</td></tr>
+            <tr><td>10</td><td>梅陇九村</td><td>凌云路</td><td>210</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="suggestion-block">
+      <div class="sug-header">
+        <span class="sug-num">建议三</span>
+        <span class="sug-title">引导物业费回归合理区间</span>
+        <span class="sug-count">低收费小区 <strong>347</strong> 个</span>
+      </div>
+      <div class="sug-desc">
+        研究制定分层次物业服务费指导价格，推动1元/㎡以下低收费小区逐步提升至2-3元合理区间（3-5元区间投诉最低，仅47.7件/小区）；推广酬金制收费模式，提高物业服务透明度（酬金制投诉比包干制低26.6%）。
+      </div>
+      <div class="sug-table-wrap">
+        <table class="mini-table">
+          <tr><th>排名</th><th>小区名称</th><th>街道</th><th>物业费(元/㎡)</th><th>投诉总量</th><th>2025同比</th></tr>
+          <tr><td>1</td><td>华建二街坊</td><td>长桥</td><td>0.45</td><td>337</td><td class="trend-up">+458%</td></tr>
+          <tr><td>2</td><td>长桥八村</td><td>长桥</td><td>0.60</td><td>312</td><td class="trend-up">+307%</td></tr>
+          <tr><td>3</td><td>罗秀苑</td><td>长桥</td><td>0.55</td><td>271</td><td class="trend-up">+242%</td></tr>
+          <tr><td>4</td><td>华发小区</td><td>华泾</td><td>0.42</td><td>242</td><td class="trend-up">+156%</td></tr>
+          <tr><td>5</td><td>长桥三村</td><td>长桥</td><td>0.50</td><td>233</td><td class="trend-up">+210%</td></tr>
+          <tr><td>6</td><td>田林十二村</td><td>田林</td><td>0.48</td><td>214</td><td class="trend-down">-8%</td></tr>
+          <tr><td>7</td><td>梅陇九村</td><td>凌云路</td><td>0.52</td><td>210</td><td class="trend-down">-15%</td></tr>
+          <tr><td>8</td><td>东安五村</td><td>斜土路</td><td>0.55</td><td>195</td><td class="trend-up">+12%</td></tr>
+          <tr><td>9</td><td>园南二村</td><td>长桥</td><td>0.45</td><td>188</td><td class="trend-up">+285%</td></tr>
+          <tr><td>10</td><td>康健路100弄</td><td>康健新村</td><td>0.50</td><td>182</td><td class="trend-up">+45%</td></tr>
+        </table>
+        <div class="table-note">物业费为高层/多层平均参考值，展示投诉量Top10小区</div>
+      </div>
+    </div>
+
+    <div class="suggestion-block">
+      <div class="sug-header">
+        <span class="sug-num">建议四</span>
+        <span class="sug-title">老旧小区综合治理</span>
+        <span class="sug-count">40年以上 <strong>204</strong> 个小区</span>
+      </div>
+      <div class="sug-desc">
+        对40年以上的老小区，结合旧改、成套改造、修缮等政策打组合拳（40年以上小区每百户投诉16.4件，是10年以内新小区的2.4倍）；直管公房治理经验（投诉降23%）可复制推广到售后房小区。
+      </div>
+      <div class="sug-table-wrap">
+        <table class="mini-table">
+          <tr><th>排名</th><th>小区名称</th><th>街道</th><th>房龄(年)</th><th>投诉总量</th><th>每百户投诉</th></tr>
+          <tr><td>1</td><td>东安五村</td><td>斜土路</td><td>43</td><td>195</td><td>23.8</td></tr>
+          <tr><td>2</td><td>康健路100弄</td><td>康健新村</td><td>44</td><td>182</td><td>26.2</td></tr>
+          <tr><td>3</td><td>田林三四村</td><td>田林</td><td>42</td><td>178</td><td>20.5</td></tr>
+          <tr><td>4</td><td>田林十二村</td><td>田林</td><td>41</td><td>214</td><td>18.7</td></tr>
+          <tr><td>5</td><td>长风小区</td><td>枫林路</td><td>45</td><td>165</td><td>28.9</td></tr>
+          <tr><td>6</td><td>梅陇九村</td><td>凌云路</td><td>42</td><td>210</td><td>17.3</td></tr>
+          <tr><td>7</td><td>徐汇长青坊</td><td>康健新村</td><td>43</td><td>152</td><td>22.4</td></tr>
+          <tr><td>8</td><td>宛南六村</td><td>枫林路</td><td>44</td><td>148</td><td>30.5</td></tr>
+          <tr><td>9</td><td>振兴小区</td><td>枫林路</td><td>41</td><td>145</td><td>95.4</td></tr>
+          <tr><td>10</td><td>龙山新村</td><td>枫林路</td><td>46</td><td>142</td><td>19.7</td></tr>
+        </table>
+        <div class="table-note">按每百户投诉强度排序，展示Top10重点小区</div>
+      </div>
+    </div>
+
+    <div class="suggestion-block">
+      <div class="sug-header">
+        <span class="sug-num">建议五</span>
+        <span class="sug-title">加速推进业委会组建</span>
+        <span class="sug-count">无业委会 <strong>119</strong> 个小区</span>
+      </div>
+      <div class="sug-desc">
+        对无业主大会的小区制定组建时间表；加强业委会规范化运作培训；推广"红色业委会"经验，发挥党建引领作用。有业委会小区投诉量比无业委会低13.9%，同比增速低144个百分点。
+      </div>
+      <div class="sug-table-wrap">
+        <table class="mini-table">
+          <tr><th>排名</th><th>小区名称</th><th>街道</th><th>户数</th><th>投诉总量</th><th>2025同比</th></tr>
+          <tr><td>1</td><td>中海馨园</td><td>漕河泾</td><td>798</td><td>247</td><td class="trend-up">+82%</td></tr>
+          <tr><td>2</td><td>华悦家园</td><td>虹梅路</td><td>2828</td><td>229</td><td class="trend-up">+56%</td></tr>
+          <tr><td>3</td><td>钦州花苑</td><td>田林</td><td>1536</td><td>196</td><td class="trend-up">+120%</td></tr>
+          <tr><td>4</td><td>徐汇长春苑</td><td>康健新村</td><td>623</td><td>168</td><td class="trend-up">+245%</td></tr>
+          <tr><td>5</td><td>光华苑</td><td>漕河泾</td><td>666</td><td>145</td><td class="trend-up">+98%</td></tr>
+          <tr><td>6</td><td>北赵小区</td><td>华泾</td><td>448</td><td>142</td><td class="trend-up">+310%</td></tr>
+          <tr><td>7</td><td>中恒苑</td><td>龙华</td><td>536</td><td>138</td><td class="trend-up">+165%</td></tr>
+          <tr><td>8</td><td>紫阳花苑</td><td>华泾</td><td>958</td><td>135</td><td class="trend-up">+78%</td></tr>
+          <tr><td>9</td><td>欣嘉苑</td><td>虹梅路</td><td>512</td><td>128</td><td class="trend-up">+210%</td></tr>
+          <tr><td>10</td><td>盛华景苑</td><td>华泾</td><td>1868</td><td>125</td><td class="trend-up">+45%</td></tr>
+        </table>
+        <div class="table-note">按投诉量排序的无业委会重点小区Top10，优先推进业委会组建</div>
+      </div>
+    </div>
+
+    <div class="suggestion-block">
+      <div class="sug-header">
+        <span class="sug-num">建议六</span>
+        <span class="sug-title">街道治理能力提升行动</span>
+        <span class="sug-count">重点街道 <strong>2</strong> 个</span>
+      </div>
+      <div class="sug-desc">
+        总结凌云路（-5.8%）、田林（-2.4%）、天平路（-1.1%）等街道的成功经验，形成可复制的治理模式；对华泾（183.8件/小区）、长桥（140.1件/小区）等投诉高强度街道开展专项督导；建立街道间"结对帮扶"机制。
+      </div>
+      <div class="sug-table-wrap">
+        <table class="mini-table">
+          <tr><th>排名</th><th>小区名称</th><th>街道</th><th>投诉总量</th><th>每百户投诉</th><th>2025同比</th></tr>
+          <tr><td>1</td><td>华建二街坊</td><td>长桥</td><td>337</td><td>13.5</td><td class="trend-up">+458%</td></tr>
+          <tr><td>2</td><td>长桥八村</td><td>长桥</td><td>312</td><td>14.8</td><td class="trend-up">+307%</td></tr>
+          <tr><td>3</td><td>罗秀苑</td><td>长桥</td><td>271</td><td>18.6</td><td class="trend-up">+242%</td></tr>
+          <tr><td>4</td><td>华发小区</td><td>华泾</td><td>242</td><td>22.8</td><td class="trend-up">+156%</td></tr>
+          <tr><td>5</td><td>上海晶城晶欣坊</td><td>华泾</td><td>232</td><td>8.3</td><td class="trend-up">+25%</td></tr>
+          <tr><td>6</td><td>长桥三村</td><td>长桥</td><td>233</td><td>12.1</td><td class="trend-up">+210%</td></tr>
+          <tr><td>7</td><td>紫阳花苑</td><td>华泾</td><td>135</td><td>14.1</td><td class="trend-up">+78%</td></tr>
+          <tr><td>8</td><td>盛华景苑</td><td>华泾</td><td>125</td><td>6.7</td><td class="trend-up">+45%</td></tr>
+          <tr><td>9</td><td>园南二村</td><td>长桥</td><td>188</td><td>10.5</td><td class="trend-up">+285%</td></tr>
+          <tr><td>10</td><td>华富小区</td><td>华泾</td><td>91</td><td>53.5</td><td class="trend-up">+32%</td></tr>
+        </table>
+        <div class="table-note">华泾、长桥街道投诉量Top10重点小区，建议纳入街道专项督导清单</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期 · 物业投诉根因分析报告 · 2026年8月
+</div>
+
+</body>
+</html>

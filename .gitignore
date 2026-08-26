@@ -1,0 +1,39 @@
+# Environment
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.db
+
+# Large data files
+data/*.pkl
+data/*.db
+data/*.csv
+data/*.xlsx
+data/*.xls
+热线数据/
+徐汇各科室业务数据/
+
+# Temporary files
+*.tmp
+*.log
+logs/
+demo_cache/
+.DS_Store
+.trae-html-share-packages/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node
+node_modules/

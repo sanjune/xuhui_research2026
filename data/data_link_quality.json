@@ -1,0 +1,56 @@
+{
+  "total_communities": 994,
+  "total_streets": 13,
+  "data_sources": {
+    "纳统小区(主表)": {
+      "records": 994,
+      "match": "100%",
+      "level": "小区级"
+    },
+    "电梯基本信息": {
+      "records": 1617,
+      "communities": 268,
+      "matched": 256,
+      "match_rate": "95.5%"
+    },
+    "修缮项目": {
+      "records": 553,
+      "communities": 339,
+      "matched": 284,
+      "match_rate": "83.8%"
+    },
+    "失信计分": {
+      "records": 37,
+      "communities": 18,
+      "matched": 18,
+      "match_rate": "100.0%"
+    },
+    "底部抬升小区": {
+      "records": 84,
+      "matched": 82,
+      "match_rate": "97.6%"
+    },
+    "热线投诉": {
+      "records": 64570,
+      "matched_by_id": 1049,
+      "matched_by_name": 967
+    },
+    "征收": {
+      "records": 105,
+      "level": "街道级",
+      "streets": 12
+    },
+    "拆房信息": {
+      "records": 51,
+      "level": "街道级",
+      "streets": 11
+    },
+    "测绘基本信息": {
+      "records": 115,
+      "level": "街道级",
+      "streets": 12
+    }
+  },
+  "community_level_fields": 45,
+  "street_level_fields": 24
+}

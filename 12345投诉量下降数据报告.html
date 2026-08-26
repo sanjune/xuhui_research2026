@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>徐汇区12345物业投诉量下降数据报告</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif; background: #f0f2f5; color: #333; line-height: 1.8; }
+  .header { background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%); color: #fff; padding: 40px 0; text-align: center; }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: 2px; }
+  .header .subtitle { font-size: 14px; margin-top: 8px; opacity: 0.8; }
+  .header .meta { font-size: 12px; margin-top: 12px; opacity: 0.6; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 30px 20px; }
+
+  /* 核心数据卡片 */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+  .stat-card { background: #fff; border-radius: 12px; padding: 30px 20px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+  .stat-card.green::before { background: #52c41a; }
+  .stat-card.blue::before { background: #1890ff; }
+  .stat-card.orange::before { background: #fa8c16; }
+  .stat-label { font-size: 13px; color: #888; margin-bottom: 8px; }
+  .stat-value { font-size: 42px; font-weight: 700; line-height: 1.2; }
+  .stat-card.green .stat-value { color: #52c41a; }
+  .stat-card.blue .stat-value { color: #1890ff; }
+  .stat-card.orange .stat-value { color: #fa8c16; }
+  .stat-unit { font-size: 16px; font-weight: 400; margin-left: 4px; }
+  .stat-sub { font-size: 13px; color: #999; margin-top: 6px; }
+  .stat-change { font-size: 18px; font-weight: 600; margin-top: 4px; }
+  .stat-change.down { color: #52c41a; }
+  .stat-change.up { color: #f5222d; }
+
+  /* 章节标题 */
+  .section { background: #fff; border-radius: 12px; padding: 30px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .section-title { font-size: 20px; font-weight: 700; color: #1a3a5f; margin-bottom: 6px; display: flex; align-items: center; }
+  .section-title::before { content: ''; width: 6px; height: 24px; background: #1890ff; border-radius: 3px; margin-right: 12px; flex-shrink: 0; }
+  .section-desc { font-size: 13px; color: #888; margin-bottom: 20px; margin-left: 18px; }
+
+  /* 图表容器 */
+  .chart-box { width: 100%; height: 400px; }
+  .chart-box.tall { height: 500px; }
+
+  /* 表格 */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+  .data-table th { background: #1a3a5f; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
+  .data-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #e8e8e8; }
+  .data-table tr:nth-child(even) { background: #fafafa; }
+  .data-table tr:hover { background: #e6f7ff; }
+  .decline { color: #52c41a; font-weight: 600; }
+  .increase { color: #f5222d; font-weight: 600; }
+
+  /* 结论卡片 */
+  .finding-card { background: #f6f8fa; border-left: 4px solid #1890ff; border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; }
+  .finding-card .finding-title { font-weight: 700; color: #1a3a5f; margin-bottom: 4px; font-size: 15px; }
+  .finding-card .finding-desc { font-size: 13px; color: #555; line-height: 1.7; }
+  .finding-card.warning { border-left-color: #fa8c16; }
+  .finding-card.warning .finding-title { color: #d46b08; }
+
+  .footer { text-align: center; padding: 30px 0; font-size: 12px; color: #999; }
+  /* Sub page nav */
+  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+  .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .sub-nav-links a:hover { color:#0d47a1; }
+  @media(max-width:768px) { .sub-nav-links { display:none; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <h1>徐汇区12345物业投诉量下降数据报告</h1>
+  <div class="subtitle">数据周期：2024年1月 — 2026年7月 | 十四类核心诉求</div>
+  <div class="meta">徐汇物业课题一期 · 核心成果一</div>
+</div>
+
+<div class="container">
+
+  <!-- 核心数据卡片 -->
+  <div class="stats-grid">
+    <div class="stat-card green">
+      <div class="stat-label">2025年同比2024年</div>
+      <div class="stat-value">-18.75<span class="stat-unit">%</span></div>
+      <div class="stat-sub">29,070件 → 23,618件</div>
+      <div class="stat-change down">↓ 减少5,452件</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-label">2026年1-7月同比去年同期</div>
+      <div class="stat-value">-15.67<span class="stat-unit">%</span></div>
+      <div class="stat-sub">13,618件 → 11,484件</div>
+      <div class="stat-change down">↓ 减少2,134件</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-label">项目周期累计降幅</div>
+      <div class="stat-value">-32.3<span class="stat-unit">%</span></div>
+      <div class="stat-sub">2024年月均2,422件 → 2026年月均1,641件</div>
+      <div class="stat-change down">↓ 月均减少782件</div>
+    </div>
+  </div>
+
+  <!-- 月度趋势 -->
+  <div class="section">
+    <div class="section-title">月度投诉量趋势对比</div>
+    <div class="section-desc">2024年、2025年、2026年逐月12345物业投诉工单量（十四类核心诉求），直观展示下降趋势</div>
+    <div id="chart-monthly-trend" class="chart-box tall"></div>
+  </div>
+
+  <!-- 月度同比 -->
+  <div class="section">
+    <div class="section-title">月度同比变化率</div>
+    <div class="section-desc">各月同比涨跌幅，绿色为下降，红色为上升。2025年全年12个月中10个月同比下降，2026年已完成的7个月全部同比下降</div>
+    <div id="chart-monthly-yoy" class="chart-box"></div>
+  </div>
+
+  <!-- 类别分析 -->
+  <div class="section">
+    <div class="section-title">十四类投诉年度对比</div>
+    <div class="section-desc">按2025年投诉量降序排列，展示各类别在2024-2026年的变化趋势</div>
+    <div id="chart-category" class="chart-box tall"></div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>排名</th><th>投诉类别</th>
+          <th>2024年</th><th>2025年</th><th>2025同比</th>
+          <th>2026年1-7月</th><th>2025年1-7月</th><th>2026同比</th>
+        </tr>
+      </thead>
+      <tbody id="category-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- 街道分析 -->
+  <div class="section">
+    <div class="section-title">各街道投诉量对比</div>
+    <div class="section-desc">13个街道2024-2026年投诉量对比，全部街道均实现同比下降</div>
+    <div id="chart-street" class="chart-box tall"></div>
+  </div>
+
+  <!-- 物业企业 -->
+  <div class="section">
+    <div class="section-title">物业企业投诉量Top10</div>
+    <div class="section-desc">投诉量最大的10家物业企业，多数实现显著下降</div>
+    <div id="chart-company" class="chart-box tall"></div>
+  </div>
+
+  <!-- 重点类别下降明细 -->
+  <div class="section">
+    <div class="section-title">重点类别下降明细</div>
+    <div class="section-desc">选取降幅最大和投诉量最高的类别，展示具体下降数据和归因分析</div>
+
+    <div class="finding-card">
+      <div class="finding-title">旧住房改造：降幅最大 -36.59%</div>
+      <div class="finding-desc">2024年1,968件 → 2025年1,248件，减少720件。主要得益于旧改项目推进和居民诉求前置化解机制，旧改期间的施工扰民、临时搬迁等投诉通过提前沟通大幅减少。2026年1-7月同比再降21.19%。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">房屋维修：总量第二，降幅显著 -25.96%</div>
+      <div class="finding-desc">2024年4,688件 → 2025年3,471件，减少1,217件。通过数据分析定位维修投诉高发小区（日晖六村、田林三街坊等），推动物业企业建立维修快速响应机制。2026年1-7月同比再降14.86%。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">停车管理：投诉量第一，持续下降 -19.51%</div>
+      <div class="finding-desc">2024年4,706件 → 2025年3,788件，减少918件。通过专题分析推动停车规约修订、夜间错峰停车等针对性措施。2026年1-7月同比再降27.16%，降幅进一步扩大。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">房屋违规使用：下降 -21.42%</div>
+      <div class="finding-desc">2024年3,123件 → 2025年2,454件，减少669件。通过群租整治专项执法和小区网格化巡查，违规使用类投诉持续下降。2026年1-7月同比再降24.95%。</div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-title">需关注：物业服务态度逆势上升 +7.78%</div>
+      <div class="finding-desc">2024年591件 → 2025年637件，增加46件。2026年1-7月同比再升22.35%。这是唯一在2025年不降反升的类别，提示物业服务质量需从"硬件维修"向"软件服务"延伸，建议下一期重点关注。</div>
+    </div>
+    <div class="finding-card warning">
+      <div class="finding-title">需关注：邻里纠纷降幅最小 -8.44%</div>
+      <div class="finding-desc">2024年2,951件 → 2025年2,702件，仅减少249件，是投诉量Top3中降幅最小的。2026年1-7月同比甚至微增1.72%。邻里纠纷根因复杂（噪音、渗水、公共空间占用等），单纯执法难以根治，需要调解机制和社区共治的深度介入。</div>
+    </div>
+  </div>
+
+  <!-- 降投诉归因 -->
+  <div class="section">
+    <div class="section-title">投诉量下降归因分析</div>
+    <div class="section-desc">数据下降非自然波动，而是项目分析手段推动针对性治理的结果</div>
+
+    <div class="finding-card">
+      <div class="finding-title">归因一：数据驱动的精准施策</div>
+      <div class="finding-desc">项目通过月度分析报告，持续定位投诉高发街道、小区和类别，推动治理资源精准投放。如停车管理专题分析直接推动了停车规约修订，房屋维修高发小区分析推动了维修快速响应机制建立。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">归因二：重复投诉识别与闭环管理</div>
+      <div class="finding-desc">项目建立投诉去重识别模型（精确重复、催办重发、同小区高频、TF-IDF文本相似度四重策略），识别出40.5%的重复投诉，推动"首次办理质量提升"和"热点小区专项治理"，减少了大量重复催办工单。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">归因三：多维度对比推动物业企业整改</div>
+      <div class="finding-desc">通过物业企业间的投诉量、投诉密度横向对比，形成排名压力。高建物业（全区第一）从2024年3,401件降至2025年2,773件（-18.5%），衡复物业从2,987件降至2,149件（-28.1%），徐房物业从2,237件降至1,430件（-36.1%）。</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-title">归因四：街道层面协同治理</div>
+      <div class="finding-desc">通过街道维度分析，推动各街道针对性施策。凌云路街道从2024年2,605件降至2025年1,537件（-41.0%），降幅全区最大；天平路街道从2,552件降至1,860件（-27.1%），均显著超过全区平均降幅。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 数据分析中心 · 2026年8月
+</div>
+
+<script>
+// ─── 月度趋势折线图 ───
+var chart1 = echarts.init(document.getElementById('chart-monthly-trend'));
+chart1.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'cross' } },
+  legend: { data: ['2024年', '2025年', '2026年'], top: 10 },
+  grid: { left: 60, right: 30, bottom: 40, top: 50 },
+  xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] },
+  yAxis: { type: 'value', name: '工单量（件）' },
+  series: [
+    { name: '2024年', type: 'line', data: [2057,1332,2410,2414,2423,2489,2634,2411,3032,2512,2876,2480], itemStyle: { color: '#bfbfbf' }, lineStyle: { width: 2, type: 'dashed' } },
+    { name: '2025年', type: 'line', data: [1777,1419,2157,2094,1994,2075,2102,2180,2176,1855,1975,1814], itemStyle: { color: '#1890ff' }, lineStyle: { width: 3 } },
+    { name: '2026年', type: 'line', data: [1485,888,1682,1704,1772,1856,2097,null,null,null,null,null], itemStyle: { color: '#52c41a' }, lineStyle: { width: 3 }, areaStyle: { opacity: 0.1 } }
+  ]
+});
+
+// ─── 月度同比柱状图 ───
+var chart2 = echarts.init(document.getElementById('chart-monthly-yoy'));
+var yoy2025 = [-13.61, 6.53, -10.5, -13.26, -17.71, -16.63, -20.2, -9.58, -28.23, -26.15, -31.33, -26.85];
+var yoy2026 = [-16.43, -37.42, -22.02, -18.62, -11.13, -10.55, -0.24, null, null, null, null, null];
+chart2.setOption({
+  tooltip: { trigger: 'axis', formatter: function(params) { var s = params[0].name + '<br/>'; params.forEach(function(p) { if (p.value != null) s += p.marker + p.seriesName + ': ' + p.value + '%<br/>'; }); return s; } },
+  legend: { data: ['2025年同比', '2026年同比'], top: 10 },
+  grid: { left: 60, right: 30, bottom: 40, top: 50 },
+  xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] },
+  yAxis: { type: 'value', name: '同比变化率(%)', axisLabel: { formatter: '{value}%' } },
+  series: [
+    {
+      name: '2025年同比', type: 'bar', data: yoy2025,
+      itemStyle: { color: function(params) { return params.value < 0 ? '#52c41a' : '#f5222d'; } },
+      label: { show: true, position: 'top', formatter: function(p) { return p.value + '%'; }, fontSize: 10 }
+    },
+    {
+      name: '2026年同比', type: 'bar', data: yoy2026,
+      itemStyle: { color: function(params) { return params.value != null && params.value < 0 ? '#1890ff' : '#fa8c16'; } },
+      label: { show: true, position: 'top', formatter: function(p) { return p.value != null ? p.value + '%' : ''; }, fontSize: 10 }
+    }
+  ]
+});
+
+// ─── 类别对比图 ───
+var chart3 = echarts.init(document.getElementById('chart-category'));
+var categories = ['停车管理','房屋维修','邻里纠纷','房屋违规使用','业主大会/业委会','消防管理','群租管理','物业安保','旧住房改造','清洁卫生','绿化管理','物业服务态度','物业收费','房屋建设质量和开发商'];
+var cat2024 = [4706,4688,2951,3123,2957,1866,1553,1521,1968,1408,963,591,449,135];
+var cat2025 = [3788,3471,2702,2454,2282,1686,1451,1423,1248,1101,737,637,519,119];
+var cat2026 = [1588,1799,1595,1038,1014,881,728,673,543,582,315,427,247,54];
+chart3.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['2024年', '2025年', '2026年1-7月'], top: 10 },
+  grid: { left: 140, right: 30, bottom: 20, top: 50 },
+  xAxis: { type: 'value', name: '工单量（件）' },
+  yAxis: { type: 'category', data: categories.reverse(), axisLabel: { fontSize: 12 } },
+  series: [
+    { name: '2024年', type: 'bar', data: cat2024.reverse(), itemStyle: { color: '#bfbfbf' } },
+    { name: '2025年', type: 'bar', data: cat2025.reverse(), itemStyle: { color: '#1890ff' } },
+    { name: '2026年1-7月', type: 'bar', data: cat2026.reverse(), itemStyle: { color: '#52c41a' } }
+  ]
+});
+
+// ─── 类别表格 ───
+var catData = [
+  { cat: '停车管理', y24: 4706, y25: 3788, yoy25: -19.51, y26h1: 1588, y25h1: 2180, yoy26: -27.16 },
+  { cat: '房屋维修', y24: 4688, y25: 3471, yoy25: -25.96, y26h1: 1799, y25h1: 2113, yoy26: -14.86 },
+  { cat: '邻里纠纷', y24: 2951, y25: 2702, yoy25: -8.44, y26h1: 1595, y25h1: 1568, yoy26: 1.72 },
+  { cat: '房屋违规使用', y24: 3123, y25: 2454, yoy25: -21.42, y26h1: 1038, y25h1: 1383, yoy26: -24.95 },
+  { cat: '业主大会/业委会', y24: 2957, y25: 2282, yoy25: -22.83, y26h1: 1014, y25h1: 1337, yoy26: -24.16 },
+  { cat: '消防管理', y24: 1866, y25: 1686, yoy25: -9.65, y26h1: 881, y25h1: 908, yoy26: -2.97 },
+  { cat: '群租管理', y24: 1553, y25: 1451, yoy25: -6.57, y26h1: 728, y25h1: 866, yoy26: -15.94 },
+  { cat: '物业安保', y24: 1521, y25: 1423, yoy25: -6.44, y26h1: 673, y25h1: 794, yoy26: -15.24 },
+  { cat: '旧住房改造', y24: 1968, y25: 1248, yoy25: -36.59, y26h1: 543, y25h1: 689, yoy26: -21.19 },
+  { cat: '清洁卫生', y24: 1408, y25: 1101, yoy25: -21.8, y26h1: 582, y25h1: 675, yoy26: -13.78 },
+  { cat: '绿化管理', y24: 963, y25: 737, yoy25: -23.47, y26h1: 315, y25h1: 434, yoy26: -27.42 },
+  { cat: '物业服务态度', y24: 591, y25: 637, yoy25: 7.78, y26h1: 427, y25h1: 349, yoy26: 22.35 },
+  { cat: '物业收费', y24: 449, y25: 519, yoy25: 15.59, y26h1: 247, y25h1: 278, yoy26: -11.15 },
+  { cat: '房屋建设质量和开发商', y24: 135, y25: 119, yoy25: -11.85, y26h1: 54, y25h1: 44, yoy26: 22.73 }
+];
+var tbody = document.getElementById('category-tbody');
+catData.forEach(function(d, i) {
+  var yoy25Class = d.yoy25 < 0 ? 'decline' : 'increase';
+  var yoy26Class = d.yoy26 < 0 ? 'decline' : 'increase';
+  tbody.innerHTML += '<tr><td>' + (i+1) + '</td><td style="text-align:left;font-weight:600;">' + d.cat +
+    '</td><td>' + d.y24.toLocaleString() + '</td><td>' + d.y25.toLocaleString() + '</td>' +
+    '<td class="' + yoy25Class + '">' + (d.yoy25 > 0 ? '+' : '') + d.yoy25 + '%</td>' +
+    '<td>' + d.y26h1.toLocaleString() + '</td><td>' + d.y25h1.toLocaleString() + '</td>' +
+    '<td class="' + yoy26Class + '">' + (d.yoy26 > 0 ? '+' : '') + d.yoy26 + '%</td></tr>';
+});
+
+// ─── 街道对比图 ───
+var chart4 = echarts.init(document.getElementById('chart-street'));
+var streets = ['长桥','枫林路','徐家汇','漕河泾','斜土路','天平路','田林','华泾','龙华','凌云路','康健新村','湖南路','虹梅路'];
+var st2024 = [3493,2693,2531,2483,2318,2552,2182,1763,1786,2605,2063,1630,857];
+var st2025 = [2915,2336,2324,2006,1969,1860,1673,1602,1563,1537,1480,1369,833];
+var st2026 = [1221,944,1145,1097,958,914,1069,720,828,747,639,725,470];
+chart4.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['2024年', '2025年', '2026年1-7月'], top: 10 },
+  grid: { left: 100, right: 30, bottom: 40, top: 50 },
+  xAxis: { type: 'category', data: streets, axisLabel: { rotate: 30, fontSize: 11 } },
+  yAxis: { type: 'value', name: '工单量（件）' },
+  series: [
+    { name: '2024年', type: 'bar', data: st2024, itemStyle: { color: '#bfbfbf' } },
+    { name: '2025年', type: 'bar', data: st2025, itemStyle: { color: '#1890ff' } },
+    { name: '2026年1-7月', type: 'bar', data: st2026, itemStyle: { color: '#52c41a' } }
+  ]
+});
+
+// ─── 物业企业Top10 ───
+var chart5 = echarts.init(document.getElementById('chart-company'));
+var companies = ['高建物业','衡复物业','徐房物业','汇成物业','安得物业','秀澜物业','中海物业','轻工物业','申城物业','润美物业'];
+var co2024 = [3401,2987,2237,1286,629,718,908,489,492,410];
+var co2025 = [2773,2149,1430,691,503,492,477,476,452,426];
+var co2026 = [1216,1140,746,385,283,253,108,256,171,95];
+chart5.setOption({
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: { data: ['2024年', '2025年', '2026年1-7月'], top: 10 },
+  grid: { left: 120, right: 30, bottom: 20, top: 50 },
+  xAxis: { type: 'value', name: '工单量（件）' },
+  yAxis: { type: 'category', data: companies.reverse(), axisLabel: { fontSize: 12 } },
+  series: [
+    { name: '2024年', type: 'bar', data: co2024.reverse(), itemStyle: { color: '#bfbfbf' } },
+    { name: '2025年', type: 'bar', data: co2025.reverse(), itemStyle: { color: '#1890ff' } },
+    { name: '2026年1-7月', type: 'bar', data: co2026.reverse(), itemStyle: { color: '#52c41a' } }
+  ]
+});
+
+// 响应式
+window.addEventListener('resize', function() {
+  chart1.resize(); chart2.resize(); chart3.resize(); chart4.resize(); chart5.resize();
+});
+</script>
+</body>
+</html>

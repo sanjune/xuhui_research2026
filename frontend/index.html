@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>徐汇区物业投诉分析智能助手</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="app">
+  <header class="app-header">
+    <div class="avatar">🏛️</div>
+    <div class="title">
+      <div class="title-main">徐汇区物业投诉分析智能助手</div>
+      <div class="title-sub">Xuhui Property Complaint AI Assistant</div>
+    </div>
+  </header>
+
+  <main id="chat-area" class="chat-area">
+    <div class="message assistant">
+      <div class="bubble">
+        您好！我是徐汇区物业投诉数据分析助手。
+        您可以问我任何关于12345投诉数据的问题，例如：
+        <br>· 这个月全区投诉情况怎么样？
+        <br>· 本月投诉量最多的5个街道是哪些？
+        <br>· 停车类投诉主要集中在哪些小区？
+      </div>
+    </div>
+  </main>
+
+  <div class="quick-buttons">
+    <button class="quick-btn" data-q="这个月全区投诉情况怎么样？">本月概况</button>
+    <button class="quick-btn" data-q="今年的投诉量和去年比降了没有？">投诉趋势</button>
+    <button class="quick-btn" data-q="本月投诉量最多的5个街道是哪些？">街道排行</button>
+    <button class="quick-btn" data-q="停车类投诉主要集中在哪些小区？">停车分析</button>
+    <button class="quick-btn" data-q="重复投诉率是多少？哪些小区最严重？">重复投诉</button>
+  </div>
+
+  <footer class="input-bar">
+    <input id="msg-input" type="text" placeholder="请输入您的问题..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="send">
+    <button id="send-btn">发送</button>
+  </footer>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
