@@ -459,7 +459,7 @@ async def chat(req: ChatRequest, credentials: HTTPAuthorizationCredentials = Dep
             if reply:
                 elapsed = int(elapsed_ms)
                 logger.info(f"[{session_id}] intent={intent} (cache fallback) elapsed={elapsed}ms")
-                session_manager.add_history(session_id, message, intent, params)
+                session_manager.add_history(session_id, message, intent, params, reply=reply)
                 return ChatResponse(
                     session_id=session_id,
                     reply=reply,
@@ -472,19 +472,23 @@ async def chat(req: ChatRequest, credentials: HTTPAuthorizationCredentials = Dep
     # 7. LLM 结果总结(超时则走模板)
     reply = ""
     llm_started = time.perf_counter()
+    # 获取对话历史 + 上下文,注入 LLM
+    history = session_manager.get_history(session_id)
     if llm_client.available():
         try:
             # 只传统计结果(剥离 _table 等内部字段),避免大对象
             slim_result = {k: v for k, v in result.items() if not k.startswith("_")}
-            reply = llm_client.summarize_result(message, slim_result)
+            reply = llm_client.summarize_result(
+                message, slim_result, history=history, context=ctx
+            )
         except Exception as e:
             logger.warning(f"LLM summarize 失败,走模板: {e}")
             reply = ""
     if not reply:
         reply = template_summarize(intent, message, result)
 
-    # 8. 记录会话历史+上下文继承
-    session_manager.add_history(session_id, message, intent, params)
+    # 8. 记录会话历史+上下文继承(含本轮 reply,供下一轮 LLM 上下文使用)
+    session_manager.add_history(session_id, message, intent, params, reply=reply)
 
     # 9. 缓存预设问题结果(若未缓存)
     if preset and cache_key:

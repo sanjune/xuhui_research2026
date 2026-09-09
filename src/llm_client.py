@@ -1,6 +1,6 @@
 import json
 import time
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 try:
     from openai import OpenAI
@@ -9,7 +9,38 @@ except ImportError:
 
 from src.config import DASHSCOPE_API_KEY, LLM_TIMEOUT_MS
 
+# ============================================================
+# 系统 Prompt:定义 AI 角色 + 数据驱动 + 上下文感知
+# ============================================================
+SYSTEM_PROMPT = """你是「徐汇区物业投诉数据分析智能助手」，专门服务于徐汇区12345热线物业投诉数据的查询与分析。
 
+【你的职责】
+1. 基于数据库查询结果，生成专业、准确的数据分析总结
+2. 结合对话上下文理解用户意图，保持多轮对话的连贯性
+3. 每次回答前，系统已从数据库读取相关统计数据，你只能基于这些数据回答
+
+【数据来源与规范】
+- 数据库：徐汇区12345热线投诉数据（数据范围：2024年1月至今，含6万余条记录）
+- 预计算聚合表：monthly_stats（月度统计）、category_monthly_stats（类别月度）、street_monthly_stats（街道月度）、enterprise_stats（企业统计）、community_stats（小区统计）
+- ⚠️ 严禁编造数据！只使用下方「本次查询结果」中的数字
+- 如查询结果为空或异常，如实告知用户并建议换一种问法
+
+【回答规范】
+1. 先给出核心数字（总量、同比/环比变化率）
+2. 再列出重点发现（Top3排名、异常增长项、对比差异）
+3. 最后给一句简短建议或关注方向
+4. 语言简洁专业，不超过200字
+5. 数字带单位（件、%），变化方向明确（增长/下降）
+
+【上下文感知规则】
+- 继承最近3轮对话的时间参数（year、month）
+- 当用户追问"那XX类呢"时，自动继承上一轮的时间范围
+- 当用户追问"那个街道/小区呢"时，自动继承上一轮的维度
+- 如果用户未指定时间，默认查询最新月度数据"""
+
+# ============================================================
+# LLM 客户端
+# ============================================================
 class LLMClient:
     def __init__(self):
         self.client = None
@@ -58,31 +89,66 @@ class LLMClient:
         except Exception:
             return fallback
 
-    def summarize_result(self, question: str, query_result: Dict[str, Any]) -> str:
-        fallback_templates = {
-            "total": f"根据统计数据，查询结果已生成。",
-            "summary": f"徐汇区投诉统计结果已整理，详见表格数据。"
-        }
-        fallback = fallback_templates.get("summary", "查询结果已生成。")
+    def _build_context_summary(self, context: Dict[str, Any]) -> str:
+        """将会话上下文参数格式化为文本"""
+        if not context:
+            return "（无上下文，本次为首次对话）"
+        parts = []
+        if "year" in context:
+            parts.append(f"年份={context['year']}")
+        if "month" in context:
+            parts.append(f"月份={context['month']}")
+        if "dimension" in context:
+            parts.append(f"维度={context['dimension']}")
+        if "category" in context:
+            parts.append(f"类别={context['category']}")
+        if "street" in context:
+            parts.append(f"街道={context['street']}")
+        return "、".join(parts) if parts else "（无上下文）"
+
+    def _build_history_messages(self, history: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+        """将对话历史转为 LLM messages 格式(user/assistant 交替)"""
+        msgs = []
+        for turn in history:
+            user_msg = turn.get("message", "")
+            assistant_reply = turn.get("reply", "")
+            if user_msg:
+                msgs.append({"role": "user", "content": user_msg})
+            if assistant_reply:
+                msgs.append({"role": "assistant", "content": assistant_reply})
+        return msgs
+
+    def summarize_result(self, question: str, query_result: Dict[str, Any],
+                         history: List[Dict[str, Any]] = None,
+                         context: Dict[str, Any] = None) -> str:
+        """基于数据库查询结果 + 对话上下文 + 历史记录，生成智能总结"""
+        fallback = "查询结果已生成，详见表格数据。"
         if not self.available():
             return fallback
 
-        system_prompt = """你是徐汇区物业投诉数据分析助手。根据查询结果，用简洁专业的语言生成分析总结。
-要求：
-1. 先给出核心数字（总量、变化率）
-2. 再列出重点发现（Top3、异常项）
-3. 最后给一句简短建议（可选）
-4. 语言简洁，不超过150字
-5. 不要编造数据，只使用提供的结果"""
-
         try:
-            user_msg = f"用户问题：{question}\n查询结果：{json.dumps(query_result, ensure_ascii=False)}"
+            # 构建多轮对话 messages
+            messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+
+            # 注入对话历史(最近3轮 user/assistant 交替)
+            if history:
+                history_msgs = self._build_history_messages(history)
+                messages.extend(history_msgs)
+
+            # 构建当前轮 user 消息:上下文 + 查询结果 + 用户问题
+            context_str = self._build_context_summary(context)
+            result_str = json.dumps(query_result, ensure_ascii=False)
+            user_msg = (
+                f"【对话上下文】{context_str}\n"
+                f"【本次数据库查询结果】\n{result_str}\n"
+                f"【用户问题】{question}\n"
+                f"请基于以上数据库查询结果回答用户问题。"
+            )
+            messages.append({"role": "user", "content": user_msg})
+
             response = self.client.chat.completions.create(
                 model="qwen-turbo",
-                messages=[
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_msg}
-                ],
+                messages=messages,
                 temperature=0.3,
                 timeout=LLM_TIMEOUT_MS / 1000
             )

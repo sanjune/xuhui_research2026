@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>反弹小区集中地址入户核查工作单</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
+.container { max-width:1000px; margin:0 auto; padding:20px; }
+/* Sub page nav */
+.sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+.sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+.sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+.sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+.sub-nav-links { margin-left:auto; display:flex; gap:12px; }
+.sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
+.sub-nav-links a:hover { color:#0d47a1; }
+@media(max-width:768px) { .sub-nav-links { display:none; } }
+.header { background:linear-gradient(135deg,#c62828,#b71c1c); color:#fff; padding:24px 30px; border-radius:10px 10px 0 0; }
+.header h1 { font-size:22px; margin-bottom:6px; }
+.header .subtitle { font-size:13px; opacity:0.9; }
+.header .meta { font-size:12px; opacity:0.8; margin-top:8px; }
+.summary { background:#fff; padding:16px 30px; border-bottom:1px solid #eee; }
+.summary table { width:100%; border-collapse:collapse; font-size:12px; }
+.summary th { background:#f5f5f5; padding:6px; text-align:left; }
+.summary td { padding:6px; border-bottom:1px solid #eee; }
+.case-card { background:#fff; margin:20px 0; border-radius:8px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+.case-header { padding:16px 24px; color:#fff; }
+.case-header h2 { font-size:18px; margin-bottom:4px; }
+.case-header .addr { font-size:13px; opacity:0.9; }
+.case-badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:11px; margin-left:8px; }
+.badge-red { background:#fff; color:#c62828; }
+.badge-orange { background:#fff; color:#e65100; }
+.case-body { padding:20px 24px; }
+.stat-row { display:flex; gap:12px; margin-bottom:16px; }
+.stat-box { flex:1; background:#f5f5f5; padding:10px; border-radius:6px; text-align:center; }
+.stat-box .num { font-size:24px; font-weight:700; }
+.stat-box .label { font-size:11px; color:#888; }
+.urgent-box { border-left:4px solid #c62828; background:#ffebee; padding:12px 16px; border-radius:4px; margin-bottom:16px; font-size:13px; }
+.urgent-box strong { color:#c62828; }
+.complaint-table { width:100%; border-collapse:collapse; font-size:11px; margin-bottom:16px; }
+.complaint-table th { background:#eee; padding:6px 8px; text-align:left; font-weight:600; }
+.complaint-table td { padding:6px 8px; border-bottom:1px solid #eee; vertical-align:top; }
+.complaint-table .pid { color:#1565c0; font-family:monospace; }
+.complaint-table .content { max-width:400px; }
+.checklist { background:#e8f5e9; border-left:4px solid #2e7d32; padding:14px 16px; border-radius:4px; margin-bottom:16px; }
+.checklist h4 { font-size:14px; color:#2e7d32; margin-bottom:8px; }
+.checklist ul { margin-left:18px; font-size:13px; }
+.checklist li { margin:4px 0; }
+.checklist input { margin-right:6px; }
+.finding-box { background:#fff3e0; border-left:4px solid #e65100; padding:12px 16px; border-radius:4px; font-size:13px; }
+.finding-box strong { color:#e65100; }
+.sign-section { margin-top:20px; padding:16px; background:#f5f5f5; border-radius:6px; }
+.sign-row { display:flex; gap:30px; margin:8px 0; }
+.sign-item { font-size:13px; }
+.sign-item span { display:inline-block; min-width:100px; }
+.sign-line { display:inline-block; border-bottom:1px solid #999; min-width:200px; margin-left:8px; }
+.footer { text-align:center; padding:20px 0; font-size:11px; color:#999; }
+@media print { .container { max-width:none; } .case-card { break-inside:avoid; page-break-inside:avoid; } }
+</style>
+</head>
+<body>
+
+<div class="sub-nav-bar">
+<div class="sub-nav-inner">
+<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
+<a class="sub-nav-back" href="治理效果追踪分析报告.html" style="margin-left:4px;">← 返回治理报告</a>
+<div class="sub-nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+<a href="课题成果总览.html#consulting">咨询成果</a>
+<a href="课题成果总览.html#docs">验收文档</a>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+<div class="header">
+  <h1>反弹小区集中地址入户核查工作单</h1>
+  <div class="subtitle">基于治理效果追踪分析报告 · 27个反弹小区中5个集中地址爆发型小区</div>
+  <div class="meta">编制日期：2026年9月 · 数据范围：2024年1月—2026年7月 · 12345热线全量投诉数据</div>
+</div>
+
+<div class="summary">
+  <h3 style="font-size:14px;margin-bottom:8px;">核查概况</h3>
+  <table>
+    <tr><th>序号</th><th>小区</th><th>街道</th><th>核查地址</th><th>该地址投诉量</th><th>核心矛盾</th><th>紧急程度</th></tr>
+    <tr><td>1</td><td>永福一区</td><td>湖南路</td><td>新乐路151弄1号楼1楼1室</td><td>21件（全部2026年）</td><td>住宅改商业+拆承重墙</td><td style="color:#c62828;font-weight:700;">🔴 紧急</td></tr>
+    <tr><td>2</td><td>铁路新村</td><td>徐家汇</td><td>凯旋路2120弄3号</td><td>11件（2026年10件）</td><td>加装电梯+物业费发票</td><td style="color:#e65100;font-weight:700;">🟠 高优先</td></tr>
+    <tr><td>3</td><td>桂林住宅小区</td><td>虹梅路</td><td>钦州北路888弄19号601室</td><td>10件（全部2026年）</td><td>楼道堆物反复清理不彻底</td><td style="color:#e65100;font-weight:700;">🟠 高优先</td></tr>
+    <tr><td>4</td><td>人防小区</td><td>龙华</td><td>黄石路169弄</td><td>25件（2026年8件）</td><td>群租+停车管理</td><td style="color:#f9a825;font-weight:700;">🟡 中优先</td></tr>
+    <tr><td>5</td><td>科汇景苑</td><td>漕河泾</td><td>田东路69弄3号401</td><td>9件（2026年4件）</td><td>物业多收装修垃圾费不退</td><td style="color:#f9a825;font-weight:700;">🟡 中优先</td></tr>
+  </table>
+</div>
+
+<!-- ===== 案件1：永福一区 ===== -->
+<div class="case-card">
+  <div class="case-header" style="background:linear-gradient(135deg,#c62828,#b71c1c);">
+    <h2>案件1：永福一区 <span class="case-badge badge-red">🔴 紧急</span></h2>
+    <div class="addr">核查地址：新乐路151弄1号楼1楼1室 | 街道：湖南路</div>
+  </div>
+  <div class="case-body">
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" style="color:#c62828;">21</div><div class="label">该地址投诉量</div></div>
+      <div class="stat-box"><div class="num" style="color:#c62828;">21</div><div class="label">2026年投诉</div></div>
+      <div class="stat-box"><div class="num">19</div><div class="label">房屋违规使用</div></div>
+      <div class="stat-box"><div class="num">2</div><div class="label">房屋维修</div></div>
+    </div>
+
+    <div class="urgent-box">
+      <strong>⚠️ 紧急预警：</strong>该地址21件投诉全部集中在2026年（1-7月），核心问题是<strong>1楼住宅被改为商业会所/办公用途</strong>，租户多次更换装修、<strong>拆除承重墙</strong>。市民反映该房屋2019年已发生过一次下塌事故，楼上住有大量七八十岁老人，存在严重安全隐患。城管已贴责令整改单但<strong>当事人拒绝整改</strong>。
+    </div>
+
+    <h4 style="font-size:13px;margin:12px 0 6px;">投诉记录摘要：</h4>
+    <table class="complaint-table">
+      <tr><th>日期</th><th>分类</th><th>工单号</th><th>诉求内容</th></tr>
+      <tr><td>2026-05-09</td><td>房屋违规使用</td><td class="pid">20260509217749</td><td class="content">1楼住宅作为会所接待出租，私人住宅改商业用途不合规，装修改了房屋结构，私配钥匙闲杂人员进出</td></tr>
+      <tr><td>2026-05-09</td><td>房屋违规使用</td><td class="pid">—</td><td class="content">1号楼底楼一层长期出租给外面公司办公，大量人员进出，经常更换公司装修产生污染和噪音</td></tr>
+      <tr><td>2026-05-09</td><td>房屋违规使用</td><td class="pid">—</td><td class="content">该户业主装修时把承重墙敲了拆了一扇门，楼上201室下方位置，要求查处拆承重墙行为</td></tr>
+      <tr><td>2026-05-13</td><td>房屋违规使用</td><td class="pid">补充</td><td class="content">城管已贴责令整改单，但单上没有注明整改时间期限，要求明确期限</td></tr>
+      <tr><td>2026-05-18</td><td>房屋违规使用</td><td class="pid">催单</td><td class="content">城管开具私自敲承重墙整改单，但对方拒绝整改，该房屋2019年已下塌过一次，楼里住七八十岁老人</td></tr>
+      <tr><td>2026-05-27</td><td>房屋违规使用</td><td class="pid">催单</td><td class="content">承重墙结构问题仍然未解决，要求尽快整治</td></tr>
+      <tr><td>2026-06-03</td><td>房屋违规使用</td><td class="pid">催单</td><td class="content">市民称管理部门至今未给予任何回复</td></tr>
+      <tr><td>2026-07-15</td><td>房屋违规使用</td><td class="pid">—</td><td class="content">1楼仍在营业，有人进进出出，疑似仍在经营</td></tr>
+    </table>
+    <p style="font-size:11px;color:#888;">注：以上为21件中代表性的8件，全部为同一地址、同一矛盾</p>
+
+    <div class="checklist">
+      <h4>✅ 入户核查要点</h4>
+      <ul>
+        <li><input type="checkbox"> 现场核查1号楼1楼1室是否仍在经营/会所用途，拍照取证</li>
+        <li><input type="checkbox"> 核查承重墙拆除情况，是否已恢复，是否需要房屋安全鉴定</li>
+        <li><input type="checkbox"> 核查2019年下塌事故记录，调取历史维修档案</li>
+        <li><input type="checkbox"> 约谈房东/中介，明确住宅不得改变用途，限期恢复</li>
+        <li><input type="checkbox"> 核查城管责令整改单是否已执行，若无执行查明原因</li>
+        <li><input type="checkbox"> 走访楼上201室及2楼以上住户，了解对安全和噪音的影响</li>
+        <li><input type="checkbox"> 若承重墙问题仍未修复，建议启动房屋安全应急程序</li>
+      </ul>
+    </div>
+
+    <div class="finding-box">
+      <strong>初步判断：</strong>该地址21件投诉高度集中于同一矛盾（住宅改商业+拆承重墙），属于<strong>同一人反复投诉同一问题未解决</strong>。治理措施仅停留在"贴整改单"层面，当事人拒绝执行后无后续强制措施，导致投诉持续升级。根因是执法环节断裂——<strong>有处罚无执行</strong>。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 案件2：铁路新村 ===== -->
+<div class="case-card">
+  <div class="case-header" style="background:linear-gradient(135deg,#e65100,#d84315);">
+    <h2>案件2：铁路新村 <span class="case-badge badge-orange">🟠 高优先</span></h2>
+    <div class="addr">核查地址：凯旋路2120弄3号 | 街道：徐家汇</div>
+  </div>
+  <div class="case-body">
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" style="color:#e65100;">11</div><div class="label">该地址投诉量</div></div>
+      <div class="stat-box"><div class="num" style="color:#e65100;">10</div><div class="label">2026年投诉</div></div>
+      <div class="stat-box"><div class="num">5</div><div class="label">物业服务态度</div></div>
+      <div class="stat-box"><div class="num">4</div><div class="label">物业收费</div></div>
+    </div>
+
+    <div class="urgent-box" style="border-left-color:#e65100;background:#fff3e0;">
+      <strong>⚠️ 重点关注：</strong>该地址投诉集中在两个矛盾：① <strong>3号加装电梯</strong>——居民（以老人为主）反映楼梯陡峭，2025年12月提出加装电梯申请，至2026年7月仍无回复，催单多次；② <strong>3号301室物业费发票</strong>——2023年已交物业费但至今未开发票，4次催单未解决。
+    </div>
+
+    <h4 style="font-size:13px;margin:12px 0 6px;">投诉记录摘要：</h4>
+    <table class="complaint-table">
+      <tr><th>日期</th><th>分类</th><th>工单号</th><th>诉求内容</th></tr>
+      <tr><td>2025-12-26</td><td>旧住房改造</td><td class="pid">20251226235147</td><td class="content">3号楼楼梯非常陡，居民楼很多老人有加装电梯意向，向居委反映后没有得到处理</td></tr>
+      <tr><td>2026-01-12</td><td>旧住房改造</td><td class="pid">催单</td><td class="content">管理部门至今未给予任何回复，请尽快处理</td></tr>
+      <tr><td>2026-01-16</td><td>物业收费</td><td class="pid">20260116205065</td><td class="content">3号301室住户2023年已支付物业费和管理费，至今未给发票，要求尽快开具</td></tr>
+      <tr><td>2026-01-22</td><td>物业收费</td><td class="pid">催单</td><td class="content">管理部门至今未回复，请尽快处理发票问题</td></tr>
+      <tr><td>2026-01-31</td><td>物业收费</td><td class="pid">催单</td><td class="content">仍然没有收到物业费发票</td></tr>
+      <tr><td>2026-02-10</td><td>物业服务</td><td class="pid">—</td><td class="content">物业不作为，管理混乱，保安和保洁不到位</td></tr>
+      <tr><td>2026-03-05</td><td>清洁卫生</td><td class="pid">—</td><td class="content">楼道脏乱，垃圾无人清理</td></tr>
+    </table>
+
+    <div class="checklist">
+      <h4>✅ 入户核查要点</h4>
+      <ul>
+        <li><input type="checkbox"> 现场查看3号楼楼梯状况，评估加装电梯可行性</li>
+        <li><input type="checkbox"> 核查加装电梯申请的审批进度，为何6个月无回复</li>
+        <li><input type="checkbox"> 约谈301室住户，核实2023年物业费发票问题</li>
+        <li><input type="checkbox"> 约谈物业公司，要求限期补开发票</li>
+        <li><input type="checkbox"> 走访3号其他住户，了解加装电梯意愿（是否达到2/3门槛）</li>
+        <li><input type="checkbox"> 核查物业合同，确认物业费收费标准和服务标准是否匹配</li>
+        <li><input type="checkbox"> 若电梯加装条件不具备，研究替代方案（如椅式电梯、代爬楼服务）</li>
+      </ul>
+    </div>
+
+    <div class="finding-box">
+      <strong>初步判断：</strong>该地址投诉为<strong>两户不同居民的并行矛盾</strong>——一户催办加装电梯（旧住房改造），另一户催办物业费发票（物业收费）。两个问题均卡在"部门未回复"环节，反弹根因是<strong>行政不作为导致催单循环</strong>，不是硬件问题未解决。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 案件3：桂林住宅小区 ===== -->
+<div class="case-card">
+  <div class="case-header" style="background:linear-gradient(135deg,#e65100,#d84315);">
+    <h2>案件3：桂林住宅小区 <span class="case-badge badge-orange">🟠 高优先</span></h2>
+    <div class="addr">核查地址：钦州北路888弄19号601室 | 街道：虹梅路</div>
+  </div>
+  <div class="case-body">
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" style="color:#e65100;">10</div><div class="label">该地址投诉量</div></div>
+      <div class="stat-box"><div class="num" style="color:#e65100;">10</div><div class="label">2026年投诉</div></div>
+      <div class="stat-box"><div class="num">10</div><div class="label">消防管理</div></div>
+      <div class="stat-box"><div class="num">0</div><div class="label">2024/2025年</div></div>
+    </div>
+
+    <div class="urgent-box" style="border-left-color:#e65100;background:#fff3e0;">
+      <strong>⚠️ 重点关注：</strong>10件投诉<strong>全部集中在2026年3月</strong>，全部是同一问题——19号601室<strong>楼道堆物</strong>。市民反复投诉：第一次清理后仍有堆物，第二次只清理了木板没清理板凳，第三次仍未处理干净。<strong>处理不彻底导致反复催单</strong>。
+    </div>
+
+    <h4 style="font-size:13px;margin:12px 0 6px;">投诉记录摘要：</h4>
+    <table class="complaint-table">
+      <tr><th>日期</th><th>分类</th><th>工单号</th><th>诉求内容</th></tr>
+      <tr><td>2026-03-05</td><td>消防管理</td><td class="pid">20260305221661</td><td class="content">19号601室居民楼道堆物，要求整治清理</td></tr>
+      <tr><td>2026-03-06</td><td>消防管理</td><td class="pid">催单</td><td class="content">管理部门至今未给予任何回复</td></tr>
+      <tr><td>2026-03-09</td><td>消防管理</td><td class="pid">重新交办</td><td class="content">答复要点与实际情况不符，走道堆物完全没有处理</td></tr>
+      <tr><td>2026-03-16</td><td>消防管理</td><td class="pid">催单</td><td class="content">清理了木板等杂物，但楼道里还有板凳靠背凳之类，要求都清理干净</td></tr>
+      <tr><td>2026-03-17</td><td>消防管理</td><td class="pid">补充</td><td class="content">3月16日有人来处理但没处理掉，希望尽快落实</td></tr>
+      <tr><td>2026-03-20</td><td>消防管理</td><td class="pid">催单</td><td class="content">仍有堆物未清理</td></tr>
+      <tr><td>2026-04-02</td><td>消防管理</td><td class="pid">催单</td><td class="content">堆物问题反复，要求彻底解决</td></tr>
+    </table>
+
+    <div class="checklist">
+      <h4>✅ 入户核查要点</h4>
+      <ul>
+        <li><input type="checkbox"> 现场核查19号601室门口楼道，确认堆物是否已清理</li>
+        <li><input type="checkbox"> 约谈601室住户，了解堆物原因（是否有储物需求/装修遗留）</li>
+        <li><input type="checkbox"> 确认前三次清理为何不彻底（城管/物业/消防职责不清？）</li>
+        <li><input type="checkbox"> 明确楼道堆物的执法主体和流程，避免互相推诿</li>
+        <li><input type="checkbox"> 走访19号其他楼层住户，了解对消防通道的影响</li>
+        <li><input type="checkbox"> 建立"清理后拍照确认"机制，确保一次清到位</li>
+        <li><input type="checkbox"> 若堆物反复，考虑启动行政处罚程序</li>
+      </ul>
+    </div>
+
+    <div class="finding-box">
+      <strong>初步判断：</strong>该地址10件投诉<strong>全部来自同一投诉人</strong>（要求信息保密无需回复），矛盾单一（楼道堆物）。反弹根因是<strong>处置不彻底+部门职责不清</strong>——清理了木板没清理板凳，多次往返仍未解决，导致投诉人反复催单。治理建议：现场一次性清理到位+拍照确认+明确职责。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 案件4：人防小区 ===== -->
+<div class="case-card">
+  <div class="case-header" style="background:linear-gradient(135deg,#f9a825,#ef6c00);">
+    <h2>案件4：人防小区 <span class="case-badge" style="background:#fff;color:#f9a825;">🟡 中优先</span></h2>
+    <div class="addr">核查地址：黄石路169弄1-8单元 | 街道：龙华</div>
+  </div>
+  <div class="case-body">
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" style="color:#ef6c00;">25</div><div class="label">该地址投诉量</div></div>
+      <div class="stat-box"><div class="num" style="color:#ef6c00;">8</div><div class="label">2026年投诉</div></div>
+      <div class="stat-box"><div class="num">9</div><div class="label">群租管理(2026)</div></div>
+      <div class="stat-box"><div class="num">7</div><div class="label">停车管理(累计)</div></div>
+    </div>
+
+    <div class="urgent-box" style="border-left-color:#f9a825;background:#fff8e1;">
+      <strong>⚠️ 重点关注：</strong>该小区<strong>无物业管理</strong>，是自管老旧小区。2026年9件群租投诉集中爆发，1-8单元均有反映。此前2024年停车管理矛盾突出（7件），停车位借给商务楼人员导致拥堵，措施只做了一半（放了禁停牌但车辆照停）。
+    </div>
+
+    <h4 style="font-size:13px;margin:12px 0 6px;">投诉记录摘要：</h4>
+    <table class="complaint-table">
+      <tr><th>日期</th><th>分类</th><th>工单号</th><th>诉求内容</th></tr>
+      <tr><td>2024-05-15</td><td>其他</td><td class="pid">—</td><td class="content">小区没有物业，树木长得太高，晾晒衣物勾落树上</td></tr>
+      <tr><td>2024-08-13</td><td>停车管理</td><td class="pid">20240813005550</td><td class="content">停车位借给外面商务楼的人，小区只有1个出入口，早高峰拥堵</td></tr>
+      <tr><td>2024-08-22</td><td>停车管理</td><td class="pid">催单</td><td class="content">措施只做了一半，放了禁停板但车辆照常停放</td></tr>
+      <tr><td>2024-12-08</td><td>停车管理</td><td class="pid">—</td><td class="content">停车位紧张，快递驿站停大型车辆，居委开辟的空地要改学校要求挪车</td></tr>
+      <tr><td>2026-02-10</td><td>群租管理</td><td class="pid">—</td><td class="content">1-8单元存在群租，多人居住影响居民生活</td></tr>
+      <tr><td>2026-03-15</td><td>群租管理</td><td class="pid">催单</td><td class="content">群租问题未解决，仍在继续</td></tr>
+      <tr><td>2026-05-20</td><td>群租管理</td><td class="pid">—</td><td class="content">群租宿舍噪音扰民，卫生差</td></tr>
+    </table>
+
+    <div class="checklist">
+      <h4>✅ 入户核查要点</h4>
+      <ul>
+        <li><input type="checkbox"> 逐单元核查1-8号群租情况，登记租住人数和房东信息</li>
+        <li><input type="checkbox"> 核查群租是否涉及"二房东"转租模式</li>
+        <li><input type="checkbox"> 了解小区无物业的现状，是否需要引入物业或托底管理</li>
+        <li><input type="checkbox"> 核查停车管理措施执行情况，禁停牌是否有效</li>
+        <li><input type="checkbox"> 约谈周边商务楼，禁止外来车辆借用小区停车位</li>
+        <li><input type="checkbox"> 评估绿化修剪需求（2024年反映树木过高问题）</li>
+        <li><input type="checkbox"> 研究是否纳入旧住房改造或"微更新"计划</li>
+      </ul>
+    </div>
+
+    <div class="finding-box">
+      <strong>初步判断：</strong>该小区矛盾从2024年停车管理转移到2026年群租管理，<strong>不同问题在不同时期爆发</strong>，属于<strong>无物业管理老旧小区的综合性治理困境</strong>。根因是小区无物业管理主体，缺乏常态化维护机制。反弹根因是治理措施"打地鼠"式应对——解决了停车问题但群租又冒出。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 案件5：科汇景苑 ===== -->
+<div class="case-card">
+  <div class="case-header" style="background:linear-gradient(135deg,#f9a825,#ef6c00);">
+    <h2>案件5：科汇景苑 <span class="case-badge" style="background:#fff;color:#f9a825;">🟡 中优先</span></h2>
+    <div class="addr">核查地址：田东路69弄3号401室 | 街道：漕河泾</div>
+  </div>
+  <div class="case-body">
+    <div class="stat-row">
+      <div class="stat-box"><div class="num" style="color:#ef6c00;">9</div><div class="label">该地址投诉量</div></div>
+      <div class="stat-box"><div class="num" style="color:#ef6c00;">4</div><div class="label">2026年投诉</div></div>
+      <div class="stat-box"><div class="num">5</div><div class="label">物业收费</div></div>
+      <div class="stat-box"><div class="num">4</div><div class="label">其他纠纷</div></div>
+    </div>
+
+    <div class="urgent-box" style="border-left-color:#f9a825;background:#fff8e1;">
+      <strong>⚠️ 重点关注：</strong>3号401室住户2025年6月装修时被物业收取4000元垃圾清运费（实际只拉了一车垃圾，应退3300元），物业经理<strong>谢德玉</strong>不接电话不退款，持续3个月。住户多次催单，房管部门协调未果，物业以"相关人员挪用"为由推诿。2026年矛盾仍在持续。
+    </div>
+
+    <h4 style="font-size:13px;margin:12px 0 6px;">投诉记录摘要：</h4>
+    <table class="complaint-table">
+      <tr><th>日期</th><th>分类</th><th>工单号</th><th>诉求内容</th></tr>
+      <tr><td>2025-09-20</td><td>物业收费</td><td class="pid">20250920209241</td><td class="content">装修时物业收4000元垃圾清理费（700元/车），只拉一车应退3300元，物业拖着不退</td></tr>
+      <tr><td>2025-09-29</td><td>物业收费</td><td class="pid">催单</td><td class="content">物业谢德玉经理找不到人不接电话，已经快3个月，要求退款</td></tr>
+      <tr><td>2025-10-10</td><td>物业收费</td><td class="pid">催单</td><td class="content">管理部门至今未回复</td></tr>
+      <tr><td>2025-10-17</td><td>物业收费</td><td class="pid">重新交办</td><td class="content">答复与实际不符，钱交给物业公司，相关人员挪用与市民无关，不愿打官司要求协调</td></tr>
+      <tr><td>2025-10-23</td><td>物业收费</td><td class="pid">重新交办</td><td class="content">3300元无法走法律途径，处理部门没联系过市民，要求房管部门协调</td></tr>
+      <tr><td>2026-01-15</td><td>物业收费</td><td class="pid">—</td><td class="content">仍未收到退款，物业经理仍未联系</td></tr>
+      <tr><td>2026-03-10</td><td>邻里纠纷</td><td class="pid">—</td><td class="content">与物业纠纷未解决后引发邻里矛盾</td></tr>
+    </table>
+
+    <div class="checklist">
+      <h4>✅ 入户核查要点</h4>
+      <ul>
+        <li><input type="checkbox"> 约谈3号401室住户，确认4000元收费凭证和退款诉求</li>
+        <li><input type="checkbox"> 约谈物业公司（上海客尚居物业）经理谢德玉，核实收费和退款情况</li>
+        <li><input type="checkbox"> 核查物业公司是否有"相关人员挪用"的情况，是否已报案</li>
+        <li><input type="checkbox"> 核查垃圾清运费收费标准是否合规（700元/车是否合理）</li>
+        <li><input type="checkbox"> 房管办出面协调，限期7天内完成退款</li>
+        <li><input type="checkbox"> 若物业拒不退款，启动行政处罚或信用扣分</li>
+        <li><input type="checkbox"> 核查该物业公司是否有其他类似收费纠纷</li>
+      </ul>
+    </div>
+
+    <div class="finding-box">
+      <strong>初步判断：</strong>该地址投诉为<strong>同一户（401室）的单一纠纷</strong>——物业多收3300元不退。反弹根因是<strong>物业经理失联+房管部门协调不力</strong>，导致简单退款问题拖延8个月未解决。治理建议：房管办直接约谈物业限期退款，逾期启动信用扣分。
+    </div>
+  </div>
+</div>
+
+<!-- ===== 总结 ===== -->
+<div class="case-card">
+  <div class="case-header" style="background:linear-gradient(135deg,#1565c0,#0d47a1);">
+    <h2>核查总结与处置建议</h2>
+  </div>
+  <div class="case-body">
+    <h3 style="font-size:15px;margin-bottom:10px;">五类反弹根因归纳</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+      <tr style="background:#1565c0;color:#fff;"><th style="padding:6px;">案件</th><th>反弹类型</th><th>根因</th><th>处置方向</th><th>责任部门</th><th>时限</th></tr>
+      <tr><td>永福一区</td><td>执法断裂型</td><td>有整改单无强制执行</td><td>启动强制执法程序</td><td>城管+房管</td><td style="color:#c62828;font-weight:700;">7天内</td></tr>
+      <tr><td>铁路新村</td><td>行政不作为型</td><td>申请6个月无回复</td><td>明确审批进度和时限</td><td>街道+房管</td><td style="color:#e65100;font-weight:700;">15天内</td></tr>
+      <tr><td>桂林住宅</td><td>处置不彻底型</td><td>清理不干净反复催</td><td>一次清到位+拍照确认</td><td>消防+物业</td><td style="color:#e65100;font-weight:700;">7天内</td></tr>
+      <tr><td>人防小区</td><td>综合困境型</td><td>无物业+多问题叠加</td><td>引入物业+综合治理</td><td>街道</td><td style="color:#f9a825;font-weight:700;">30天内</td></tr>
+      <tr><td>科汇景苑</td><td>物业赖账型</td><td>物业收钱不退</td><td>限期退款+信用扣分</td><td>房管办</td><td style="color:#f9a825;font-weight:700;">15天内</td></tr>
+    </table>
+
+    <div class="finding-box" style="background:#e3f2fd;border-left-color:#1565c0;">
+      <strong style="color:#1565c0;">📌 总体建议：</strong>5个集中地址反弹的根因各不相同，但共同特征是<strong>"治理停在中间环节"</strong>——有措施无落实、有整改无执行、有协调无结果。建议建立<strong>"措施落实确认制"</strong>：每项治理措施完成后，由独立人员现场确认是否落实到位，避免"虚假办结"导致反弹。
+    </div>
+  </div>
+</div>
+
+<div class="sign-section">
+  <h4 style="font-size:14px;margin-bottom:10px;">核查签字确认</h4>
+  <div class="sign-row">
+    <div class="sign-item"><span>核查人：</span><span class="sign-line"></span></div>
+    <div class="sign-item"><span>核查日期：</span><span class="sign-line"></span></div>
+  </div>
+  <div class="sign-row">
+    <div class="sign-item"><span>街道负责人：</span><span class="sign-line"></span></div>
+    <div class="sign-item"><span>物业负责人：</span><span class="sign-line"></span></div>
+  </div>
+  <div class="sign-row">
+    <div class="sign-item"><span>发现问题描述：</span><span class="sign-line"></span></div>
+  </div>
+  <div class="sign-row">
+    <div class="sign-item"><span>处置方案：</span><span class="sign-line"></span></div>
+  </div>
+  <div class="sign-row">
+    <div class="sign-item"><span>完成时限：</span><span class="sign-line"></span></div>
+    <div class="sign-item"><span>复核日期：</span><span class="sign-line"></span></div>
+  </div>
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期 · 反弹小区集中地址入户核查工作单 · 2026年9月<br>
+  基于12345热线全量投诉数据（2024年1月—2026年7月）生成
+</div>
+
+</div>
+</body>
+</html>
