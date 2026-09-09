@@ -32,17 +32,24 @@ class SessionManager:
         self._sessions.move_to_end(session_id)
         return self._sessions[session_id]
 
-    def add_history(self, session_id: str, message: str, intent: str, params: Dict[str, Any]):
+    def add_history(self, session_id: str, message: str, intent: str,
+                    params: Dict[str, Any], reply: str = ""):
         session = self.get_or_create(session_id)
         session["history"].append({
             "message": message,
             "intent": intent,
             "params": params,
+            "reply": reply,
             "time": time.time()
         })
         if len(session["history"]) > self._max_history:
             session["history"] = session["history"][-self._max_history:]
         self._inherit_context(session, params)
+
+    def get_history(self, session_id: str) -> List[Dict[str, Any]]:
+        """返回最近 N 轮对话历史(含 reply)"""
+        session = self.get_or_create(session_id)
+        return session.get("history", []).copy()
 
     def _inherit_context(self, session: Dict[str, Any], current_params: Dict[str, Any]):
         ctx = session.get("context", {})

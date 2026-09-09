@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-24 21:02:26",
-  "session_id": "demo_rehearsal_v1_1787576538",
+  "generated_at": "2026-08-27 11:31:21",
+  "session_id": "demo_rehearsal_v1_1787801472",
   "summary": {
     "total": 9,
     "passed": 9,
     "failed": 0,
     "pass_rate_pct": 100.0,
-    "total_wall_time_ms": 8502,
-    "avg_query_time_ms": 938.8,
-    "max_query_time_ms": 1323,
-    "min_query_time_ms": 500
+    "total_wall_time_ms": 8484,
+    "avg_query_time_ms": 936.9,
+    "max_query_time_ms": 1342,
+    "min_query_time_ms": 587
   },
   "results": [
     {
@@ -20,7 +20,7 @@
       "expected_intent": "summary",
       "response": {
         "raw_intent": "summary",
-        "reply": "2026年7月，徐汇区物业投诉总量为2097件，环比增长13.0%，同比增长0.2%。重点发现：房屋维修、邻里纠纷、停车管理为投诉前三类，其中邻里纠纷同比激增55.6%。漕河泾街道投诉量最高，同比增38.7%。建议关注邻里纠纷高发问题。",
+        "reply": "2026年7月徐汇区物业投诉总量为2097件，环比增长13.0%。房屋维修、邻里纠纷、停车管理为投诉前三类，其中邻里纠纷同比激增55.6%。漕河泾街道投诉量最高，同比增长38.7%。建议重点关注邻里纠纷问题及漕河泾区域的投诉动态。",
         "table": {
           "headers": [
             "指标",
@@ -61,9 +61,9 @@
             ]
           ]
         },
-        "query_time_ms": 981,
-        "wall_time_ms": 998,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 1029,
+        "wall_time_ms": 1056,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
@@ -85,7 +85,7 @@
       "expected_intent": "trend",
       "response": {
         "raw_intent": "trend",
-        "reply": "2026年全年投诉量为11484件，较2025年下降51.4%。重点发现：1-7月投诉量明显下降，8-12月骤降至零；2025年同期数据较高；部分月份数据异常偏低。建议关注8月后数据缺失原因。",
+        "reply": "2026年1-7月徐汇区物业投诉总量为11484件，较2025年同期下降51.4%。其中7月单月投诉2097件，环比增长13.0%。建议关注全年趋势变化及近期环比波动情况。",
         "table": {
           "headers": [
             "月份",
@@ -174,9 +174,9 @@
             ]
           ]
         },
-        "query_time_ms": 862,
-        "wall_time_ms": 866,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 675,
+        "wall_time_ms": 678,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
@@ -198,7 +198,7 @@
       "expected_intent": "ranking",
       "response": {
         "raw_intent": "ranking",
-        "reply": "2026年7月投诉总量为1013件，环比上升。漕河泾以226件居首，同比增长38.7%；长桥、徐家汇次之。长桥、斜土路、枫林路投诉量同比下降。建议关注漕河泾投诉激增原因。",
+        "reply": "2026年7月徐汇区投诉量前五的街道为：漕河泾（226件，+38.7%）、长桥（214件，-11.6%）、徐家汇（204件，+6.8%）、斜土路（197件，-3.9%）、枫林路（172件，-11.3%）。漕河泾仍居首位，且同比增幅最大。建议关注漕河泾的投诉处理情况。",
         "table": {
           "headers": [
             "排名",
@@ -239,9 +239,9 @@
             ]
           ]
         },
-        "query_time_ms": 869,
-        "wall_time_ms": 873,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 1305,
+        "wall_time_ms": 1308,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
@@ -263,7 +263,7 @@
       "expected_intent": "category",
       "response": {
         "raw_intent": "category",
-        "reply": "2026年7月徐汇区停车类投诉总量263件，涉及132个小区。Top3社区为化工一、四村（13件）、罗秀新二村（11件）、欣嘉苑1-3期（9件）。异常项为多个小区投诉集中于同一物业公司。建议加强重点小区的停车管理。",
+        "reply": "2026年7月徐汇区停车管理类投诉共263件。投诉量前五小区为化工一、四村（13件）、罗秀新二村（11件）、欣嘉苑1-3期（9件）、虹梅小区（6件）、古美小区（6件）。虹梅路街道相关小区投诉较集中。建议加强重点小区停车管理。",
         "table": {
           "headers": [
             "排名",
@@ -356,9 +356,9 @@
             ]
           ]
         },
-        "query_time_ms": 866,
-        "wall_time_ms": 871,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 994,
+        "wall_time_ms": 998,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
@@ -380,7 +380,7 @@
       "expected_intent": "category",
       "response": {
         "raw_intent": "category",
-        "reply": "2026年7月，徐汇区停车类投诉总量为263件，涉及132个小区。Top3小区为化工一、四村（13件，4.9%）、罗秀新二村（11件，4.2%）、欣嘉苑1-3期（9件，3.4%）。异常项为多个小区投诉量偏低，需关注管理覆盖情况。建议加强重点小区管理。",
+        "reply": "2026年7月徐汇区停车管理类投诉共263件，主要集中在化工一、四村（13件）、罗秀新二村（11件）、欣嘉苑1-3期（9件）。虹梅路街道相关小区投诉较为集中。建议重点关注上述小区的停车管理问题。",
         "table": {
           "headers": [
             "排名",
@@ -473,16 +473,16 @@
             ]
           ]
         },
-        "query_time_ms": 1043,
-        "wall_time_ms": 1048,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 813,
+        "wall_time_ms": 816,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
         "time_ok": true,
-        "hints_hit": 1,
+        "hints_hit": 2,
         "hints_total": 2,
-        "hints_ratio": 0.5,
+        "hints_ratio": 1.0,
         "hints_ok": true,
         "passed": true,
         "fail_reasons": []
@@ -497,7 +497,7 @@
       "expected_intent": "comparison",
       "response": {
         "raw_intent": "comparison",
-        "reply": "2026年7月，徐房集团共受理投诉141件，城投集团仅1件。徐房集团投诉量显著，主要集中在漕河泾、田林等区域，以房屋维修为主。城投集团投诉量极少，需关注其服务覆盖情况。建议加强徐房集团重点区域管理。",
+        "reply": "2026年7月，徐房集团共处理停车管理投诉141件，涉及32个小区，平均每个小区4.41件，主要集中在漕河泾（46件）、田林（39件）。城投集团仅1件，反映其投诉量极低。建议徐房集团加强重点街道的停车管理。",
         "table": {
           "headers": [
             "对比维度",
@@ -532,9 +532,9 @@
             ]
           ]
         },
-        "query_time_ms": 886,
-        "wall_time_ms": 891,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 868,
+        "wall_time_ms": 871,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
@@ -556,7 +556,7 @@
       "expected_intent": "repeat",
       "response": {
         "raw_intent": "repeat",
-        "reply": "2026年1-6月徐汇区物业投诉总量为9387件，重复投诉率为4.6%。重点发现：安福直管公房、尚海湾二期、欣嘉苑1-3期重复投诉最多。异常项：停车管理、业主大会/业委会、房屋违规使用问题突出。建议加强重点小区和高频问题的跟踪处理。\n\n【重复投诉 Top 小区】",
+        "reply": "2026年1-6月徐汇区物业投诉重复率为4.6%，其中安福直管公房（18件）、尚海湾二期（17件）、欣嘉苑1-3期（14件）重复投诉最严重。建议针对这些小区加强问题闭环管理。\n\n【重复投诉 Top 小区】",
         "table": {
           "headers": [
             "排名",
@@ -627,9 +627,9 @@
             ]
           ]
         },
-        "query_time_ms": 1119,
-        "wall_time_ms": 1123,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 819,
+        "wall_time_ms": 822,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
@@ -651,7 +651,7 @@
       "expected_intent": "hotspot",
       "response": {
         "raw_intent": "hotspot",
-        "reply": "2026年物业投诉总量较上年增长显著，其中嘉俊庭以800%的同比增长率位居第一。Top3为嘉俊庭（+800%）、田林五街坊（+625%）、臻庭（+400%）。异常项为多个小区投诉量从个位数激增至数十，反映管理问题突增。建议加强重点小区监管与服务提升。",
+        "reply": "2026年7月，徐汇区停车管理类投诉增长最快的是嘉俊庭（+800%）、田林五街坊（+625%）、臻庭（+400%）。其中田林六街坊投诉量最高达45件。建议重点关注高增长小区的管理问题。",
         "table": {
           "headers": [
             "排名",
@@ -755,16 +755,16 @@
             ]
           ]
         },
-        "query_time_ms": 1323,
-        "wall_time_ms": 1327,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 1342,
+        "wall_time_ms": 1345,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
         "time_ok": true,
-        "hints_hit": 1,
+        "hints_hit": 2,
         "hints_total": 2,
-        "hints_ratio": 0.5,
+        "hints_ratio": 1.0,
         "hints_ok": true,
         "passed": true,
         "fail_reasons": []
@@ -779,7 +779,7 @@
       "expected_intent": "property",
       "response": {
         "raw_intent": "property",
-        "reply": "2026年7月，投诉总量为0，无有效投诉记录。  \n重点发现：无投诉记录，表现最佳。  \n建议：继续保持高质量服务。\n\n【该企业服务小区投诉排行】",
+        "reply": "2026年7月徐汇区停车管理类投诉总量为0件，未发现相关物业企业数据。建议核实数据范围或调整查询条件。\n\n【该企业服务小区投诉排行】",
         "table": {
           "headers": [
             "排名",
@@ -789,16 +789,16 @@
           ],
           "rows": []
         },
-        "query_time_ms": 500,
-        "wall_time_ms": 505,
-        "session_id": "demo_rehearsal_v1_1787576538"
+        "query_time_ms": 587,
+        "wall_time_ms": 590,
+        "session_id": "demo_rehearsal_v1_1787801472"
       },
       "evaluation": {
         "intent_ok": true,
         "time_ok": true,
-        "hints_hit": 1,
+        "hints_hit": 2,
         "hints_total": 2,
-        "hints_ratio": 0.5,
+        "hints_ratio": 1.0,
         "hints_ok": true,
         "passed": true,
         "fail_reasons": []
