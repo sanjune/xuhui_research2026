@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>版本更新记录 - 徐汇物业课题一期</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
+.nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
+.nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
+.nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
+.nav-back:hover { background:#e3f2fd; color:#0d47a1; }
+.nav-links { margin-left:auto; display:flex; gap:12px; }
+.nav-links a { font-size:12px; color:#666; text-decoration:none; }
+.nav-links a:hover { color:#0d47a1; }
+.container { max-width:1100px; margin:0 auto; padding:24px 16px; }
+.header { background:linear-gradient(135deg,#0d47a1,#1565c0); color:#fff; padding:36px 30px; border-radius:12px; margin-bottom:24px; }
+.header h1 { font-size:24px; margin-bottom:6px; }
+.header .subtitle { font-size:13px; opacity:0.9; }
+.header .meta { font-size:12px; opacity:0.7; margin-top:10px; display:flex; gap:20px; flex-wrap:wrap; }
+
+.version-card { background:#fff; border-radius:10px; margin-bottom:20px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+.version-header { padding:18px 24px; border-bottom:1px solid #eee; display:flex; align-items:center; gap:12px; }
+.version-tag { padding:4px 14px; border-radius:16px; font-size:12px; font-weight:700; color:#fff; }
+.tag-major { background:#c62828; }
+.tag-minor { background:#e65100; }
+.tag-patch { background:#2e7d32; }
+.version-num { font-size:18px; font-weight:700; color:#1a1a1a; }
+.version-date { font-size:12px; color:#999; margin-left:auto; }
+.version-body { padding:20px 24px; }
+
+.section-group { margin-bottom:16px; }
+.section-group:last-child { margin-bottom:0; }
+.section-title { font-size:14px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.section-title.feat { color:#1565c0; }
+.section-title.fix { color:#c62828; }
+.section-title.opt { color:#2e7d32; }
+.section-title::before { content:''; width:3px; height:14px; border-radius:2px; }
+.section-title.feat::before { background:#1565c0; }
+.section-title.fix::before { background:#c62828; }
+.section-title.opt::before { background:#2e7d32; }
+
+.item-list { list-style:none; padding-left:10px; }
+.item-list li { font-size:13px; color:#444; margin:6px 0; padding-left:14px; position:relative; }
+.item-list li::before { content:'•'; position:absolute; left:0; color:#bbb; }
+.item-list strong { color:#1a1a1a; }
+.item-list .tag { display:inline-block; padding:1px 7px; border-radius:10px; font-size:11px; margin:0 4px; }
+.tag-new { background:#e3f2fd; color:#1565c0; }
+.tag-fix { background:#ffebee; color:#c62828; }
+.tag-imp { background:#e8f5e9; color:#2e7d32; }
+.tag-data { background:#fff3e0; color:#e65100; }
+
+.file-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:8px; }
+.file-item { background:#f5f5f5; padding:8px 12px; border-radius:6px; font-size:12px; color:#555; display:flex; align-items:center; gap:6px; }
+.file-item .icon { font-size:14px; }
+.file-item .name { flex:1; }
+.file-item .change { font-size:11px; padding:1px 6px; border-radius:8px; }
+.change-add { background:#c8e6c9; color:#2e7d32; }
+.change-mod { background:#bbdefb; color:#1565c0; }
+.change-del { background:#ffcdd2; color:#c62828; }
+
+.stat-row { display:flex; gap:16px; margin:16px 0; flex-wrap:wrap; }
+.stat-box { flex:1; min-width:100px; background:#f5f5f5; border-radius:8px; padding:14px; text-align:center; }
+.stat-num { font-size:24px; font-weight:700; color:#1565c0; }
+.stat-label { font-size:11px; color:#888; margin-top:2px; }
+
+.footer { text-align:center; padding:20px 0; font-size:11px; color:#999; }
+
+@media(max-width:768px) {
+  .file-grid { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<div class="nav-inner">
+<a class="nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+<a class="nav-back" href="课题成果总览.html">← 返回总览</a>
+<div class="nav-links">
+<a href="课题成果总览.html#core">核心成果</a>
+<a href="课题成果总览.html#analysis">深度分析</a>
+<a href="课题成果总览.html#tools">工具成果</a>
+</div>
+</div>
+</div>
+
+<div class="container">
+
+<div class="header">
+  <h1>📋 版本更新记录</h1>
+  <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
+  <div class="meta">
+    <span>当前版本：v2.1.0</span>
+    <span>更新日期：2026-09-10</span>
+    <span>累计更新：7 次</span>
+  </div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-num">19</div><div class="stat-label">本次更新文件数</div></div>
+  <div class="stat-box"><div class="stat-num">+3,482</div><div class="stat-label">新增代码行数</div></div>
+  <div class="stat-box"><div class="stat-num">-207</div><div class="stat-label">删除代码行数</div></div>
+  <div class="stat-box"><div class="stat-num">13</div><div class="stat-label">已完成成果数</div></div>
+</div>
+
+<!-- ===== v2.1.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-major">MAJOR</span>
+    <span class="version-num">v2.1.0</span>
+    <span class="version-date">2026-09-10</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">✨ 新增成果</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新成果</span><strong>反弹小区入户核查工作单</strong>（成果#7附件）—— 对27个反弹小区中5个"集中地址爆发型"小区进行逐条投诉溯源，形成入户核查实操工作单，含工单编号、诉求摘要、核查要点清单、签字确认栏，支持打印携带现场核查</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">📊 新增分析维度</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新章节</span><strong>全量报告新增2026年近期数据分析</strong> — 6份核心报告（根因、专题、底部抬升、治理追踪、12345下降、高风险预警）均新增"2026年1-7月"独立分析章节，含月度趋势、街道表现、分类变化、红绿预警</li>
+        <li><span class="tag tag-new">新维度</span><strong>根因报告全维度新增"每百户投诉量"</strong> — 从房龄、房屋性质、物业费、收费模式、物业公司、车位、修缮、业委会、底部抬升、街道共10个维度增加每百户交叉分析，发现多个"总量与强度反转"的治理盲区</li>
+        <li><span class="tag tag-new">新维度</span><strong>根因报告新增电梯投诉内容分析</strong> — 从64,570条热线内容中检索"电梯"关键词，匹配4,317件电梯相关投诉，按加装诉求/故障/安全/维保全分类分析</li>
+        <li><span class="tag tag-new">新地图</span><strong>街道差异双色系分布图</strong> — 橙红色系（件/小区）+ 蓝色系（件/百户）两张并置，揭示"南高北低"与"北密南疏"的空间反差</li>
+        <li><span class="tag tag-new">新章节</span><strong>底部抬升报告新增第八章</strong> — 物业费调价与维修资金续筹引发的群访和重复投诉专项分析，含526件投诉溯源、Top10问题小区、4条治理建议</li>
+        <li><span class="tag tag-new">新章节</span><strong>治理建议附小区清单+工单</strong> — 6条治理建议各附Top10重点小区表格+典型工单示例（工单号+时间+类别+缩略诉求），便于工作人员核查</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🐛 数据修正</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">数据修正</span><strong>2026年8-12月数据显示问题</strong> — 修复专题报告中2026年8-12月显示为0的问题，改为null并断开折线，避免误导</li>
+        <li><span class="tag tag-fix">数据修正</span><strong>2024年投诉总量修正</strong> — 全报告统一：2024年总量从29,070件修正为29,468件（基于清洗后标准数据），同比变化率从-18.8%修正为-19.9%</li>
+        <li><span class="tag tag-fix">数据修正</span><strong>物业公司关联数据补全</strong> — 纳统小区物业公司关联率从93.0%提升至94.4%，根因报告Top10物业公司排名同步更新</li>
+        <li><span class="tag tag-fix">数据修正</span><strong>验收演练报告数据修正</strong> — 2026年同期同比从-51.4%修正为-15.7%，总量从23,618修正为13,618</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">♻️ 结构优化</div>
+      <ul class="item-list">
+        <li><span class="tag tag-imp">删除</span><strong>移除物业资质分析章节</strong> — 根因报告3.3节物业资质分析因参考价值有限已移除，六维模型调整为五维（硬件/物业/设施/治理/区位）</li>
+        <li><span class="tag tag-imp">优化</span><strong>数据时间范围说明</strong> — 根因报告开头增加明确的数据时间范围说明框，区分三年累计值与同比指标</li>
+        <li><span class="tag tag-imp">优化</span><strong>治理报告附件体系</strong> — 治理效果追踪报告新增附件章节，与入户核查工作单形成"分析+执行"闭环</li>
+        <li><span class="tag tag-imp">优化</span><strong>课题成果总览进度</strong> — 从80%（12/15）更新为87%（13/15）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">📁 涉及文件</div>
+      <div class="file-grid">
+        <div class="file-item"><span class="icon">➕</span><span class="name">反弹小区入户核查工作单.html</span><span class="change change-add">新增</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">物业投诉根因分析报告.html</span><span class="change change-mod">重大更新</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">重点问题专题分析报告.html</span><span class="change change-mod">重大更新</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">底部抬升小区热线数据分析报告.html</span><span class="change change-mod">重大更新</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">治理效果追踪分析报告.html</span><span class="change change-mod">重大更新</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">12345投诉量下降数据报告.html</span><span class="change change-mod">新增章节</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">高风险小区预警清单.html</span><span class="change change-mod">新增章节</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">课题成果总览.html</span><span class="change change-mod">进度更新</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">徐汇AI智能体.html</span><span class="change change-mod">数据修正</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">验收演练报告.html</span><span class="change change-mod">数据修正</span></div>
+        <div class="file-item"><span class="icon">✏️</span><span class="name">数据质量优化专项报告.html</span><span class="change change-mod">数据修正</span></div>
+        <div class="file-item"><span class="icon">➕</span><span class="name">scripts/investigation_targets.json</span><span class="change change-add">新增</span></div>
+        <div class="file-item"><span class="icon">➕</span><span class="name">scripts/root_cause_2026_data.json</span><span class="change change-add">新增</span></div>
+        <div class="file-item"><span class="icon">➕</span><span class="name">scripts/topic_2026_data.json</span><span class="change change-add">新增</span></div>
+        <div class="file-item"><span class="icon">➕</span><span class="name">scripts/recommendation_orders.json</span><span class="change change-add">新增</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.0.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-major">MAJOR</span>
+    <span class="version-num">v2.0.0</span>
+    <span class="version-date">2026-08-26</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">✨ 重大新增</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新成果</span><strong>数据分析月报合集</strong>（成果#9）—— 2024-2026年31期月度数据全览，按年份Tab切换，含街道Top5、小区Top10、类别Top5、热点问题Top5</li>
+        <li><span class="tag tag-new">新成果</span><strong>多源数据清洗与关联分析报告</strong> — 9类业务数据全量清洗关联（小区级45字段+街道级24字段），匹配率评估和质量报告</li>
+        <li><span class="tag tag-new">新成果</span><strong>底部抬升小区热线数据分析报告</strong>（成果#7附件）—— 84个党建引领重点小区全周期追踪分析</li>
+        <li><span class="tag tag-new">新功能</span><strong>徐汇AI智能体H5页面</strong> — 悬浮AI按钮 + 10大主题知识库聊天界面</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">🏗️ 架构升级</div>
+      <ul class="item-list">
+        <li><span class="tag tag-imp">架构</span><strong>建立课题成果总览页面</strong> — 统一入口目录，15项成果分类展示，进度可视化</li>
+        <li><span class="tag tag-imp">架构</span><strong>全报告统一导航栏</strong> — 8个子页面全部添加返回键和导航栏，格式与首页一致</li>
+        <li><span class="tag tag-imp">数据</span><strong>多源数据关联底座</strong> — 以纳统小区（994个）为基础，关联电梯、修缮、失信、底部抬升、热线、征收、拆房、测绘等9类业务数据</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v1.2.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v1.2.0</span>
+    <span class="version-date">2026-08-15</span>
+  </div>
+  <div class="version-body">
+    <div class="section-group">
+      <div class="section-title feat">✨ 新增</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新成果</span><strong>物业投诉根因分析报告</strong>（成果#4）—— 六维根因模型，968小区深度归因</li>
+        <li><span class="tag tag-new">新成果</span><strong>治理效果追踪分析报告</strong>（成果#7）—— 635小区全周期追踪，成功/反弹/恶化三类</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v1.1.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v1.1.0</span>
+    <span class="version-date">2026-08-10</span>
+  </div>
+  <div class="version-body">
+    <div class="section-group">
+      <div class="section-title feat">✨ 新增</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新成果</span><strong>重点问题专题分析报告</strong> — 5大专题（停车/维修/邻里/违规使用/业委会）深度分析</li>
+        <li><span class="tag tag-new">新成果</span><strong>高风险小区预警清单</strong> — 五维评分模型，高风险小区排名</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== v1.0.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-major">MAJOR</span>
+    <span class="version-num">v1.0.0</span>
+    <span class="version-date">2026-08-01</span>
+  </div>
+  <div class="version-body">
+    <div class="section-group">
+      <div class="section-title feat">🎉 初始版本</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">核心</span><strong>12345投诉量下降数据报告</strong>（成果#1）—— 整体趋势、街道分布、类别变化</li>
+        <li><span class="tag tag-new">核心</span><strong>投诉去重识别方法论说明</strong>（成果#2）—— 去重算法、准确率评估</li>
+        <li><span class="tag tag-new">核心</span><strong>投诉去重建议清单</strong>（成果#2附件A/B）—— 月度+半年度清单</li>
+        <li><span class="tag tag-new">核心</span><strong>数据质量优化专项报告</strong>（成果#3）—— 数据质量评估与优化方案</li>
+        <li><span class="tag tag-data">数据</span> 完成64,570条热线投诉数据清洗标准化</li>
+        <li><span class="tag tag-data">数据</span> 完成纳统小区匹配关联（97.4%匹配率）</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  徐汇区物业课题一期项目 · 版本更新记录 · 自动生成于 2026-09-10
+</div>
+
+</div>
+</body>
+</html>

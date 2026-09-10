@@ -1,0 +1,182 @@
+[
+  {
+    "rank": 1,
+    "community": "海珀旭晖",
+    "street": "斜土路",
+    "category": "业主大会/业委会",
+    "count": 15,
+    "property": "上海绿地物业服务有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 2,
+    "community": "化工一、四村",
+    "street": "凌云路",
+    "category": "停车管理",
+    "count": 13,
+    "property": "上海华卫装潢公司物业管理服务部",
+    "priority": "高"
+  },
+  {
+    "rank": 3,
+    "community": "罗秀新二村",
+    "street": "长桥",
+    "category": "停车管理",
+    "count": 11,
+    "property": "上海中誉物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 4,
+    "community": "日晖二村",
+    "street": "斜土路",
+    "category": "房屋维修",
+    "count": 10,
+    "property": "上海华欣物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 5,
+    "community": "俞一小区",
+    "street": "龙华",
+    "category": "邻里纠纷",
+    "count": 9,
+    "property": "上海华晅投资管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 6,
+    "community": "淮中直管公房",
+    "street": "湖南路",
+    "category": "房屋维修",
+    "count": 9,
+    "property": "上海衡复物业有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 7,
+    "community": "东航小区",
+    "street": "枫林路",
+    "category": "房屋违规使用",
+    "count": 9,
+    "property": "上海高建物业有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 8,
+    "community": "欣嘉苑1-3期",
+    "street": "虹梅路",
+    "category": "停车管理",
+    "count": 9,
+    "property": "上海锦龙物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 9,
+    "community": "新湖云庭",
+    "street": "枫林路",
+    "category": "业主大会/业委会",
+    "count": 9,
+    "property": "上海东方航空物业有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 10,
+    "community": "永兆豪庭",
+    "street": "虹梅路",
+    "category": "业主大会/业委会",
+    "count": 8,
+    "property": "上海盛熙物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 11,
+    "community": "月季园",
+    "street": "康健新村",
+    "category": "房屋维修",
+    "count": 8,
+    "property": "上海轻工物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 12,
+    "community": "番禺路801弄",
+    "street": "徐家汇",
+    "category": "房屋违规使用",
+    "count": 8,
+    "property": "上海佳具物业有限责任公司",
+    "priority": "高"
+  },
+  {
+    "rank": 13,
+    "community": "钦州公寓",
+    "street": "田林",
+    "category": "物业安保",
+    "count": 8,
+    "property": "上海安得物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 14,
+    "community": "宝能华庭",
+    "street": "龙华",
+    "category": "业主大会/业委会",
+    "count": 8,
+    "property": "深圳吉祥服务集团有限公司上海分公司",
+    "priority": "高"
+  },
+  {
+    "rank": 15,
+    "community": "俞一小区",
+    "street": "龙华",
+    "category": "清洁卫生",
+    "count": 7,
+    "property": "上海华晅投资管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 16,
+    "community": "西木小区",
+    "street": "枫林路",
+    "category": "房屋维修",
+    "count": 7,
+    "property": "上海高建物业有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 17,
+    "community": "金波直管公房",
+    "street": "湖南路",
+    "category": "房屋维修",
+    "count": 7,
+    "property": "上海衡复物业有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 18,
+    "community": "亚都国际名园",
+    "street": "徐家汇",
+    "category": "房屋维修",
+    "count": 7,
+    "property": "上海万科物业服务有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 19,
+    "community": "尚海湾二期",
+    "street": "斜土路",
+    "category": "业主大会/业委会",
+    "count": 7,
+    "property": "上海阳光投资（集团）物业管理有限公司",
+    "priority": "高"
+  },
+  {
+    "rank": 20,
+    "community": "嘉俊庭",
+    "street": "华泾镇",
+    "category": "其他",
+    "count": 7,
+    "property": "上海嘉英物业管理有限公司",
+    "priority": "高"
+  }
+]

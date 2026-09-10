@@ -85,6 +85,87 @@
   .nav-links a { font-size:12px; color:#666; text-decoration:none; }
   .nav-links a:hover { color:#0d47a1; }
 
+  /* 导航下拉菜单 */
+  .nav-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .nav-dropdown > a {
+    display: inline-block;
+    padding: 4px 0;
+    position: relative;
+  }
+  .nav-dropdown > a::after {
+    content: ' ▾';
+    font-size: 10px;
+    opacity: 0.6;
+  }
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 260px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    border: 1px solid #f0f0f0;
+  }
+  .nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-left: 1px solid #f0f0f0;
+    border-top: 1px solid #f0f0f0;
+  }
+  .dropdown-item {
+    display: block;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #444 !important;
+    text-decoration: none;
+    transition: all 0.15s;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dropdown-item:hover {
+    background: #e3f2fd;
+    color: #0d47a1 !important;
+    padding-left: 20px;
+  }
+  .dropdown-item .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    background: #e3f2fd;
+    color: #1565c0;
+    margin-right: 6px;
+    font-weight: 600;
+  }
+  .dropdown-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 6px 0;
+  }
+
   /* ===== Responsive ===== */
   @media(max-width:768px) {
     .card-grid { grid-template-columns:1fr; }
@@ -109,25 +190,42 @@
   <div class="nav-inner">
     <div class="nav-logo">徐汇物业课题一期</div>
     <div class="nav-links">
-      <a href="#core">核心成果</a>
-      <a href="#analysis">深度分析</a>
-      <a href="#tools">工具成果</a>
-      <a href="#consulting">咨询成果</a>
-      <a href="#docs">验收文档</a>
+      <div class="nav-dropdown">
+        <a href="#core">核心成果</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="12345投诉量下降数据报告.html"><span class="badge">#1</span>12345投诉量下降数据报告</a>
+          <a class="dropdown-item" href="投诉去重识别方法论说明.html"><span class="badge">#2</span>投诉去重识别方法论说明</a>
+          <a class="dropdown-item" href="2026年1-7月投诉去重建议清单.html"><span class="badge">#2·附</span>2026年1-7月去重建议清单</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="数据质量优化专项报告.html"><span class="badge">#3</span>数据质量优化专项报告</a>
+          <a class="dropdown-item" href="高风险小区预警清单.html"><span class="badge">#6</span>高风险小区预警清单</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="#analysis">深度分析</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="物业投诉根因分析报告.html"><span class="badge">#4</span>物业投诉根因分析报告</a>
+          <a class="dropdown-item" href="重点问题专题分析报告（5份）.html"><span class="badge">#5</span>重点问题专题分析报告（5份）</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="治理效果追踪分析报告.html"><span class="badge">#7</span>治理效果追踪分析报告</a>
+          <a class="dropdown-item" href="反弹小区入户核查工作单.html"><span class="badge">#7·附</span>反弹小区入户核查工作单</a>
+          <a class="dropdown-item" href="底部抬升小区热线数据分析报告.html"><span class="badge">#7·附</span>底部抬升小区热线数据分析</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- ===== Header ===== -->
 <div class="header">
-  <h1>徐汇区物业课题一期 · 成果总览</h1>
+  <h1>徐汇区物业课题· 成果总览</h1>
   <div class="subtitle">基于12345热线全量数据的小区物业监管分析体系</div>
   <div class="meta">2024-2026年 · 29,468+23,618+11,484件投诉 · 635个小区 · 13个街道 · 14类问题</div>
   <div class="stats">
-    <div class="stat-item"><div class="num">10</div><div class="label">已完成成果</div></div>
-    <div class="stat-item"><div class="num">5</div><div class="label">待推进成果</div></div>
-    <div class="stat-item"><div class="num">15</div><div class="label">成果总数</div></div>
-    <div class="stat-item"><div class="num">-19.9%</div><div class="label">投诉量同比降幅</div></div>
+    <div class="stat-item"><div class="num">29,468</div><div class="label">2024年投诉总量</div></div>
+    <div class="stat-item"><div class="num" style="color:#43a047;">23,618</div><div class="label">2025年投诉总量 ↓19.9%</div></div>
+    <div class="stat-item"><div class="num" style="color:#ff8f00;">11,484</div><div class="label">2026年1-7月 ↓15.7%</div></div>
+    <div class="stat-item"><div class="num" style="color:#7b1fa2;">635</div><div class="label">追踪小区数</div></div>
   </div>
 </div>
 
@@ -137,10 +235,10 @@
   <div class="progress-wrap">
     <div class="progress-title">
       <span>成果完成进度</span>
-      <span class="pct">13 / 15 · 87%</span>
+      <span class="pct">7 / 7 · 100%</span>
     </div>
     <div class="progress-bar">
-      <div class="progress-fill" style="width:87%;"></div>
+      <div class="progress-fill" style="width:100%;"></div>
     </div>
   </div>
 
@@ -192,34 +290,16 @@
         </div>
       </a>
 
-      <a class="card accent-blue" href="2026年6月投诉去重建议清单.html">
+      <a class="card accent-blue" href="2026年1-7月投诉去重建议清单.html">
         <div class="card-header">
-          <div class="num-badge">成果 #2 · 附件A</div>
-          <div class="card-title">2026年6月投诉去重建议清单</div>
+          <div class="num-badge">成果 #2 · 附件</div>
+          <div class="card-title">2026年1-7月投诉去重建议清单</div>
         </div>
         <div class="card-body">
-          <div class="card-desc">单月去重成果，含精确重复、催办重复、高频重复、相似重复四类清单，按优先级排序</div>
+          <div class="card-desc">月度汇总去重成果，按月切换标签，含趋势、Top小区/类别/街道分布</div>
           <div class="card-tags">
-            <span class="card-tag">月度清单</span>
-            <span class="card-tag">含Excel</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看报告 →</span>
-        </div>
-      </a>
-
-      <a class="card accent-blue" href="2026年1-6月投诉去重建议清单.html">
-        <div class="card-header">
-          <div class="num-badge">成果 #2 · 附件B</div>
-          <div class="card-title">2026年1-6月投诉去重建议清单</div>
-        </div>
-        <div class="card-body">
-          <div class="card-desc">上半年汇总去重成果，按月汇总趋势，Top重复小区/类别/街道分布</div>
-          <div class="card-tags">
-            <span class="card-tag">半年度汇总</span>
-            <span class="card-tag">含Excel</span>
+            <span class="card-tag">月度合集</span>
+            <span class="card-tag">标签切换</span>
           </div>
         </div>
         <div class="card-footer">
@@ -376,7 +456,7 @@
   </div>
 
   <!-- ===== 三、工具成果 ===== -->
-  <div class="cat-section" id="tools">
+  <div class="cat-section" id="tools" style="display:none;">
     <div class="cat-header">
       <div class="cat-icon cat-icon-bg" style="background:#ff8f00;">三</div>
       <div class="cat-title">工具成果</div>
@@ -425,7 +505,7 @@
   </div>
 
   <!-- ===== 四、咨询成果 ===== -->
-  <div class="cat-section" id="consulting">
+  <div class="cat-section" id="consulting" style="display:none;">
     <div class="cat-header">
       <div class="cat-icon cat-icon-bg" style="background:#7b1fa2;">四</div>
       <div class="cat-title">咨询成果</div>
@@ -493,7 +573,7 @@
   </div>
 
   <!-- ===== 五、方法论与验收文档 ===== -->
-  <div class="cat-section" id="docs">
+  <div class="cat-section" id="docs" style="display:none;">
     <div class="cat-header">
       <div class="cat-icon cat-icon-bg" style="background:#00897b;">五</div>
       <div class="cat-title">方法论与验收文档</div>
@@ -572,7 +652,8 @@
 </div>
 
 <div class="footer">
-  徐汇区物业课题一期项目 · 成果总览 · 2026年8月
+  徐汇区物业课题一期项目 · 成果总览 · 2026年9月 ·
+  <a href="版本更新记录.html" style="color:#999;text-decoration:underline;">版本更新记录</a>
 </div>
 
 <!-- ===== Floating AI Button ===== -->

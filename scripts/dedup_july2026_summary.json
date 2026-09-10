@@ -1,0 +1,15 @@
+{
+  "total": 2097,
+  "total_dup": 809,
+  "dup_rate": 38.6,
+  "s1_count": 13,
+  "s1_groups": 9,
+  "s2_count": 364,
+  "s3_count": 598,
+  "s3_groups": 178,
+  "s4_count": 63,
+  "s4_pairs": 63,
+  "s4_comms": 43,
+  "high_priority": 624,
+  "mid_priority": 1473
+}
