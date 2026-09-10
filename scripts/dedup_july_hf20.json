@@ -1,0 +1,106 @@
+[
+  {
+    "community": "徐汇世家花园",
+    "street": "田林",
+    "category": "房屋维修",
+    "count": 414,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "龙南七村",
+    "street": "龙华",
+    "category": "邻里纠纷",
+    "count": 333,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "淮中直管公房",
+    "street": "湖南路",
+    "category": "停车管理",
+    "count": 263,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "万科华尔兹花园",
+    "street": "田林",
+    "category": "业主大会/业委会",
+    "count": 182,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "长陇苑",
+    "street": "凌云路",
+    "category": "房屋违规使用",
+    "count": 167,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "俞一小区",
+    "street": "龙华",
+    "category": "消防管理",
+    "count": 147,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "鑫桂苑·侨高中心",
+    "street": "虹梅路",
+    "category": "清洁卫生",
+    "count": 114,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "懿园",
+    "street": "天平路",
+    "category": "群租管理",
+    "count": 102,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "龙吴路11弄",
+    "street": "漕河泾",
+    "category": "物业安保",
+    "count": 101,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "日晖六村",
+    "street": "斜土路",
+    "category": "旧住房改造",
+    "count": 97,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "徐汇新城",
+    "street": "长桥",
+    "category": "物业服务态度",
+    "count": 70,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "紫阳花苑",
+    "street": "华泾镇",
+    "category": "其他",
+    "count": 62,
+    "property": "—",
+    "priority": "高"
+  },
+  {
+    "community": "东方巴黎霞飞苑",
+    "street": "湖南路",
+    "category": "物业收费",
+    "count": 45,
+    "property": "—",
+    "priority": "高"
+  }
+]
