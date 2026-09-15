@@ -37,3 +37,6 @@ demo_cache/
 
 # Node
 node_modules/
+
+# WorkBuddy workspace
+.workbuddy/

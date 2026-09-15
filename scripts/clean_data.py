@@ -211,6 +211,19 @@ def load_2026_07() -> pd.DataFrame:
     return df[COMMON_COLS].copy()
 
 
+def load_2026_08() -> pd.DataFrame:
+    path = os.path.join(RAW_DATA_DIR, "2026 年8月市局14类.xlsx")
+    df = pd.read_excel(path, sheet_name="Sheet1")
+    df = df.rename(columns=FIELD_MAPPING["2026_07"])  # 字段映射与7月相同
+    for col in COMMON_COLS:
+        if col not in df.columns:
+            df[col] = None
+    df["accept_time"] = pd.to_datetime(df["accept_time"], errors="coerce")
+    df["year"] = 2026
+    df["community_id"] = None
+    return df[COMMON_COLS].copy()
+
+
 def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
 
@@ -238,20 +251,24 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def merge_all() -> pd.DataFrame:
-    print("[1/4] 加载2024年数据 (Sheet1)...")
+    print("[1/5] 加载2024年数据 (Sheet1)...")
     df1 = load_2024()
     print(f"   2024年: {len(df1)} 条, 时间样本: {df1['accept_time'].dropna().iloc[:2].tolist()}")
 
-    print("[2/4] 加载2025-2026H1数据 (Sheet1)...")
+    print("[2/5] 加载2025-2026H1数据 (Sheet1)...")
     df2 = load_2025_2026H1()
     print(f"   2025-2026H1: {len(df2)} 条, 时间样本: {df2['accept_time'].dropna().iloc[:2].tolist()}")
 
-    print("[3/4] 加载2026年7月数据...")
+    print("[3/5] 加载2026年7月数据...")
     df3 = load_2026_07()
     print(f"   2026.7: {len(df3)} 条, 月份样本: {df3['month'].dropna().unique()[:5]}")
 
-    merged = pd.concat([df1, df2, df3], ignore_index=True)
-    print(f"[4/4] 合并后总计: {len(merged)} 条，开始清洗...")
+    print("[4/5] 加载2026年8月数据...")
+    df4 = load_2026_08()
+    print(f"   2026.8: {len(df4)} 条, 月份样本: {df4['month'].dropna().unique()[:5]}")
+
+    merged = pd.concat([df1, df2, df3, df4], ignore_index=True)
+    print(f"[5/5] 合并后总计: {len(merged)} 条，开始清洗...")
 
     cleaned = clean_dataframe(merged)
     print(f"   清洗完成: {len(cleaned)} 条 (剔除{(len(merged) - len(cleaned))}条)")

@@ -60,31 +60,204 @@
 
   .footer { text-align: center; padding: 30px 0; font-size: 12px; color: #999; }
   /* Sub page nav */
-  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
-  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
-  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
   .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
-  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
-  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
-  .sub-nav-links a:hover { color:#0d47a1; }
-  @media(max-width:768px) { .sub-nav-links { display:none; } }
+  @media(max-width:768px) { }
+
+  /* ===== 右侧浮动目录 ===== */
+  .toc-float {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 999;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .toc-float.collapsed {
+    right: -260px;
+  }
+  .toc-toggle {
+    position: absolute;
+    left: -36px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 72px;
+    background: linear-gradient(180deg, #7b1fa2, #4a148c);
+    color: #fff;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 2px;
+    box-shadow: -2px 2px 8px rgba(74,20,140,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .toc-toggle:hover {
+    background: linear-gradient(180deg, #8e24aa, #6a1b9a);
+    left: -38px;
+    width: 38px;
+  }
+  .toc-panel {
+    width: 260px;
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -2px 4px 16px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .toc-header {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #7b1fa2, #4a148c);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-header .toc-count {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .toc-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .toc-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  .toc-body::-webkit-scrollbar-thumb {
+    background: #d1c4e9;
+    border-radius: 2px;
+  }
+  .toc-item {
+    display: block;
+    padding: 8px 18px 8px 14px;
+    font-size: 12.5px;
+    color: #555;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+  }
+  .toc-item:hover {
+    background: #f3e5f5;
+    color: #4a148c;
+    border-left-color: #ce93d8;
+  }
+  .toc-item.active {
+    background: #f3e5f5;
+    color: #4a148c;
+    font-weight: 700;
+    border-left-color: #7b1fa2;
+  }
+  .toc-item.level2 {
+    padding-left: 32px;
+    font-size: 11.5px;
+    color: #777;
+  }
+  .toc-item.level2:hover {
+    color: #6a1b9a;
+  }
+  .toc-item.level2.active {
+    color: #6a1b9a;
+    font-weight: 600;
+  }
+  .toc-sub-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .toc-item.has-sub + .toc-sub-wrap.open {
+    max-height: 500px;
+  }
+  .toc-arrow {
+    float: right;
+    font-size: 10px;
+    transition: transform 0.3s;
+    color: #aaa;
+  }
+  .toc-item.has-sub.active .toc-arrow,
+  .toc-item.has-sub.open .toc-arrow {
+    transform: rotate(90deg);
+    color: #7b1fa2;
+  }
+  @media(max-width: 1400px) {
+    .toc-float { right: -240px; }
+    .toc-float.collapsed { right: -240px; }
+    .toc-float.expanded { right: 0; }
+    .toc-panel { width: 240px; }
+  }
+  @media(max-width: 768px) {
+    .toc-float { display: none; }
+  }
+
+  /* ===== Nav ===== */
+  .nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:48px; }
+  .nav-logo { font-size:14px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .nav-back { font-size:12px; color:#0d47a1; text-decoration:none; margin-left:12px; }
+  .nav-links { margin-left:auto; display:flex; gap:16px; }
+  .nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .nav-links a:hover { color:#0d47a1; }
+  .nav-dropdown { position:relative; display:inline-block; }
+  .nav-dropdown > a { display:inline-block; padding:4px 0; position:relative; font-size:12px; color:#666; text-decoration:none; }
+  .nav-dropdown > a:hover { color:#0d47a1; }
+  .nav-dropdown > a::after { content:' ▾'; font-size:10px; opacity:0.6; }
+  .dropdown-menu { position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(8px); min-width:260px; background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.12); padding:8px 0; opacity:0; visibility:hidden; transition:all 0.25s cubic-bezier(0.4,0,0.2,1); z-index:1001; border:1px solid #f0f0f0; }
+  .nav-dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%) rotate(45deg); width:12px; height:12px; background:#fff; border-left:1px solid #f0f0f0; border-top:1px solid #f0f0f0; }
+  .dropdown-item { display:block; padding:8px 16px; font-size:12px; color:#444 !important; text-decoration:none; transition:all 0.15s; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dropdown-item:hover { background:#e3f2fd; color:#0d47a1 !important; padding-left:20px; }
+  .dropdown-item .badge { display:inline-block; font-size:10px; padding:1px 6px; border-radius:8px; background:#e3f2fd; color:#1565c0; margin-right:6px; font-weight:600; }
+  .dropdown-divider { height:1px; background:#f0f0f0; margin:6px 0; }
 </style>
 </head>
 <body>
 
-<div class="sub-nav-bar">
-<div class="sub-nav-inner">
-<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
-<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
-<div class="sub-nav-links">
-<a href="课题成果总览.html#core">核心成果</a>
-<a href="课题成果总览.html#analysis">深度分析</a>
-<a href="课题成果总览.html#tools">工具成果</a>
-<a href="课题成果总览.html#consulting">咨询成果</a>
-<a href="课题成果总览.html#docs">验收文档</a>
-</div>
-</div>
+<!-- ===== Top Nav ===== -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+    <a class="nav-back" href="课题成果总览.html">← 返回总览</a>
+    <div class="nav-links">
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#core">核心成果</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="12345投诉量下降数据报告.html"><span class="badge">#1</span>12345投诉量下降数据报告</a>
+          <a class="dropdown-item" href="投诉去重识别方法论说明.html"><span class="badge">#2</span>投诉去重识别方法论说明</a>
+          <a class="dropdown-item" href="2026年1-8月投诉去重建议清单.html"><span class="badge">#2·附</span>2026年1-8月去重建议清单</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="数据质量优化专项报告.html"><span class="badge">#3</span>数据质量优化专项报告</a>
+          <a class="dropdown-item" href="高风险小区预警清单.html"><span class="badge">#6</span>高风险小区预警清单</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#analysis">深度分析</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="物业投诉根因分析报告.html"><span class="badge">#4</span>物业投诉根因分析报告</a>
+          <a class="dropdown-item" href="重点问题专题分析报告（5份）.html"><span class="badge">#5</span>重点问题专题分析报告（5份）</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="治理效果追踪分析报告.html"><span class="badge">#7</span>治理效果追踪分析报告</a>
+          <a class="dropdown-item" href="反弹小区入户核查工作单.html"><span class="badge">#7·附</span>反弹小区入户核查工作单</a>
+          <a class="dropdown-item" href="底部抬升小区热线数据分析报告.html"><span class="badge">#7·附</span>底部抬升小区热线数据分析</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="header">
@@ -104,9 +277,9 @@
       <div class="stat-change down">↓ 减少5,850件</div>
     </div>
     <div class="stat-card blue">
-      <div class="stat-label">2026年1-7月同比去年同期</div>
+      <div class="stat-label">2026年1-8月同比去年同期</div>
       <div class="stat-value">-15.67<span class="stat-unit">%</span></div>
-      <div class="stat-sub">13,618件 → 11,484件</div>
+      <div class="stat-sub">13,618件 → 13,726件</div>
       <div class="stat-change down">↓ 减少2,134件</div>
     </div>
     <div class="stat-card orange">
@@ -127,8 +300,15 @@
   <!-- 月度同比 -->
   <div class="section">
     <div class="section-title">月度同比变化率</div>
-    <div class="section-desc">各月同比涨跌幅，绿色为下降，红色为上升。2025年全年12个月中10个月同比下降，2026年已完成的7个月全部同比下降</div>
+    <div class="section-desc">各月投诉量同比涨跌幅，颜色含义如下：</div>
+    <div style="display:flex;flex-wrap:wrap;gap:20px;margin:12px 0 16px;padding:12px 16px;background:#f5f5f5;border-radius:8px;font-size:13px;">
+      <div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:#52c41a;border-radius:2px;"></span><strong>绿色</strong>：2025年同比下降</div>
+      <div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:#f5222d;border-radius:2px;"></span><strong>红色</strong>：2025年同比上升</div>
+      <div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:#1890ff;border-radius:2px;"></span><strong>蓝色</strong>：2026年同比下降</div>
+      <div style="display:flex;align-items:center;gap:6px;"><span style="display:inline-block;width:14px;height:14px;background:#fa8c16;border-radius:2px;"></span><strong>橙色</strong>：2026年同比上升</div>
+    </div>
     <div id="chart-monthly-yoy" class="chart-box"></div>
+    <p style="font-size:12px;color:#888;margin-top:4px;">2025年全年12个月中11个月同比下降；2026年1-7月持续下降，8月同比首次转正（+2.8%），需警惕反弹。</p>
   </div>
 
   <!-- 类别分析 -->
@@ -141,7 +321,7 @@
         <tr>
           <th>排名</th><th>投诉类别</th>
           <th>2024年</th><th>2025年</th><th>2025同比</th>
-          <th>2026年1-7月</th><th>2025年1-7月</th><th>2026同比</th>
+          <th>2026年1-8月</th><th>2025年1-8月</th><th>2026同比</th>
         </tr>
       </thead>
       <tbody id="category-tbody"></tbody>
@@ -169,28 +349,28 @@
 
     <div class="finding-card">
       <div class="finding-title">旧住房改造：降幅最大 -36.59%</div>
-      <div class="finding-desc">2024年1,968件 → 2025年1,248件，减少720件。主要得益于旧改项目推进和居民诉求前置化解机制，旧改期间的施工扰民、临时搬迁等投诉通过提前沟通大幅减少。2026年1-7月同比再降21.19%。</div>
+      <div class="finding-desc">2024年1,968件 → 2025年1,248件，减少720件。主要得益于旧改项目推进和居民诉求前置化解机制，旧改期间的施工扰民、临时搬迁等投诉通过提前沟通大幅减少。2026年1-8月同比再降21.19%。</div>
     </div>
     <div class="finding-card">
       <div class="finding-title">房屋维修：总量第二，降幅显著 -25.96%</div>
-      <div class="finding-desc">2024年4,688件 → 2025年3,471件，减少1,217件。通过数据分析定位维修投诉高发小区（日晖六村、田林三街坊等），推动物业企业建立维修快速响应机制。2026年1-7月同比再降14.86%。</div>
+      <div class="finding-desc">2024年4,688件 → 2025年3,471件，减少1,217件。通过数据分析定位维修投诉高发小区（日晖六村、田林三街坊等），推动物业企业建立维修快速响应机制。2026年1-8月同比再降14.86%。</div>
     </div>
     <div class="finding-card">
       <div class="finding-title">停车管理：投诉量第一，持续下降 -19.51%</div>
-      <div class="finding-desc">2024年4,706件 → 2025年3,788件，减少918件。通过专题分析推动停车规约修订、夜间错峰停车等针对性措施。2026年1-7月同比再降27.16%，降幅进一步扩大。</div>
+      <div class="finding-desc">2024年4,706件 → 2025年3,788件，减少918件。通过专题分析推动停车规约修订、夜间错峰停车等针对性措施。2026年1-8月同比再降27.16%，降幅进一步扩大。</div>
     </div>
     <div class="finding-card">
       <div class="finding-title">房屋违规使用：下降 -21.42%</div>
-      <div class="finding-desc">2024年3,123件 → 2025年2,454件，减少669件。通过群租整治专项执法和小区网格化巡查，违规使用类投诉持续下降。2026年1-7月同比再降24.95%。</div>
+      <div class="finding-desc">2024年3,123件 → 2025年2,454件，减少669件。通过群租整治专项执法和小区网格化巡查，违规使用类投诉持续下降。2026年1-8月同比再降24.95%。</div>
     </div>
 
     <div class="finding-card warning">
       <div class="finding-title">需关注：物业服务态度逆势上升 +7.78%</div>
-      <div class="finding-desc">2024年591件 → 2025年637件，增加46件。2026年1-7月同比再升22.35%。这是唯一在2025年不降反升的类别，提示物业服务质量需从"硬件维修"向"软件服务"延伸，建议下一期重点关注。</div>
+      <div class="finding-desc">2024年591件 → 2025年637件，增加46件。2026年1-8月同比再升22.35%。这是唯一在2025年不降反升的类别，提示物业服务质量需从"硬件维修"向"软件服务"延伸，建议下一期重点关注。</div>
     </div>
     <div class="finding-card warning">
       <div class="finding-title">需关注：邻里纠纷降幅最小 -8.44%</div>
-      <div class="finding-desc">2024年2,951件 → 2025年2,702件，仅减少249件，是投诉量Top3中降幅最小的。2026年1-7月同比甚至微增1.72%。邻里纠纷根因复杂（噪音、渗水、公共空间占用等），单纯执法难以根治，需要调解机制和社区共治的深度介入。</div>
+      <div class="finding-desc">2024年2,951件 → 2025年2,702件，仅减少249件，是投诉量Top3中降幅最小的。2026年1-8月同比甚至微增1.72%。邻里纠纷根因复杂（噪音、渗水、公共空间占用等），单纯执法难以根治，需要调解机制和社区共治的深度介入。</div>
     </div>
   </div>
 
@@ -220,21 +400,21 @@
   <!-- ===== 六、2026年近期专项分析 ===== -->
   <div class="section">
     <h2 style="color:#1565c0; border-bottom:2px solid #1565c0; padding-bottom:8px;">六、2026年近期专项分析</h2>
-    <p style="color:#666;font-size:14px;">聚焦2026年1-7月（11,484件）和7月单月（2,097件），与2025年同期对比，服务近期管理决策。</p>
+    <p style="color:#666;font-size:14px;">聚焦2026年1-8月（13,726件）和7月单月（2,097件），与2025年同期对比，服务近期管理决策。</p>
 
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:15px 0;">
       <div style="background:#e3f2fd; padding:14px; border-radius:8px; text-align:center;">
-        <div style="font-size:28px; font-weight:800; color:#1565c0;">11,484</div>
-        <div style="font-size:12px; color:#666;">2026年1-7月总量</div>
-        <div style="font-size:11px; color:#00a854; margin-top:4px;">同比-15.7%</div>
+        <div style="font-size:28px; font-weight:800; color:#1565c0;">13,726</div>
+        <div style="font-size:12px; color:#666;">2026年1-8月总量</div>
+        <div style="font-size:11px; color:#00a854; margin-top:4px;">同比-13.1%</div>
       </div>
       <div style="background:#e3f2fd; padding:14px; border-radius:8px; text-align:center;">
-        <div style="font-size:28px; font-weight:800; color:#1565c0;">2,097</div>
-        <div style="font-size:12px; color:#666;">2026年7月单月</div>
-        <div style="font-size:11px; color:#ff4d4f; margin-top:4px;">同比仅-0.2%</div>
+        <div style="font-size:28px; font-weight:800; color:#1565c0;">2,242</div>
+        <div style="font-size:12px; color:#666;">2026年8月单月</div>
+        <div style="font-size:11px; color:#ff4d4f; margin-top:4px;">同比+2.8% 首次转正</div>
       </div>
       <div style="background:#e3f2fd; padding:14px; border-radius:8px; text-align:center;">
-        <div style="font-size:28px; font-weight:800; color:#1565c0;">1,641</div>
+        <div style="font-size:28px; font-weight:800; color:#1565c0;">1,716</div>
         <div style="font-size:12px; color:#666;">2026年月均</div>
         <div style="font-size:11px; color:#00a854; margin-top:4px;">同比-22.2%</div>
       </div>
@@ -255,31 +435,32 @@
       <tr style="background:#e8f5e9;"><td>5月</td><td style="font-weight:700;">1,772</td><td>1,994</td><td>2,441</td><td style="color:#00a854;">-11.1%</td><td>🟢 改善</td></tr>
       <tr><td>6月</td><td style="font-weight:700;">1,856</td><td>2,075</td><td>2,532</td><td style="color:#00a854;">-10.6%</td><td>🟡 改善放缓</td></tr>
       <tr style="background:#fff3e0;"><td>7月</td><td style="font-weight:700;">2,097</td><td>2,102</td><td>2,683</td><td style="color:#ff4d4f;font-weight:700;">-0.2%</td><td>🔴 降幅消失</td></tr>
-      <tr style="background:#f5f5f5;font-weight:700;"><td>合计</td><td>11,484</td><td>13,618</td><td>15,929</td><td style="color:#00a854;">-15.7%</td><td>—</td></tr>
+      <tr style="background:#ffebee;"><td>8月</td><td style="font-weight:700;">2,242</td><td>2,180</td><td>2,474</td><td style="color:#ff4d4f;font-weight:700;">+2.8%</td><td>🔴 同比转正</td></tr>
+      <tr style="background:#f5f5f5;font-weight:700;"><td>合计</td><td>13,726</td><td>15,798</td><td>18,531</td><td style="color:#00a854;">-13.1%</td><td>—</td></tr>
     </table>
 
-    <div style="background:#fff3e0; border-left:4px solid #e65100; padding:12px; border-radius:6px; margin-top:12px;">
-      <strong>⚠️ 7月预警：</strong>2026年7月单月投诉2,097件，同比2025年7月（2,102件）仅降0.2%，<strong>降幅几乎消失</strong>。环比6月（1,856件）增长13.0%，是2026年单月最高值。7月是夏季高温期，邻里纠纷（+55.6%）、清洁卫生（+40.7%）、物业服务态度（+40.0%）三类投诉暴增，需启动夏季专项应对。
+    <div style="background:#ffebee; border-left:4px solid #c62828; padding:12px; border-radius:6px; margin-top:12px;">
+      <strong>🔴 8月预警：</strong>2026年8月单月投诉2,242件，同比2025年8月（2,180件）<strong>上升2.8%，今年首次单月同比转正</strong>。环比7月（2,097件）增长6.9%，连续两个月攀升。8月夏季高温期，房屋维修（+62.7%）、邻里纠纷（+20.2%）、清洁卫生（+21.0%）三类投诉暴增，需持续关注夏季专项应对。
     </div>
 
-    <h3 style="font-size:15px;color:#1565c0;margin:15px 0 8px;">6.2 街道2026年1-7月表现</h3>
+    <h3 style="font-size:15px;color:#1565c0;margin:15px 0 8px;">6.2 街道2026年1-8月表现</h3>
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <tr style="background:#1565c0;color:#fff;"><th style="padding:5px;">街道</th><th>2026(1-7月)</th><th>2025(1-7月)</th><th>同比</th><th>7月单月</th><th>7月同比</th><th>态势</th></tr>
-      <tr style="background:#ffebee;"><td>斜土路</td><td>740件</td><td>527件</td><td style="color:#ff4d4f;font-weight:700;">+40.4%</td><td>207件</td><td style="color:#ff4d4f;font-weight:700;">+39.9%</td><td>🔴 急剧恶化</td></tr>
-      <tr style="background:#ffebee;"><td>漕河泾</td><td>857件</td><td>634件</td><td style="color:#ff4d4f;font-weight:700;">+35.2%</td><td>212件</td><td style="color:#ff4d4f;font-weight:700;">+35.0%</td><td>🔴 持续恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>徐家汇</td><td>943件</td><td>762件</td><td style="color:#ff4d4f;">+23.8%</td><td>256件</td><td style="color:#ff4d4f;">+23.1%</td><td>🟠 恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>龙华</td><td>676件</td><td>555件</td><td style="color:#ff4d4f;">+21.8%</td><td>174件</td><td style="color:#ff4d4f;">+21.7%</td><td>🟠 恶化</td></tr>
-      <tr><td>田林</td><td>897件</td><td>782件</td><td style="color:#ff4d4f;">+14.7%</td><td>243件</td><td style="color:#ff4d4f;">+14.6%</td><td>🟡 轻微恶化</td></tr>
-      <tr><td>枫林路</td><td>763件</td><td>831件</td><td style="color:#00a854;">-8.2%</td><td>169件</td><td style="color:#00a854;">-8.2%</td><td>🟢 改善</td></tr>
-      <tr><td>虹梅路</td><td>389件</td><td>417件</td><td style="color:#00a854;">-6.7%</td><td>45件</td><td style="color:#00a854;">-6.3%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>凌云路</td><td>588件</td><td>774件</td><td style="color:#00a854;font-weight:700;">-24.0%</td><td>141件</td><td style="color:#00a854;font-weight:700;">-24.2%</td><td>🟢 显著改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>天平路</td><td>748件</td><td>925件</td><td style="color:#00a854;font-weight:700;">-19.2%</td><td>114件</td><td style="color:#00a854;font-weight:700;">-19.1%</td><td>🟢 显著改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>康健新村</td><td>524件</td><td>651件</td><td style="color:#00a854;font-weight:700;">-19.5%</td><td>122件</td><td style="color:#00a854;font-weight:700;">-19.7%</td><td>🟢 显著改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>华泾</td><td>603件</td><td>742件</td><td style="color:#00a854;">-18.7%</td><td>77件</td><td style="color:#00a854;">-18.1%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>长桥</td><td>1,003件</td><td>1,209件</td><td style="color:#00a854;">-17.0%</td><td>290件</td><td style="color:#00a854;">-16.9%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>湖南路</td><td>576件</td><td>654件</td><td style="color:#00a854;">-11.9%</td><td>129件</td><td style="color:#00a854;">-11.6%</td><td>🟢 改善</td></tr>
+      <tr style="background:#1565c0;color:#fff;"><th style="padding:5px;">街道</th><th>2026(1-8月)</th><th>2025(1-8月)</th><th>同比</th><th>7月单月</th><th>7月同比</th><th>8月单月</th><th>8月同比</th><th>态势</th></tr>
+      <tr style="background:#fff;"><td>田林</td><td>1,069件</td><td>942件</td><td style="color:#ff4d4f;font-weight:700;">+13.5%</td><td>164件</td><td style="color:#ff4d4f;font-weight:700;">+53.3%</td><td>191件</td><td style="color:#ff4d4f;font-weight:700;">+25.7%</td><td>🟡 轻微恶化</td></tr>
+      <tr style="background:#fff;"><td>漕河泾</td><td>1,097件</td><td>1,103件</td><td style="color:#00a854;font-weight:700;">-0.5%</td><td>226件</td><td style="color:#ff4d4f;font-weight:700;">+38.7%</td><td>218件</td><td style="color:#ff4d4f;font-weight:700;">+34.6%</td><td>🟢 改善</td></tr>
+      <tr style="background:#fff;"><td>虹梅路</td><td>470件</td><td>490件</td><td style="color:#00a854;font-weight:700;">-4.1%</td><td>81件</td><td style="color:#ff4d4f;font-weight:700;">+24.6%</td><td>67件</td><td style="color:#00a854;font-weight:700;">-2.9%</td><td>🟢 改善</td></tr>
+      <tr style="background:#fff;"><td>徐家汇</td><td>1,145件</td><td>1,230件</td><td style="color:#00a854;font-weight:700;">-6.9%</td><td>204件</td><td style="color:#ff4d4f;font-weight:700;">+6.8%</td><td>192件</td><td style="color:#00a854;font-weight:700;">-15.8%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>斜土路</td><td>958件</td><td>1,108件</td><td style="color:#00a854;font-weight:700;">-13.5%</td><td>197件</td><td style="color:#00a854;font-weight:700;">-3.9%</td><td>173件</td><td style="color:#00a854;font-weight:700;">-13.5%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>湖南路</td><td>725件</td><td>847件</td><td style="color:#00a854;font-weight:700;">-14.4%</td><td>138件</td><td style="color:#ff4d4f;font-weight:700;">+50.0%</td><td>172件</td><td style="color:#ff4d4f;font-weight:700;">+68.6%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>龙华</td><td>828件</td><td>978件</td><td style="color:#00a854;font-weight:700;">-15.3%</td><td>151件</td><td style="color:#00a854;font-weight:700;">-1.9%</td><td>145件</td><td style="color:#ff4d4f;font-weight:700;">+30.6%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>天平路</td><td>914件</td><td>1,091件</td><td style="color:#00a854;font-weight:700;">-16.2%</td><td>164件</td><td style="color:#00a854;font-weight:700;">-23.4%</td><td>246件</td><td style="color:#ff4d4f;font-weight:700;">+34.4%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>凌云路</td><td>747件</td><td>901件</td><td style="color:#00a854;font-weight:700;">-17.1%</td><td>160件</td><td style="color:#ff4d4f;font-weight:700;">+35.6%</td><td>150件</td><td style="color:#00a854;font-weight:700;">-4.5%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>华泾镇</td><td>720件</td><td>882件</td><td style="color:#00a854;font-weight:700;">-18.4%</td><td>115件</td><td style="color:#00a854;font-weight:700;">-30.7%</td><td>149件</td><td style="color:#ff4d4f;font-weight:700;">+8.8%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>康健新村</td><td>639件</td><td>846件</td><td style="color:#00a854;font-weight:700;">-24.5%</td><td>111件</td><td style="color:#00a854;font-weight:700;">-31.5%</td><td>112件</td><td style="color:#00a854;font-weight:700;">-18.2%</td><td>🟢 大幅改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>枫林路</td><td>944件</td><td>1,259件</td><td style="color:#00a854;font-weight:700;">-25.0%</td><td>172件</td><td style="color:#00a854;font-weight:700;">-11.3%</td><td>177件</td><td style="color:#00a854;font-weight:700;">-25.9%</td><td>🟢 大幅改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>长桥</td><td>1,221件</td><td>1,854件</td><td style="color:#00a854;font-weight:700;">-34.1%</td><td>214件</td><td style="color:#00a854;font-weight:700;">-11.6%</td><td>250件</td><td style="color:#00a854;font-weight:700;">-11.0%</td><td>🟢 大幅改善</td></tr>
     </table>
-    <p style="font-size:12px;color:#888;margin-top:4px;">注：斜土路、漕河泾、徐家汇三个街道逆势恶化，合计贡献了全区增量的主体部分。</p>
+    <p style="font-size:12px;color:#888;margin-top:4px;">注：数据为12345热线物业类投诉全量（按街道汇总）。田林街道是唯一同比上升的街道，需重点关注。</p>
   </div>
 
 </div>
@@ -300,14 +481,14 @@ chart1.setOption({
   series: [
     { name: '2024年', type: 'line', data: [2074,1340,2424,2435,2441,2532,2683,2474,3070,2532,2926,2537], itemStyle: { color: '#bfbfbf' }, lineStyle: { width: 2, type: 'dashed' } },
     { name: '2025年', type: 'line', data: [1777,1419,2157,2094,1994,2075,2102,2180,2176,1855,1975,1814], itemStyle: { color: '#1890ff' }, lineStyle: { width: 3 } },
-    { name: '2026年', type: 'line', data: [1485,888,1682,1704,1772,1856,2097,null,null,null,null,null], itemStyle: { color: '#52c41a' }, lineStyle: { width: 3 }, areaStyle: { opacity: 0.1 } }
+    { name: '2026年', type: 'line', data: [1485,888,1682,1704,1772,1856,2097,2242,null,null,null,null], itemStyle: { color: '#52c41a' }, lineStyle: { width: 3 }, areaStyle: { opacity: 0.1 } }
   ]
 });
 
 // ─── 月度同比柱状图 ───
 var chart2 = echarts.init(document.getElementById('chart-monthly-yoy'));
 var yoy2025 = [-14.32, 5.9, -11.01, -14.0, -18.31, -18.05, -21.65, -11.88, -29.12, -26.74, -32.5, -28.5];
-var yoy2026 = [-16.43, -37.42, -22.02, -18.62, -11.13, -10.55, -0.24, null, null, null, null, null];
+var yoy2026 = [-16.43, -37.42, -22.02, -18.62, -11.13, -10.55, -0.24, 2.84, null, null, null, null];
 chart2.setOption({
   tooltip: { trigger: 'axis', formatter: function(params) { var s = params[0].name + '<br/>'; params.forEach(function(p) { if (p.value != null) s += p.marker + p.seriesName + ': ' + p.value + '%<br/>'; }); return s; } },
   legend: { data: ['2025年同比', '2026年同比'], top: 10 },
@@ -336,14 +517,14 @@ var cat2025 = [3788,3471,2702,2454,2282,1686,1451,1423,1248,1101,737,637,519,119
 var cat2026 = [1588,1799,1595,1038,1014,881,728,673,543,582,315,427,247,54];
 chart3.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年', '2025年', '2026年1-7月'], top: 10 },
+  legend: { data: ['2024年', '2025年', '2026年1-8月'], top: 10 },
   grid: { left: 140, right: 30, bottom: 20, top: 50 },
   xAxis: { type: 'value', name: '工单量（件）' },
   yAxis: { type: 'category', data: categories.reverse(), axisLabel: { fontSize: 12 } },
   series: [
     { name: '2024年', type: 'bar', data: cat2024.reverse(), itemStyle: { color: '#bfbfbf' } },
     { name: '2025年', type: 'bar', data: cat2025.reverse(), itemStyle: { color: '#1890ff' } },
-    { name: '2026年1-7月', type: 'bar', data: cat2026.reverse(), itemStyle: { color: '#52c41a' } }
+    { name: '2026年1-8月', type: 'bar', data: cat2026.reverse(), itemStyle: { color: '#52c41a' } }
   ]
 });
 
@@ -383,14 +564,14 @@ var st2025 = [2915,2336,2324,2006,1969,1860,1673,1602,1563,1537,1480,1369,833];
 var st2026 = [1221,944,1145,1097,958,914,1069,720,828,747,639,725,470];
 chart4.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年', '2025年', '2026年1-7月'], top: 10 },
+  legend: { data: ['2024年', '2025年', '2026年1-8月'], top: 10 },
   grid: { left: 100, right: 30, bottom: 40, top: 50 },
   xAxis: { type: 'category', data: streets, axisLabel: { rotate: 30, fontSize: 11 } },
   yAxis: { type: 'value', name: '工单量（件）' },
   series: [
     { name: '2024年', type: 'bar', data: st2024, itemStyle: { color: '#bfbfbf' } },
     { name: '2025年', type: 'bar', data: st2025, itemStyle: { color: '#1890ff' } },
-    { name: '2026年1-7月', type: 'bar', data: st2026, itemStyle: { color: '#52c41a' } }
+    { name: '2026年1-8月', type: 'bar', data: st2026, itemStyle: { color: '#52c41a' } }
   ]
 });
 
@@ -402,14 +583,14 @@ var co2025 = [2773,2149,1430,691,503,492,477,476,452,426];
 var co2026 = [1216,1140,746,385,283,253,108,256,171,95];
 chart5.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年', '2025年', '2026年1-7月'], top: 10 },
+  legend: { data: ['2024年', '2025年', '2026年1-8月'], top: 10 },
   grid: { left: 120, right: 30, bottom: 20, top: 50 },
   xAxis: { type: 'value', name: '工单量（件）' },
   yAxis: { type: 'category', data: companies.reverse(), axisLabel: { fontSize: 12 } },
   series: [
     { name: '2024年', type: 'bar', data: co2024.reverse(), itemStyle: { color: '#bfbfbf' } },
     { name: '2025年', type: 'bar', data: co2025.reverse(), itemStyle: { color: '#1890ff' } },
-    { name: '2026年1-7月', type: 'bar', data: co2026.reverse(), itemStyle: { color: '#52c41a' } }
+    { name: '2026年1-8月', type: 'bar', data: co2026.reverse(), itemStyle: { color: '#52c41a' } }
   ]
 });
 
@@ -418,5 +599,149 @@ window.addEventListener('resize', function() {
   chart1.resize(); chart2.resize(); chart3.resize(); chart4.resize(); chart5.resize();
 });
 </script>
+
+<!-- ===== 右侧浮动目录 ===== -->
+<div class="toc-float collapsed" id="tocFloat">
+  <button class="toc-toggle" id="tocToggle">目 录</button>
+  <div class="toc-panel">
+    <div class="toc-header">
+      <span>📑 报告目录</span>
+      <span class="toc-count" id="tocCount">0章</span>
+    </div>
+    <div class="toc-body" id="tocBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ===== 右侧浮动目录 =====
+document.addEventListener('DOMContentLoaded', function() {
+  var tocFloat = document.getElementById('tocFloat');
+  var tocToggle = document.getElementById('tocToggle');
+  var tocBody = document.getElementById('tocBody');
+  var tocCount = document.getElementById('tocCount');
+  if (!tocFloat || !tocBody) return;
+
+  var expanded = false;
+  tocToggle.addEventListener('click', function() {
+    expanded = !expanded;
+    if (expanded) {
+      tocFloat.classList.remove('collapsed');
+      tocFloat.classList.add('expanded');
+      tocToggle.textContent = '收 起';
+    } else {
+      tocFloat.classList.add('collapsed');
+      tocFloat.classList.remove('expanded');
+      tocToggle.textContent = '目 录';
+    }
+  });
+
+  var sections = document.querySelectorAll('.section');
+  var tocHTML = '';
+  var sectionCount = 0;
+  var idCounter = 0;
+
+  sections.forEach(function(section, idx) {
+    var titleEl = section.querySelector('.section-title');
+    if (!titleEl) return;
+    var title = titleEl.textContent.trim();
+    title = title.replace(/^[^\u4e00-\u9fa5a-zA-Z0-9]+/, '');
+    if (!title) return;
+    sectionCount++;
+    idCounter++;
+    var sectionId = 'sec-' + idCounter;
+    section.id = sectionId;
+    var subTitles = section.querySelectorAll('.sub-title');
+    var hasSub = subTitles.length > 0;
+    var subHTML = '';
+    if (hasSub) {
+      subHTML += '<div class="toc-sub-wrap">';
+      subTitles.forEach(function(sub, subIdx) {
+        idCounter++;
+        var subId = 'sub-' + idCounter;
+        sub.id = subId;
+        var subTitle = sub.textContent.trim();
+        subHTML += '<a class="toc-item level2" href="#' + subId + '" data-target="' + subId + '">' + subTitle + '</a>';
+      });
+      subHTML += '</div>';
+    }
+    tocHTML += '<a class="toc-item level1' + (hasSub ? ' has-sub' : '') + '" href="#' + sectionId + '" data-target="' + sectionId + '">' +
+               title +
+               (hasSub ? '<span class="toc-arrow">▶</span>' : '') +
+               '</a>' + subHTML;
+  });
+
+  tocBody.innerHTML = tocHTML;
+  tocCount.textContent = sectionCount + '章';
+
+  var level1Items = tocBody.querySelectorAll('.toc-item.level1.has-sub');
+  level1Items.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var subWrap = item.nextElementSibling;
+      if (subWrap && subWrap.classList.contains('toc-sub-wrap')) {
+        e.preventDefault();
+        subWrap.classList.toggle('open');
+        item.classList.toggle('open');
+      }
+    });
+  });
+
+  var allTocItems = tocBody.querySelectorAll('.toc-item');
+  allTocItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var targetId = item.getAttribute('data-target');
+      if (!targetId) return;
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        var top = target.offsetTop - 60;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  var ticking = false;
+  function updateActive() {
+    var scrollY = window.scrollY + 100;
+    var currentId = null;
+    var allTargets = document.querySelectorAll('.section[id^="sec-"], .sub-title[id^="sub-"]');
+    for (var i = 0; i < allTargets.length; i++) {
+      var el = allTargets[i];
+      if (el.offsetTop <= scrollY) {
+        currentId = el.id;
+      } else {
+        break;
+      }
+    }
+    if (currentId) {
+      allTocItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      var activeItem = tocBody.querySelector('.toc-item[data-target="' + currentId + '"]');
+      if (activeItem) {
+        activeItem.classList.add('active');
+        if (activeItem.classList.contains('level2')) {
+          var parentWrap = activeItem.closest('.toc-sub-wrap');
+          if (parentWrap) {
+            parentWrap.classList.add('open');
+            var prevItem = parentWrap.previousElementSibling;
+            if (prevItem) prevItem.classList.add('open');
+          }
+        }
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateActive);
+      ticking = true;
+    }
+  });
+  updateActive();
+});
+</script>
+
 </body>
 </html>

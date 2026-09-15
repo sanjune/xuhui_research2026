@@ -6,16 +6,8 @@
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f5; color:#333; line-height:1.7; }
-
-  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
-  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
-  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
   .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
-  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
-  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
-  .sub-nav-links a:hover { color:#0d47a1; }
-  @media(max-width:768px) { .sub-nav-links { display:none; } }
+  @media(max-width:768px) { }
 
   .header { background:linear-gradient(135deg,#4a148c 0%,#6a1b9a 40%,#7b1fa2 100%); color:#fff; padding:36px 0 32px; text-align:center; position:relative; }
   .header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:4px; background:linear-gradient(90deg,#aa00ff,#7c4dff,#536dfe,#448aff); }
@@ -265,23 +257,60 @@
     .sug-header { gap:8px; }
     .sug-count { margin-left:0; width:100%; text-align:center; }
   }
+  /* ===== Nav ===== */
+  .nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:48px; }
+  .nav-logo { font-size:14px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .nav-back { font-size:12px; color:#0d47a1; text-decoration:none; margin-left:12px; }
+  .nav-links { margin-left:auto; display:flex; gap:16px; }
+  .nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .nav-links a:hover { color:#0d47a1; }
+  .nav-dropdown { position:relative; display:inline-block; }
+  .nav-dropdown > a { display:inline-block; padding:4px 0; position:relative; font-size:12px; color:#666; text-decoration:none; }
+  .nav-dropdown > a:hover { color:#0d47a1; }
+  .nav-dropdown > a::after { content:' ▾'; font-size:10px; opacity:0.6; }
+  .dropdown-menu { position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(8px); min-width:260px; background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.12); padding:8px 0; opacity:0; visibility:hidden; transition:all 0.25s cubic-bezier(0.4,0,0.2,1); z-index:1001; border:1px solid #f0f0f0; }
+  .nav-dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%) rotate(45deg); width:12px; height:12px; background:#fff; border-left:1px solid #f0f0f0; border-top:1px solid #f0f0f0; }
+  .dropdown-item { display:block; padding:8px 16px; font-size:12px; color:#444 !important; text-decoration:none; transition:all 0.15s; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dropdown-item:hover { background:#e3f2fd; color:#0d47a1 !important; padding-left:20px; }
+  .dropdown-item .badge { display:inline-block; font-size:10px; padding:1px 6px; border-radius:8px; background:#e3f2fd; color:#1565c0; margin-right:6px; font-weight:600; }
+  .dropdown-divider { height:1px; background:#f0f0f0; margin:6px 0; }
 </style>
 </head>
 <body>
 
 <!-- Sub Nav -->
-<div class="sub-nav-bar">
-<div class="sub-nav-inner">
-<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
-<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
-<div class="sub-nav-links" style="position: relative;">
-<a href="课题成果总览.html#core">核心成果</a>
-<a href="课题成果总览.html#analysis">深度分析</a>
-<a href="课题成果总览.html#tools">工具成果</a>
-<a href="课题成果总览.html#consulting">咨询成果</a>
-<a href="课题成果总览.html#docs">验收文档</a>
-</div>
-</div>
+<!-- ===== Top Nav ===== -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+    <a class="nav-back" href="课题成果总览.html">← 返回总览</a>
+    <div class="nav-links">
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#core">核心成果</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="12345投诉量下降数据报告.html"><span class="badge">#1</span>12345投诉量下降数据报告</a>
+          <a class="dropdown-item" href="投诉去重识别方法论说明.html"><span class="badge">#2</span>投诉去重识别方法论说明</a>
+          <a class="dropdown-item" href="2026年1-8月投诉去重建议清单.html"><span class="badge">#2·附</span>2026年1-8月去重建议清单</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="数据质量优化专项报告.html"><span class="badge">#3</span>数据质量优化专项报告</a>
+          <a class="dropdown-item" href="高风险小区预警清单.html"><span class="badge">#6</span>高风险小区预警清单</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#analysis">深度分析</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="物业投诉根因分析报告.html"><span class="badge">#4</span>物业投诉根因分析报告</a>
+          <a class="dropdown-item" href="重点问题专题分析报告（5份）.html"><span class="badge">#5</span>重点问题专题分析报告（5份）</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="治理效果追踪分析报告.html"><span class="badge">#7</span>治理效果追踪分析报告</a>
+          <a class="dropdown-item" href="反弹小区入户核查工作单.html"><span class="badge">#7·附</span>反弹小区入户核查工作单</a>
+          <a class="dropdown-item" href="底部抬升小区热线数据分析报告.html"><span class="badge">#7·附</span>底部抬升小区热线数据分析</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Header -->
@@ -1257,14 +1286,14 @@
   <!-- ===== 七、2026年近期数据专项分析 ===== -->
   <div class="section" style="border-top:3px solid #1565c0; padding-top:20px; margin-top:30px;" id="sec-23">
     <div class="section-title"><span class="icon">📅</span>七、2026年近期数据专项分析</div>
-    <p class="desc">为服务部门近期管理决策，本章将2026年1-7月数据（11,484件）和2026年7月单月数据（2,097件）单独提取分析，与三年累计基准对比，聚焦<strong>"当下态势"</strong>。</p>
+    <p class="desc">为服务部门近期管理决策，本章将2026年1-8月数据（13,726件）和2026年8月单月数据（2,242件）单独提取分析，与三年累计基准对比，聚焦<strong>"当下态势"</strong>。</p>
 
     <div class="highlight" style="background:#e3f2fd; border-left-color:#1565c0;">
-      <strong>核心发现：</strong>2026年1-7月投诉总量同比下降15.7%，但<strong>7月单月同比仅降0.2%</strong>，降幅正在收窄。部分维度出现趋势反转——三年数据中表现好的群体在2026年近期反而恶化（如商品房+16.7%），需重点关注。
+      <strong>核心发现：</strong>2026年1-8月投诉总量同比下降13.1%，但<strong>8月单月同比转正+2.8%</strong>，今年首次单月同比上升。夏季高温期房屋维修（+62.7%）、邻里纠纷（+20.2%）暴增，需重点关注。
     </div>
 
     <!-- 7.1 六维2026年数据对比 -->
-    <h3 style="color:#1565c0; margin:20px 0 10px;">7.1 六维2026年1-7月数据对比</h3>
+    <h3 style="color:#1565c0; margin:20px 0 10px;">7.1 六维2026年1-8月数据对比</h3>
     
     <h4 style="color:#333; margin:15px 0 8px;">（1）硬件因素</h4>
     <table class="data-table">

@@ -54,36 +54,209 @@
   .footer { text-align:center; padding:24px 0; font-size:12px; color:#999; }
   .note { font-size:12px; color:#999; margin-top:8px; }
   /* Sub page nav */
-  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
-  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
-  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
   .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
-  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
-  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
-  .sub-nav-links a:hover { color:#0d47a1; }
-  @media(max-width:768px) { .sub-nav-links { display:none; } }
+  @media(max-width:768px) { }
+
+  /* ===== 右侧浮动目录 ===== */
+  .toc-float {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 999;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .toc-float.collapsed {
+    right: -260px;
+  }
+  .toc-toggle {
+    position: absolute;
+    left: -36px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 72px;
+    background: linear-gradient(180deg, #7b1fa2, #4a148c);
+    color: #fff;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 2px;
+    box-shadow: -2px 2px 8px rgba(74,20,140,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .toc-toggle:hover {
+    background: linear-gradient(180deg, #8e24aa, #6a1b9a);
+    left: -38px;
+    width: 38px;
+  }
+  .toc-panel {
+    width: 260px;
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -2px 4px 16px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .toc-header {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #7b1fa2, #4a148c);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-header .toc-count {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .toc-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .toc-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  .toc-body::-webkit-scrollbar-thumb {
+    background: #d1c4e9;
+    border-radius: 2px;
+  }
+  .toc-item {
+    display: block;
+    padding: 8px 18px 8px 14px;
+    font-size: 12.5px;
+    color: #555;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+  }
+  .toc-item:hover {
+    background: #f3e5f5;
+    color: #4a148c;
+    border-left-color: #ce93d8;
+  }
+  .toc-item.active {
+    background: #f3e5f5;
+    color: #4a148c;
+    font-weight: 700;
+    border-left-color: #7b1fa2;
+  }
+  .toc-item.level2 {
+    padding-left: 32px;
+    font-size: 11.5px;
+    color: #777;
+  }
+  .toc-item.level2:hover {
+    color: #6a1b9a;
+  }
+  .toc-item.level2.active {
+    color: #6a1b9a;
+    font-weight: 600;
+  }
+  .toc-sub-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .toc-item.has-sub + .toc-sub-wrap.open {
+    max-height: 500px;
+  }
+  .toc-arrow {
+    float: right;
+    font-size: 10px;
+    transition: transform 0.3s;
+    color: #aaa;
+  }
+  .toc-item.has-sub.active .toc-arrow,
+  .toc-item.has-sub.open .toc-arrow {
+    transform: rotate(90deg);
+    color: #7b1fa2;
+  }
+  @media(max-width: 1400px) {
+    .toc-float { right: -240px; }
+    .toc-float.collapsed { right: -240px; }
+    .toc-float.expanded { right: 0; }
+    .toc-panel { width: 240px; }
+  }
+  @media(max-width: 768px) {
+    .toc-float { display: none; }
+  }
+
+  /* ===== Nav ===== */
+  .nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:48px; }
+  .nav-logo { font-size:14px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .nav-back { font-size:12px; color:#0d47a1; text-decoration:none; margin-left:12px; }
+  .nav-links { margin-left:auto; display:flex; gap:16px; }
+  .nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .nav-links a:hover { color:#0d47a1; }
+  .nav-dropdown { position:relative; display:inline-block; }
+  .nav-dropdown > a { display:inline-block; padding:4px 0; position:relative; font-size:12px; color:#666; text-decoration:none; }
+  .nav-dropdown > a:hover { color:#0d47a1; }
+  .nav-dropdown > a::after { content:' ▾'; font-size:10px; opacity:0.6; }
+  .dropdown-menu { position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(8px); min-width:260px; background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.12); padding:8px 0; opacity:0; visibility:hidden; transition:all 0.25s cubic-bezier(0.4,0,0.2,1); z-index:1001; border:1px solid #f0f0f0; }
+  .nav-dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%) rotate(45deg); width:12px; height:12px; background:#fff; border-left:1px solid #f0f0f0; border-top:1px solid #f0f0f0; }
+  .dropdown-item { display:block; padding:8px 16px; font-size:12px; color:#444 !important; text-decoration:none; transition:all 0.15s; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dropdown-item:hover { background:#e3f2fd; color:#0d47a1 !important; padding-left:20px; }
+  .dropdown-item .badge { display:inline-block; font-size:10px; padding:1px 6px; border-radius:8px; background:#e3f2fd; color:#1565c0; margin-right:6px; font-weight:600; }
+  .dropdown-divider { height:1px; background:#f0f0f0; margin:6px 0; }
 </style>
 </head>
 <body>
 
-<div class="sub-nav-bar">
-<div class="sub-nav-inner">
-<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
-<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
-<div class="sub-nav-links">
-<a href="课题成果总览.html#core">核心成果</a>
-<a href="课题成果总览.html#analysis">深度分析</a>
-<a href="课题成果总览.html#tools">工具成果</a>
-<a href="课题成果总览.html#consulting">咨询成果</a>
-<a href="课题成果总览.html#docs">验收文档</a>
-</div>
-</div>
+<!-- ===== Top Nav ===== -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+    <a class="nav-back" href="课题成果总览.html">← 返回总览</a>
+    <div class="nav-links">
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#core">核心成果</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="12345投诉量下降数据报告.html"><span class="badge">#1</span>12345投诉量下降数据报告</a>
+          <a class="dropdown-item" href="投诉去重识别方法论说明.html"><span class="badge">#2</span>投诉去重识别方法论说明</a>
+          <a class="dropdown-item" href="2026年1-8月投诉去重建议清单.html"><span class="badge">#2·附</span>2026年1-8月去重建议清单</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="数据质量优化专项报告.html"><span class="badge">#3</span>数据质量优化专项报告</a>
+          <a class="dropdown-item" href="高风险小区预警清单.html"><span class="badge">#6</span>高风险小区预警清单</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#analysis">深度分析</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="物业投诉根因分析报告.html"><span class="badge">#4</span>物业投诉根因分析报告</a>
+          <a class="dropdown-item" href="重点问题专题分析报告（5份）.html"><span class="badge">#5</span>重点问题专题分析报告（5份）</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="治理效果追踪分析报告.html"><span class="badge">#7</span>治理效果追踪分析报告</a>
+          <a class="dropdown-item" href="反弹小区入户核查工作单.html"><span class="badge">#7·附</span>反弹小区入户核查工作单</a>
+          <a class="dropdown-item" href="底部抬升小区热线数据分析报告.html"><span class="badge">#7·附</span>底部抬升小区热线数据分析</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="header">
   <h1>高风险小区预警清单</h1>
-  <div class="subtitle">五维风险评分模型 · 799个小区参评 · 红橙黄蓝四级预警</div>
+  <div class="subtitle">五维风险评分模型 · 620个小区参评 · 红橙黄蓝四级预警</div>
   <div class="meta">徐汇物业课题一期 · 深度分析成果 | 2026年8月</div>
 </div>
 
@@ -92,7 +265,7 @@
   <!-- 一、总体概况 -->
   <div class="section">
     <div class="section-title">一、总体概况</div>
-    <p>基于2024-2026年12345热线物业投诉数据，构建五维风险评分模型，对全区799个投诉量≥10件的小区进行系统性风险评估，输出红橙黄蓝四级预警清单。预警结果可作为物业监管资源分配的优先级依据。</p>
+    <p>基于2024-2026年12345热线物业投诉数据，构建五维风险评分模型，对全区620个投诉量≥10件的小区进行系统性风险评估，输出红橙黄蓝四级预警清单。预警结果可作为物业监管资源分配的优先级依据。</p>
     <div class="stat-grid">
       <div class="stat-card red"><div class="num">236</div><div class="label">红色预警</div><div class="action" style="color:#f5222d;">紧急处置</div></div>
       <div class="stat-card orange"><div class="num">426</div><div class="label">橙色预警</div><div class="action" style="color:#fa8c16;">重点关注</div></div>
@@ -119,7 +292,7 @@
       <div class="dim-weight">25分</div>
       <div>
         <div class="dim-name">维度二：同比增长率</div>
-        <div class="dim-desc">2026年1-7月 vs 2025年同期对比。正增长=问题在恶化=高风险。仅当基数≥5时计算，避免小样本失真。</div>
+        <div class="dim-desc">2026年1-8月 vs 2025年同期对比。正增长=问题在恶化=高风险。仅当基数≥5时计算，避免小样本失真。</div>
       </div>
     </div>
     <div class="model-dim">
@@ -185,13 +358,13 @@
         <tr><td style="text-align:left;font-weight:600;">虹梅路</td><td>20</td><td>6</td><td><span class="badge orange">12</span></td><td>2</td><td>0</td><td>30.0%</td></tr>
       </tbody>
     </table>
-    <p style="color:#f5222d;font-weight:600;">重点关注：华泾镇红色预警占比57.1%（全区最高），龙华街道36.4%，这两个街道的小区风险最为集中。</p>
+    <p style="color:#f5222d;font-weight:600;">重点关注：华泾镇红色预警占比0.0%（全区最高），龙华街道36.4%，这两个街道的小区风险最为集中。</p>
   </div>
 
   <!-- 五、红色预警小区Top30 -->
   <div class="section">
     <div class="section-title">五、红色预警小区Top30（紧急处置）</div>
-    <p>以下30个小区风险评分最高，建议优先制定"一小区一方案"专项治理计划。完整236个红色预警小区见附件Excel。</p>
+    <p>以下30个小区风险评分最高，建议优先制定"一小区一方案"专项治理计划。数据基于热线全口径628个有投诉记录的小区（1-8月），其中红色预警（≥80分）1个。</p>
     <table class="data-table">
       <thead>
         <tr>
@@ -201,36 +374,36 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td>1</td><td style="text-align:left;font-weight:700;">海珀旭晖</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">92.6</td><td>114</td><td style="color:#f5222d;font-weight:600;">+537.5%</td><td>72.8%</td><td>业主大会</td><td>绿地物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>2</td><td style="text-align:left;font-weight:700;">嘉俊庭</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">92.2</td><td>67</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>65.7%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>3</td><td style="text-align:left;font-weight:700;">玖珑庭</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">92.2</td><td>108</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>68.5%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>4</td><td style="text-align:left;font-weight:700;">汇宁花园</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">91.8</td><td>57</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>61.4%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>5</td><td style="text-align:left;font-weight:700;">家乐苑</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">91.7</td><td>207</td><td style="color:#f5222d;font-weight:600;">+205%</td><td>74.9%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>6</td><td style="text-align:left;font-weight:700;">尚海湾二期</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">91.3</td><td>494</td><td style="color:#f5222d;font-weight:600;">+82.9%</td><td>60.3%</td><td>业主大会</td><td>阳光投资</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>7</td><td style="text-align:left;font-weight:700;">汇东小区</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">91.2</td><td>53</td><td style="color:#f5222d;font-weight:600;">+228.6%</td><td>67.9%</td><td>群租管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>8</td><td style="text-align:left;font-weight:700;">永福一区</td><td>湖南路</td><td style="font-weight:700;color:#f5222d;">90.9</td><td>58</td><td style="color:#f5222d;font-weight:600;">+966.7%</td><td>56.9%</td><td>房屋违规</td><td>衡复物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>9</td><td style="text-align:left;font-weight:700;">华泾五村</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">90.7</td><td>151</td><td style="color:#f5222d;font-weight:600;">+109.1%</td><td>62.3%</td><td>停车管理</td><td>秀澜物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>10</td><td style="text-align:left;font-weight:700;">建国西路581弄</td><td>天平路</td><td style="font-weight:700;color:#f5222d;">90.7</td><td>47</td><td style="color:#f5222d;font-weight:600;">+100%</td><td>63.8%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>11</td><td style="text-align:left;">明佳苑</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">90.5</td><td>112</td><td style="color:#f5222d;">+160%</td><td>64.3%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>12</td><td style="text-align:left;">秀水苑</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">90.0</td><td>56</td><td style="color:#f5222d;">+85.7%</td><td>67.9%</td><td>物业安保</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>13</td><td style="text-align:left;">宜德苑</td><td>田林</td><td style="font-weight:700;color:#f5222d;">89.9</td><td>89</td><td style="color:#f5222d;">+300%</td><td>58.4%</td><td>房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>14</td><td style="text-align:left;">凯旋新村</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">89.7</td><td>86</td><td style="color:#f5222d;">+62.5%</td><td>58.1%</td><td>旧住房改造</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>15</td><td style="text-align:left;">良友公寓</td><td>湖南路</td><td style="font-weight:700;color:#f5222d;">89.6</td><td>36</td><td style="color:#f5222d;">+100%</td><td>58.3%</td><td>邻里纠纷</td><td>衡复物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>16</td><td style="text-align:left;">乐山大楼</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">89.4</td><td>51</td><td style="color:#f5222d;">+100%</td><td>64.7%</td><td>房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>17</td><td style="text-align:left;">欣嘉苑1-3期</td><td>虹梅路</td><td style="font-weight:700;color:#f5222d;">89.4</td><td>205</td><td style="color:#f5222d;">+305.3%</td><td>62.4%</td><td>停车管理</td><td>锦龙物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>18</td><td style="text-align:left;">天悦</td><td>康健新村</td><td style="font-weight:700;color:#f5222d;">89.1</td><td>76</td><td style="color:#f5222d;">+114.3%</td><td>57.9%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>19</td><td style="text-align:left;">恒昌花园</td><td>枫林路</td><td style="font-weight:700;color:#f5222d;">88.9</td><td>74</td><td style="color:#f5222d;">+114.3%</td><td>66.2%</td><td>邻里纠纷</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>20</td><td style="text-align:left;">寿祥坊</td><td>康健新村</td><td style="font-weight:700;color:#f5222d;">88.5</td><td>85</td><td style="color:#f5222d;">+140%</td><td>61.2%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>21</td><td style="text-align:left;">尚海湾一期</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">88.4</td><td>154</td><td style="color:#f5222d;">+111.8%</td><td>59.7%</td><td>消防管理</td><td>金地物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>22</td><td style="text-align:left;">尊园</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">88.0</td><td>42</td><td style="color:#f5222d;">+140%</td><td>61.9%</td><td>业主大会</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>23</td><td style="text-align:left;">化工一四村</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>122</td><td style="color:#f5222d;">+81.2%</td><td>60.7%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>24</td><td style="text-align:left;">华建二街坊</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>60</td><td style="color:#f5222d;">+112.5%</td><td>61.7%</td><td>停车管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>25</td><td style="text-align:left;">平江路170弄</td><td>枫林路</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>51</td><td style="color:#f5222d;">+80%</td><td>62.7%</td><td>房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>26</td><td style="text-align:left;">明园小安桥</td><td>田林</td><td style="font-weight:700;color:#f5222d;">87.9</td><td>48</td><td style="color:#f5222d;">+100%</td><td>58.3%</td><td>房屋违规</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>27</td><td style="text-align:left;">习勤小区</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">87.8</td><td>59</td><td style="color:#f5222d;">+75%</td><td>62.7%</td><td>旧住房改造</td><td>—</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>28</td><td style="text-align:left;">明丰新纪苑</td><td>华泾</td><td style="font-weight:700;color:#f5222d;">87.7</td><td>170</td><td style="color:#f5222d;">+87%</td><td>60.6%</td><td>停车管理</td><td>泾鸿物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>29</td><td style="text-align:left;">永兆豪庭</td><td>虹梅路</td><td style="font-weight:700;color:#f5222d;">86.6</td><td>108</td><td style="color:#f5222d;">+281.8%</td><td>78.7%</td><td>业主大会</td><td>盛熙物业</td><td><span class="badge red">红</span></td></tr>
-        <tr><td>30</td><td style="text-align:left;">康兴花园</td><td>康健</td><td style="font-weight:700;color:#f5222d;">86.5</td><td>46</td><td style="color:#f5222d;">+33.3%</td><td>65.2%</td><td>停车管理</td><td>同进物业</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>1</td><td style="text-align:left;font-weight:700;">家乐苑</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">80</td><td>212</td><td style="color:#f5222d;font-weight:600;">+219.4%</td><td>65.6%</td><td>停车管理、房屋违规使用</td><td>秀澜（上海）物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:700;">新湖云庭</td><td>枫林路</td><td style="font-weight:700;color:#f5222d;">75</td><td>196</td><td style="color:#f5222d;font-weight:600;">+228.6%</td><td>65.8%</td><td>业主大会/业委会、停车管理</td><td>上海东方航空物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:700;">欣嘉苑1-3期</td><td>虹梅路</td><td style="font-weight:700;color:#f5222d;">74</td><td>206</td><td style="color:#f5222d;font-weight:600;">+74.6%</td><td>69.4%</td><td>停车管理、群租管理</td><td>上海锦龙物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;font-weight:700;">铁路新村</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">72</td><td>50</td><td style="color:#f5222d;font-weight:600;">+285.7%</td><td>74.0%</td><td>业主大会/业委会、清洁卫生</td><td>上海乾宁物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;font-weight:700;">安福直管公房</td><td>湖南路</td><td style="font-weight:700;color:#f5222d;">72</td><td>375</td><td style="color:#f5222d;font-weight:600;">+65.9%</td><td>50.7%</td><td>房屋违规使用、房屋维修</td><td>上海衡复物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;font-weight:700;">中海瀛台</td><td>长桥</td><td style="font-weight:700;color:#f5222d;">71</td><td>1020</td><td style="color:#f5222d;font-weight:600;">-62.5%</td><td>87.4%</td><td>业主大会/业委会、房屋维修</td><td>上海中海物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;font-weight:700;">华泾五村</td><td>华泾镇</td><td style="font-weight:700;color:#f5222d;">70</td><td>157</td><td style="color:#f5222d;font-weight:600;">+116.7%</td><td>60.5%</td><td>停车管理、物业收费</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;font-weight:700;">田林十三村</td><td>田林</td><td style="font-weight:700;color:#f5222d;">70</td><td>156</td><td style="color:#f5222d;font-weight:600;">+100.0%</td><td>62.8%</td><td>房屋违规使用、房屋维修</td><td>上海徐房物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;font-weight:700;">嘉俊庭</td><td>华泾镇</td><td style="font-weight:700;color:#f5222d;">69</td><td>76</td><td style="color:#f5222d;font-weight:600;">+1587.5%</td><td>68.4%</td><td>停车管理、其他</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;font-weight:700;">梅陇十一村（A块）</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">67</td><td>320</td><td style="color:#f5222d;font-weight:600;">-45.0%</td><td>74.4%</td><td>消防管理、邻里纠纷</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>11</td><td style="text-align:left;font-weight:700;">长汇景苑</td><td>长桥</td><td style="font-weight:700;color:#f5222d;">67</td><td>302</td><td style="color:#f5222d;font-weight:600;">-64.3%</td><td>76.5%</td><td>业主大会/业委会、房屋维修</td><td>绿城物业服务集团有限公司上海分公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>12</td><td style="text-align:left;font-weight:700;">陕西直管公房</td><td>天平路</td><td style="font-weight:700;color:#f5222d;">67</td><td>232</td><td style="color:#f5222d;font-weight:600;">+56.4%</td><td>52.2%</td><td>房屋违规使用、房屋维修</td><td>上海衡复物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>13</td><td style="text-align:left;font-weight:700;">石龙路33弄</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">67</td><td>301</td><td style="color:#f5222d;font-weight:600;">+34.8%</td><td>59.1%</td><td>群租管理、停车管理</td><td>上海华东房产物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>14</td><td style="text-align:left;font-weight:700;">虹桥大仕馆</td><td>田林</td><td style="font-weight:700;color:#f5222d;">67</td><td>159</td><td style="color:#f5222d;font-weight:600;">+45.4%</td><td>71.7%</td><td>业主大会/业委会、房屋维修</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>15</td><td style="text-align:left;font-weight:700;">阳光绿园</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">67</td><td>307</td><td style="color:#f5222d;font-weight:600;">-24.1%</td><td>72.3%</td><td>停车管理、业主大会/业委会</td><td>上海阳光投资（集团）物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>16</td><td style="text-align:left;font-weight:700;">龙华西路309弄</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">67</td><td>24</td><td style="color:#f5222d;font-weight:600;">+575.0%</td><td>79.2%</td><td>房屋维修、业主大会/业委会</td><td>上海徐房物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>17</td><td style="text-align:left;font-weight:700;">明佳苑</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">67</td><td>113</td><td style="color:#f5222d;font-weight:600;">+62.5%</td><td>70.8%</td><td>房屋违规使用、房屋维修</td><td>上海润美物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>18</td><td style="text-align:left;font-weight:700;">海珀旭晖</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">67</td><td>116</td><td style="color:#f5222d;font-weight:600;">+562.5%</td><td>59.5%</td><td>业主大会/业委会、房屋维修</td><td>上海绿地物业服务有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>19</td><td style="text-align:left;font-weight:700;">吴东小区</td><td>田林</td><td style="font-weight:700;color:#f5222d;">67</td><td>190</td><td style="color:#f5222d;font-weight:600;">+112.7%</td><td>50.0%</td><td>旧住房改造、房屋违规使用</td><td>上海天梭物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>20</td><td style="text-align:left;font-weight:700;">永兆豪庭</td><td>虹梅路</td><td style="font-weight:700;color:#f5222d;">65</td><td>118</td><td style="color:#f5222d;font-weight:600;">+116.7%</td><td>65.3%</td><td>业主大会/业委会、停车管理</td><td>上海盛熙物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>21</td><td style="text-align:left;font-weight:700;">气象苑</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">64</td><td>27</td><td style="color:#f5222d;font-weight:600;">+470.0%</td><td>66.7%</td><td>房屋维修、停车管理</td><td>上海佳信物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>22</td><td style="text-align:left;font-weight:700;">秀水苑</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">64</td><td>57</td><td style="color:#f5222d;font-weight:600;">+133.3%</td><td>68.4%</td><td>物业安保、业主大会/业委会</td><td>上海轻工物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>23</td><td style="text-align:left;font-weight:700;">梅陇三村</td><td>凌云路</td><td style="font-weight:700;color:#f5222d;">64</td><td>340</td><td style="color:#f5222d;font-weight:600;">-60.3%</td><td>66.8%</td><td>旧住房改造、房屋维修</td><td>上海徐房物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>24</td><td style="text-align:left;font-weight:700;">东湾小区</td><td>华泾镇</td><td style="font-weight:700;color:#f5222d;">64</td><td>467</td><td style="color:#f5222d;font-weight:600;">-66.0%</td><td>69.6%</td><td>停车管理、消防管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>25</td><td style="text-align:left;font-weight:700;">杜鹃园</td><td>康健新村</td><td style="font-weight:700;color:#f5222d;">62</td><td>212</td><td style="color:#f5222d;font-weight:600;">-42.6%</td><td>77.4%</td><td>停车管理、业主大会/业委会</td><td>上海宾泉物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>26</td><td style="text-align:left;font-weight:700;">乐山大楼</td><td>徐家汇</td><td style="font-weight:700;color:#f5222d;">62</td><td>52</td><td style="color:#f5222d;font-weight:600;">+425.0%</td><td>50.0%</td><td>房屋维修、停车管理</td><td>上海高建物业有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>27</td><td style="text-align:left;font-weight:700;">紫阳花苑</td><td>华泾镇</td><td style="font-weight:700;color:#f5222d;">62</td><td>353</td><td style="color:#f5222d;font-weight:600;">+17.1%</td><td>51.0%</td><td>停车管理、消防管理</td><td>—</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>28</td><td style="text-align:left;font-weight:700;">臻庭</td><td>漕河泾</td><td style="font-weight:700;color:#f5222d;">62</td><td>71</td><td style="color:#f5222d;font-weight:600;">+725.0%</td><td>56.3%</td><td>业主大会/业委会、邻里纠纷</td><td>上海古北物业（集团）有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>29</td><td style="text-align:left;font-weight:700;">尚海湾二期</td><td>斜土路</td><td style="font-weight:700;color:#f5222d;">62</td><td>514</td><td style="color:#f5222d;font-weight:600;">+13.5%</td><td>58.4%</td><td>业主大会/业委会、房屋维修</td><td>上海阳光投资（集团）物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
+        <tr><td>30</td><td style="text-align:left;font-weight:700;">睿园</td><td>天平路</td><td style="font-weight:700;color:#f5222d;">62</td><td>54</td><td style="color:#f5222d;font-weight:600;">+242.9%</td><td>55.6%</td><td>业主大会/业委会、房屋违规使用</td><td>上海花苑物业管理有限公司</td><td><span class="badge red">红</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -262,7 +435,7 @@
         <tr>
           <td style="text-align:left;font-weight:600;color:#faad14;">华泾片区集中</td>
           <td style="text-align:left;">嘉俊庭、华泾五村、华建二街坊、明丰新纪苑</td>
-          <td style="text-align:left;">华泾镇红色预警占比57.1%（全区最高），停车管理问题集中爆发</td>
+          <td style="text-align:left;">华泾镇红色预警占比0.0%（全区最高），停车管理问题集中爆发</td>
         </tr>
       </tbody>
     </table>
@@ -274,15 +447,15 @@
 
     <div class="action-card">
       <div class="ac-title">建议一：建立月度风险评分更新机制</div>
-      <div class="ac-desc">每月新数据入库后自动运行风险评分模型，更新799个小区的风险等级。当小区从橙色升至红色时自动触发预警，推送至街道物业管理部门和区房管局。建议以本模型为基础，开发自动化预警系统。</div>
+      <div class="ac-desc">每月新数据入库后自动运行风险评分模型，更新620个小区的风险等级。当小区从橙色升至红色时自动触发预警，推送至街道物业管理部门和区房管局。建议以本模型为基础，开发自动化预警系统。</div>
     </div>
     <div class="action-card">
       <div class="ac-title">建议二：Top30红色预警小区限期治理</div>
-      <div class="ac-desc">对Top30红色预警小区，由街道牵头，区房管局、城管、物业科联合制定"一小区一方案"，限期30个工作日内给出解决方案。重点处置尚海湾二期（494件，斜土路）、家乐苑（207件，凌云路）、欣嘉苑（205件，虹梅路）三个投诉量最大的小区。</div>
+      <div class="ac-desc">对Top30红色预警小区，由街道牵头，区房管局、城管、物业科联合制定"一小区一方案"，限期30个工作日内给出解决方案。重点处置中海瀛台（1020件，长桥）、日晖六村（736件，斜土路）、华悦家园（583件，虹梅路）三个投诉量最大的小区。</div>
     </div>
     <div class="action-card">
       <div class="ac-title">建议三：华泾镇停车问题专项督办</div>
-      <div class="ac-desc">华泾镇红色预警占比57.1%（全区最高），Top30中5个位于华泾，全部为停车管理问题。建议华泾镇制定《停车管理专项治理方案》，全区推广斜土路街道的治理经验。</div>
+      <div class="ac-desc">华泾镇红色预警占比0.0%（全区最高），Top30中4个位于华泾，全部为停车管理问题。建议华泾镇制定《停车管理专项治理方案》，全区推广斜土路街道的治理经验。</div>
     </div>
     <div class="action-card">
       <div class="ac-title">建议四：建立"风险-资源"联动分配机制</div>
@@ -296,61 +469,61 @@
 
   <!-- ===== 五、2026年近期预警 ===== -->
   <div class="section">
-    <h2 style="color:#c62828; border-bottom:2px solid #c62828; padding-bottom:8px;">五、2026年近期预警（1-7月数据）</h2>
-    <p style="color:#666;font-size:14px;">基于2026年1-7月投诉数据，对968个有投诉记录的小区进行近期风险评估。与三年累计评分不同，本章聚焦<strong>"当下态势"</strong>，为近期督导提供靶向目标。</p>
+    <h2 style="color:#c62828; border-bottom:2px solid #c62828; padding-bottom:8px;">五、2026年近期预警（1-8月数据）</h2>
+    <p style="color:#666;font-size:14px;">基于2026年1-8月投诉数据，对620个有投诉记录的小区进行近期风险评估。与三年累计评分不同，本章聚焦<strong>"当下态势"</strong>，为近期督导提供靶向目标。</p>
 
     <div style="background:#ffebee; border-left:4px solid #c62828; padding:12px; border-radius:6px; margin-bottom:15px;">
-      <strong>🔴 近期高风险预警：</strong>2026年1-7月投诉量Top30中，有<strong>10个小区逆势恶化</strong>（同比正增长），其中欣嘉苑（+236.8%）、家乐苑（+170.0%）、新湖云庭（+134.8%）恶化最严重，需立即启动专项督导。
+      <strong>🔴 近期高风险预警：</strong>2026年1-8月投诉量Top30中，有14个小区逆势恶化（同比正增长），其中新湖云庭（+228.6%）、欣嘉苑1-3期（+212.0%）、吴东小区（+129.4%）恶化最严重，需立即启动专项督导。
     </div>
 
-    <h3 style="font-size:15px;color:#c62828;margin:15px 0 8px;">5.1 2026年1-7月投诉量Top30小区</h3>
+    <h3 style="font-size:15px;color:#c62828;margin:15px 0 8px;">5.1 2026年1-8月投诉量Top30小区</h3>
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <tr style="background:#c62828;color:#fff;"><th style="padding:5px;">排名</th><th>小区</th><th>街道</th><th>2026(1-7月)</th><th>2025(1-7月)</th><th>2024年</th><th>同比</th><th>标签</th><th>态势</th></tr>
-      <tr><td>1</td><td>华悦家园</td><td>虹梅路</td><td><strong>94</strong></td><td>117</td><td>118</td><td style="color:#00a854;">-19.7%</td><td>★底部抬升</td><td>🟢 改善</td></tr>
-      <tr><td>2</td><td>罗秀新二村</td><td>长桥</td><td><strong>91</strong></td><td>114</td><td>149</td><td style="color:#00a854;">-20.2%</td><td>★底部抬升</td><td>🟢 改善</td></tr>
-      <tr><td>3</td><td>日晖六村</td><td>斜土路</td><td><strong>89</strong></td><td>178</td><td>209</td><td style="color:#00a854;font-weight:700;">-50.0%</td><td>★底部抬升</td><td>🟢 大幅改善</td></tr>
-      <tr><td>4</td><td>华欣家园</td><td>华泾</td><td><strong>78</strong></td><td>84</td><td>105</td><td style="color:#00a854;">-7.1%</td><td>★底部抬升</td><td>🟡 改善偏弱</td></tr>
-      <tr style="background:#fff3e0;"><td>5</td><td>安福直管公房</td><td>湖南路</td><td><strong>76</strong></td><td>57</td><td>61</td><td style="color:#ff4d4f;font-weight:700;">+33.3%</td><td>—</td><td>🟠 恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>6</td><td>紫阳花苑</td><td>华泾</td><td><strong>71</strong></td><td>69</td><td>74</td><td style="color:#ff4d4f;">+2.9%</td><td>—</td><td>🟡 微增</td></tr>
-      <tr><td>7</td><td>凌云新村</td><td>凌云路</td><td><strong>71</strong></td><td>91</td><td>111</td><td style="color:#00a854;">-22.0%</td><td>★底部抬升</td><td>🟢 改善</td></tr>
-      <tr style="background:#ffebee;"><td>8</td><td>吴东小区</td><td>田林</td><td><strong>67</strong></td><td>33</td><td>51</td><td style="color:#ff4d4f;font-weight:700;">+103.0%</td><td>—</td><td>🔴 急剧恶化</td></tr>
-      <tr><td>9</td><td>长桥四村</td><td>长桥</td><td><strong>65</strong></td><td>80</td><td>97</td><td style="color:#00a854;">-18.8%</td><td>★底部抬升</td><td>🟢 改善</td></tr>
-      <tr style="background:#ffebee;"><td>10</td><td>欣嘉苑1-3期</td><td>虹梅路</td><td><strong>64</strong></td><td>19</td><td>25</td><td style="color:#ff4d4f;font-weight:700;">+236.8%</td><td>★底部抬升</td><td>🔴 急剧恶化</td></tr>
-      <tr><td>11</td><td>华滨家园</td><td>长桥</td><td><strong>63</strong></td><td>95</td><td>109</td><td style="color:#00a854;">-33.7%</td><td>★底部抬升</td><td>🟢 改善</td></tr>
-      <tr><td>12</td><td>华泾绿苑</td><td>华泾</td><td><strong>62</strong></td><td>76</td><td>89</td><td style="color:#00a854;">-18.4%</td><td>—</td><td>🟢 改善</td></tr>
-      <tr><td>13</td><td>龙山新村</td><td>枫林路</td><td><strong>60</strong></td><td>92</td><td>107</td><td style="color:#00a854;">-34.8%</td><td>★底部抬升</td><td>🟢 改善</td></tr>
-      <tr><td>14</td><td>宛龙小区</td><td>枫林路</td><td><strong>60</strong></td><td>109</td><td>128</td><td style="color:#00a854;font-weight:700;">-45.0%</td><td>★底部抬升</td><td>🟢 大幅改善</td></tr>
-      <tr style="background:#ffebee;"><td>15</td><td>尚海湾二期</td><td>斜土路</td><td><strong>60</strong></td><td>41</td><td>43</td><td style="color:#ff4d4f;font-weight:700;">+46.3%</td><td>★底部抬升</td><td>🔴 恶化</td></tr>
-      <tr><td>16</td><td>田林三街坊</td><td>田林</td><td><strong>55</strong></td><td>99</td><td>95</td><td style="color:#00a854;font-weight:700;">-44.4%</td><td>—</td><td>🟢 大幅改善</td></tr>
-      <tr style="background:#ffebee;"><td>17</td><td>家乐苑</td><td>凌云路</td><td><strong>54</strong></td><td>20</td><td>27</td><td style="color:#ff4d4f;font-weight:700;">+170.0%</td><td>—</td><td>🔴 急剧恶化</td></tr>
-      <tr style="background:#ffebee;"><td>18</td><td>新湖云庭</td><td>枫林路</td><td><strong>54</strong></td><td>23</td><td>18</td><td style="color:#ff4d4f;font-weight:700;">+134.8%</td><td>★底部抬升</td><td>🔴 急剧恶化</td></tr>
-      <tr><td>19</td><td>盛大花园</td><td>龙华</td><td><strong>53</strong></td><td>50</td><td>64</td><td style="color:#ff4d4f;">+6.0%</td><td>★底部抬升</td><td>🟡 微增</td></tr>
-      <tr style="background:#ffebee;"><td>20</td><td>钦州花苑</td><td>田林</td><td><strong>53</strong></td><td>26</td><td>33</td><td style="color:#ff4d4f;font-weight:700;">+103.8%</td><td>—</td><td>🔴 急剧恶化</td></tr>
-      <tr><td>21</td><td>馨宁公寓</td><td>华泾</td><td><strong>52</strong></td><td>138</td><td>156</td><td style="color:#00a854;font-weight:700;">-62.3%</td><td>—</td><td>🟢🟢 最佳改善</td></tr>
-      <tr><td>22</td><td>华东花苑</td><td>长桥</td><td><strong>51</strong></td><td>53</td><td>69</td><td style="color:#00a854;">-3.8%</td><td>★底部抬升</td><td>🟡 改善偏弱</td></tr>
-      <tr><td>23</td><td>盛华景苑</td><td>华泾</td><td><strong>51</strong></td><td>61</td><td>70</td><td style="color:#00a854;">-16.4%</td><td>—</td><td>🟢 改善</td></tr>
-      <tr><td>24</td><td>南丹小区</td><td>徐家汇</td><td><strong>50</strong></td><td>53</td><td>66</td><td style="color:#00a854;">-5.7%</td><td>—</td><td>🟡 改善偏弱</td></tr>
-      <tr style="background:#fff3e0;"><td>25</td><td>长桥八村</td><td>长桥</td><td><strong>50</strong></td><td>43</td><td>56</td><td style="color:#ff4d4f;">+16.3%</td><td>★底部抬升</td><td>🟠 恶化</td></tr>
-      <tr><td>26</td><td>田林三四村</td><td>田林</td><td><strong>50</strong></td><td>57</td><td>63</td><td style="color:#00a854;">-12.3%</td><td>—</td><td>🟢 改善</td></tr>
-      <tr><td>27</td><td>梅陇四村</td><td>凌云路</td><td><strong>47</strong></td><td>52</td><td>69</td><td style="color:#00a854;">-9.6%</td><td>—</td><td>🟢 改善</td></tr>
-      <tr><td>28</td><td>天钥新村</td><td>枫林路</td><td><strong>47</strong></td><td>91</td><td>102</td><td style="color:#00a854;font-weight:700;">-48.4%</td><td>—</td><td>🟢 大幅改善</td></tr>
-      <tr style="background:#ffebee;"><td>29</td><td>汇成一村</td><td>长桥</td><td><strong>45</strong></td><td>22</td><td>31</td><td style="color:#ff4d4f;font-weight:700;">+104.5%</td><td>—</td><td>🔴 急剧恶化</td></tr>
-      <tr><td>30</td><td>日晖二村</td><td>斜土路</td><td><strong>45</strong></td><td>89</td><td>106</td><td style="color:#00a854;font-weight:700;">-49.4%</td><td>★底部抬升</td><td>🟢 大幅改善</td></tr>
+      <tr style="background:#c62828;color:#fff;"><th style="padding:5px;">排名</th><th>小区</th><th>街道</th><th>2026(1-8月)</th><th>2025(1-8月)</th><th>2024年</th><th>同比</th><th>标签</th><th>态势</th></tr>
+      <tr style="background:#fff;"><td>1</td><td style="text-align:left;font-weight:600;">罗秀新二村</td><td>长桥</td><td><strong>142</strong></td><td>148</td><td>0</td><td style="color:#00a854;font-weight:700;">-4.1%</td><td>底部抬升</td><td>改善偏弱</td></tr>
+      <tr style="background:#e8f5e9;"><td>2</td><td style="text-align:left;font-weight:600;">日晖六村</td><td>斜土路</td><td><strong>126</strong></td><td>216</td><td>297</td><td style="color:#00a854;font-weight:700;">-41.7%</td><td>底部抬升</td><td>大幅改善</td></tr>
+      <tr style="background:#fff;"><td>3</td><td style="text-align:left;font-weight:600;">华悦家园</td><td>虹梅路</td><td><strong>126</strong></td><td>134</td><td>250</td><td style="color:#00a854;font-weight:700;">-6.0%</td><td>底部抬升</td><td>改善偏弱</td></tr>
+      <tr style="background:#fff3e0;"><td>4</td><td style="text-align:left;font-weight:600;">安福直管公房</td><td>湖南路</td><td><strong>115</strong></td><td>64</td><td>156</td><td style="color:#ff4d4f;font-weight:700;">+79.7%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#fff3e0;"><td>5</td><td style="text-align:left;font-weight:600;">华欣家园</td><td>华泾镇</td><td><strong>96</strong></td><td>89</td><td>205</td><td style="color:#ff4d4f;font-weight:700;">+7.9%</td><td>底部抬升</td><td>恶化</td></tr>
+      <tr style="background:#fff3e0;"><td>6</td><td style="text-align:left;font-weight:600;">紫阳花苑</td><td>华泾镇</td><td><strong>96</strong></td><td>76</td><td>134</td><td style="color:#ff4d4f;font-weight:700;">+26.3%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#e8f5e9;"><td>7</td><td style="text-align:left;font-weight:600;">龙山新村</td><td>枫林路</td><td><strong>94</strong></td><td>120</td><td>157</td><td style="color:#00a854;font-weight:700;">-21.7%</td><td>底部抬升</td><td>改善</td></tr>
+      <tr style="background:#ffebee;"><td>8</td><td style="text-align:left;font-weight:600;">新湖云庭</td><td>枫林路</td><td><strong>92</strong></td><td>28</td><td>62</td><td style="color:#ff4d4f;font-weight:700;">+228.6%</td><td>底部抬升</td><td>急剧恶化</td></tr>
+      <tr style="background:#fff;"><td>9</td><td style="text-align:left;font-weight:600;">凌云新村</td><td>凌云路</td><td><strong>91</strong></td><td>100</td><td>207</td><td style="color:#00a854;font-weight:700;">-9.0%</td><td>底部抬升</td><td>改善偏弱</td></tr>
+      <tr style="background:#fff;"><td>10</td><td style="text-align:left;font-weight:600;">长桥四村</td><td>长桥</td><td><strong>88</strong></td><td>88</td><td>157</td><td style="color:#00a854;font-weight:700;">+0.0%</td><td>底部抬升</td><td>改善偏弱</td></tr>
+      <tr style="background:#e8f5e9;"><td>11</td><td style="text-align:left;font-weight:600;">华滨家园</td><td>长桥</td><td><strong>88</strong></td><td>110</td><td>157</td><td style="color:#00a854;font-weight:700;">-20.0%</td><td>底部抬升</td><td>改善</td></tr>
+      <tr style="background:#fff3e0;"><td>12</td><td style="text-align:left;font-weight:600;">尚海湾二期</td><td>斜土路</td><td><strong>87</strong></td><td>46</td><td>312</td><td style="color:#ff4d4f;font-weight:700;">+89.1%</td><td>底部抬升</td><td>恶化</td></tr>
+      <tr style="background:#e8f5e9;"><td>13</td><td style="text-align:left;font-weight:600;">田林三街坊</td><td>田林</td><td><strong>81</strong></td><td>118</td><td>265</td><td style="color:#00a854;font-weight:700;">-31.4%</td><td>-</td><td>改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>14</td><td style="text-align:left;font-weight:600;">日晖二村</td><td>斜土路</td><td><strong>79</strong></td><td>100</td><td>120</td><td style="color:#00a854;font-weight:700;">-21.0%</td><td>底部抬升</td><td>改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>15</td><td style="text-align:left;font-weight:600;">天钥新村</td><td>枫林路</td><td><strong>79</strong></td><td>112</td><td>149</td><td style="color:#00a854;font-weight:700;">-29.5%</td><td>-</td><td>改善</td></tr>
+      <tr style="background:#fff3e0;"><td>16</td><td style="text-align:left;font-weight:600;">华东花苑</td><td>长桥</td><td><strong>79</strong></td><td>61</td><td>116</td><td style="color:#ff4d4f;font-weight:700;">+29.5%</td><td>底部抬升</td><td>恶化</td></tr>
+      <tr style="background:#ffebee;"><td>17</td><td style="text-align:left;font-weight:600;">吴东小区</td><td>田林</td><td><strong>78</strong></td><td>34</td><td>57</td><td style="color:#ff4d4f;font-weight:700;">+129.4%</td><td>-</td><td>急剧恶化</td></tr>
+      <tr style="background:#ffebee;"><td>18</td><td style="text-align:left;font-weight:600;">欣嘉苑1-3期</td><td>虹梅路</td><td><strong>78</strong></td><td>25</td><td>61</td><td style="color:#ff4d4f;font-weight:700;">+212.0%</td><td>-</td><td>急剧恶化</td></tr>
+      <tr style="background:#e8f5e9;"><td>19</td><td style="text-align:left;font-weight:600;">宛龙小区</td><td>枫林路</td><td><strong>76</strong></td><td>135</td><td>168</td><td style="color:#00a854;font-weight:700;">-43.7%</td><td>底部抬升</td><td>大幅改善</td></tr>
+      <tr style="background:#fff;"><td>20</td><td style="text-align:left;font-weight:600;">盛华景苑</td><td>华泾镇</td><td><strong>75</strong></td><td>77</td><td>182</td><td style="color:#00a854;font-weight:700;">-2.6%</td><td>-</td><td>改善偏弱</td></tr>
+      <tr style="background:#fff3e0;"><td>21</td><td style="text-align:left;font-weight:600;">长桥八村</td><td>长桥</td><td><strong>74</strong></td><td>58</td><td>79</td><td style="color:#ff4d4f;font-weight:700;">+27.6%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#e8f5e9;"><td>22</td><td style="text-align:left;font-weight:600;">华泾绿苑</td><td>华泾镇</td><td><strong>72</strong></td><td>91</td><td>171</td><td style="color:#00a854;font-weight:700;">-20.9%</td><td>-</td><td>改善</td></tr>
+      <tr style="background:#fff3e0;"><td>23</td><td style="text-align:left;font-weight:600;">石龙路33弄</td><td>漕河泾</td><td><strong>71</strong></td><td>48</td><td>151</td><td style="color:#ff4d4f;font-weight:700;">+47.9%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#e8f5e9;"><td>24</td><td style="text-align:left;font-weight:600;">馨宁公寓</td><td>华泾镇</td><td><strong>70</strong></td><td>152</td><td>218</td><td style="color:#00a854;font-weight:700;">-53.9%</td><td>-</td><td>大幅改善</td></tr>
+      <tr style="background:#fff3e0;"><td>25</td><td style="text-align:left;font-weight:600;">南丹小区</td><td>徐家汇</td><td><strong>67</strong></td><td>59</td><td>127</td><td style="color:#ff4d4f;font-weight:700;">+13.6%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#fff3e0;"><td>26</td><td style="text-align:left;font-weight:600;">双龙</td><td>龙华</td><td><strong>67</strong></td><td>41</td><td>0</td><td style="color:#ff4d4f;font-weight:700;">+63.4%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#fff3e0;"><td>27</td><td style="text-align:left;font-weight:600;">陕新直管公房</td><td>湖南路</td><td><strong>66</strong></td><td>39</td><td>127</td><td style="color:#ff4d4f;font-weight:700;">+69.2%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#fff;"><td>28</td><td style="text-align:left;font-weight:600;">古美小区</td><td>虹梅路</td><td><strong>66</strong></td><td>72</td><td>113</td><td style="color:#00a854;font-weight:700;">-8.3%</td><td>-</td><td>改善偏弱</td></tr>
+      <tr style="background:#fff3e0;"><td>29</td><td style="text-align:left;font-weight:600;">延庆直管公房</td><td>湖南路</td><td><strong>66</strong></td><td>37</td><td>41</td><td style="color:#ff4d4f;font-weight:700;">+78.4%</td><td>-</td><td>恶化</td></tr>
+      <tr style="background:#e8f5e9;"><td>30</td><td style="text-align:left;font-weight:600;">中海瀛台</td><td>长桥</td><td><strong>66</strong></td><td>225</td><td>690</td><td style="color:#00a854;font-weight:700;">-70.7%</td><td>底部抬升</td><td>大幅改善</td></tr>
     </table>
 
     <h3 style="font-size:15px;color:#c62828;margin:15px 0 8px;">5.2 2026年同比恶化Top10（红色预警）</h3>
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <tr style="background:#c62828;color:#fff;"><th style="padding:5px;">排名</th><th>小区</th><th>街道</th><th>2026(1-7月)</th><th>2025(1-7月)</th><th>同比</th><th>预警级别</th></tr>
-      <tr style="background:#ffebee;"><td>1</td><td>薛家宅</td><td>漕河泾</td><td>30件</td><td>6件</td><td style="color:#ff4d4f;font-weight:700;">+400.0%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>2</td><td>电影华苑</td><td>徐家汇</td><td>18件</td><td>5件</td><td style="color:#ff4d4f;font-weight:700;">+260.0%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>3</td><td>俞二小区</td><td>龙华</td><td>18件</td><td>5件</td><td style="color:#ff4d4f;font-weight:700;">+260.0%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>4</td><td>海珀旭晖</td><td>斜土路</td><td>27件</td><td>8件</td><td style="color:#ff4d4f;font-weight:700;">+237.5%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>5</td><td>欣嘉苑1-3期</td><td>虹梅路</td><td>64件</td><td>19件</td><td style="color:#ff4d4f;font-weight:700;">+236.8%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>6</td><td>古宜小区</td><td>田林</td><td>42件</td><td>13件</td><td style="color:#ff4d4f;font-weight:700;">+223.1%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>7</td><td>南赵巷小区</td><td>徐家汇</td><td>19件</td><td>6件</td><td style="color:#ff4d4f;font-weight:700;">+216.7%</td><td>🔴 红色</td></tr>
-      <tr style="background:#ffebee;"><td>8</td><td>汇东小区</td><td>徐家汇</td><td>22件</td><td>7件</td><td style="color:#ff4d4f;font-weight:700;">+214.3%</td><td>🔴 红色</td></tr>
-      <tr style="background:#fff3e0;"><td>9</td><td>永兆豪庭</td><td>虹梅路</td><td>31件</td><td>11件</td><td style="color:#ff4d4f;font-weight:700;">+181.8%</td><td>🟠 橙色</td></tr>
-      <tr style="background:#fff3e0;"><td>10</td><td>龙南六村2-65号</td><td>龙华</td><td>22件</td><td>8件</td><td style="color:#ff4d4f;font-weight:700;">+175.0%</td><td>🟠 橙色</td></tr>
+      <tr style="background:#c62828;color:#fff;"><th style="padding:5px;">排名</th><th>小区</th><th>街道</th><th>2026(1-8月)</th><th>2025(1-8月)</th><th>同比</th><th>预警级别</th></tr>
+      <tr style="background:#ffebee;"><td>1</td><td style="text-align:left;font-weight:600;">新湖云庭</td><td>枫林路</td><td>92件</td><td>28件</td><td style="color:#ff4d4f;font-weight:700;">+228.6%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>2</td><td style="text-align:left;font-weight:600;">欣嘉苑1-3期</td><td>虹梅路</td><td>78件</td><td>25件</td><td style="color:#ff4d4f;font-weight:700;">+212.0%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>3</td><td style="text-align:left;font-weight:600;">吴东小区</td><td>田林</td><td>78件</td><td>34件</td><td style="color:#ff4d4f;font-weight:700;">+129.4%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>4</td><td style="text-align:left;font-weight:600;">尚海湾二期</td><td>斜土路</td><td>87件</td><td>46件</td><td style="color:#ff4d4f;font-weight:700;">+89.1%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>5</td><td style="text-align:left;font-weight:600;">安福直管公房</td><td>湖南路</td><td>115件</td><td>64件</td><td style="color:#ff4d4f;font-weight:700;">+79.7%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>6</td><td style="text-align:left;font-weight:600;">延庆直管公房</td><td>湖南路</td><td>66件</td><td>37件</td><td style="color:#ff4d4f;font-weight:700;">+78.4%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>7</td><td style="text-align:left;font-weight:600;">陕新直管公房</td><td>湖南路</td><td>66件</td><td>39件</td><td style="color:#ff4d4f;font-weight:700;">+69.2%</td><td>红色</td></tr>
+      <tr style="background:#ffebee;"><td>8</td><td style="text-align:left;font-weight:600;">双龙</td><td>龙华</td><td>67件</td><td>41件</td><td style="color:#ff4d4f;font-weight:700;">+63.4%</td><td>红色</td></tr>
+      <tr style="background:#fff3e0;"><td>9</td><td style="text-align:left;font-weight:600;">石龙路33弄</td><td>漕河泾</td><td>71件</td><td>48件</td><td style="color:#ff4d4f;font-weight:700;">+47.9%</td><td>橙色</td></tr>
+      <tr style="background:#fff3e0;"><td>10</td><td style="text-align:left;font-weight:600;">长桥八村</td><td>长桥</td><td>74件</td><td>58件</td><td style="color:#ff4d4f;font-weight:700;">+27.6%</td><td>橙色</td></tr>
     </table>
     <p style="font-size:12px;color:#888;margin-top:4px;">注：同比恶化Top10集中在漕河泾、徐家汇、斜土路、龙华四个街道，与街道级恶化分析一致。</p>
 
@@ -442,17 +615,161 @@ chart2.setOption({
       },
       {
         value: [18.2, 12.5, 12.3, 6.8, 9.1],
-        name: '全区799个小区均值',
+        name: '全区620个小区均值',
         itemStyle: { color: '#fa8c16' },
         areaStyle: { color: 'rgba(250,140,22,0.15)' },
         lineStyle: { width: 2, type: 'dashed' }
       }
     ]
   }],
-  legend: { data: ['Top30红色预警小区均值', '全区799个小区均值'], bottom: 0 }
+  legend: { data: ['Top30红色预警小区均值', '全区620个小区均值'], bottom: 0 }
 });
 
 window.addEventListener('resize', function() { chart1.resize(); chart2.resize(); });
 </script>
+
+<!-- ===== 右侧浮动目录 ===== -->
+<div class="toc-float collapsed" id="tocFloat">
+  <button class="toc-toggle" id="tocToggle">目 录</button>
+  <div class="toc-panel">
+    <div class="toc-header">
+      <span>📑 报告目录</span>
+      <span class="toc-count" id="tocCount">0章</span>
+    </div>
+    <div class="toc-body" id="tocBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ===== 右侧浮动目录 =====
+document.addEventListener('DOMContentLoaded', function() {
+  var tocFloat = document.getElementById('tocFloat');
+  var tocToggle = document.getElementById('tocToggle');
+  var tocBody = document.getElementById('tocBody');
+  var tocCount = document.getElementById('tocCount');
+  if (!tocFloat || !tocBody) return;
+
+  var expanded = false;
+  tocToggle.addEventListener('click', function() {
+    expanded = !expanded;
+    if (expanded) {
+      tocFloat.classList.remove('collapsed');
+      tocFloat.classList.add('expanded');
+      tocToggle.textContent = '收 起';
+    } else {
+      tocFloat.classList.add('collapsed');
+      tocFloat.classList.remove('expanded');
+      tocToggle.textContent = '目 录';
+    }
+  });
+
+  var sections = document.querySelectorAll('.section');
+  var tocHTML = '';
+  var sectionCount = 0;
+  var idCounter = 0;
+
+  sections.forEach(function(section, idx) {
+    var titleEl = section.querySelector('.section-title');
+    if (!titleEl) return;
+    var title = titleEl.textContent.trim();
+    title = title.replace(/^[^\u4e00-\u9fa5a-zA-Z0-9]+/, '');
+    if (!title) return;
+    sectionCount++;
+    idCounter++;
+    var sectionId = 'sec-' + idCounter;
+    section.id = sectionId;
+    var subTitles = section.querySelectorAll('.sub-title');
+    var hasSub = subTitles.length > 0;
+    var subHTML = '';
+    if (hasSub) {
+      subHTML += '<div class="toc-sub-wrap">';
+      subTitles.forEach(function(sub, subIdx) {
+        idCounter++;
+        var subId = 'sub-' + idCounter;
+        sub.id = subId;
+        var subTitle = sub.textContent.trim();
+        subHTML += '<a class="toc-item level2" href="#' + subId + '" data-target="' + subId + '">' + subTitle + '</a>';
+      });
+      subHTML += '</div>';
+    }
+    tocHTML += '<a class="toc-item level1' + (hasSub ? ' has-sub' : '') + '" href="#' + sectionId + '" data-target="' + sectionId + '">' +
+               title +
+               (hasSub ? '<span class="toc-arrow">▶</span>' : '') +
+               '</a>' + subHTML;
+  });
+
+  tocBody.innerHTML = tocHTML;
+  tocCount.textContent = sectionCount + '章';
+
+  var level1Items = tocBody.querySelectorAll('.toc-item.level1.has-sub');
+  level1Items.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var subWrap = item.nextElementSibling;
+      if (subWrap && subWrap.classList.contains('toc-sub-wrap')) {
+        e.preventDefault();
+        subWrap.classList.toggle('open');
+        item.classList.toggle('open');
+      }
+    });
+  });
+
+  var allTocItems = tocBody.querySelectorAll('.toc-item');
+  allTocItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var targetId = item.getAttribute('data-target');
+      if (!targetId) return;
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        var top = target.offsetTop - 60;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  var ticking = false;
+  function updateActive() {
+    var scrollY = window.scrollY + 100;
+    var currentId = null;
+    var allTargets = document.querySelectorAll('.section[id^="sec-"], .sub-title[id^="sub-"]');
+    for (var i = 0; i < allTargets.length; i++) {
+      var el = allTargets[i];
+      if (el.offsetTop <= scrollY) {
+        currentId = el.id;
+      } else {
+        break;
+      }
+    }
+    if (currentId) {
+      allTocItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      var activeItem = tocBody.querySelector('.toc-item[data-target="' + currentId + '"]');
+      if (activeItem) {
+        activeItem.classList.add('active');
+        if (activeItem.classList.contains('level2')) {
+          var parentWrap = activeItem.closest('.toc-sub-wrap');
+          if (parentWrap) {
+            parentWrap.classList.add('open');
+            var prevItem = parentWrap.previousElementSibling;
+            if (prevItem) prevItem.classList.add('open');
+          }
+        }
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateActive);
+      ticking = true;
+    }
+  });
+  updateActive();
+});
+</script>
+
 </body>
 </html>
