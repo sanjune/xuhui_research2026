@@ -69,6 +69,149 @@
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .two-col { flex-direction: column; }
   }
+
+  /* ===== 右侧浮动目录 ===== */
+  .toc-float {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 999;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .toc-float.collapsed {
+    right: -260px;
+  }
+  .toc-toggle {
+    position: absolute;
+    left: -36px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 72px;
+    background: linear-gradient(180deg, #7b1fa2, #4a148c);
+    color: #fff;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 2px;
+    box-shadow: -2px 2px 8px rgba(74,20,140,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .toc-toggle:hover {
+    background: linear-gradient(180deg, #8e24aa, #6a1b9a);
+    left: -38px;
+    width: 38px;
+  }
+  .toc-panel {
+    width: 260px;
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -2px 4px 16px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .toc-header {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #7b1fa2, #4a148c);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-header .toc-count {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .toc-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .toc-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  .toc-body::-webkit-scrollbar-thumb {
+    background: #d1c4e9;
+    border-radius: 2px;
+  }
+  .toc-item {
+    display: block;
+    padding: 8px 18px 8px 14px;
+    font-size: 12.5px;
+    color: #555;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+  }
+  .toc-item:hover {
+    background: #f3e5f5;
+    color: #4a148c;
+    border-left-color: #ce93d8;
+  }
+  .toc-item.active {
+    background: #f3e5f5;
+    color: #4a148c;
+    font-weight: 700;
+    border-left-color: #7b1fa2;
+  }
+  .toc-item.level2 {
+    padding-left: 32px;
+    font-size: 11.5px;
+    color: #777;
+  }
+  .toc-item.level2:hover {
+    color: #6a1b9a;
+  }
+  .toc-item.level2.active {
+    color: #6a1b9a;
+    font-weight: 600;
+  }
+  .toc-sub-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .toc-item.has-sub + .toc-sub-wrap.open {
+    max-height: 500px;
+  }
+  .toc-arrow {
+    float: right;
+    font-size: 10px;
+    transition: transform 0.3s;
+    color: #aaa;
+  }
+  .toc-item.has-sub.active .toc-arrow,
+  .toc-item.has-sub.open .toc-arrow {
+    transform: rotate(90deg);
+    color: #7b1fa2;
+  }
+  @media(max-width: 1400px) {
+    .toc-float { right: -240px; }
+    .toc-float.collapsed { right: -240px; }
+    .toc-float.expanded { right: 0; }
+    .toc-panel { width: 240px; }
+  }
+  @media(max-width: 768px) {
+    .toc-float { display: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -1081,6 +1224,150 @@ document.querySelectorAll('.tab-btn').forEach(function(btn) {
     this.classList.add('active');
     document.getElementById('panel-' + tab).classList.add('active');
   });
+});
+</script>
+
+
+<!-- ===== 右侧浮动目录 ===== -->
+<div class="toc-float collapsed" id="tocFloat">
+  <button class="toc-toggle" id="tocToggle">目 录</button>
+  <div class="toc-panel">
+    <div class="toc-header">
+      <span>📑 报告目录</span>
+      <span class="toc-count" id="tocCount">0章</span>
+    </div>
+    <div class="toc-body" id="tocBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ===== 右侧浮动目录 =====
+document.addEventListener('DOMContentLoaded', function() {
+  var tocFloat = document.getElementById('tocFloat');
+  var tocToggle = document.getElementById('tocToggle');
+  var tocBody = document.getElementById('tocBody');
+  var tocCount = document.getElementById('tocCount');
+  if (!tocFloat || !tocBody) return;
+
+  var expanded = false;
+  tocToggle.addEventListener('click', function() {
+    expanded = !expanded;
+    if (expanded) {
+      tocFloat.classList.remove('collapsed');
+      tocFloat.classList.add('expanded');
+      tocToggle.textContent = '收 起';
+    } else {
+      tocFloat.classList.add('collapsed');
+      tocFloat.classList.remove('expanded');
+      tocToggle.textContent = '目 录';
+    }
+  });
+
+  var sections = document.querySelectorAll('.section');
+  var tocHTML = '';
+  var sectionCount = 0;
+  var idCounter = 0;
+
+  sections.forEach(function(section, idx) {
+    var titleEl = section.querySelector('.section-title');
+    if (!titleEl) return;
+    var title = titleEl.textContent.trim();
+    title = title.replace(/^[^\u4e00-\u9fa5a-zA-Z0-9]+/, '');
+    if (!title) return;
+    sectionCount++;
+    idCounter++;
+    var sectionId = 'sec-' + idCounter;
+    section.id = sectionId;
+    var subTitles = section.querySelectorAll('.sub-title');
+    var hasSub = subTitles.length > 0;
+    var subHTML = '';
+    if (hasSub) {
+      subHTML += '<div class="toc-sub-wrap">';
+      subTitles.forEach(function(sub, subIdx) {
+        idCounter++;
+        var subId = 'sub-' + idCounter;
+        sub.id = subId;
+        var subTitle = sub.textContent.trim();
+        subHTML += '<a class="toc-item level2" href="#' + subId + '" data-target="' + subId + '">' + subTitle + '</a>';
+      });
+      subHTML += '</div>';
+    }
+    tocHTML += '<a class="toc-item level1' + (hasSub ? ' has-sub' : '') + '" href="#' + sectionId + '" data-target="' + sectionId + '">' +
+               title +
+               (hasSub ? '<span class="toc-arrow">▶</span>' : '') +
+               '</a>' + subHTML;
+  });
+
+  tocBody.innerHTML = tocHTML;
+  tocCount.textContent = sectionCount + '章';
+
+  var level1Items = tocBody.querySelectorAll('.toc-item.level1.has-sub');
+  level1Items.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var subWrap = item.nextElementSibling;
+      if (subWrap && subWrap.classList.contains('toc-sub-wrap')) {
+        e.preventDefault();
+        subWrap.classList.toggle('open');
+        item.classList.toggle('open');
+      }
+    });
+  });
+
+  var allTocItems = tocBody.querySelectorAll('.toc-item');
+  allTocItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var targetId = item.getAttribute('data-target');
+      if (!targetId) return;
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        var top = target.offsetTop - 60;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  var ticking = false;
+  function updateActive() {
+    var scrollY = window.scrollY + 100;
+    var currentId = null;
+    var allTargets = document.querySelectorAll('.section[id^="sec-"], .sub-title[id^="sub-"]');
+    for (var i = 0; i < allTargets.length; i++) {
+      var el = allTargets[i];
+      if (el.offsetTop <= scrollY) {
+        currentId = el.id;
+      } else {
+        break;
+      }
+    }
+    if (currentId) {
+      allTocItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      var activeItem = tocBody.querySelector('.toc-item[data-target="' + currentId + '"]');
+      if (activeItem) {
+        activeItem.classList.add('active');
+        if (activeItem.classList.contains('level2')) {
+          var parentWrap = activeItem.closest('.toc-sub-wrap');
+          if (parentWrap) {
+            parentWrap.classList.add('open');
+            var prevItem = parentWrap.previousElementSibling;
+            if (prevItem) prevItem.classList.add('open');
+          }
+        }
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateActive);
+      ticking = true;
+    }
+  });
+  updateActive();
 });
 </script>
 

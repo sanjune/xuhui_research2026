@@ -58,36 +58,209 @@
   .note { font-size:12px; color:#999; margin-top:8px; }
   .arrow { display:inline-block; margin:0 4px; color:#999; }
   /* Sub page nav */
-  .sub-nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-  .sub-nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:44px; }
-  .sub-nav-logo { font-size:13px; font-weight:700; color:#0d47a1; text-decoration:none; }
-  .sub-nav-back { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:#666; text-decoration:none; padding:4px 12px; border-radius:6px; background:#f5f5f5; transition:all 0.2s; margin-left:12px; }
   .sub-nav-back:hover { background:#e3f2fd; color:#0d47a1; }
-  .sub-nav-links { margin-left:auto; display:flex; gap:12px; }
-  .sub-nav-links a { font-size:12px; color:#666; text-decoration:none; }
-  .sub-nav-links a:hover { color:#0d47a1; }
-  @media(max-width:768px) { .sub-nav-links { display:none; } }
+  @media(max-width:768px) { }
+
+  /* ===== 右侧浮动目录 ===== */
+  .toc-float {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 999;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .toc-float.collapsed {
+    right: -260px;
+  }
+  .toc-toggle {
+    position: absolute;
+    left: -36px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 72px;
+    background: linear-gradient(180deg, #7b1fa2, #4a148c);
+    color: #fff;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 2px;
+    box-shadow: -2px 2px 8px rgba(74,20,140,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+  .toc-toggle:hover {
+    background: linear-gradient(180deg, #8e24aa, #6a1b9a);
+    left: -38px;
+    width: 38px;
+  }
+  .toc-panel {
+    width: 260px;
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -2px 4px 16px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .toc-header {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #7b1fa2, #4a148c);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-header .toc-count {
+    margin-left: auto;
+    background: rgba(255,255,255,0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .toc-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .toc-body::-webkit-scrollbar {
+    width: 4px;
+  }
+  .toc-body::-webkit-scrollbar-thumb {
+    background: #d1c4e9;
+    border-radius: 2px;
+  }
+  .toc-item {
+    display: block;
+    padding: 8px 18px 8px 14px;
+    font-size: 12.5px;
+    color: #555;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.5;
+  }
+  .toc-item:hover {
+    background: #f3e5f5;
+    color: #4a148c;
+    border-left-color: #ce93d8;
+  }
+  .toc-item.active {
+    background: #f3e5f5;
+    color: #4a148c;
+    font-weight: 700;
+    border-left-color: #7b1fa2;
+  }
+  .toc-item.level2 {
+    padding-left: 32px;
+    font-size: 11.5px;
+    color: #777;
+  }
+  .toc-item.level2:hover {
+    color: #6a1b9a;
+  }
+  .toc-item.level2.active {
+    color: #6a1b9a;
+    font-weight: 600;
+  }
+  .toc-sub-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .toc-item.has-sub + .toc-sub-wrap.open {
+    max-height: 500px;
+  }
+  .toc-arrow {
+    float: right;
+    font-size: 10px;
+    transition: transform 0.3s;
+    color: #aaa;
+  }
+  .toc-item.has-sub.active .toc-arrow,
+  .toc-item.has-sub.open .toc-arrow {
+    transform: rotate(90deg);
+    color: #7b1fa2;
+  }
+  @media(max-width: 1400px) {
+    .toc-float { right: -240px; }
+    .toc-float.collapsed { right: -240px; }
+    .toc-float.expanded { right: 0; }
+    .toc-panel { width: 240px; }
+  }
+  @media(max-width: 768px) {
+    .toc-float { display: none; }
+  }
+
+  /* ===== Nav ===== */
+  .nav-bar { background:#fff; border-bottom:1px solid #e8e8e8; position:sticky; top:0; z-index:1000; box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+  .nav-inner { max-width:1100px; margin:0 auto; padding:0 16px; display:flex; align-items:center; height:48px; }
+  .nav-logo { font-size:14px; font-weight:700; color:#0d47a1; text-decoration:none; }
+  .nav-back { font-size:12px; color:#0d47a1; text-decoration:none; margin-left:12px; }
+  .nav-links { margin-left:auto; display:flex; gap:16px; }
+  .nav-links a { font-size:12px; color:#666; text-decoration:none; }
+  .nav-links a:hover { color:#0d47a1; }
+  .nav-dropdown { position:relative; display:inline-block; }
+  .nav-dropdown > a { display:inline-block; padding:4px 0; position:relative; font-size:12px; color:#666; text-decoration:none; }
+  .nav-dropdown > a:hover { color:#0d47a1; }
+  .nav-dropdown > a::after { content:' ▾'; font-size:10px; opacity:0.6; }
+  .dropdown-menu { position:absolute; top:100%; left:50%; transform:translateX(-50%) translateY(8px); min-width:260px; background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.12); padding:8px 0; opacity:0; visibility:hidden; transition:all 0.25s cubic-bezier(0.4,0,0.2,1); z-index:1001; border:1px solid #f0f0f0; }
+  .nav-dropdown:hover .dropdown-menu { opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+  .dropdown-menu::before { content:''; position:absolute; top:-6px; left:50%; transform:translateX(-50%) rotate(45deg); width:12px; height:12px; background:#fff; border-left:1px solid #f0f0f0; border-top:1px solid #f0f0f0; }
+  .dropdown-item { display:block; padding:8px 16px; font-size:12px; color:#444 !important; text-decoration:none; transition:all 0.15s; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dropdown-item:hover { background:#e3f2fd; color:#0d47a1 !important; padding-left:20px; }
+  .dropdown-item .badge { display:inline-block; font-size:10px; padding:1px 6px; border-radius:8px; background:#e3f2fd; color:#1565c0; margin-right:6px; font-weight:600; }
+  .dropdown-divider { height:1px; background:#f0f0f0; margin:6px 0; }
 </style>
 </head>
 <body>
 
-<div class="sub-nav-bar">
-<div class="sub-nav-inner">
-<a class="sub-nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
-<a class="sub-nav-back" href="课题成果总览.html">← 返回总览</a>
-<div class="sub-nav-links">
-<a href="课题成果总览.html#core">核心成果</a>
-<a href="课题成果总览.html#analysis">深度分析</a>
-<a href="课题成果总览.html#tools">工具成果</a>
-<a href="课题成果总览.html#consulting">咨询成果</a>
-<a href="课题成果总览.html#docs">验收文档</a>
-</div>
-</div>
+<!-- ===== Top Nav ===== -->
+<div class="nav-bar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="课题成果总览.html">徐汇物业课题一期</a>
+    <a class="nav-back" href="课题成果总览.html">← 返回总览</a>
+    <div class="nav-links">
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#core">核心成果</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="12345投诉量下降数据报告.html"><span class="badge">#1</span>12345投诉量下降数据报告</a>
+          <a class="dropdown-item" href="投诉去重识别方法论说明.html"><span class="badge">#2</span>投诉去重识别方法论说明</a>
+          <a class="dropdown-item" href="2026年1-8月投诉去重建议清单.html"><span class="badge">#2·附</span>2026年1-8月去重建议清单</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="数据质量优化专项报告.html"><span class="badge">#3</span>数据质量优化专项报告</a>
+          <a class="dropdown-item" href="高风险小区预警清单.html"><span class="badge">#6</span>高风险小区预警清单</a>
+        </div>
+      </div>
+      <div class="nav-dropdown">
+        <a href="课题成果总览.html#analysis">深度分析</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="物业投诉根因分析报告.html"><span class="badge">#4</span>物业投诉根因分析报告</a>
+          <a class="dropdown-item" href="重点问题专题分析报告（5份）.html"><span class="badge">#5</span>重点问题专题分析报告（5份）</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="治理效果追踪分析报告.html"><span class="badge">#7</span>治理效果追踪分析报告</a>
+          <a class="dropdown-item" href="反弹小区入户核查工作单.html"><span class="badge">#7·附</span>反弹小区入户核查工作单</a>
+          <a class="dropdown-item" href="底部抬升小区热线数据分析报告.html"><span class="badge">#7·附</span>底部抬升小区热线数据分析</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="header">
   <h1>治理效果追踪分析报告</h1>
-  <div class="subtitle">635个小区追踪 · 成功/反弹/恶化三类案例 · 发现→施策→验证闭环</div>
+  <div class="subtitle">629个小区追踪 · 成功/反弹/恶化三类案例 · 发现→施策→验证闭环</div>
   <div class="meta">徐汇物业课题一期 · 深度分析成果 | 2026年8月</div>
 </div>
 
@@ -96,14 +269,14 @@
   <!-- 一、总体概况 -->
   <div class="section">
     <div class="section-title">一、总体概况</div>
-    <p>对全区投诉量≥15件的小区进行全周期追踪，对比2024年（治理前）→2025年（治理中）→2026年1-7月（治理后）的投诉量变化，评估治理措施的实际效果，形成"发现问题→施策→验证效果"的完整闭环。</p>
+    <p>对全区投诉量≥15件的热线小区（全口径）进行全周期追踪，对比2024年（治理前）→2025年（治理中）→2026年1-8月（治理后）的投诉量变化，评估治理措施的实际效果，形成"发现问题→施策→验证效果"的完整闭环。</p>
     <div class="stat-grid">
-      <div class="stat-card green"><div class="num">635</div><div class="label">追踪小区总数</div></div>
-      <div class="stat-card green"><div class="num">269</div><div class="label">显著改善(>30%)</div><div class="pct" style="color:#52c41a;">42.4%</div></div>
-      <div class="stat-card orange"><div class="num">74</div><div class="label">出现反弹</div><div class="pct" style="color:#fa8c16;">11.7%</div></div>
-      <div class="stat-card red"><div class="num">158</div><div class="label">持续恶化</div><div class="pct" style="color:#f5222d;">24.9%</div></div>
+      <div class="stat-card green"><div class="num">629</div><div class="label">追踪小区总数（热线全口径）</div></div>
+      <div class="stat-card green"><div class="num">121</div><div class="label">显著改善(>30%)</div><div class="pct" style="color:#52c41a;">19.2%</div></div>
+      <div class="stat-card orange"><div class="num">115</div><div class="label">改善后反弹</div><div class="pct" style="color:#fa8c16;">18.3%</div></div>
+      <div class="stat-card red"><div class="num">31</div><div class="label">持续恶化</div><div class="pct" style="color:#f5222d;">4.9%</div></div>
     </div>
-    <p>追踪结果显示：<strong>42.4%的小区治理效果显著</strong>（投诉量下降超30%），但也有<strong>24.9%的小区投诉持续恶化</strong>，另有<strong>11.7%的小区出现反弹</strong>（2025年改善但2026年再次恶化）。说明治理措施的持续性和针对性有待加强。</p>
+    <p>追踪结果显示：<strong>19.2%的小区治理效果显著</strong>（投诉量下降超30%），但也有<strong>4.9%的小区投诉持续恶化</strong>，另有<strong>18.3%的小区出现反弹</strong>（2025年改善但2026年再次恶化）。说明治理措施的持续性和针对性有待加强。</p>
   </div>
 
   <!-- 二、治理闭环模型 -->
@@ -113,36 +286,36 @@
     <table class="data-table">
       <thead><tr><th>闭环状态</th><th>小区数</th><th>占比</th><th>特征描述</th><th>处置建议</th></tr></thead>
       <tbody>
-        <tr><td><span class="badge green">持续改善</span></td><td>269</td><td>42.4%</td><td style="text-align:left;">2025年降幅>30%且2026年继续下降</td><td style="text-align:left;">总结经验，推广做法</td></tr>
-        <tr><td><span class="badge orange">改善后反弹</span></td><td>74</td><td>11.7%</td><td style="text-align:left;">2025年改善>20%但2026年恶化>10%</td><td style="text-align:left;">分析反弹原因，重新施策</td></tr>
-        <tr><td><span class="badge red">持续恶化</span></td><td>158</td><td>24.9%</td><td style="text-align:left;">2025年投诉量增长>20%</td><td style="text-align:left;">紧急介入，专项治理</td></tr>
-        <tr><td><span class="badge" style="background:#e6f7ff;color:#1890ff;border:1px solid #91d5ff;">基本稳定</span></td><td>93</td><td>14.6%</td><td style="text-align:left;">投诉量波动在±10%以内</td><td style="text-align:left;">常规跟踪，预防恶化</td></tr>
+        <tr><td><span class="badge green">显著改善</span></td><td>121</td><td>19.2%</td><td style="text-align:left;">2025年降幅>30%且2026年继续下降</td><td style="text-align:left;">总结经验，推广做法</td></tr>
+        <tr><td><span class="badge orange">改善后反弹</span></td><td>115</td><td>18.3%</td><td style="text-align:left;">2025年改善>20%但2026年恶化>10%</td><td style="text-align:left;">分析反弹原因，重新施策</td></tr>
+        <tr><td><span class="badge red">持续恶化</span></td><td>31</td><td>4.9%</td><td style="text-align:left;">2025年投诉量增长>20%且2026年继续上升</td><td style="text-align:left;">紧急介入，专项治理</td></tr>
+        <tr><td><span class="badge" style="background:#e6f7ff;color:#1890ff;border:1px solid #91d5ff;">基本稳定</span></td><td>16</td><td>2.5%</td><td style="text-align:left;">投诉量波动在±10%以内</td><td style="text-align:left;">常规跟踪，预防恶化</td></tr>
       </tbody>
     </table>
-    <p class="note">注：另有41个小区（6.5%）状态为"改善后稳定"或"小幅波动"，未归入上述四类。</p>
+    <p class="note">注：另有346个小区（55.0%）状态为"改善后稳定"或"小幅波动"，未归入上述四类。数据基于热线全口径小区，不依赖纳统匹配。</p>
   </div>
 
   <!-- 三、十四类治理效果 -->
   <div class="section">
     <div class="section-title">三、十四类问题治理效果</div>
-    <p>从类别维度看，旧住房改造（-37.2%）和房屋维修（-26.2%）治理效果最好，与修缮旧改推进时间吻合；邻里纠纷（-7.3%）和物业服务态度（-7.0%）效果最差，2026年甚至出现回升。</p>
+    <p>从类别维度看，旧住房改造和房屋违规使用治理效果最好；物业服务态度和邻里纠纷2026年同期反弹明显，需重点关注。</p>
     <div id="chart-category" class="chart-box"></div>
     <table class="data-table">
-      <thead><tr><th>类别</th><th>2024年</th><th>2025年</th><th>2025改善率</th><th>2026年1-7月</th><th>2026趋势</th><th>治理评价</th></tr></thead>
+      <thead><tr><th>类别</th><th>2024年</th><th>2025年</th><th>2025改善率</th><th>2025年1-8月</th><th>2026年1-8月</th><th>2026同期改善率</th><th>治理评价</th></tr></thead>
       <tbody>
-        <tr><td style="text-align:left;font-weight:600;">旧住房改造</td><td>1,933</td><td>1,213</td><td><span class="decline">-37.2%</span></td><td>542</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果显著</span></td></tr>
-        <tr><td style="text-align:left;font-weight:600;">房屋维修</td><td>4,591</td><td>3,389</td><td><span class="decline">-26.2%</span></td><td>1,793</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果显著</span></td></tr>
-        <tr><td style="text-align:left;font-weight:600;">绿化管理</td><td>930</td><td>712</td><td><span class="decline">-23.4%</span></td><td>314</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果良好</span></td></tr>
-        <tr><td style="text-align:left;font-weight:600;">业主大会/业委会</td><td>2,877</td><td>2,240</td><td><span class="decline">-22.1%</span></td><td>1,011</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果良好</span></td></tr>
-        <tr><td style="text-align:left;font-weight:600;">清洁卫生</td><td>1,375</td><td>1,072</td><td><span class="decline">-22.0%</span></td><td>582</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果良好</span></td></tr>
-        <tr><td style="text-align:left;font-weight:600;">房屋违规使用</td><td>2,925</td><td>2,361</td><td><span class="decline">-19.3%</span></td><td>1,036</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果良好</span></td></tr>
-        <tr><td style="text-align:left;font-weight:600;">停车管理</td><td>4,590</td><td>3,722</td><td><span class="decline">-18.9%</span></td><td>1,584</td><td><span class="decline">持续改善</span></td><td><span class="badge green">效果良好</span></td></tr>
-        <tr><td style="text-align:left;">消防管理</td><td>1,801</td><td>1,661</td><td><span class="decline">-7.8%</span></td><td>877</td><td><span class="decline">持续改善</span></td><td><span class="badge orange">效果一般</span></td></tr>
-        <tr><td style="text-align:left;">邻里纠纷</td><td>2,761</td><td>2,559</td><td><span class="decline">-7.3%</span></td><td>1,588</td><td><span class="increase">需关注</span></td><td><span class="badge red">效果不佳</span></td></tr>
-        <tr><td style="text-align:left;">物业安保</td><td>1,485</td><td>1,385</td><td><span class="decline">-6.7%</span></td><td>671</td><td><span class="decline">持续改善</span></td><td><span class="badge orange">效果一般</span></td></tr>
-        <tr><td style="text-align:left;">群租管理</td><td>1,476</td><td>1,415</td><td><span class="decline">-4.1%</span></td><td>726</td><td><span class="decline">持续改善</span></td><td><span class="badge orange">效果一般</span></td></tr>
-        <tr><td style="text-align:left;">物业收费</td><td>443</td><td>494</td><td><span class="increase">+11.5%</span></td><td>247</td><td><span class="decline">2026改善</span></td><td><span class="badge red">2025恶化</span></td></tr>
-        <tr><td style="text-align:left;">物业服务态度</td><td>575</td><td>615</td><td><span class="increase">+7.0%</span></td><td>426</td><td><span class="increase">需关注</span></td><td><span class="badge red">效果不佳</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">旧住房改造</td><td>1,968</td><td>1,248</td><td><span style="color:#2e7d32;font-weight:600;">-36.6%</span></td><td>797</td><td>648</td><td><span style="color:#2e7d32;font-weight:600;">-18.7%</span></td><td><span class="badge green">效果良好</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">其他</td><td>1,289</td><td>856</td><td><span style="color:#2e7d32;font-weight:600;">-33.6%</span></td><td>565</td><td>436</td><td><span style="color:#2e7d32;font-weight:600;">-22.8%</span></td><td><span class="badge green">效果显著</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">房屋维修</td><td>4,688</td><td>3,471</td><td><span style="color:#2e7d32;font-weight:600;">-26.0%</span></td><td>2,472</td><td>2,383</td><td><span style="color:#2e7d32;font-weight:600;">-3.6%</span></td><td><span class="badge orange">效果一般</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">业主大会/业委会</td><td>2,957</td><td>2,282</td><td><span style="color:#2e7d32;font-weight:600;">-22.8%</span></td><td>1,522</td><td>1,225</td><td><span style="color:#2e7d32;font-weight:600;">-19.5%</span></td><td><span class="badge green">效果良好</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">清洁卫生</td><td>1,408</td><td>1,101</td><td><span style="color:#2e7d32;font-weight:600;">-21.8%</span></td><td>780</td><td>709</td><td><span style="color:#2e7d32;font-weight:600;">-9.1%</span></td><td><span class="badge orange">效果一般</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">房屋违规使用</td><td>3,123</td><td>2,454</td><td><span style="color:#2e7d32;font-weight:600;">-21.4%</span></td><td>1,615</td><td>1,185</td><td><span style="color:#2e7d32;font-weight:600;">-26.6%</span></td><td><span class="badge green">效果显著</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">停车管理</td><td>4,706</td><td>3,788</td><td><span style="color:#2e7d32;font-weight:600;">-19.5%</span></td><td>2,540</td><td>1,819</td><td><span style="color:#2e7d32;font-weight:600;">-28.4%</span></td><td><span class="badge green">效果显著</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">消防管理</td><td>1,866</td><td>1,686</td><td><span style="color:#2e7d32;font-weight:600;">-9.6%</span></td><td>1,040</td><td>1,015</td><td><span style="color:#2e7d32;font-weight:600;">-2.4%</span></td><td><span class="badge orange">效果一般</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">邻里纠纷</td><td>2,951</td><td>2,702</td><td><span style="color:#2e7d32;font-weight:600;">-8.4%</span></td><td>1,835</td><td>1,916</td><td><span style="color:#c62828;font-weight:600;">+4.4%</span></td><td><span class="badge orange">效果一般</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">群租管理</td><td>1,553</td><td>1,451</td><td><span style="color:#2e7d32;font-weight:600;">-6.6%</span></td><td>987</td><td>832</td><td><span style="color:#2e7d32;font-weight:600;">-15.7%</span></td><td><span class="badge green">效果良好</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">物业安保</td><td>1,521</td><td>1,423</td><td><span style="color:#2e7d32;font-weight:600;">-6.4%</span></td><td>914</td><td>781</td><td><span style="color:#2e7d32;font-weight:600;">-14.6%</span></td><td><span class="badge green">效果良好</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">物业服务态度</td><td>591</td><td>637</td><td><span style="color:#c62828;font-weight:600;">+7.8%</span></td><td>406</td><td>493</td><td><span style="color:#c62828;font-weight:600;">+21.4%</span></td><td><span class="badge red">效果不佳</span></td></tr>
+        <tr><td style="text-align:left;font-weight:600;">物业收费</td><td>449</td><td>519</td><td><span style="color:#c62828;font-weight:600;">+15.6%</span></td><td>325</td><td>284</td><td><span style="color:#2e7d32;font-weight:600;">-12.6%</span></td><td><span class="badge green">效果良好</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -152,25 +325,25 @@
     <div class="section-title">四、街道治理效果排名</div>
     <div id="chart-street" class="chart-box"></div>
     <table class="data-table">
-      <thead><tr><th>排名</th><th>街道</th><th>2024年</th><th>2025年</th><th>2025改善率</th><th>2026年1-7月</th><th>2026趋势</th></tr></thead>
+      <thead><tr><th>排名</th><th>街道</th><th>2024年</th><th>2025年</th><th>2025改善率</th><th>2025年1-8月</th><th>2026年1-8月</th><th>2026同期改善率</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td style="text-align:left;font-weight:600;">凌云路</td><td>2,521</td><td>1,509</td><td><span class="decline">-40.1%</span></td><td>745</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>2</td><td style="text-align:left;font-weight:600;">康健新村</td><td>2,006</td><td>1,452</td><td><span class="decline">-27.6%</span></td><td>637</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>3</td><td style="text-align:left;font-weight:600;">天平路</td><td>2,419</td><td>1,800</td><td><span class="decline">-25.6%</span></td><td>909</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>4</td><td style="text-align:left;font-weight:600;">田林</td><td>2,120</td><td>1,644</td><td><span class="decline">-22.5%</span></td><td>1,069</td><td><span class="increase">需关注</span></td></tr>
-        <tr><td>5</td><td style="text-align:left;font-weight:600;">漕河泾</td><td>2,379</td><td>1,975</td><td><span class="decline">-17.0%</span></td><td>1,094</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>6</td><td style="text-align:left;font-weight:600;">湖南路</td><td>1,517</td><td>1,275</td><td><span class="decline">-16.0%</span></td><td>720</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>7</td><td style="text-align:left;font-weight:600;">长桥</td><td>3,415</td><td>2,872</td><td><span class="decline">-15.9%</span></td><td>1,220</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>8</td><td style="text-align:left;font-weight:600;">斜土路</td><td>2,219</td><td>1,906</td><td><span class="decline">-14.1%</span></td><td>956</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>9</td><td style="text-align:left;font-weight:600;">枫林路</td><td>2,599</td><td>2,310</td><td><span class="decline">-11.1%</span></td><td>941</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>10</td><td style="text-align:left;font-weight:600;">龙华</td><td>1,711</td><td>1,534</td><td><span class="decline">-10.3%</span></td><td>827</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>11</td><td style="text-align:left;font-weight:600;">华泾</td><td>1,718</td><td>1,595</td><td><span class="decline">-7.2%</span></td><td>719</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>12</td><td style="text-align:left;font-weight:600;">徐家汇</td><td>2,410</td><td>2,263</td><td><span class="decline">-6.1%</span></td><td>1,144</td><td><span class="decline">持续改善</span></td></tr>
-        <tr><td>13</td><td style="text-align:left;font-weight:600;">虹梅路</td><td>814</td><td>815</td><td class="increase">+0.1%</td><td>470</td><td><span class="decline">2026改善</span></td></tr>
+        <tr><td>1</td><td style="text-align:left;font-weight:600;">长桥</td><td>3,515</td><td>2,915</td><td><span style="color:#2e7d32;font-weight:600;">-17.1%</span></td><td>2,135</td><td>1,471</td><td><span style="color:#2e7d32;font-weight:600;">-31.1%</span></td></tr>
+        <tr><td>2</td><td style="text-align:left;font-weight:600;">枫林路</td><td>2,760</td><td>2,336</td><td><span style="color:#2e7d32;font-weight:600;">-15.4%</span></td><td>1,498</td><td>1,121</td><td><span style="color:#2e7d32;font-weight:600;">-25.2%</span></td></tr>
+        <tr><td>3</td><td style="text-align:left;font-weight:600;">徐家汇</td><td>2,550</td><td>2,324</td><td><span style="color:#2e7d32;font-weight:600;">-8.9%</span></td><td>1,458</td><td>1,337</td><td><span style="color:#2e7d32;font-weight:600;">-8.3%</span></td></tr>
+        <tr><td>4</td><td style="text-align:left;font-weight:600;">漕河泾</td><td>2,516</td><td>2,006</td><td><span style="color:#2e7d32;font-weight:600;">-20.3%</span></td><td>1,265</td><td>1,315</td><td><span style="color:#c62828;font-weight:600;">+4.0%</span></td></tr>
+        <tr><td>5</td><td style="text-align:left;font-weight:600;">斜土路</td><td>2,339</td><td>1,969</td><td><span style="color:#2e7d32;font-weight:600;">-15.8%</span></td><td>1,308</td><td>1,131</td><td><span style="color:#2e7d32;font-weight:600;">-13.5%</span></td></tr>
+        <tr><td>6</td><td style="text-align:left;font-weight:600;">天平路</td><td>2,620</td><td>1,860</td><td><span style="color:#2e7d32;font-weight:600;">-29.0%</span></td><td>1,274</td><td>1,160</td><td><span style="color:#2e7d32;font-weight:600;">-8.9%</span></td></tr>
+        <tr><td>7</td><td style="text-align:left;font-weight:600;">田林</td><td>2,206</td><td>1,673</td><td><span style="color:#2e7d32;font-weight:600;">-24.2%</span></td><td>1,094</td><td>1,260</td><td><span style="color:#c62828;font-weight:600;">+15.2%</span></td></tr>
+        <tr><td>8</td><td style="text-align:left;font-weight:600;">华泾镇</td><td>1,789</td><td>1,602</td><td><span style="color:#2e7d32;font-weight:600;">-10.5%</span></td><td>1,019</td><td>869</td><td><span style="color:#2e7d32;font-weight:600;">-14.7%</span></td></tr>
+        <tr><td>9</td><td style="text-align:left;font-weight:600;">龙华</td><td>1,816</td><td>1,563</td><td><span style="color:#2e7d32;font-weight:600;">-13.9%</span></td><td>1,089</td><td>973</td><td><span style="color:#2e7d32;font-weight:600;">-10.7%</span></td></tr>
+        <tr><td>10</td><td style="text-align:left;font-weight:600;">凌云路</td><td>2,615</td><td>1,537</td><td><span style="color:#2e7d32;font-weight:600;">-41.2%</span></td><td>1,058</td><td>897</td><td><span style="color:#2e7d32;font-weight:600;">-15.2%</span></td></tr>
+        <tr><td>11</td><td style="text-align:left;font-weight:600;">康健新村</td><td>2,083</td><td>1,480</td><td><span style="color:#2e7d32;font-weight:600;">-28.9%</span></td><td>983</td><td>751</td><td><span style="color:#2e7d32;font-weight:600;">-23.6%</span></td></tr>
+        <tr><td>12</td><td style="text-align:left;font-weight:600;">湖南路</td><td>1,682</td><td>1,369</td><td><span style="color:#2e7d32;font-weight:600;">-18.6%</span></td><td>949</td><td>897</td><td><span style="color:#2e7d32;font-weight:600;">-5.5%</span></td></tr>
+        <tr><td>13</td><td style="text-align:left;font-weight:600;">虹梅路</td><td>859</td><td>833</td><td><span style="color:#2e7d32;font-weight:600;">-3.0%</span></td><td>559</td><td>537</td><td><span style="color:#2e7d32;font-weight:600;">-3.9%</span></td></tr>
       </tbody>
     </table>
-    <p style="color:#52c41a;font-weight:600;">治理最佳：凌云路街道2025年降幅40.1%，是全区唯一降幅超40%的街道。</p>
-    <p style="color:#f5222d;font-weight:600;">需关注：田林街道2025年改善22.5%但2026年出现恶化趋势（-16.1%），虹梅路基本持平。</p>
+    <p style="color:#52c41a;font-weight:600;">治理最佳：凌云路街道2025年降幅41.2%，是全区唯一降幅超40%的街道。</p>
+    <p style="color:#f5222d;font-weight:600;">需关注：田林街道2026年趋势转差（+9.5%），虹梅路改善幅度最小。</p>
   </div>
 
   <!-- 五、成功案例Top10 -->
@@ -179,36 +352,44 @@
     <p>以下小区投诉量大幅下降，治理效果显著。分析其成功经验，可在同类小区推广。</p>
 
     <div class="case-card success">
-      <div class="cc-title">案例1：松风花园（凌云路）— 业主大会/业委会纠纷化解</div>
-      <div class="cc-desc">145件 <span class="arrow">→</span> 0件 <span class="arrow">→</span> 0件，改善率100%。2024年业主大会/业委会纠纷集中爆发（145件），经过街道办介入调解、重新组织业委会选举后，2025年投诉清零。经验：业委会纠纷需街道办主动介入，依法组织换届/改选。</div>
+      <div class="cc-title">案例1：中海瀛台（长桥）— 业主大会/业委会治理成效</div>
+      <div class="cc-desc">690件 <span class="arrow">→</span> 264件（改善61.7%） <span class="arrow">→</span> 2026年1-8月42件（持续下降）。主要投诉类别为业主大会/业委会，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例2：百汇园（龙华）— 房屋维修集中修缮</div>
-      <div class="cc-desc">127件 <span class="arrow">→</span> 0件 <span class="arrow">→</span> 0件，改善率100%。2024年房屋维修投诉127件，经旧住房改造项目集中修缮后，2025年投诉清零。经验：老旧小区维修问题应纳入旧改计划集中解决。</div>
+      <div class="cc-title">案例2：田林三街坊（田林）— 停车管理治理成效</div>
+      <div class="cc-desc">265件 <span class="arrow">→</span> 171件（改善35.5%） <span class="arrow">→</span> 2026年1-8月66件（持续下降）。主要投诉类别为停车管理，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例3：罗秀二村（长桥）— 清洁卫生整治</div>
-      <div class="cc-desc">79件 <span class="arrow">→</span> 1件 <span class="arrow">→</span> 0件，改善率98.7%。2024年清洁卫生投诉79件，经物业企业更换保洁公司、增加清扫频次后，2025年降至1件。经验：清洁卫生问题可通过物业企业考核+督促整改快速见效。</div>
+      <div class="cc-title">案例3：西木小区（枫林路）— 房屋维修治理成效</div>
+      <div class="cc-desc">214件 <span class="arrow">→</span> 144件（改善32.7%） <span class="arrow">→</span> 2026年1-8月52件（持续下降）。主要投诉类别为房屋维修，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例4：长桥三村西区（长桥）— 消防管理整改</div>
-      <div class="cc-desc">70件 <span class="arrow">→</span> 1件 <span class="arrow">→</span> 0件，改善率98.6%。消防通道堵塞问题经消防部门联合物业整治后，投诉从70件降至0。经验：消防管理需联合执法，物业单方面难以解决。</div>
+      <div class="cc-title">案例4：梅陇三村（凌云路）— 旧住房改造治理成效</div>
+      <div class="cc-desc">230件 <span class="arrow">→</span> 87件（改善62.2%） <span class="arrow">→</span> 2026年1-8月21件（持续下降）。主要投诉类别为旧住房改造，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例5：长桥三村东区（长桥）— 停车规约改革</div>
-      <div class="cc-desc">64件 <span class="arrow">→</span> 2件 <span class="arrow">→</span> 0件，改善率96.9%。停车管理纠纷经业委会重新制定停车规约、重新分配车位后，投诉从64件降至0。经验：停车问题核心在规约公平性，规约改革是有效手段。</div>
+      <div class="cc-title">案例5：茶花园（康健新村）— 停车管理治理成效</div>
+      <div class="cc-desc">220件 <span class="arrow">→</span> 84件（改善61.8%） <span class="arrow">→</span> 2026年1-8月15件（持续下降）。主要投诉类别为停车管理，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例6：丁香园（康健）— 清洁卫生整改</div>
-      <div class="cc-desc">70件 <span class="arrow">→</span> 0件，改善率100%。与罗秀二村类似，清洁卫生问题通过物业整改快速解决。说明清洁卫生是最"可治"的问题类型。</div>
+      <div class="cc-title">案例6：梅陇十一村（A块）（凌云路）— 消防管理治理成效</div>
+      <div class="cc-desc">197件 <span class="arrow">→</span> 90件（改善54.3%） <span class="arrow">→</span> 2026年1-8月23件（持续下降）。主要投诉类别为消防管理，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例7：上缝小区（龙华）— 停车管理治理</div>
-      <div class="cc-desc">68件 <span class="arrow">→</span> 0件，改善率100%。停车管理问题通过车位重新规划和外来车辆管控解决。</div>
+      <div class="cc-title">案例7：阳光绿园（凌云路）— 停车管理治理成效</div>
+      <div class="cc-desc">182件 <span class="arrow">→</span> 83件（改善54.4%） <span class="arrow">→</span> 2026年1-8月36件（持续下降）。主要投诉类别为停车管理，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
     <div class="case-card success">
-      <div class="cc-title">案例8：康馨家园（康健）— 业委会规范化</div>
-      <div class="cc-desc">25件 <span class="arrow">→</span> 1件 <span class="arrow">→</span> 0件，改善率96.0%。业委会运作不规范问题经街道指导后显著改善。</div>
+      <div class="cc-title">案例8：三江小区（漕河泾）— 旧住房改造治理成效</div>
+      <div class="cc-desc">143件 <span class="arrow">→</span> 78件（改善45.5%） <span class="arrow">→</span> 2026年1-8月36件（持续下降）。主要投诉类别为旧住房改造，治理成效显著，连续两年投诉量大幅下降。</div>
+    </div>
+    <div class="case-card success">
+      <div class="cc-title">案例9：金色港湾公寓（斜土路）— 房屋违规使用治理成效</div>
+      <div class="cc-desc">179件 <span class="arrow">→</span> 45件（改善74.9%） <span class="arrow">→</span> 2026年1-8月20件（持续下降）。主要投诉类别为房屋违规使用，治理成效显著，连续两年投诉量大幅下降。</div>
+    </div>
+    <div class="case-card success">
+      <div class="cc-title">案例10：江南裕德（徐家汇）— 房屋维修治理成效</div>
+      <div class="cc-desc">130件 <span class="arrow">→</span> 79件（改善39.2%） <span class="arrow">→</span> 2026年1-8月25件（持续下降）。主要投诉类别为房屋维修，治理成效显著，连续两年投诉量大幅下降。</div>
     </div>
   </div>
 
@@ -218,24 +399,24 @@
     <p>以下小区2025年治理效果良好，但2026年投诉量再次上升。反弹原因需深入调研，防止"治标不治本"。</p>
 
     <div class="case-card rebound">
-      <div class="cc-title">案例1：海珀旭晖（斜土路）— 业委会纠纷反复</div>
-      <div class="cc-desc">51件 <span class="arrow">→</span> 12件（改善76.5%） <span class="arrow">→</span> 2026年1-7月51件（反弹-537.5%）。2025年业委会纠纷经过调解后大幅下降，但2026年纠纷再次爆发至2024年同期水平。根因：业委会运作机制问题未根本解决，调解只是暂时压下矛盾。建议：重新启动业委会改选程序。</div>
+      <div class="cc-title">案例1：尚海湾二期（斜土路）— 投诉反弹</div>
+      <div class="cc-desc">312件 <span class="arrow">→</span> 115件（改善63.1%） <span class="arrow">→</span> 2026年1-8月75件（反弹11.8%）。2025年治理效果良好，但2026年投诉量再次上升，需深入调研反弹根因，防止"治标不治本"。</div>
     </div>
     <div class="case-card rebound">
-      <div class="cc-title">案例2：薛家宅（漕河泾）— 停车问题反复</div>
-      <div class="cc-desc">27件 <span class="arrow">→</span> 21件（改善22.2%） <span class="arrow">→</span> 2026年1-7月32件（反弹-433.3%）。停车管理问题2025年小幅改善，但2026年投诉量超过2024年基线。根因：车位供给不足的结构性问题未解决，规约调整只能暂时平衡利益。建议：增加车位供给（立体车位/共享停车）。</div>
+      <div class="cc-title">案例2：安福直管公房（湖南路）— 投诉反弹</div>
+      <div class="cc-desc">156件 <span class="arrow">→</span> 104件（改善33.3%） <span class="arrow">→</span> 2026年1-8月91件（反弹50.0%）。2025年治理效果良好，但2026年投诉量再次上升，需深入调研反弹根因，防止"治标不治本"。</div>
     </div>
     <div class="case-card rebound">
-      <div class="cc-title">案例3：新湖云庭（枫林路）— 业委会纠纷反复</div>
-      <div class="cc-desc">62件 <span class="arrow">→</span> 42件（改善32.3%） <span class="arrow">→</span> 2026年1-7月74件（反弹-221.7%）。业委会纠纷2025年有所改善，但2026年反弹超过2024年水平。建议：对业委会纠纷类问题建立长期跟踪机制，不能"调解完就结束"。</div>
+      <div class="cc-title">案例3：南丹小区（徐家汇）— 投诉反弹</div>
+      <div class="cc-desc">127件 <span class="arrow">→</span> 91件（改善28.3%） <span class="arrow">→</span> 2026年1-8月59件（反弹11.1%）。2025年治理效果良好，但2026年投诉量再次上升，需深入调研反弹根因，防止"治标不治本"。</div>
     </div>
     <div class="case-card rebound">
-      <div class="cc-title">案例4：万科华尔兹花园（田林）— 业委会纠纷反复</div>
-      <div class="cc-desc">37件 <span class="arrow">→</span> 12件（改善67.6%） <span class="arrow">→</span> 2026年1-7月19件（反弹-216.7%）。与海珀旭晖类似，业委会纠纷调解后反弹。建议：业委会运作机制改革，建立常态化监督。</div>
+      <div class="cc-title">案例4：梅陇四村（凌云路）— 投诉反弹</div>
+      <div class="cc-desc">126件 <span class="arrow">→</span> 85件（改善32.5%） <span class="arrow">→</span> 2026年1-8月56件（反弹12.9%）。2025年治理效果良好，但2026年投诉量再次上升，需深入调研反弹根因，防止"治标不治本"。</div>
     </div>
     <div class="case-card rebound">
-      <div class="cc-title">案例5：中科新苑（斜土路）— 房屋维修反复</div>
-      <div class="cc-desc">25件 <span class="arrow">→</span> 13件（改善48.0%） <span class="arrow">→</span> 2026年1-7月19件（反弹-216.7%）。维修问题反复，根因是只修了表象未解决结构性问题。建议：纳入旧住房改造计划。</div>
+      <div class="cc-title">案例5：陕新直管公房（湖南路）— 投诉反弹</div>
+      <div class="cc-desc">127件 <span class="arrow">→</span> 62件（改善51.2%） <span class="arrow">→</span> 2026年1-8月51件（反弹41.0%）。2025年治理效果良好，但2026年投诉量再次上升，需深入调研反弹根因，防止"治标不治本"。</div>
     </div>
   </div>
 
@@ -245,24 +426,24 @@
     <p>以下小区投诉量持续增长，2025年未出现改善，需紧急介入。</p>
 
     <div class="case-card worsen">
-      <div class="cc-title">案例1：汇樾庭（康健）— 房屋质量问题</div>
-      <div class="cc-desc">7件 → 71件（-914.3%） → 2026年9件。2025年投诉量暴增9倍，核心问题是新建小区房屋质量纠纷。属于新交付小区的集中维权，需住建部门介入。</div>
+      <div class="cc-title">案例1：龙南七村（龙华）— 投诉持续恶化</div>
+      <div class="cc-desc">50件 → 62件（增长24.0%） → 2026年1-8月42件。投诉量持续增长，2025年未出现改善趋势，2026年仍在高位，需紧急介入专项治理。</div>
     </div>
     <div class="case-card worsen">
-      <div class="cc-title">案例2：漓江山水花园（华泾）— 业委会纠纷</div>
-      <div class="cc-desc">9件 → 63件（-600%） → 2026年8件。2025年业委会纠纷暴增，2026年回落。可能是事件性爆发（物业选续聘），现已缓解。</div>
+      <div class="cc-title">案例2：延庆直管公房（湖南路）— 投诉持续恶化</div>
+      <div class="cc-desc">41件 → 60件（增长46.3%） → 2026年1-8月51件。投诉量持续增长，2025年未出现改善趋势，2026年仍在高位，需紧急介入专项治理。</div>
     </div>
     <div class="case-card worsen">
-      <div class="cc-title">案例3：宫霄小区（湖南路）— 房屋违规使用</div>
-      <div class="cc-desc">8件 → 46件（-475%） → 2026年13件。衡复风貌区内违规装修问题持续恶化，说明执法力度不足。建议：加强巡查频次和处罚力度。</div>
+      <div class="cc-title">案例3：虹桥大仕馆（田林）— 投诉持续恶化</div>
+      <div class="cc-desc">31件 → 65件（增长109.7%） → 2026年1-8月45件。投诉量持续增长，2025年未出现改善趋势，2026年仍在高位，需紧急介入专项治理。</div>
     </div>
     <div class="case-card worsen">
-      <div class="cc-title">案例4：永新城（徐家汇）— 消防管理</div>
-      <div class="cc-desc">13件 → 61件（-369%） → 2026年12件。消防管理问题暴增，可能涉及消防设施老化。建议：消防部门专项检查。</div>
+      <div class="cc-title">案例4：周家湾（龙华）— 投诉持续恶化</div>
+      <div class="cc-desc">38件 → 53件（增长39.5%） → 2026年1-8月46件。投诉量持续增长，2025年未出现改善趋势，2026年仍在高位，需紧急介入专项治理。</div>
     </div>
     <div class="case-card worsen">
-      <div class="cc-title">案例5：良友公寓（湖南路）— 邻里纠纷</div>
-      <div class="cc-desc">6件 → 26件（-333%） → 2026年4件。邻里纠纷暴增后回落，可能是阶段性事件。但湖南路街道邻里纠纷整体呈上升趋势，需关注。</div>
+      <div class="cc-title">案例5：汇成五村（长桥）— 投诉持续恶化</div>
+      <div class="cc-desc">39件 → 48件（增长23.1%） → 2026年1-8月36件。投诉量持续增长，2025年未出现改善趋势，2026年仍在高位，需紧急介入专项治理。</div>
     </div>
   </div>
 
@@ -307,8 +488,8 @@
       <div class="ac-desc">将269个显著改善小区的成功经验，按问题类型分类提炼。例如"长桥三村东区停车规约改革模式"、"百汇园旧改集中修缮模式"、"松风花园业委会换届模式"，在同类小区中推广。目标：将成功案例从269个扩展到500个以上。</div>
     </div>
     <div class="action-card">
-      <div class="ac-title">建议四：74个反弹小区二次治理</div>
-      <div class="ac-desc">反弹案例的核心问题是"治标不治本"。对74个反弹小区逐一分析反弹原因，制定二次治理方案。重点：业委会纠纷类反弹需从运作机制改革入手，停车类反弹需增加供给而非仅调规约，维修类反弹需纳入旧改而非仅修表象。</div>
+      <div class="ac-title">建议四：115个反弹小区二次治理</div>
+      <div class="ac-desc">反弹案例的核心问题是"治标不治本"。对115个反弹小区逐一分析反弹原因，制定二次治理方案。重点：业委会纠纷类反弹需从运作机制改革入手，停车类反弹需增加供给而非仅调规约，维修类反弹需纳入旧改而非仅修表象。</div>
     </div>
     <div class="action-card">
       <div class="ac-title">建议五：将治理效果纳入物业企业考核</div>
@@ -318,13 +499,13 @@
 
   <!-- ===== 五、2026年近期治理追踪 ===== -->
   <div class="section">
-    <h2 style="color:#00695c; border-bottom:2px solid #00695c; padding-bottom:8px;">五、2026年近期治理追踪（1-7月）</h2>
-    <p style="color:#666;font-size:14px;">将2026年1-7月数据与2025年同期对比，追踪治理成效在"当下"的表现，识别近期趋势反转风险。</p>
+    <h2 style="color:#00695c; border-bottom:2px solid #00695c; padding-bottom:8px;">五、2026年近期治理追踪（1-8月）</h2>
+    <p style="color:#666;font-size:14px;">将2026年1-8月数据与2025年同期对比，追踪治理成效在"当下"的表现，识别近期趋势反转风险。</p>
 
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:15px 0;">
       <div style="background:#e0f2f1; padding:14px; border-radius:8px; text-align:center;">
         <div style="font-size:28px; font-weight:800; color:#00695c;">-15.7%</div>
-        <div style="font-size:12px; color:#666;">2026年1-7月同比</div>
+        <div style="font-size:12px; color:#666;">2026年1-8月同比</div>
         <div style="font-size:11px; color:#00a854; margin-top:4px;">持续下降</div>
       </div>
       <div style="background:#e0f2f1; padding:14px; border-radius:8px; text-align:center;">
@@ -345,7 +526,7 @@
     </div>
 
     <h3 style="font-size:15px;color:#00695c;margin:15px 0 8px;">5.1 近期治理四象限</h3>
-    <p style="font-size:13px;color:#666;">以2025年1-7月投诉量为横轴、2026年1-7月同比变化率为纵轴，将13个街道分为四个象限：</p>
+    <p style="font-size:13px;color:#666;">以2025年1-8月投诉量为横轴、2026年1-8月同比变化率为纵轴，将13个街道分为四个象限：</p>
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
       <tr style="background:#00695c;color:#fff;"><th style="padding:5px;">象限</th><th>定义</th><th>街道</th><th>管理策略</th></tr>
       <tr style="background:#e8f5e9;"><td>🟢 第一象限</td><td>基数低+持续改善</td><td>天平路、康健、华泾、长桥、湖南路、凌云路</td><td>保持推进，总结经验推广</td></tr>
@@ -356,10 +537,10 @@
 
     <h3 style="font-size:15px;color:#00695c;margin:15px 0 8px;">5.2 近期治理反转预警</h3>
     <div style="background:#ffebee; border-left:4px solid #c62828; padding:12px; border-radius:6px; margin-bottom:12px;">
-      <strong>🔴 趋势反转预警：</strong>以下小区在三年数据中表现良好（2025同比改善），但在2026年1-7月出现<strong>趋势反转</strong>，需重点关注：
+      <strong>🔴 趋势反转预警：</strong>以下小区在三年数据中表现良好（2025同比改善），但在2026年1-8月出现<strong>趋势反转</strong>，需重点关注：
     </div>
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <tr style="background:#c62828;color:#fff;"><th style="padding:5px;">小区</th><th>街道</th><th>2025同比</th><th>2026(1-7月)同比</th><th>反转幅度</th><th>预警级别</th></tr>
+      <tr style="background:#c62828;color:#fff;"><th style="padding:5px;">小区</th><th>街道</th><th>2025同比</th><th>2026(1-8月)同比</th><th>反转幅度</th><th>预警级别</th></tr>
       <tr style="background:#ffebee;"><td>欣嘉苑1-3期</td><td>虹梅路</td><td>-24.0%</td><td style="color:#ff4d4f;font-weight:700;">+236.8%</td><td>260.8pp</td><td>🔴 红色</td></tr>
       <tr style="background:#ffebee;"><td>家乐苑</td><td>凌云路</td><td>-25.9%</td><td style="color:#ff4d4f;font-weight:700;">+170.0%</td><td>195.9pp</td><td>🔴 红色</td></tr>
       <tr style="background:#ffebee;"><td>新湖云庭</td><td>枫林路</td><td>-8.7%</td><td style="color:#ff4d4f;font-weight:700;">+134.8%</td><td>143.5pp</td><td>🔴 红色</td></tr>
@@ -371,7 +552,7 @@
 
     <h3 style="font-size:15px;color:#00695c;margin:15px 0 8px;">5.3 近期持续改善标杆（保持推进）</h3>
     <table style="width:100%;border-collapse:collapse;font-size:12px;">
-      <tr style="background:#00695c;color:#fff;"><th style="padding:5px;">小区</th><th>街道</th><th>2025同比</th><th>2026(1-7月)同比</th><th>持续改善</th></tr>
+      <tr style="background:#00695c;color:#fff;"><th style="padding:5px;">小区</th><th>街道</th><th>2025同比</th><th>2026(1-8月)同比</th><th>持续改善</th></tr>
       <tr style="background:#e8f5e9;"><td>馨宁公寓</td><td>华泾</td><td>-11.5%</td><td style="color:#00a854;font-weight:700;">-62.3%</td><td>🟢 加速改善</td></tr>
       <tr style="background:#e8f5e9;"><td>日晖六村</td><td>斜土路</td><td>-15.3%</td><td style="color:#00a854;font-weight:700;">-50.0%</td><td>🟢 加速改善</td></tr>
       <tr style="background:#e8f5e9;"><td>天钥新村</td><td>枫林路</td><td>-10.8%</td><td style="color:#00a854;font-weight:700;">-48.4%</td><td>🟢 加速改善</td></tr>
@@ -381,14 +562,14 @@
     </table>
 
     <div style="background:#e0f2f1; border-left:4px solid #00695c; padding:12px; border-radius:6px; margin-top:12px;">
-      <strong>📌 近期治理建议：</strong>2026年1-7月整体降幅-15.7%，但<strong>7月单月降幅消失（-0.2%）</strong>，治理红利正在消退。建议：(1) 对第四象限4个恶化街道启动专项督导；(2) 对5个红色反转小区逐一排查反弹原因；(3) 总结馨宁公寓等标杆小区的治理经验，形成可复制模式推广。
+      <strong>📌 近期治理建议：</strong>2026年1-8月整体降幅-15.7%，但<strong>7月单月降幅消失（-0.2%）</strong>，治理红利正在消退。建议：(1) 对第四象限4个恶化街道启动专项督导；(2) 对5个红色反转小区逐一排查反弹原因；(3) 总结馨宁公寓等标杆小区的治理经验，形成可复制模式推广。
     </div>
   </div>
 
   <!-- ===== 附件 ===== -->
   <div class="section">
     <div class="section-title">附件：反弹小区集中地址入户核查工作单</div>
-    <p style="color:#666;font-size:13px;">基于本报告第六章"治理反弹案例Top5"的深入分析，对27个反弹小区中5个"集中地址爆发型"小区的特定门牌地址进行了逐条投诉溯源，形成入户核查工作单，供工作人员携带现场核查使用。</p>
+    <p style="color:#666;font-size:13px;">基于本报告第六章"治理反弹案例Top5"的深入分析，对115个反弹小区中5个"集中地址爆发型"小区的特定门牌地址进行了逐条投诉溯源，形成入户核查工作单，供工作人员携带现场核查使用。</p>
     
     <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:16px 0;">
       <div style="border:1px solid #e0e0e0; border-radius:8px; padding:16px; background:#fafafa;">
@@ -465,14 +646,14 @@ chart1.setOption({
 var chart2 = echarts.init(document.getElementById('chart-category'));
 chart2.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年','2025年','2026年1-7月'], top: 5 },
+  legend: { data: ['2024年','2025年','2026年1-8月'], top: 5 },
   grid: { left: 130, right: 30, bottom: 40, top: 50 },
   xAxis: { type: 'value', name: '投诉量（件）' },
   yAxis: { type: 'category', data: ['旧住房改造','房屋维修','绿化管理','业主大会/业委会','清洁卫生','房屋违规使用','停车管理','消防管理','邻里纠纷','物业安保','群租管理','物业收费','物业服务态度'] },
   series: [
     { name: '2024年', type: 'bar', data: [1933,4591,930,2877,1375,2925,4590,1801,2761,1485,1476,443,575], itemStyle: { color: '#bfbfbf' } },
     { name: '2025年', type: 'bar', data: [1213,3389,712,2240,1072,2361,3722,1661,2559,1385,1415,494,615], itemStyle: { color: '#fa8c16' } },
-    { name: '2026年1-7月', type: 'bar', data: [542,1793,314,1011,582,1036,1584,877,1588,671,726,247,426], itemStyle: { color: '#1890ff' } }
+    { name: '2026年1-8月', type: 'bar', data: [542,1793,314,1011,582,1036,1584,877,1588,671,726,247,426], itemStyle: { color: '#1890ff' } }
   ]
 });
 
@@ -480,18 +661,162 @@ chart2.setOption({
 var chart3 = echarts.init(document.getElementById('chart-street'));
 chart3.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年','2025年','2026年1-7月'], top: 5 },
+  legend: { data: ['2024年','2025年','2026年1-8月'], top: 5 },
   grid: { left: 80, right: 30, bottom: 40, top: 50 },
   xAxis: { type: 'category', data: ['凌云路','康健新村','天平路','田林','漕河泾','湖南路','长桥','斜土路','枫林路','龙华','华泾','徐家汇','虹梅路'], axisLabel: { rotate: 30 } },
   yAxis: { type: 'value', name: '投诉量（件）' },
   series: [
     { name: '2024年', type: 'bar', data: [2521,2006,2419,2120,2379,1517,3415,2219,2599,1711,1718,2410,814], itemStyle: { color: '#bfbfbf' } },
     { name: '2025年', type: 'bar', data: [1509,1452,1800,1644,1975,1275,2872,1906,2310,1534,1595,2263,815], itemStyle: { color: '#fa8c16' } },
-    { name: '2026年1-7月', type: 'bar', data: [745,637,909,1069,1094,720,1220,956,941,827,719,1144,470], itemStyle: { color: '#1890ff' } }
+    { name: '2026年1-8月', type: 'bar', data: [745,637,909,1069,1094,720,1220,956,941,827,719,1144,470], itemStyle: { color: '#1890ff' } }
   ]
 });
 
 window.addEventListener('resize', function() { chart1.resize(); chart2.resize(); chart3.resize(); });
 </script>
+
+<!-- ===== 右侧浮动目录 ===== -->
+<div class="toc-float collapsed" id="tocFloat">
+  <button class="toc-toggle" id="tocToggle">目 录</button>
+  <div class="toc-panel">
+    <div class="toc-header">
+      <span>📑 报告目录</span>
+      <span class="toc-count" id="tocCount">0章</span>
+    </div>
+    <div class="toc-body" id="tocBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ===== 右侧浮动目录 =====
+document.addEventListener('DOMContentLoaded', function() {
+  var tocFloat = document.getElementById('tocFloat');
+  var tocToggle = document.getElementById('tocToggle');
+  var tocBody = document.getElementById('tocBody');
+  var tocCount = document.getElementById('tocCount');
+  if (!tocFloat || !tocBody) return;
+
+  var expanded = false;
+  tocToggle.addEventListener('click', function() {
+    expanded = !expanded;
+    if (expanded) {
+      tocFloat.classList.remove('collapsed');
+      tocFloat.classList.add('expanded');
+      tocToggle.textContent = '收 起';
+    } else {
+      tocFloat.classList.add('collapsed');
+      tocFloat.classList.remove('expanded');
+      tocToggle.textContent = '目 录';
+    }
+  });
+
+  var sections = document.querySelectorAll('.section');
+  var tocHTML = '';
+  var sectionCount = 0;
+  var idCounter = 0;
+
+  sections.forEach(function(section, idx) {
+    var titleEl = section.querySelector('.section-title');
+    if (!titleEl) return;
+    var title = titleEl.textContent.trim();
+    title = title.replace(/^[^\u4e00-\u9fa5a-zA-Z0-9]+/, '');
+    if (!title) return;
+    sectionCount++;
+    idCounter++;
+    var sectionId = 'sec-' + idCounter;
+    section.id = sectionId;
+    var subTitles = section.querySelectorAll('.sub-title');
+    var hasSub = subTitles.length > 0;
+    var subHTML = '';
+    if (hasSub) {
+      subHTML += '<div class="toc-sub-wrap">';
+      subTitles.forEach(function(sub, subIdx) {
+        idCounter++;
+        var subId = 'sub-' + idCounter;
+        sub.id = subId;
+        var subTitle = sub.textContent.trim();
+        subHTML += '<a class="toc-item level2" href="#' + subId + '" data-target="' + subId + '">' + subTitle + '</a>';
+      });
+      subHTML += '</div>';
+    }
+    tocHTML += '<a class="toc-item level1' + (hasSub ? ' has-sub' : '') + '" href="#' + sectionId + '" data-target="' + sectionId + '">' +
+               title +
+               (hasSub ? '<span class="toc-arrow">▶</span>' : '') +
+               '</a>' + subHTML;
+  });
+
+  tocBody.innerHTML = tocHTML;
+  tocCount.textContent = sectionCount + '章';
+
+  var level1Items = tocBody.querySelectorAll('.toc-item.level1.has-sub');
+  level1Items.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var subWrap = item.nextElementSibling;
+      if (subWrap && subWrap.classList.contains('toc-sub-wrap')) {
+        e.preventDefault();
+        subWrap.classList.toggle('open');
+        item.classList.toggle('open');
+      }
+    });
+  });
+
+  var allTocItems = tocBody.querySelectorAll('.toc-item');
+  allTocItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var targetId = item.getAttribute('data-target');
+      if (!targetId) return;
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        var top = target.offsetTop - 60;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  var ticking = false;
+  function updateActive() {
+    var scrollY = window.scrollY + 100;
+    var currentId = null;
+    var allTargets = document.querySelectorAll('.section[id^="sec-"], .sub-title[id^="sub-"]');
+    for (var i = 0; i < allTargets.length; i++) {
+      var el = allTargets[i];
+      if (el.offsetTop <= scrollY) {
+        currentId = el.id;
+      } else {
+        break;
+      }
+    }
+    if (currentId) {
+      allTocItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      var activeItem = tocBody.querySelector('.toc-item[data-target="' + currentId + '"]');
+      if (activeItem) {
+        activeItem.classList.add('active');
+        if (activeItem.classList.contains('level2')) {
+          var parentWrap = activeItem.closest('.toc-sub-wrap');
+          if (parentWrap) {
+            parentWrap.classList.add('open');
+            var prevItem = parentWrap.previousElementSibling;
+            if (prevItem) prevItem.classList.add('open');
+          }
+        }
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateActive);
+      ticking = true;
+    }
+  });
+  updateActive();
+});
+</script>
+
 </body>
 </html>
