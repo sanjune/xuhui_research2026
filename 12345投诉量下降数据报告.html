@@ -314,7 +314,8 @@
   <!-- 类别分析 -->
   <div class="section">
     <div class="section-title">十四类投诉年度对比</div>
-    <div class="section-desc">按2025年投诉量降序排列，展示各类别在2024-2026年的变化趋势</div>
+    <div class="section-desc">按2025年投诉量降序排列，展示各类别在2024-2026年的变化趋势。点击图例「2024年 / 2025年 / 2026年1-8月」可切换各年份柱条的显示与隐藏</div>
+    <p style="font-size:12px;color:#888;margin:0 0 8px;">口径说明：2024、2025 为全年数据，2026 年为 1-8 月数据。</p>
     <div id="chart-category" class="chart-box tall"></div>
     <table class="data-table">
       <thead>
@@ -518,7 +519,7 @@ var cat2025 = [3788,3471,2702,2454,2282,1686,1451,1423,1248,1101,737,637,519,119
 var cat2026 = [1588,1799,1595,1038,1014,881,728,673,543,582,315,427,247,54];
 chart3.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年1-8月', '2025年1-8月', '2026年1-8月'], top: 10 },
+  legend: { data: ['2024年', '2025年', '2026年1-8月'], top: 10 },
   grid: { left: 140, right: 30, bottom: 20, top: 50 },
   xAxis: { type: 'value', name: '工单量（件）' },
   yAxis: { type: 'category', data: categories.reverse(), axisLabel: { fontSize: 12 } },
@@ -584,7 +585,7 @@ var co2025 = [2773,2149,1430,691,503,492,477,476,452,426];
 var co2026 = [1216,1140,746,385,283,253,108,256,171,95];
 chart5.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年1-8月', '2025年1-8月', '2026年1-8月'], top: 10 },
+  legend: { data: ['2024年', '2025年', '2026年1-8月'], top: 10 },
   grid: { left: 120, right: 30, bottom: 20, top: 50 },
   xAxis: { type: 'value', name: '工单量（件）' },
   yAxis: { type: 'category', data: companies.reverse(), axisLabel: { fontSize: 12 } },

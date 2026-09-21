@@ -570,7 +570,6 @@ chart1.setOption({
 var chart2 = echarts.init(document.getElementById('chart-trend'));
 chart2.setOption({
   tooltip: { trigger: 'axis' },
-  legend: { data: ['缺失率(越低越好)'], top: 10 },
   grid: { left: 60, right: 30, bottom: 60, top: 50 },
   xAxis: { type: 'category', data: ['答复要点','主办单位','内容描述','诉求区域','物业公司','小区为无'], axisLabel: { rotate: 20 } },
   yAxis: { type: 'value', name: '缺失率(%)', max: 70 },
