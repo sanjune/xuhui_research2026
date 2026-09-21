@@ -50,6 +50,14 @@
   .card-status { font-size:11px; font-weight:600; }
   .card-link { font-size:12px; color:#1976d2; font-weight:600; text-decoration:none; }
   .card:hover .card-link { color:#0d47a1; }
+  .card-title a { color:inherit; text-decoration:none; }
+
+  /* 附件链接区（成果卡片内） */
+  .card-attach { padding:10px 18px; border-top:1px dashed #e8e8e8; background:#fafbfd; }
+  .card-attach .attach-title { font-size:10px; color:#999; font-weight:600; letter-spacing:1px; margin-bottom:4px; }
+  .card-attach a { display:flex; align-items:center; gap:6px; font-size:12px; color:#1565c0; text-decoration:none; padding:3px 0; line-height:1.5; }
+  .card-attach a:hover { color:#0d47a1; text-decoration:underline; }
+  .card-attach a::before { content:'📎'; font-size:11px; }
 
   /* Status colors */
   .status-done { color:#43a047; }
@@ -194,7 +202,6 @@
         <div class="dropdown-menu">
           <a class="dropdown-item" href="12345投诉量下降数据报告.html"><span class="badge">#1</span>12345投诉量下降数据报告</a>
           <a class="dropdown-item" href="投诉去重识别方法论说明.html"><span class="badge">#2</span>投诉去重识别方法论说明</a>
-          <a class="dropdown-item" href="2026年1-8月投诉去重建议清单.html"><span class="badge">#2·附</span>2026年1-8月去重建议清单</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="数据质量优化专项报告.html"><span class="badge">#3</span>数据质量优化专项报告</a>
           <a class="dropdown-item" href="高风险小区预警清单.html"><span class="badge">#6</span>高风险小区预警清单</a>
@@ -207,8 +214,6 @@
           <a class="dropdown-item" href="重点问题专题分析报告（5份）.html"><span class="badge">#5</span>重点问题专题分析报告（5份）</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="治理效果追踪分析报告.html"><span class="badge">#7</span>治理效果追踪分析报告</a>
-          <a class="dropdown-item" href="反弹小区入户核查工作单.html"><span class="badge">#7·附</span>反弹小区入户核查工作单</a>
-          <a class="dropdown-item" href="底部抬升小区热线数据分析报告.html"><span class="badge">#7·附</span>底部抬升小区热线数据分析</a>
         </div>
       </div>
     </div>
@@ -246,14 +251,14 @@
     <div class="cat-header">
       <div class="cat-icon cat-icon-bg" style="background:#1976d2;">一</div>
       <div class="cat-title">核心硬成果</div>
-      <div class="cat-count">3项已完成</div>
+      <div class="cat-count">3项已完成 · 含1项附件</div>
     </div>
     <div class="card-grid">
 
-      <a class="card accent-blue" href="12345投诉量下降数据报告.html">
+      <div class="card accent-blue" id="c1">
         <div class="card-header">
           <div class="num-badge">成果 #1</div>
-          <div class="card-title">12345投诉量下降数据报告</div>
+          <div class="card-title"><a href="12345投诉量下降数据报告.html">12345投诉量下降数据报告</a></div>
         </div>
         <div class="card-body">
           <div class="card-desc">核心数据卡片、月度趋势图、同比对比、十四类明细、街道与物业企业分析、归因分析</div>
@@ -264,16 +269,20 @@
             <span class="card-tag">13街道</span>
           </div>
         </div>
+        <div class="card-attach">
+          <div class="attach-title">附 件</div>
+          <a href="街镇专项分析报告.html">街镇专项分析报告（13个街镇单独分析）</a>
+        </div>
         <div class="card-footer">
           <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看报告 →</span>
+          <a class="card-link" href="12345投诉量下降数据报告.html">查看报告 →</a>
         </div>
-      </a>
+      </div>
 
-      <a class="card accent-blue" href="投诉去重识别方法论说明.html">
+      <div class="card accent-blue" id="c2">
         <div class="card-header">
           <div class="num-badge">成果 #2</div>
-          <div class="card-title">投诉去重识别方法论说明</div>
+          <div class="card-title"><a href="投诉去重识别方法论说明.html">投诉去重识别方法论说明</a></div>
         </div>
         <div class="card-body">
           <div class="card-desc">四重识别策略（精确/催办/高频/相似）、流程图、识别结果、数据质量控制、市局复核机制、技术参数表</div>
@@ -283,31 +292,17 @@
             <span class="card-tag">四重策略</span>
           </div>
         </div>
-        <div class="card-footer">
-          <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看报告 →</span>
-        </div>
-      </a>
-
-      <a class="card accent-blue" href="2026年1-8月投诉去重建议清单.html">
-        <div class="card-header">
-          <div class="num-badge">成果 #2 · 附件</div>
-          <div class="card-title">2026年1-8月投诉去重建议清单</div>
-        </div>
-        <div class="card-body">
-          <div class="card-desc">月度汇总去重成果，按月切换标签，含趋势、Top小区/类别/街道分布</div>
-          <div class="card-tags">
-            <span class="card-tag">月度合集</span>
-            <span class="card-tag">标签切换</span>
-          </div>
+        <div class="card-attach">
+          <div class="attach-title">附 件</div>
+          <a href="2026年1-8月投诉去重建议清单.html">2026年1-8月投诉去重建议清单</a>
         </div>
         <div class="card-footer">
           <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看报告 →</span>
+          <a class="card-link" href="投诉去重识别方法论说明.html">查看报告 →</a>
         </div>
-      </a>
+      </div>
 
-      <a class="card accent-blue" href="数据质量优化专项报告.html">
+      <a class="card accent-blue" id="c3" href="数据质量优化专项报告.html">
         <div class="card-header">
           <div class="num-badge">成果 #3</div>
           <div class="card-title">数据质量优化专项报告</div>
@@ -334,11 +329,11 @@
     <div class="cat-header">
       <div class="cat-icon cat-icon-bg" style="background:#43a047;">二</div>
       <div class="cat-title">深度分析成果</div>
-      <div class="cat-count">5项已完成</div>
+      <div class="cat-count">4项已完成 · 含2项附件</div>
     </div>
     <div class="card-grid">
 
-      <a class="card accent-green" href="物业投诉根因分析报告.html">
+      <a class="card accent-green" id="c4" href="物业投诉根因分析报告.html">
         <div class="card-header">
           <div class="num-badge">成果 #4</div>
           <div class="card-title">物业投诉根因分析报告</div>
@@ -356,7 +351,7 @@
         </div>
       </a>
 
-      <a class="card accent-green" href="重点问题专题分析报告（5份）.html">
+      <a class="card accent-green" id="c5" href="重点问题专题分析报告（5份）.html">
         <div class="card-header">
           <div class="num-badge">成果 #5</div>
           <div class="card-title">重点问题专题分析报告（5份）</div>
@@ -375,7 +370,7 @@
         </div>
       </a>
 
-      <a class="card accent-green" href="高风险小区预警清单.html">
+      <a class="card accent-green" id="c6" href="高风险小区预警清单.html">
         <div class="card-header">
           <div class="num-badge">成果 #6</div>
           <div class="card-title">高风险小区预警清单</div>
@@ -394,10 +389,10 @@
         </div>
       </a>
 
-      <a class="card accent-green" href="治理效果追踪分析报告.html">
+      <div class="card accent-green" id="c7">
         <div class="card-header">
           <div class="num-badge">成果 #7</div>
-          <div class="card-title">治理效果追踪分析报告</div>
+          <div class="card-title"><a href="治理效果追踪分析报告.html">治理效果追踪分析报告</a></div>
         </div>
         <div class="card-body">
           <div class="card-desc">635个小区全周期追踪（2024→2025→2026），成功269个(42.4%)、反弹74个(11.7%)、恶化158个(24.9%)，闭环模型、类别/街道效果、成功/反弹/恶化案例、机制建议</div>
@@ -407,49 +402,16 @@
             <span class="card-tag">三类案例</span>
           </div>
         </div>
-        <div class="card-footer">
-          <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看报告 →</span>
-        </div>
-      </a>
-
-      <a class="card accent-green" href="反弹小区入户核查工作单.html">
-        <div class="card-header">
-          <div class="num-badge">成果 #7·附件</div>
-          <div class="card-title">反弹小区入户核查工作单</div>
-        </div>
-        <div class="card-body">
-          <div class="card-desc">27个反弹小区中5个"集中地址爆发型"小区的逐条投诉溯源，含工单编号、诉求摘要、入户核查要点清单、签字确认栏，支持打印携带现场核查</div>
-          <div class="card-tags">
-            <span class="card-tag">5个地址</span>
-            <span class="card-tag">投诉溯源</span>
-            <span class="card-tag">现场核查</span>
-          </div>
+        <div class="card-attach">
+          <div class="attach-title">附 件</div>
+          <a href="反弹小区入户核查工作单.html">反弹小区入户核查工作单</a>
+          <a href="底部抬升小区热线数据分析报告.html">底部抬升小区同比热线数据分析</a>
         </div>
         <div class="card-footer">
           <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看工作单 →</span>
+          <a class="card-link" href="治理效果追踪分析报告.html">查看报告 →</a>
         </div>
-      </a>
-
-      <a class="card accent-green" href="底部抬升小区热线数据分析报告.html">
-        <div class="card-header">
-          <div class="num-badge">成果 #7·附</div>
-          <div class="card-title">底部抬升小区同比热线数据分析</div>
-        </div>
-        <div class="card-body">
-          <div class="card-desc">84个党建引领物业治理重点小区全周期追踪，2024-2026年同比分析，13街道排名、三类矛盾分析、Top改善/恶化榜单、治理建议</div>
-          <div class="card-tags">
-            <span class="card-tag">84个重点小区</span>
-            <span class="card-tag">同比分析</span>
-            <span class="card-tag">三类矛盾</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <span class="card-status status-done">● 已完成</span>
-          <span class="card-link">查看报告 →</span>
-        </div>
-      </a>
+      </div>
 
     </div>
   </div>
