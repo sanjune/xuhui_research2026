@@ -340,8 +340,8 @@
   <!-- 物业企业 -->
   <div class="section">
     <div class="section-title">物业企业投诉量Top10</div>
-    <div class="section-desc">按 2025 年 1-8 月投诉量降序取前 10 家物业企业，三年统一采用同期（1-8月）口径。点击图例可切换各年份柱条的显示与隐藏</div>
-    <p style="font-size:12px;color:#888;margin:0 0 8px;">口径说明：三年均为 1-8 月同期数据；统计范围为工单上填报的物业服务企业，「无物业企业（自管/无）」未计入排名。</p>
+    <div class="section-desc">按2025年投诉量降序取前10家物业企业。点击图例「2024年 / 2025年 / 2026年1-8月」可切换各年份柱条的显示与隐藏</div>
+    <p style="font-size:12px;color:#888;margin:0 0 8px;">口径说明：2024、2025 为全年数据，2026 为 1-8 月数据（2025年同比 = 2025全年 vs 2024全年；2026年同比 = 2026年1-8月 vs 2025年1-8月）。统计范围为工单上填报的物业服务企业，「无物业企业（自管/无）」未计入排名。</p>
     <div id="chart-company" class="chart-box tall"></div>
   </div>
 
@@ -392,7 +392,7 @@
     </div>
     <div class="finding-card">
       <div class="finding-title">归因三：多维度对比推动物业企业整改</div>
-      <div class="finding-desc">通过物业企业间的投诉量、投诉密度横向对比，形成排名压力。同期（1-8月）口径下，高建物业（全区第一）从2024年2,194件降至2025年1,815件（-17.3%），2026年同期再降至1,480件（-18.5%）；衡复物业从1,977件降至1,453件（-26.5%），徐房物业从1,474件降至993件（-32.6%）。</div>
+      <div class="finding-desc">通过物业企业间的投诉量、投诉密度横向对比，形成排名压力。高建物业（全区第一）从2024年3,486件降至2025年2,773件（-20.5%），衡复物业从3,082件降至2,149件（-30.3%），徐房物业从2,247件降至1,430件（-36.4%）。</div>
     </div>
     <div class="finding-card">
       <div class="finding-title">归因四：街道层面协同治理</div>
@@ -580,19 +580,19 @@ chart4.setOption({
 
 // ─── 物业企业Top10 ───
 var chart5 = echarts.init(document.getElementById('chart-company'));
-var companies = ['高建物业','衡复物业','徐房物业','汇成物业','中海物业','安得物业','秀澜物业','申城物业','轻工物业','润美物业'];
-var co2024 = [2194,1977,1474,855,548,441,468,294,281,274];
-var co2025 = [1815,1453,993,474,374,349,347,334,287,274];
-var co2026 = [1480,1458,876,450,142,329,294,216,300,109];
+var companies = ['高建物业','衡复物业','徐房物业','汇成物业','安得物业','秀澜物业','中海物业','轻工物业','申城物业','润美物业'];
+var co2024 = [3486,3082,2247,1296,635,722,908,491,499,413];
+var co2025 = [2773,2149,1430,691,503,492,477,476,452,426];
+var co2026 = [1480,1458,876,450,329,294,142,300,216,109];
 chart5.setOption({
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  legend: { data: ['2024年1-8月', '2025年1-8月', '2026年1-8月'], top: 10 },
+  legend: { data: ['2024年', '2025年', '2026年1-8月'], top: 10 },
   grid: { left: 120, right: 30, bottom: 20, top: 50 },
   xAxis: { type: 'value', name: '工单量（件）' },
   yAxis: { type: 'category', data: companies.reverse(), axisLabel: { fontSize: 12 } },
   series: [
-    { name: '2024年1-8月', type: 'bar', data: co2024.reverse(), itemStyle: { color: '#bfbfbf' } },
-    { name: '2025年1-8月', type: 'bar', data: co2025.reverse(), itemStyle: { color: '#1890ff' } },
+    { name: '2024年', type: 'bar', data: co2024.reverse(), itemStyle: { color: '#bfbfbf' } },
+    { name: '2025年', type: 'bar', data: co2025.reverse(), itemStyle: { color: '#1890ff' } },
     { name: '2026年1-8月', type: 'bar', data: co2026.reverse(), itemStyle: { color: '#52c41a' } }
   ]
 });
