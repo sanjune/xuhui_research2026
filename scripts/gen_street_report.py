@@ -201,6 +201,39 @@ def chart_overview_contribution(ov):
     }
 
 
+# 词云配色（按权重从高到低循环取用，中文词云不旋转，保证可读）
+WC_PALETTE = ["#1a3a5f", "#1890ff", "#13c2c2", "#52c41a", "#fa8c16",
+              "#f5222d", "#7b1fa2", "#0f6e56"]
+
+
+def chart_wordcloud(kws):
+    """诉求主题词词云。kws: [{'word':..,'cnt':..}]，按词频降序。"""
+    items = sorted(kws, key=lambda x: -x["cnt"])[:24]
+    if not items:
+        return None
+    data = [{"name": x["word"], "value": x["cnt"],
+             "textStyle": {"color": WC_PALETTE[i % len(WC_PALETTE)]}}
+            for i, x in enumerate(items)]
+    mx = max(x["cnt"] for x in items)
+    return {
+        "tooltip": {"formatter": "{b}：{c} 次"},
+        "series": [{
+            "type": "wordCloud",
+            "shape": "circle",
+            "left": "center", "top": "center",
+            "width": "96%", "height": "92%",
+            "sizeRange": [13, 46],
+            "rotationRange": [0, 0],
+            "rotationStep": 0,
+            "gridSize": 6,
+            "drawOutOfBound": False,
+            "layoutAnimation": False,
+            "emphasis": {"textStyle": {"fontWeight": "bold"}},
+            "data": data,
+        }],
+    }
+
+
 def chart_street_heatmap(ov, streets):
     months = [f"{m}月" for m in range(1, 9)]
     data, mx = [], 1
@@ -283,6 +316,7 @@ CSS = """<style>
   .chart-box { width:100%; height:360px; }
   .chart-box.tall { height:440px; }
   .chart-box.mid { height:320px; }
+  .chart-box.wordcloud { height:380px; }
 
   .data-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:12.5px; }
   .data-table th { background:#1a3a5f; color:#fff; padding:9px 10px; text-align:center; font-weight:600; font-size:12px; }
@@ -547,9 +581,6 @@ def street_panel(i, s, r, active):
         ext_html = f"""<div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid">{''.join(ext_cards)}</div>"""
 
-    # 关键词
-    chips = "".join(f"<span class='chip'>{x['word']}<span class='c'>{n(x['cnt'])}</span></span>"
-                    for x in s["keywords"])
 
     # 来源 / 工单类型 / 质量
     src_rows = "".join(f"<tr><td class='left'>{x['name']}</td><td>{n(x['cnt'])}</td><td>{x['pct']}%</td></tr>"
@@ -641,7 +672,7 @@ def street_panel(i, s, r, active):
     {comp_rows}
   </table>
   <div class="sub-title">诉求主题词（已过滤工单模板用语）</div>
-  <div class="chip-wrap">{chips}</div>
+  <div id="c{i}-wordcloud" class="chart-box wordcloud"></div>
 
   <div class="sub-title">重复投诉与数据质量</div>
   {dup_html}
@@ -689,6 +720,9 @@ def build_html(data):
         charts[f"c{i}-catdelta"] = chart_category_delta(s)
         charts[f"c{i}-catdonut"] = chart_category_donut(s)
         charts[f"c{i}-quarter"] = chart_same_period(s)
+        wc = chart_wordcloud(s.get("keywords") or [])
+        if wc:
+            charts[f"c{i}-wordcloud"] = wc
 
     charts_js = json.dumps(charts, ensure_ascii=False)
 
@@ -722,6 +756,7 @@ def build_html(data):
   徐汇区物业课题一期项目 · 数据分析中心 · 2026年9月 · 数据截至 2026年8月
 </div>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"></script>
 <script>
 var CHARTS = {{}};
 var OPTS = {charts_js};
@@ -792,8 +827,10 @@ def main():
     html = build_html(data)
     with open(OUT, "w", encoding="utf-8") as f:
         f.write(html)
+    n_wc = sum(1 for s in data["streets"].values() if s.get("keywords"))
+    n_chart = len(data["overview"]) * 5 + 3 + n_wc
     print(f"✔ 生成 {OUT}（{os.path.getsize(OUT)/1024:.1f} KB）")
-    print(f"  街镇 {len(data['overview'])} 个 | 图表 {len(data['overview']) * 5 + 3} 个")
+    print(f"  街镇 {len(data['overview'])} 个 | 图表 {n_chart} 个（含 {n_wc} 张主题词词云）")
 
 
 if __name__ == "__main__":
