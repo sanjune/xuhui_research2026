@@ -21,16 +21,6 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "scripts", "street_analysis.json")
 OUT = os.path.join(ROOT, "街镇专项分析报告.html")
-# 词云遮罩（徐汇区行政边界）：scripts/gen_xuhui_mask.py 生成
-MASK_B64_FILE = os.path.join(ROOT, "assets", "xuhui_mask.b64")
-
-
-def load_mask_b64():
-    """读取徐汇区边界遮罩的 base64（内联进 HTML，保持报告单文件自包含）。"""
-    if not os.path.exists(MASK_B64_FILE):
-        return None
-    with open(MASK_B64_FILE, encoding="ascii") as f:
-        return f.read().strip()
 
 C = {
     "blue": "#1890ff", "deep": "#1a3a5f", "green": "#52c41a", "red": "#f5222d",
@@ -219,9 +209,9 @@ WC_PALETTE = ["#1a3a5f", "#1890ff", "#13c2c2", "#52c41a", "#fa8c16",
 def chart_wordcloud(kws):
     """诉求主题词词云。kws: [{'word':..,'cnt':..}]，按词频降序。
 
-    轮廓为徐汇区行政边界：maskImage 在页面 JS 侧注入（图片对象无法放进 JSON），
-    这里只声明 keepAspect —— 让词云按遮罩真实宽高比（约 0.605，南北长）居中收缩，
-    避免被容器拉扁。遮罩未就绪时页面会跳过词云，就绪后自动补绘。
+    边界为 16:9 长方形：不设 maskImage（echarts-wordcloud 缺省时布局区域即满矩形），
+    配合 keepAspect=False 让词云铺满 16:9 容器，与 词云图/*.png 导出图一致。
+    字号区间随容器尺寸缩放（容器约 980×551，对应导出画布 1600×900 的 0.61 倍）。
     """
     items = sorted(kws, key=lambda x: -x["cnt"])[:24]
     if not items:
@@ -233,11 +223,10 @@ def chart_wordcloud(kws):
         "tooltip": {"formatter": "{b}：{c} 次"},
         "series": [{
             "type": "wordCloud",
-            "shape": "circle",
-            "keepAspect": True,
+            "keepAspect": False,
             "left": "center", "top": "center",
-            "width": "96%", "height": "92%",
-            "sizeRange": [12, 44],
+            "width": "100%", "height": "100%",
+            "sizeRange": [39, 147],
             "rotationRange": [0, 0],
             "rotationStep": 0,
             "gridSize": 5,
@@ -331,8 +320,10 @@ CSS = """<style>
   .chart-box { width:100%; height:360px; }
   .chart-box.tall { height:440px; }
   .chart-box.mid { height:320px; }
-  .chart-box.wordcloud { height:660px; max-width:470px; margin:0 auto; }
-  .wc-note { max-width:470px; margin:6px auto 0; text-align:center; font-size:11.5px; color:#94a3b8; line-height:1.6; }
+  /* 词云：严格 16:9 —— height:auto 覆盖 .chart-box 的 360px，让高度由 aspect-ratio 决定 */
+  .chart-box.wordcloud { width:100%; max-width:980px; height:auto; aspect-ratio:16/9; margin:0 auto; }
+  @supports not (aspect-ratio: 16 / 9) { .chart-box.wordcloud { height:551px; } }
+  .wc-note { max-width:980px; margin:6px auto 0; text-align:center; font-size:11.5px; color:#94a3b8; line-height:1.6; }
 
   .data-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:12.5px; }
   .data-table th { background:#1a3a5f; color:#fff; padding:9px 10px; text-align:center; font-weight:600; font-size:12px; }
@@ -737,7 +728,7 @@ def street_panel(i, s, r, active):
   </table>
   <div class="sub-title">诉求主题词（已过滤工单模板用语）</div>
   <div id="c{i}-wordcloud" class="chart-box wordcloud"></div>
-  <div class="wc-note">词云轮廓＝徐汇区行政区域边界 ｜ 字号＝词频，展示 Top24</div>
+  <div class="wc-note">词云边界＝16:9 长方形 ｜ 字号＝词频，展示 Top24</div>
 
   <div class="sub-title">重复投诉与数据质量</div>
   {dup_html}
@@ -791,10 +782,6 @@ def build_html(data):
 
     charts_js = json.dumps(charts, ensure_ascii=False)
 
-    # 词云遮罩（徐汇区行政边界）内联为 dataURL；缺失则降级为圆形词云
-    _b64 = load_mask_b64()
-    mask_js = json.dumps("data:image/png;base64," + _b64) if _b64 else "null"
-
     heat = chart_street_heatmap(data["overview"], streets)
     heat_js = json.dumps(heat, ensure_ascii=False)
     heat_js = (heat_js[:-1] +
@@ -831,19 +818,6 @@ var CHARTS = {{}};
 var OPTS = {charts_js};
 OPTS['ov-heatmap'] = {heat_js};
 
-// 词云遮罩：徐汇区行政区域边界（黑色形状 + 透明背景，内联 base64）
-// 边界数据来源：高德开放平台行政区划（徐汇区 adcode 310104），仅用于词云轮廓示意
-var WC_MASK_SRC = {mask_js};
-var WC_MASK = null, WC_MASK_READY = false;
-if (WC_MASK_SRC) {{
-  WC_MASK = new Image();
-  WC_MASK.onload = function () {{ WC_MASK_READY = true; initCharts(document); resizeVisible(); }};
-  WC_MASK.onerror = function () {{ WC_MASK = null; WC_MASK_READY = true; initCharts(document); resizeVisible(); }};
-  WC_MASK.src = WC_MASK_SRC;
-}} else {{
-  WC_MASK_READY = true;
-}}
-
 function initCharts(scope) {{
   scope.querySelectorAll('.chart-box[id]').forEach(function (el) {{
     if (!OPTS[el.id]) return;
@@ -851,11 +825,6 @@ function initCharts(scope) {{
     if (!el.clientWidth || !el.clientHeight) return;
     if (CHARTS[el.id]) {{ CHARTS[el.id].resize(); return; }}
     var opt = OPTS[el.id];
-    // 词云：等边界遮罩就绪后再画（就绪前跳过，onload 回调里会重试）
-    if (el.id.indexOf('wordcloud') >= 0) {{
-      if (!WC_MASK_READY) return;
-      if (WC_MASK) opt.series[0].maskImage = WC_MASK;
-    }}
     var c = echarts.init(el);
     c.setOption(opt);
     CHARTS[el.id] = c;
