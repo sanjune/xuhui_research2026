@@ -58,6 +58,25 @@
 底部抬升报告重算脚本：`scripts/recalc_bottom_lift_8m.py`（产出 `bottom_lift_2026_8m.json`，
 内含对旧上半年口径 4,510/4,263/2,057/1,662 的回归校验）+ `scripts/update_bottom_lift_report.py`（回填 HTML，幂等）。
 
+### 2.3 词云规范（边界统一为 16:9 长方形）
+
+> **所有「诉求主题词」词云一律使用 16:9 长方形边界，不再使用行政区域形状遮罩。**
+
+| 项 | 规范 |
+|------|------|
+| 边界 | 16:9 长方形。实现：**不传 `maskImage`**（插件缺省时布局区域即满矩形）+ `keepAspect: false` |
+| 字号 | 随容器尺寸缩放：报告内嵌容器 980×551 用 `sizeRange [39,147]`；导出画布 1600×900 用 `[64,240]` |
+| 内容 | 每街镇 Top24 词；`rotationRange [0,0]`（中文不旋转）；配色 `WC_PALETTE` 8 色按权重循环 |
+| 报告内嵌 | `gen_street_report.py :: chart_wordcloud()`，容器 `.chart-box.wordcloud` |
+| 独立出图 | `scripts/export_wordclouds.py` → `词云图/<街镇>.png`（1600×900）+ `词云图/词云总览.html` |
+| 本地依赖 | `assets/vendor/`（echarts 5.4.3 + echarts-wordcloud 2.1.0），离线可渲染 |
+
+**易踩的坑**：`.chart-box { height:360px }` 会**覆盖** `aspect-ratio`（有显式高度时 aspect-ratio 不生效），
+所以词云容器必须显式写 `height:auto`，否则容器变成 980×360（2.72:1）而非 16:9。
+
+历史遗留：`scripts/gen_xuhui_mask.py`、`assets/xuhui_mask.*`、`data/geo/xuhui_district_310104.json`
+为早期「徐汇区行政边界形状词云」资产，现已不在报告中引用（保留备查）。
+
 ---
 
 ## 3. 目录结构

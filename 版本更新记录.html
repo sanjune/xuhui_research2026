@@ -94,9 +94,9 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.6.1</span>
+    <span>当前版本：v2.7.0</span>
     <span>更新日期：2026-09-22</span>
-    <span>累计更新：9 次</span>
+    <span>累计更新：10 次</span>
   </div>
 </div>
 
@@ -105,6 +105,28 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <div class="stat-box"><div class="stat-num">+3,482</div><div class="stat-label">新增代码行数</div></div>
   <div class="stat-box"><div class="stat-num">-207</div><div class="stat-label">删除代码行数</div></div>
   <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">已完成成果数</div></div>
+</div>
+
+<!-- ===== v2.7.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.7.0</span>
+    <span class="version-date">2026-09-22</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title opt">🎨 词云规范统一</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">口径</span><strong>词云边界统一为 16:9 长方形</strong> —— 取消原「徐汇区行政区域边界形状」遮罩，改用 16:9 长方形边界（不传 maskImage + keepAspect:false，插件缺省布局区域即满矩形）。《街镇专项分析报告》13 个词云卡片由 470×660 竖长改为 980×551 横向，与导出的独立词云图完全一致</li>
+        <li><span class="tag tag-new">新增成果</span><strong>13 个街镇诉求主题词云图（1600×900 PNG）</strong> —— 新增 <code>词云图/</code> 目录与浏览页，每镇一张 16:9 词云图，可直接用于汇报材料</li>
+        <li><span class="tag tag-new">新脚本</span><strong>export_wordclouds.py</strong> —— 无头 Chrome 渲染 echarts-wordcloud 逐街镇出图；字号区间经 4 档实验选定 <code>[64,240]</code>（1600×900 画布填充率约 95%×88%）</li>
+        <li><span class="tag tag-opt">工程</span><strong>本地化 echarts 依赖</strong> —— <code>assets/vendor/</code> 引入 echarts 5.4.3 + echarts-wordcloud 2.1.0，导出流程离线可复现</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.6.1 ===== -->
