@@ -110,6 +110,27 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
 <!-- ===== v2.1.0 ===== -->
 <div class="version-card">
   <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.5.0</span>
+    <span class="version-date">2026-09-22</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title opt">📐 口径统一</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">口径</span><strong>投诉密度统一为「件/千户」</strong> —— 定义：投诉密度 = 投诉量 ÷ 户数 × 1000。全站所有分析报告的密度指标一律按此规则计算，此前使用的「件/百户」「件/小区」不再作为密度口径（「件/小区」保留为对照列，不再称作密度）</li>
+        <li><span class="tag tag-fix">数据修正</span><strong>根因分析报告 50 处密度换算</strong> —— 21 张交叉分析表、街道密度分布图（13 个街道数值 + 6 档分级阈值）、2 组柱状图、9 处正文结论的密度值由「每百户」换算为「每千户」（数值 ×10）</li>
+        <li><span class="tag tag-fix">数据修正</span><strong>街镇专项分析报告密度表重算</strong> —— 密度排名由「件/小区」改为「件/千户」，新增「户数」列，保留「件/小区（对照）」列。户数据取自纳统小区档案 <code>community_linked_data.pkl</code> 的 <code>total_households</code> 字段（994 个纳统小区，与热线小区匹配率 95.3%、工单覆盖 97.2%）</li>
+        <li><span class="tag tag-new">结论变化</span><strong>密度排名出现反转</strong> —— 按件/千户：湖南路 50.7 件/千户居首（总量第 10），天平路 41.1 次之；原按件/小区居首的华泾镇退至第 8、长桥退至第 9。全区基准 27.7 件/千户</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="version-card">
+  <div class="version-header">
     <span class="version-tag tag-major">MAJOR</span>
     <span class="version-num">v2.1.0</span>
     <span class="version-date">2026-09-10</span>

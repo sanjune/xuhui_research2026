@@ -436,7 +436,9 @@ def overview_section(data):
   <td class="left"><b>{r['street']}</b></td>
   <td style="font-weight:700;color:#1890ff;">{r['density']}</td>
   <td>{n(r['n2026'])}</td>
+  <td>{n(r['households'])}</td>
   <td>{n(r['communities'])}</td>
+  <td>{r['density_per_community']}</td>
   <td>{r['rank_total']}</td>
   <td style="color:{gap_color};font-weight:700;">{gap_txt}</td>
   <td style="color:{color_of(r['yoy'])};font-weight:700;">{pct_txt(r['yoy'])}</td>
@@ -481,7 +483,7 @@ def overview_section(data):
 
 <div class="section">
   <div class="section-title">二、全区街镇总表</div>
-  <div class="section-desc">总量排名看规模负担，投诉密度排名看单位小区承载强度；两张表可切换查看</div>
+  <div class="section-desc">总量排名看规模负担，投诉密度排名看单位居民投诉强度（件/千户）；两张表可切换查看</div>
   <div class="rank-tabs">
     <button class="rank-tab-btn active" data-rank="rank-total">总量排名</button>
     <button class="rank-tab-btn" data-rank="rank-density">投诉密度排名</button>
@@ -500,11 +502,11 @@ def overview_section(data):
   </div>
 
   <div class="rank-panel" id="rank-density">
-    <div class="section-desc">投诉密度 = 2026年1-8月投诉量 ÷ 该街镇有投诉小区数（件/小区），衡量单个小区的平均投诉承载强度；位次差 = 总量排名 − 密度排名，正数表示该街镇"小区不多但每个都很重"</div>
+    <div class="section-desc">投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（<b>件/千户</b>），衡量平均每千户居民的投诉强度；户数为该街镇「2026年1-8月有投诉小区」的总户数（取自纳统小区档案 total_households）。位次差 = 总量排名 − 密度排名，正数表示该街镇"总量不大但单位居民投诉更重"；末列「件/小区」为对照口径</div>
     <table class="data-table">
       <tr>
-        <th>密度<br>排名</th><th>街镇</th><th>投诉密度<br>（件/小区）</th><th>2026年<br>1-8月</th>
-        <th>有投诉<br>小区数</th><th>总量<br>排名</th><th>位次差</th><th>同比</th><th>占全区</th>
+        <th>密度<br>排名</th><th>街镇</th><th>投诉密度<br>（件/千户）</th><th>2026年<br>1-8月</th>
+        <th>户数</th><th>有投诉<br>小区数</th><th>件/小区<br>（对照）</th><th>总量<br>排名</th><th>位次差</th><th>同比</th><th>占全区</th>
       </tr>
       {''.join(dens_rows)}
     </table>
