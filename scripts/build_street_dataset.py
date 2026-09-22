@@ -482,14 +482,17 @@ def build(do_dedup=True) -> dict:
                 if c.get("street") != key:
                     continue
                 out.append({"community": c.get("community"), "n2024": c.get("n2024"),
-                            "n2025": c.get("n2025"), "n2026_h1": c.get("n2026_h1"),
+                            "n2025": c.get("n2025"), "n2025_same": c.get("n2025_same"),
+                            "n2026": c.get("n2026"),
+                            "improvement_2025": c.get("improvement_2025"),
                             "improvement_2026": c.get("improvement_2026"),
                             "top_category": c.get("top_category"), "kind": label})
             return out
 
         gov_info = {
             "tracking_total": int(gov.get("total_tracking", 0)),
-            "scope_note": "治理成效为 2026 上半年（1-6月）口径；案例取自《治理效果追踪分析报告》Top 榜单",
+            "scope_note": "治理成效为 2026年1-8月 vs 2025年同期 口径（已排除「其他」「房屋交易纠纷」等非物业类）；"
+                          "案例取自《治理效果追踪分析报告》Top 榜单",
             "effect_2026": ge.get("effect_2026"),
             "volume_2024": ge.get("2024"), "volume_2025": ge.get("2025"),
             "volume_2025_h1": ge.get("2025_h1"), "volume_2026_h1": ge.get("2026_h1"),
@@ -565,10 +568,17 @@ def build(do_dedup=True) -> dict:
     risk_sorted = sorted(overview, key=lambda x: -(x["risk_red"] or 0))
     for i, r in enumerate(risk_sorted, 1):
         r["rank_risk"] = i
+    # 投诉密度 = 2026年1-8月投诉量 ÷ 有投诉小区数（件/小区），衡量单位小区承载强度
+    for r in overview:
+        r["density"] = round(r["n2026"] / r["communities"], 1) if r["communities"] else None
+    dens_sorted = sorted([r for r in overview if r["density"] is not None], key=lambda x: -x["density"])
+    for i, r in enumerate(dens_sorted, 1):
+        r["rank_density"] = i                  # 1 = 密度最高
     for r in overview:
         sb = streets_data[r["street"]]
         sb["core"].update({"rank_total": r["rank_total"], "rank_yoy": r["rank_yoy"],
-                           "rank_dup": r.get("rank_dup"), "rank_risk": r["rank_risk"]})
+                           "rank_dup": r.get("rank_dup"), "rank_risk": r["rank_risk"],
+                           "rank_density": r.get("rank_density"), "density": r.get("density")})
 
     # ── 自动结论
     for r in overview:
@@ -585,7 +595,9 @@ def build(do_dedup=True) -> dict:
             "同比统一采用同期口径（1-8月 vs 1-8月），不使用全年基数",
             f"{YEAR_NOW}年 9-12 月数据未产生，图表以空值呈现",
             "重复投诉率：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，按街镇 1-8 月累计计算",
-            "治理成效为 2026 上半年口径；风险评估为 799 个参评小区口径",
+            "治理成效为 2026年1-8月 vs 2025年同期 口径（已排除「其他」「房屋交易纠纷」等非物业类）；"
+            "案例判定以 2026 年同期同比为准：恶化<-10%｜改善>+10%；2026年1-8月零工单的小区单列「本期无投诉」，不参与排名；"
+            "风险评估为 799 个参评小区口径",
         ],
     }
     return {"meta": meta, "district": district, "overview": overview, "streets": streets_data}
@@ -644,7 +656,7 @@ def make_insights(sb, row, district, dist_cat, d26):
     if sb["governance"]["effect_2026"] is not None:
         e = sb["governance"]["effect_2026"]
         word = "改善" if e > 0 else "恶化"
-        out.append(f"治理成效（2026 上半年口径）：{sb['governance']['volume_2026_h1']:,} 件，"
+        out.append(f"治理成效（2026年1-8月同期口径）：{sb['governance']['volume_2026_h1']:,} 件，"
                    f"同比{word} {abs(e)}%。")
     return out
 

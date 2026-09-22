@@ -54,6 +54,13 @@
   .tab-panel { display:none; }
   .tab-panel.active { display:block; }
 
+  .rank-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; }
+  .rank-tab-btn { padding:7px 18px; font-size:13px; border:1px solid #d9d9d9; background:#fff; border-radius:18px; cursor:pointer; color:#555; transition:all .2s; }
+  .rank-tab-btn:hover { border-color:#1890ff; color:#1890ff; }
+  .rank-tab-btn.active { background:#1890ff; border-color:#1890ff; color:#fff; font-weight:600; }
+  .rank-panel { display:none; }
+  .rank-panel.active { display:block; }
+
   .kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:6px; }
   .kpi { background:#f6f8fa; border-radius:8px; padding:12px 14px; }
   .kpi .k { font-size:11px; color:#888; } .kpi .v { font-size:20px; font-weight:700; color:#1a3a5f; }
@@ -138,7 +145,7 @@
 <div class="container">
 <div class="note-box">
   <b>口径说明</b>
-  <div>· 街镇明细合计 13,719 条 + 归属为空 7 条 = 全区 13,726 条</div><div>· 同比统一采用同期口径（1-8月 vs 1-8月），不使用全年基数</div><div>· 2026年 9-12 月数据未产生，图表以空值呈现</div><div>· 重复投诉率：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，按街镇 1-8 月累计计算</div><div>· 治理成效为 2026 上半年口径；风险评估为 799 个参评小区口径</div>
+  <div>· 街镇明细合计 13,719 条 + 归属为空 7 条 = 全区 13,726 条</div><div>· 同比统一采用同期口径（1-8月 vs 1-8月），不使用全年基数</div><div>· 2026年 9-12 月数据未产生，图表以空值呈现</div><div>· 重复投诉率：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，按街镇 1-8 月累计计算</div><div>· 治理成效为 2026年1-8月 vs 2025年同期 口径（已排除「其他」「房屋交易纠纷」等非物业类）；案例判定以 2026 年同期同比为准：恶化<-10%｜改善>+10%；2026年1-8月零工单的小区单列「本期无投诉」，不参与排名；风险评估为 799 个参评小区口径</div>
   <div>· 重复投诉口径：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，逐月独立去重后汇总</div>
 </div>
 
@@ -254,20 +261,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">55</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>鑫隆花园</td><td><b>84.1</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>77</td><td class='increase'>+71.4%</td><td>75.3%</td><td>停车管理</td></tr><tr><td>2</td><td class='left'>长桥新村东块</td><td><b>83.8</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>35</td><td class='increase'>+80.0%</td><td>51.4%</td><td>停车管理</td></tr><tr><td>3</td><td class='left'>书香逸居</td><td><b>82.2</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>142</td><td class='increase'>+31.2%</td><td>83.8%</td><td>业主大会/业委会</td></tr><tr><td>4</td><td class='left'>汇成一村</td><td><b>81.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>174</td><td class='increase'>+113.6%</td><td>85.6%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>徐汇新城</td><td><b>81.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>201</td><td class='increase'>+28.6%</td><td>87.1%</td><td>绿化管理</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">1,220</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">1,826</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+33.2%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">2,872</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,409</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">2,006</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+29.8%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">2,745</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>星秀苑</td><td>成功改善</td><td>30</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>停车管理</td></tr><tr><td class='left'>罗秀二村</td><td>成功改善</td><td>79</td><td>1</td><td>0</td><td class='decline'>+100.0%</td><td>清洁卫生</td></tr><tr><td class='left'>长桥三村西区</td><td>成功改善</td><td>70</td><td>1</td><td>0</td><td class='decline'>+100.0%</td><td>消防管理</td></tr><tr><td class='left'>长桥三村东区</td><td>成功改善</td><td>64</td><td>2</td><td>0</td><td class='decline'>+100.0%</td><td>停车管理</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>星罗苑</td><td>成功改善</td><td>17</td><td>22</td><td>16</td><td>3</td><td class='decline'>+81.2%</td><td>邻里纠纷</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -280,7 +288,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 9 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>长桥：1,471 件，居全区第 1 位，占全区 10.7%；同比 下降 31.1%（全区 -12.6%），降幅排名全区第 1 位。</li><li>对全区投诉量下降的贡献率为 33.7%（该镇减少 664 件）。</li><li>⚠ 逆势上升类别：邻里纠纷（+59件）、物业服务态度（+20件）、清洁卫生（+5件），需重点关注。</li><li>首要矛盾为停车管理（250 件，占本镇 17.0%，高于全区 3.7 个百分点）。</li><li>投诉最集中小区为罗秀新二村（142 件，占本镇 9.7%，同比 -4.1%）；Top5 小区集中度 32.0%。</li><li>投诉最多物业企业为上海汇成物业有限公司（279 件，占本镇 19.0%，涉及 7 个小区）。</li><li>风险预警：红色 16 个、橙色 32 个小区（该镇参评 55 个）。</li><li>重复投诉 514 件，重复率 34.9%，低于全区 0.4 个百分点；高优先级 361 件。</li><li>治理成效（2026 上半年口径）：1,220 件，同比改善 33.2%。</li></ul>
+  <ul class="insight-list"><li>长桥：1,471 件，居全区第 1 位，占全区 10.7%；同比 下降 31.1%（全区 -12.6%），降幅排名全区第 1 位。</li><li>对全区投诉量下降的贡献率为 33.7%（该镇减少 664 件）。</li><li>⚠ 逆势上升类别：邻里纠纷（+59件）、物业服务态度（+20件）、清洁卫生（+5件），需重点关注。</li><li>首要矛盾为停车管理（250 件，占本镇 17.0%，高于全区 3.7 个百分点）。</li><li>投诉最集中小区为罗秀新二村（142 件，占本镇 9.7%，同比 -4.1%）；Top5 小区集中度 32.0%。</li><li>投诉最多物业企业为上海汇成物业有限公司（279 件，占本镇 19.0%，涉及 7 个小区）。</li><li>风险预警：红色 16 个、橙色 32 个小区（该镇参评 55 个）。</li><li>重复投诉 514 件，重复率 34.9%，低于全区 0.4 个百分点；高优先级 361 件。</li><li>治理成效（2026年1-8月同期口径）：1,409 件，同比改善 29.8%。</li></ul>
 </div><div class="tab-panel" id="panel-1">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">1,337</div></div>
@@ -366,20 +374,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">100</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>汇东小区</td><td><b>91.2</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>53</td><td class='increase'>+228.6%</td><td>64.2%</td><td>群租管理</td></tr><tr><td>2</td><td class='left'>凯旋新村</td><td><b>89.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>86</td><td class='increase'>+62.5%</td><td>72.1%</td><td>旧住房改造</td></tr><tr><td>3</td><td class='left'>尊园</td><td><b>88.0</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>42</td><td class='increase'>+140.0%</td><td>64.3%</td><td>业主大会/业委会</td></tr><tr><td>4</td><td class='left'>创世纪花园</td><td><b>87.6</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>185</td><td class='increase'>+87.0%</td><td>86.5%</td><td>房屋违规使用</td></tr><tr><td>5</td><td class='left'>南赵巷小区</td><td><b>86.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>58</td><td class='increase'>+300.0%</td><td>62.1%</td><td>房屋维修</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">1,144</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">1,192</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+4.0%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">2,263</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,297</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,393</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+6.9%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">2,222</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>乐山大楼</td><td>成功改善</td><td>34</td><td>4</td><td>13</td><td class='increase'>0.0%</td><td>房屋维修</td></tr><tr><td class='left'>永新城</td><td>恶化</td><td>13</td><td>61</td><td>12</td><td class='increase'>—</td><td>消防管理</td></tr><tr><td class='left'>中原新村</td><td>恶化</td><td>6</td><td>23</td><td>10</td><td class='increase'>—</td><td>群租管理</td></tr><tr><td class='left'>虹桥大楼</td><td>恶化</td><td>9</td><td>33</td><td>8</td><td class='increase'>—</td><td>房屋维修</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>上影广场</td><td>成功改善</td><td>24</td><td>12</td><td>10</td><td>1</td><td class='decline'>+90.0%</td><td>邻里纠纷</td></tr><tr><td class='left'>南天大楼</td><td>成功改善</td><td>16</td><td>45</td><td>35</td><td>5</td><td class='decline'>+85.7%</td><td>邻里纠纷</td></tr><tr><td class='left'>徐虹华庭</td><td>成功改善</td><td>11</td><td>16</td><td>14</td><td>3</td><td class='decline'>+78.6%</td><td>旧住房改造</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -392,7 +401,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 6 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>徐家汇：1,337 件，居全区第 2 位，占全区 9.7%；同比 下降 8.3%（全区 -12.6%），降幅排名全区第 9 位。</li><li>对全区投诉量下降的贡献率为 6.1%（该镇减少 121 件）。</li><li>⚠ 逆势上升类别：群租管理（+43件）、邻里纠纷（+31件）、其他（+16件），需重点关注。</li><li>首要矛盾为邻里纠纷（208 件，占本镇 15.6%，高于全区 1.6 个百分点）。</li><li>投诉最集中小区为南丹小区（67 件，占本镇 5.0%，同比 +13.6%）；Top5 小区集中度 18.7%。</li><li>投诉最多物业企业为上海高建物业有限公司（361 件，占本镇 27.0%，涉及 19 个小区）。</li><li>风险预警：红色 33 个、橙色 45 个小区（该镇参评 100 个）。</li><li>重复投诉 439 件，重复率 32.8%，低于全区 2.5 个百分点；高优先级 326 件。</li><li>治理成效（2026 上半年口径）：1,144 件，同比改善 4.0%。</li></ul>
+  <ul class="insight-list"><li>徐家汇：1,337 件，居全区第 2 位，占全区 9.7%；同比 下降 8.3%（全区 -12.6%），降幅排名全区第 9 位。</li><li>对全区投诉量下降的贡献率为 6.1%（该镇减少 121 件）。</li><li>⚠ 逆势上升类别：群租管理（+43件）、邻里纠纷（+31件）、其他（+16件），需重点关注。</li><li>首要矛盾为邻里纠纷（208 件，占本镇 15.6%，高于全区 1.6 个百分点）。</li><li>投诉最集中小区为南丹小区（67 件，占本镇 5.0%，同比 +13.6%）；Top5 小区集中度 18.7%。</li><li>投诉最多物业企业为上海高建物业有限公司（361 件，占本镇 27.0%，涉及 19 个小区）。</li><li>风险预警：红色 33 个、橙色 45 个小区（该镇参评 100 个）。</li><li>重复投诉 439 件，重复率 32.8%，低于全区 2.5 个百分点；高优先级 326 件。</li><li>治理成效（2026年1-8月同期口径）：1,297 件，同比改善 6.9%。</li></ul>
 </div><div class="tab-panel" id="panel-2">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">1,315</div></div>
@@ -478,20 +487,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">90</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>明佳苑</td><td><b>90.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>112</td><td class='increase'>+160.0%</td><td>80.4%</td><td>房屋违规使用</td></tr><tr><td>2</td><td class='left'>习勤小区</td><td><b>87.8</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>59</td><td class='increase'>+75.0%</td><td>62.7%</td><td>旧住房改造</td></tr><tr><td>3</td><td class='left'>海上名门</td><td><b>87.0</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>82</td><td class='increase'>+58.8%</td><td>73.2%</td><td>房屋维修</td></tr><tr><td>4</td><td class='left'>科苑新村（南块）</td><td><b>86.6</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>57</td><td class='increase'>+26.7%</td><td>70.2%</td><td>旧住房改造</td></tr><tr><td>5</td><td class='left'>漕溪三村</td><td><b>86.1</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>68</td><td class='increase'>+144.4%</td><td>67.6%</td><td>消防管理</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">1,094</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">1,083</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v up">-1.0%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,975</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,272</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,195</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v up">-6.4%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,902</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>凯翔小区</td><td>成功改善</td><td>23</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>房屋维修</td></tr><tr><td class='left'>漕辉小区</td><td>成功改善</td><td>29</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>旧住房改造</td></tr><tr><td class='left'>臻庭</td><td>成功改善</td><td>43</td><td>4</td><td>20</td><td class='increase'>-900.0%</td><td>业主大会/业委会</td></tr><tr><td class='left'>薛家宅</td><td>反弹</td><td>27</td><td>21</td><td>32</td><td class='increase'>-433.3%</td><td>停车管理</td></tr><tr><td class='left'>正南花苑</td><td>反弹</td><td>18</td><td>6</td><td>15</td><td class='increase'>-200.0%</td><td>停车管理</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>金牛苑</td><td>成功改善</td><td>22</td><td>53</td><td>40</td><td>7</td><td class='decline'>+82.5%</td><td>业主大会/业委会</td></tr><tr><td class='left'>漕溪三村</td><td>反弹</td><td>26</td><td>20</td><td>10</td><td>27</td><td class='increase'>-170.0%</td><td>消防管理</td></tr><tr><td class='left'>薛家宅</td><td>反弹</td><td>27</td><td>20</td><td>13</td><td>33</td><td class='increase'>-153.8%</td><td>停车管理</td></tr><tr><td class='left'>漕溪三村</td><td>恶化</td><td>26</td><td>20</td><td>10</td><td>27</td><td class='increase'>-170.0%</td><td>消防管理</td></tr><tr><td class='left'>薛家宅</td><td>恶化</td><td>27</td><td>20</td><td>13</td><td>33</td><td class='increase'>-153.8%</td><td>停车管理</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -504,7 +514,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 7 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>漕河泾：1,315 件，居全区第 3 位，占全区 9.6%；同比 上升 4.0%（全区 -12.6%），降幅排名全区第 12 位。</li><li>⚠ 逆势上升类别：邻里纠纷（+54件）、业主大会/业委会（+30件）、房屋维修（+24件），需重点关注。</li><li>首要矛盾为房屋维修（214 件，占本镇 16.3%，低于全区 1.1 个百分点）。</li><li>投诉最集中小区为石龙路33弄（71 件，占本镇 5.4%，同比 +47.9%）；Top5 小区集中度 17.4%。</li><li>投诉最多物业企业为上海徐房物业有限公司（230 件，占本镇 17.5%，涉及 22 个小区）。</li><li>风险预警：红色 27 个、橙色 50 个小区（该镇参评 90 个）。</li><li>重复投诉 428 件，重复率 32.5%，低于全区 2.8 个百分点；高优先级 332 件。</li><li>治理成效（2026 上半年口径）：1,094 件，同比恶化 1.0%。</li></ul>
+  <ul class="insight-list"><li>漕河泾：1,315 件，居全区第 3 位，占全区 9.6%；同比 上升 4.0%（全区 -12.6%），降幅排名全区第 12 位。</li><li>⚠ 逆势上升类别：邻里纠纷（+54件）、业主大会/业委会（+30件）、房屋维修（+24件），需重点关注。</li><li>首要矛盾为房屋维修（214 件，占本镇 16.3%，低于全区 1.1 个百分点）。</li><li>投诉最集中小区为石龙路33弄（71 件，占本镇 5.4%，同比 +47.9%）；Top5 小区集中度 17.4%。</li><li>投诉最多物业企业为上海徐房物业有限公司（230 件，占本镇 17.5%，涉及 22 个小区）。</li><li>风险预警：红色 27 个、橙色 50 个小区（该镇参评 90 个）。</li><li>重复投诉 428 件，重复率 32.5%，低于全区 2.8 个百分点；高优先级 332 件。</li><li>治理成效（2026年1-8月同期口径）：1,272 件，同比恶化 6.4%。</li></ul>
 </div><div class="tab-panel" id="panel-3">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">1,260</div></div>
@@ -590,20 +600,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">62</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>明园小安桥</td><td><b>87.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>48</td><td class='increase'>+100.0%</td><td>50.0%</td><td>房屋违规使用</td></tr><tr><td>2</td><td class='left'>冶金小区</td><td><b>87.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>61</td><td class='increase'>+162.5%</td><td>65.6%</td><td>房屋维修</td></tr><tr><td>3</td><td class='left'>田林十三村</td><td><b>87.1</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>149</td><td class='increase'>+128.6%</td><td>83.9%</td><td>房屋违规使用</td></tr><tr><td>4</td><td class='left'>古宜小区</td><td><b>86.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>96</td><td class='increase'>+223.1%</td><td>79.2%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>爱建园</td><td><b>86.0</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>151</td><td class='increase'>+147.1%</td><td>84.1%</td><td>房屋维修</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">1,069</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">921</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v up">-16.1%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,644</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,219</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,030</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v up">-18.3%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,588</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>万科华尔兹花园</td><td>反弹</td><td>37</td><td>12</td><td>19</td><td class='increase'>-216.7%</td><td>业主大会/业委会</td></tr><tr><td class='left'>冶金小区</td><td>反弹</td><td>26</td><td>14</td><td>21</td><td class='increase'>-162.5%</td><td>房屋维修</td></tr><tr><td class='left'>长春小区</td><td>反弹</td><td>34</td><td>15</td><td>21</td><td class='increase'>-162.5%</td><td>房屋维修</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>古宜小区</td><td>反弹</td><td>30</td><td>23</td><td>13</td><td>44</td><td class='increase'>-238.5%</td><td>停车管理</td></tr><tr><td class='left'>古宜小区</td><td>恶化</td><td>30</td><td>23</td><td>13</td><td>44</td><td class='increase'>-238.5%</td><td>停车管理</td></tr><tr><td class='left'>虹桥大仕馆</td><td>恶化</td><td>27</td><td>57</td><td>25</td><td>63</td><td class='increase'>-152.0%</td><td>业主大会/业委会</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -616,7 +627,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 11 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>田林：1,260 件，居全区第 4 位，占全区 9.2%；同比 上升 15.2%（全区 -12.6%），降幅排名全区第 13 位。</li><li>⚠ 逆势上升类别：业主大会/业委会（+61件）、物业安保（+38件）、消防管理（+30件），需重点关注。</li><li>首要矛盾为房屋维修（187 件，占本镇 14.8%，低于全区 2.6 个百分点）。</li><li>投诉最集中小区为田林三街坊（81 件，占本镇 6.4%，同比 -31.4%）；Top5 小区集中度 27.4%。</li><li>投诉最多物业企业为上海徐房物业有限公司（318 件，占本镇 25.2%，涉及 10 个小区）。</li><li>风险预警：红色 20 个、橙色 30 个小区（该镇参评 62 个）。</li><li>重复投诉 451 件，重复率 35.8%，高于全区 0.5 个百分点；高优先级 345 件。</li><li>治理成效（2026 上半年口径）：1,069 件，同比恶化 16.1%。</li></ul>
+  <ul class="insight-list"><li>田林：1,260 件，居全区第 4 位，占全区 9.2%；同比 上升 15.2%（全区 -12.6%），降幅排名全区第 13 位。</li><li>⚠ 逆势上升类别：业主大会/业委会（+61件）、物业安保（+38件）、消防管理（+30件），需重点关注。</li><li>首要矛盾为房屋维修（187 件，占本镇 14.8%，低于全区 2.6 个百分点）。</li><li>投诉最集中小区为田林三街坊（81 件，占本镇 6.4%，同比 -31.4%）；Top5 小区集中度 27.4%。</li><li>投诉最多物业企业为上海徐房物业有限公司（318 件，占本镇 25.2%，涉及 10 个小区）。</li><li>风险预警：红色 20 个、橙色 30 个小区（该镇参评 62 个）。</li><li>重复投诉 451 件，重复率 35.8%，高于全区 0.5 个百分点；高优先级 345 件。</li><li>治理成效（2026年1-8月同期口径）：1,219 件，同比恶化 18.3%。</li></ul>
 </div><div class="tab-panel" id="panel-4">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">1,160</div></div>
@@ -702,20 +713,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">85</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>永康直管公房</td><td><b>86.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>119</td><td class='increase'>+107.7%</td><td>84.0%</td><td>房屋维修</td></tr><tr><td>2</td><td class='left'>公安大楼</td><td><b>85.3</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>146</td><td class='increase'>+135.7%</td><td>84.9%</td><td>房屋维修</td></tr><tr><td>3</td><td class='left'>上海新村直管公房</td><td><b>85.2</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>144</td><td class='increase'>+56.5%</td><td>84.0%</td><td>房屋维修</td></tr><tr><td>4</td><td class='left'>康平直管公房</td><td><b>85.2</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>79</td><td class='increase'>+92.9%</td><td>70.9%</td><td>房屋违规使用</td></tr><tr><td>5</td><td class='left'>艺术公寓</td><td><b>83.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>81</td><td class='increase'>+140.0%</td><td>74.1%</td><td>业主大会/业委会</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">909</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">1,046</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+13.1%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,800</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,130</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,181</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+4.3%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,743</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>陕西南路550弄</td><td>恶化</td><td>7</td><td>34</td><td>6</td><td class='increase'>—</td><td>房屋违规使用</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>余庆直管公房</td><td>成功改善</td><td>81</td><td>76</td><td>68</td><td>8</td><td class='decline'>+88.2%</td><td>邻里纠纷</td></tr><tr><td class='left'>建平小区</td><td>成功改善</td><td>17</td><td>14</td><td>12</td><td>2</td><td class='decline'>+83.3%</td><td>物业服务态度</td></tr><tr><td class='left'>岳阳路200弄</td><td>成功改善</td><td>27</td><td>33</td><td>28</td><td>5</td><td class='decline'>+82.1%</td><td>邻里纠纷</td></tr><tr><td class='left'>陕西南路550弄</td><td>成功改善</td><td>7</td><td>33</td><td>28</td><td>6</td><td class='decline'>+78.6%</td><td>房屋违规使用</td></tr><tr><td class='left'>公安大楼</td><td>反弹</td><td>78</td><td>35</td><td>17</td><td>43</td><td class='increase'>-152.9%</td><td>房屋维修</td></tr><tr><td class='left'>永康直管公房</td><td>反弹</td><td>62</td><td>30</td><td>17</td><td>37</td><td class='increase'>-117.6%</td><td>房屋维修</td></tr><tr><td class='left'>公安大楼</td><td>恶化</td><td>78</td><td>35</td><td>17</td><td>43</td><td class='increase'>-152.9%</td><td>房屋维修</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -728,7 +740,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 5 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>天平路：1,160 件，居全区第 5 位，占全区 8.5%；同比 下降 8.9%（全区 -12.6%），降幅排名全区第 8 位。</li><li>对全区投诉量下降的贡献率为 5.8%（该镇减少 114 件）。</li><li>⚠ 逆势上升类别：邻里纠纷（+42件）、房屋维修（+35件）、业主大会/业委会（+15件），需重点关注。</li><li>首要矛盾为房屋维修（342 件，占本镇 29.5%，高于全区 12.1 个百分点）。</li><li>投诉最集中小区为太原直管公房（54 件，占本镇 4.7%，同比 +8.0%）；Top5 小区集中度 20.5%。</li><li>投诉最多物业企业为上海衡复物业有限公司（764 件，占本镇 65.9%，涉及 49 个小区）。</li><li>风险预警：红色 23 个、橙色 48 个小区（该镇参评 85 个）。</li><li>重复投诉 365 件，重复率 31.5%，低于全区 3.8 个百分点；高优先级 288 件。</li><li>治理成效（2026 上半年口径）：909 件，同比改善 13.1%。</li></ul>
+  <ul class="insight-list"><li>天平路：1,160 件，居全区第 5 位，占全区 8.5%；同比 下降 8.9%（全区 -12.6%），降幅排名全区第 8 位。</li><li>对全区投诉量下降的贡献率为 5.8%（该镇减少 114 件）。</li><li>⚠ 逆势上升类别：邻里纠纷（+42件）、房屋维修（+35件）、业主大会/业委会（+15件），需重点关注。</li><li>首要矛盾为房屋维修（342 件，占本镇 29.5%，高于全区 12.1 个百分点）。</li><li>投诉最集中小区为太原直管公房（54 件，占本镇 4.7%，同比 +8.0%）；Top5 小区集中度 20.5%。</li><li>投诉最多物业企业为上海衡复物业有限公司（764 件，占本镇 65.9%，涉及 49 个小区）。</li><li>风险预警：红色 23 个、橙色 48 个小区（该镇参评 85 个）。</li><li>重复投诉 365 件，重复率 31.5%，低于全区 3.8 个百分点；高优先级 288 件。</li><li>治理成效（2026年1-8月同期口径）：1,130 件，同比改善 4.3%。</li></ul>
 </div><div class="tab-panel" id="panel-5">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">1,131</div></div>
@@ -814,20 +826,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">62</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>海珀旭晖</td><td><b>92.6</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>114</td><td class='increase'>+537.5%</td><td>86.8%</td><td>业主大会/业委会</td></tr><tr><td>2</td><td class='left'>尚海湾二期</td><td><b>91.3</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>494</td><td class='increase'>+82.9%</td><td>95.3%</td><td>业主大会/业委会</td></tr><tr><td>3</td><td class='left'>尚海湾一期</td><td><b>88.4</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>154</td><td class='increase'>+111.8%</td><td>86.4%</td><td>消防管理</td></tr><tr><td>4</td><td class='left'>中科新苑</td><td><b>87.0</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>57</td><td class='increase'>+216.7%</td><td>64.9%</td><td>房屋维修</td></tr><tr><td>5</td><td class='left'>福华花苑</td><td><b>83.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>63</td><td class='increase'>+130.0%</td><td>60.3%</td><td>邻里纠纷</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">956</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">1,060</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+9.8%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,906</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,096</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,235</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+11.3%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,870</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>海珀旭晖</td><td>反弹</td><td>51</td><td>12</td><td>51</td><td class='increase'>-537.5%</td><td>业主大会/业委会</td></tr><tr><td class='left'>中科新苑</td><td>反弹</td><td>25</td><td>13</td><td>19</td><td class='increase'>-216.7%</td><td>房屋维修</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>江南新村</td><td>成功改善</td><td>134</td><td>86</td><td>62</td><td>3</td><td class='decline'>+95.2%</td><td>物业收费</td></tr><tr><td class='left'>景泰大厦</td><td>成功改善</td><td>7</td><td>21</td><td>15</td><td>1</td><td class='decline'>+93.3%</td><td>邻里纠纷</td></tr><tr><td class='left'>瑞嘉公寓</td><td>成功改善</td><td>57</td><td>33</td><td>30</td><td>2</td><td class='decline'>+93.3%</td><td>房屋维修</td></tr><tr><td class='left'>尚海湾二期</td><td>反弹</td><td>283</td><td>109</td><td>41</td><td>81</td><td class='increase'>-97.6%</td><td>业主大会/业委会</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -840,7 +853,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 9 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>斜土路：1,131 件，居全区第 6 位，占全区 8.2%；同比 下降 13.5%（全区 -12.6%），降幅排名全区第 6 位。</li><li>对全区投诉量下降的贡献率为 9.0%（该镇减少 177 件）。</li><li>⚠ 逆势上升类别：房屋维修（+38件）、业主大会/业委会（+25件）、消防管理（+12件），需重点关注。</li><li>首要矛盾为房屋维修（274 件，占本镇 24.2%，高于全区 6.8 个百分点）。</li><li>投诉最集中小区为日晖六村（126 件，占本镇 11.1%，同比 -41.7%）；Top5 小区集中度 36.1%。</li><li>投诉最多物业企业为上海高建物业有限公司（336 件，占本镇 29.7%，涉及 11 个小区）。</li><li>风险预警：红色 16 个、橙色 36 个小区（该镇参评 62 个）。</li><li>重复投诉 424 件，重复率 37.5%，高于全区 2.2 个百分点；高优先级 328 件。</li><li>治理成效（2026 上半年口径）：956 件，同比改善 9.8%。</li></ul>
+  <ul class="insight-list"><li>斜土路：1,131 件，居全区第 6 位，占全区 8.2%；同比 下降 13.5%（全区 -12.6%），降幅排名全区第 6 位。</li><li>对全区投诉量下降的贡献率为 9.0%（该镇减少 177 件）。</li><li>⚠ 逆势上升类别：房屋维修（+38件）、业主大会/业委会（+25件）、消防管理（+12件），需重点关注。</li><li>首要矛盾为房屋维修（274 件，占本镇 24.2%，高于全区 6.8 个百分点）。</li><li>投诉最集中小区为日晖六村（126 件，占本镇 11.1%，同比 -41.7%）；Top5 小区集中度 36.1%。</li><li>投诉最多物业企业为上海高建物业有限公司（336 件，占本镇 29.7%，涉及 11 个小区）。</li><li>风险预警：红色 16 个、橙色 36 个小区（该镇参评 62 个）。</li><li>重复投诉 424 件，重复率 37.5%，高于全区 2.2 个百分点；高优先级 328 件。</li><li>治理成效（2026年1-8月同期口径）：1,096 件，同比改善 11.3%。</li></ul>
 </div><div class="tab-panel" id="panel-6">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">1,121</div></div>
@@ -926,20 +939,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">81</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>恒昌花园</td><td><b>88.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>74</td><td class='increase'>+114.3%</td><td>73.0%</td><td>邻里纠纷</td></tr><tr><td>2</td><td class='left'>平江路170弄</td><td><b>87.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>51</td><td class='increase'>+80.0%</td><td>58.8%</td><td>房屋维修</td></tr><tr><td>3</td><td class='left'>新湖云庭</td><td><b>86.2</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>178</td><td class='increase'>+221.7%</td><td>86.0%</td><td>业主大会/业委会</td></tr><tr><td>4</td><td class='left'>东航小区</td><td><b>86.1</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>76</td><td class='increase'>+87.5%</td><td>76.3%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>振兴小区</td><td><b>82.2</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>135</td><td class='increase'>+65.0%</td><td>81.5%</td><td>房屋违规使用</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">941</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">1,243</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+24.3%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">2,310</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">1,090</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,435</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+24.0%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">2,224</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>新湖云庭</td><td>反弹</td><td>62</td><td>42</td><td>74</td><td class='increase'>-221.7%</td><td>业主大会/业委会</td></tr><tr><td class='left'>医高小区</td><td>恶化</td><td>8</td><td>45</td><td>6</td><td class='increase'>—</td><td>绿化管理</td></tr><tr><td class='left'>荣承公寓</td><td>恶化</td><td>13</td><td>47</td><td>2</td><td class='increase'>—</td><td>业主大会/业委会</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>东安路240弄1-4号</td><td>成功改善</td><td>9</td><td>13</td><td>10</td><td>1</td><td class='decline'>+90.0%</td><td>邻里纠纷</td></tr><tr><td class='left'>荣承公寓</td><td>成功改善</td><td>11</td><td>46</td><td>20</td><td>2</td><td class='decline'>+90.0%</td><td>业主大会/业委会</td></tr><tr><td class='left'>新湖云庭</td><td>反弹</td><td>60</td><td>42</td><td>28</td><td>87</td><td class='increase'>-210.7%</td><td>业主大会/业委会</td></tr><tr><td class='left'>新湖云庭</td><td>恶化</td><td>60</td><td>42</td><td>28</td><td>87</td><td class='increase'>-210.7%</td><td>业主大会/业委会</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -952,7 +966,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 6 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>枫林路：1,121 件，居全区第 7 位，占全区 8.2%；同比 下降 25.2%（全区 -12.6%），降幅排名全区第 2 位。</li><li>对全区投诉量下降的贡献率为 19.1%（该镇减少 377 件）。</li><li>⚠ 逆势上升类别：物业服务态度（+9件），需重点关注。</li><li>首要矛盾为房屋维修（191 件，占本镇 17.0%，低于全区 0.4 个百分点）。</li><li>投诉最集中小区为龙山新村（94 件，占本镇 8.4%，同比 -21.7%）；Top5 小区集中度 36.0%。</li><li>投诉最多物业企业为上海高建物业有限公司（629 件，占本镇 56.1%，涉及 26 个小区）。</li><li>风险预警：红色 15 个、橙色 45 个小区（该镇参评 81 个）。</li><li>重复投诉 343 件，重复率 30.6%，低于全区 4.7 个百分点；高优先级 271 件。</li><li>治理成效（2026 上半年口径）：941 件，同比改善 24.3%。</li></ul>
+  <ul class="insight-list"><li>枫林路：1,121 件，居全区第 7 位，占全区 8.2%；同比 下降 25.2%（全区 -12.6%），降幅排名全区第 2 位。</li><li>对全区投诉量下降的贡献率为 19.1%（该镇减少 377 件）。</li><li>⚠ 逆势上升类别：物业服务态度（+9件），需重点关注。</li><li>首要矛盾为房屋维修（191 件，占本镇 17.0%，低于全区 0.4 个百分点）。</li><li>投诉最集中小区为龙山新村（94 件，占本镇 8.4%，同比 -21.7%）；Top5 小区集中度 36.0%。</li><li>投诉最多物业企业为上海高建物业有限公司（629 件，占本镇 56.1%，涉及 26 个小区）。</li><li>风险预警：红色 15 个、橙色 45 个小区（该镇参评 81 个）。</li><li>重复投诉 343 件，重复率 30.6%，低于全区 4.7 个百分点；高优先级 271 件。</li><li>治理成效（2026年1-8月同期口径）：1,090 件，同比改善 24.0%。</li></ul>
 </div><div class="tab-panel" id="panel-7">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">973</div></div>
@@ -1038,20 +1052,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">55</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>龙兆苑</td><td><b>86.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>84</td><td class='increase'>+65.0%</td><td>73.8%</td><td>邻里纠纷</td></tr><tr><td>2</td><td class='left'>俞二小区</td><td><b>86.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>49</td><td class='increase'>+260.0%</td><td>63.3%</td><td>业主大会/业委会</td></tr><tr><td>3</td><td class='left'>机场新村</td><td><b>86.0</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>48</td><td class='increase'>+125.0%</td><td>62.5%</td><td>群租管理</td></tr><tr><td>4</td><td class='left'>人防小区</td><td><b>84.6</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>29</td><td class='increase'>+80.0%</td><td>62.1%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>龙南六村2-65号</td><td><b>84.4</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>91</td><td class='increase'>+175.0%</td><td>72.5%</td><td>停车管理</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">827</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">960</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+13.9%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,534</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">948</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,020</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+7.1%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,453</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>上缝小区</td><td>成功改善</td><td>68</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>停车管理</td></tr><tr><td class='left'>樟树苑</td><td>成功改善</td><td>27</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>房屋违规使用</td></tr><tr><td class='left'>百汇园</td><td>成功改善</td><td>127</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>房屋维修</td></tr><tr><td class='left'>长峰小区</td><td>成功改善</td><td>19</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>业主大会/业委会</td></tr><tr><td class='left'>龙华雅居</td><td>成功改善</td><td>15</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>房屋维修</td></tr><tr><td class='left'>龙南六村2-65号</td><td>反弹</td><td>42</td><td>27</td><td>22</td><td class='increase'>-175.0%</td><td>停车管理</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>恒地苑</td><td>成功改善</td><td>28</td><td>44</td><td>37</td><td>8</td><td class='decline'>+78.4%</td><td>业主大会/业委会</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -1064,7 +1079,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 6 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>龙华：973 件，居全区第 8 位，占全区 7.1%；同比 下降 10.7%（全区 -12.6%），降幅排名全区第 7 位。</li><li>对全区投诉量下降的贡献率为 5.9%（该镇减少 116 件）。</li><li>⚠ 逆势上升类别：邻里纠纷（+32件）、清洁卫生（+10件）、物业服务态度（+8件），需重点关注。</li><li>首要矛盾为业主大会/业委会（151 件，占本镇 15.5%，高于全区 6.6 个百分点）。</li><li>投诉最集中小区为双龙（67 件，占本镇 6.9%，同比 +63.4%）；Top5 小区集中度 29.7%。</li><li>投诉最多物业企业为上海华晅投资管理有限公司（127 件，占本镇 13.1%，涉及 6 个小区）。</li><li>风险预警：红色 20 个、橙色 27 个小区（该镇参评 55 个）。</li><li>重复投诉 348 件，重复率 35.8%，高于全区 0.5 个百分点；高优先级 279 件。</li><li>治理成效（2026 上半年口径）：827 件，同比改善 13.9%。</li></ul>
+  <ul class="insight-list"><li>龙华：973 件，居全区第 8 位，占全区 7.1%；同比 下降 10.7%（全区 -12.6%），降幅排名全区第 7 位。</li><li>对全区投诉量下降的贡献率为 5.9%（该镇减少 116 件）。</li><li>⚠ 逆势上升类别：邻里纠纷（+32件）、清洁卫生（+10件）、物业服务态度（+8件），需重点关注。</li><li>首要矛盾为业主大会/业委会（151 件，占本镇 15.5%，高于全区 6.6 个百分点）。</li><li>投诉最集中小区为双龙（67 件，占本镇 6.9%，同比 +63.4%）；Top5 小区集中度 29.7%。</li><li>投诉最多物业企业为上海华晅投资管理有限公司（127 件，占本镇 13.1%，涉及 6 个小区）。</li><li>风险预警：红色 20 个、橙色 27 个小区（该镇参评 55 个）。</li><li>重复投诉 348 件，重复率 35.8%，高于全区 0.5 个百分点；高优先级 279 件。</li><li>治理成效（2026年1-8月同期口径）：948 件，同比改善 7.1%。</li></ul>
 </div><div class="tab-panel" id="panel-8">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">897</div></div>
@@ -1150,20 +1165,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">47</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>家乐苑</td><td><b>91.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>207</td><td class='increase'>+205.0%</td><td>87.9%</td><td>停车管理</td></tr><tr><td>2</td><td class='left'>秀水苑</td><td><b>90.0</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>56</td><td class='increase'>+85.7%</td><td>67.9%</td><td>物业安保</td></tr><tr><td>3</td><td class='left'>化工一、四村</td><td><b>87.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>122</td><td class='increase'>+81.2%</td><td>81.1%</td><td>停车管理</td></tr><tr><td>4</td><td class='left'>梅陇五村(多层)</td><td><b>85.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>192</td><td class='increase'>+117.4%</td><td>88.0%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>梅陇五村(高层)</td><td><b>81.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>52</td><td class='increase'>+77.8%</td><td>65.4%</td><td>停车管理</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">745</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">888</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+16.1%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,509</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">869</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">1,010</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+14.0%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,456</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>松风花园</td><td>成功改善</td><td>145</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>业主大会/业委会</td></tr><tr><td class='left'>罗秀家园</td><td>成功改善</td><td>14</td><td>0</td><td>10</td><td class='increase'>0.0%</td><td>绿化管理</td></tr><tr><td class='left'>天秀苑</td><td>成功改善</td><td>31</td><td>4</td><td>2</td><td class='decline'>+33.3%</td><td>绿化管理</td></tr><tr><td class='left'>家乐苑</td><td>反弹</td><td>115</td><td>31</td><td>61</td><td class='increase'>-205.0%</td><td>停车管理</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>锦泰苑</td><td>成功改善</td><td>7</td><td>13</td><td>11</td><td>1</td><td class='decline'>+90.9%</td><td>物业收费</td></tr><tr><td class='left'>梅陇十村</td><td>成功改善</td><td>47</td><td>46</td><td>30</td><td>6</td><td class='decline'>+80.0%</td><td>邻里纠纷</td></tr><tr><td class='left'>家乐苑</td><td>反弹</td><td>106</td><td>31</td><td>20</td><td>66</td><td class='increase'>-230.0%</td><td>停车管理</td></tr><tr><td class='left'>家乐苑</td><td>恶化</td><td>106</td><td>31</td><td>20</td><td>66</td><td class='increase'>-230.0%</td><td>停车管理</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -1174,7 +1190,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 6 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>凌云路：897 件，居全区第 9 位，占全区 6.5%；同比 下降 15.2%（全区 -12.6%），降幅排名全区第 4 位。</li><li>对全区投诉量下降的贡献率为 8.2%（该镇减少 161 件）。</li><li>⚠ 逆势上升类别：业主大会/业委会（+36件）、群租管理（+14件）、物业服务态度（+13件），需重点关注。</li><li>首要矛盾为停车管理（180 件，占本镇 20.1%，高于全区 6.8 个百分点）。</li><li>投诉最集中小区为凌云新村（91 件，占本镇 10.1%，同比 -9.0%）；Top5 小区集中度 34.8%。</li><li>投诉最多物业企业为上海徐房物业有限公司（178 件，占本镇 19.8%，涉及 9 个小区）。</li><li>风险预警：红色 13 个、橙色 27 个小区（该镇参评 47 个）。</li><li>重复投诉 307 件，重复率 34.2%，低于全区 1.1 个百分点；高优先级 232 件。</li><li>治理成效（2026 上半年口径）：745 件，同比改善 16.1%。</li></ul>
+  <ul class="insight-list"><li>凌云路：897 件，居全区第 9 位，占全区 6.5%；同比 下降 15.2%（全区 -12.6%），降幅排名全区第 4 位。</li><li>对全区投诉量下降的贡献率为 8.2%（该镇减少 161 件）。</li><li>⚠ 逆势上升类别：业主大会/业委会（+36件）、群租管理（+14件）、物业服务态度（+13件），需重点关注。</li><li>首要矛盾为停车管理（180 件，占本镇 20.1%，高于全区 6.8 个百分点）。</li><li>投诉最集中小区为凌云新村（91 件，占本镇 10.1%，同比 -9.0%）；Top5 小区集中度 34.8%。</li><li>投诉最多物业企业为上海徐房物业有限公司（178 件，占本镇 19.8%，涉及 9 个小区）。</li><li>风险预警：红色 13 个、橙色 27 个小区（该镇参评 47 个）。</li><li>重复投诉 307 件，重复率 34.2%，低于全区 1.1 个百分点；高优先级 232 件。</li><li>治理成效（2026年1-8月同期口径）：869 件，同比改善 14.0%。</li></ul>
 </div><div class="tab-panel" id="panel-9">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">897</div></div>
@@ -1260,20 +1276,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">60</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>延庆直管公房</td><td><b>84.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>152</td><td class='increase'>+54.5%</td><td>83.6%</td><td>房屋维修</td></tr><tr><td>2</td><td class='left'>华港小区</td><td><b>84.4</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>47</td><td class='increase'>+40.0%</td><td>70.2%</td><td>消防管理</td></tr><tr><td>3</td><td class='left'>陕新直管公房</td><td><b>83.4</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>236</td><td class='increase'>+54.5%</td><td>89.8%</td><td>房屋维修</td></tr><tr><td>4</td><td class='left'>安福直管公房</td><td><b>81.8</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>347</td><td class='increase'>+59.6%</td><td>92.5%</td><td>房屋违规使用</td></tr><tr><td>5</td><td class='left'>华康直管公房</td><td><b>80.8</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>95</td><td class='increase'>+18.8%</td><td>77.9%</td><td>房屋违规使用</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">720</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">784</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+8.2%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,275</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">877</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">852</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v up">-2.9%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,242</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>宫霄小区</td><td>恶化</td><td>8</td><td>46</td><td>13</td><td class='increase'>—</td><td>房屋违规使用</td></tr><tr><td class='left'>良友公寓</td><td>恶化</td><td>6</td><td>26</td><td>4</td><td class='increase'>—</td><td>邻里纠纷</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>武康直管公房</td><td>成功改善</td><td>18</td><td>16</td><td>15</td><td>2</td><td class='decline'>+86.7%</td><td>消防管理</td></tr><tr><td class='left'>复襄直管公房</td><td>成功改善</td><td>15</td><td>21</td><td>15</td><td>3</td><td class='decline'>+80.0%</td><td>物业服务态度</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -1286,7 +1303,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 5 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>湖南路：897 件，居全区第 10 位，占全区 6.5%；同比 下降 5.5%（全区 -12.6%），降幅排名全区第 10 位。</li><li>对全区投诉量下降的贡献率为 2.6%（该镇减少 52 件）。</li><li>⚠ 逆势上升类别：房屋维修（+50件）、邻里纠纷（+15件）、物业服务态度（+12件），需重点关注。</li><li>首要矛盾为房屋维修（245 件，占本镇 27.3%，高于全区 9.9 个百分点）。</li><li>投诉最集中小区为安福直管公房（115 件，占本镇 12.8%，同比 +79.7%）；Top5 小区集中度 38.6%。</li><li>投诉最多物业企业为上海衡复物业有限公司（694 件，占本镇 77.4%，涉及 38 个小区）。</li><li>风险预警：红色 16 个、橙色 31 个小区（该镇参评 60 个）。</li><li>重复投诉 395 件，重复率 44.0%，高于全区 8.7 个百分点；高优先级 346 件。</li><li>治理成效（2026 上半年口径）：720 件，同比改善 8.2%。</li></ul>
+  <ul class="insight-list"><li>湖南路：897 件，居全区第 10 位，占全区 6.5%；同比 下降 5.5%（全区 -12.6%），降幅排名全区第 10 位。</li><li>对全区投诉量下降的贡献率为 2.6%（该镇减少 52 件）。</li><li>⚠ 逆势上升类别：房屋维修（+50件）、邻里纠纷（+15件）、物业服务态度（+12件），需重点关注。</li><li>首要矛盾为房屋维修（245 件，占本镇 27.3%，高于全区 9.9 个百分点）。</li><li>投诉最集中小区为安福直管公房（115 件，占本镇 12.8%，同比 +79.7%）；Top5 小区集中度 38.6%。</li><li>投诉最多物业企业为上海衡复物业有限公司（694 件，占本镇 77.4%，涉及 38 个小区）。</li><li>风险预警：红色 16 个、橙色 31 个小区（该镇参评 60 个）。</li><li>重复投诉 395 件，重复率 44.0%，高于全区 8.7 个百分点；高优先级 346 件。</li><li>治理成效（2026年1-8月同期口径）：877 件，同比恶化 2.9%。</li></ul>
 </div><div class="tab-panel" id="panel-10">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">869</div></div>
@@ -1372,20 +1389,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">21</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>华泾五村</td><td><b>90.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>151</td><td class='increase'>+109.1%</td><td>84.8%</td><td>停车管理</td></tr><tr><td>2</td><td class='left'>华建二街坊</td><td><b>87.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>60</td><td class='increase'>+112.5%</td><td>68.3%</td><td>停车管理</td></tr><tr><td>3</td><td class='left'>明丰新纪苑</td><td><b>87.7</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>170</td><td class='increase'>+87.0%</td><td>84.7%</td><td>停车管理</td></tr><tr><td>4</td><td class='left'>华建一街坊</td><td><b>79.3</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>128</td><td class='increase'>+45.0%</td><td>81.2%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>徐汇臻园</td><td><b>78.6</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>77</td><td class='increase'>+25.0%</td><td>67.5%</td><td>停车管理</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">719</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">879</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+18.2%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,595</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">816</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">980</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+16.7%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,530</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>漓江山水花园</td><td>恶化</td><td>9</td><td>63</td><td>8</td><td class='increase'>—</td><td>业主大会/业委会</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>华泾五村</td><td>反弹</td><td>66</td><td>36</td><td>24</td><td>50</td><td class='increase'>-108.3%</td><td>停车管理</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">修缮项目（按小区名关联）</div>
@@ -1394,7 +1412,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 4 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>华泾镇：869 件，居全区第 11 位，占全区 6.3%；同比 下降 14.7%（全区 -12.6%），降幅排名全区第 5 位。</li><li>对全区投诉量下降的贡献率为 7.6%（该镇减少 150 件）。</li><li>⚠ 逆势上升类别：其他（+18件）、群租管理（+16件）、清洁卫生（+3件），需重点关注。</li><li>首要矛盾为停车管理（268 件，占本镇 30.8%，高于全区 17.5 个百分点）。</li><li>投诉最集中小区为华欣家园（96 件，占本镇 11.0%，同比 +7.9%）；Top5 小区集中度 47.1%。</li><li>投诉最多物业企业为上海华泾泾鸿物业管理有限公司（226 件，占本镇 26.0%，涉及 3 个小区）。</li><li>风险预警：红色 12 个、橙色 9 个小区（该镇参评 21 个）。</li><li>重复投诉 362 件，重复率 41.7%，高于全区 6.4 个百分点；高优先级 282 件。</li><li>治理成效（2026 上半年口径）：719 件，同比改善 18.2%。</li></ul>
+  <ul class="insight-list"><li>华泾镇：869 件，居全区第 11 位，占全区 6.3%；同比 下降 14.7%（全区 -12.6%），降幅排名全区第 5 位。</li><li>对全区投诉量下降的贡献率为 7.6%（该镇减少 150 件）。</li><li>⚠ 逆势上升类别：其他（+18件）、群租管理（+16件）、清洁卫生（+3件），需重点关注。</li><li>首要矛盾为停车管理（268 件，占本镇 30.8%，高于全区 17.5 个百分点）。</li><li>投诉最集中小区为华欣家园（96 件，占本镇 11.0%，同比 +7.9%）；Top5 小区集中度 47.1%。</li><li>投诉最多物业企业为上海华泾泾鸿物业管理有限公司（226 件，占本镇 26.0%，涉及 3 个小区）。</li><li>风险预警：红色 12 个、橙色 9 个小区（该镇参评 21 个）。</li><li>重复投诉 362 件，重复率 41.7%，高于全区 6.4 个百分点；高优先级 282 件。</li><li>治理成效（2026年1-8月同期口径）：816 件，同比改善 16.7%。</li></ul>
 </div><div class="tab-panel" id="panel-11">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">751</div></div>
@@ -1480,20 +1498,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">61</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>天悦</td><td><b>89.1</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>76</td><td class='increase'>+114.3%</td><td>71.1%</td><td>房屋违规使用</td></tr><tr><td>2</td><td class='left'>寿祥坊</td><td><b>88.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>85</td><td class='increase'>+140.0%</td><td>74.1%</td><td>业主大会/业委会</td></tr><tr><td>3</td><td class='left'>寿德坊</td><td><b>86.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>81</td><td class='increase'>+76.9%</td><td>75.3%</td><td>停车管理</td></tr><tr><td>4</td><td class='left'>康兴花园</td><td><b>86.3</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>46</td><td class='increase'>+33.3%</td><td>65.2%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>紫藤苑</td><td><b>85.5</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>49</td><td class='increase'>+128.6%</td><td>75.5%</td><td>业主大会/业委会</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">637</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">829</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+23.2%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">1,452</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">719</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">916</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+21.5%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">1,385</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>丁香园</td><td>成功改善</td><td>70</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>清洁卫生</td></tr><tr><td class='left'>百合花苑</td><td>成功改善</td><td>28</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>停车管理</td></tr><tr><td class='left'>康馨家园</td><td>成功改善</td><td>25</td><td>1</td><td>0</td><td class='decline'>+100.0%</td><td>业主大会/业委会</td></tr><tr><td class='left'>汇樾庭</td><td>恶化</td><td>7</td><td>71</td><td>9</td><td class='increase'>—</td><td>房屋建设质量和开发商</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>康健公寓</td><td>成功改善</td><td>8</td><td>12</td><td>12</td><td>1</td><td class='decline'>+91.7%</td><td>房屋维修</td></tr><tr><td class='left'>寿祥坊</td><td>恶化</td><td>23</td><td>37</td><td>10</td><td>25</td><td class='increase'>-150.0%</td><td>邻里纠纷</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -1504,7 +1523,7 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 7 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>康健新村：751 件，居全区第 12 位，占全区 5.5%；同比 下降 23.6%（全区 -12.6%），降幅排名全区第 3 位。</li><li>对全区投诉量下降的贡献率为 11.8%（该镇减少 232 件）。</li><li>⚠ 逆势上升类别：旧住房改造（+14件）、邻里纠纷（+10件）、清洁卫生（+10件），需重点关注。</li><li>首要矛盾为邻里纠纷（137 件，占本镇 18.2%，高于全区 4.2 个百分点）。</li><li>投诉最集中小区为桂平小区（41 件，占本镇 5.5%，同比 -26.8%）；Top5 小区集中度 24.9%。</li><li>投诉最多物业企业为沃棠（上海）物业管理有限公司（102 件，占本镇 13.6%，涉及 7 个小区）。</li><li>风险预警：红色 19 个、橙色 34 个小区（该镇参评 61 个）。</li><li>重复投诉 215 件，重复率 28.6%，低于全区 6.7 个百分点；高优先级 149 件。</li><li>治理成效（2026 上半年口径）：637 件，同比改善 23.2%。</li></ul>
+  <ul class="insight-list"><li>康健新村：751 件，居全区第 12 位，占全区 5.5%；同比 下降 23.6%（全区 -12.6%），降幅排名全区第 3 位。</li><li>对全区投诉量下降的贡献率为 11.8%（该镇减少 232 件）。</li><li>⚠ 逆势上升类别：旧住房改造（+14件）、邻里纠纷（+10件）、清洁卫生（+10件），需重点关注。</li><li>首要矛盾为邻里纠纷（137 件，占本镇 18.2%，高于全区 4.2 个百分点）。</li><li>投诉最集中小区为桂平小区（41 件，占本镇 5.5%，同比 -26.8%）；Top5 小区集中度 24.9%。</li><li>投诉最多物业企业为沃棠（上海）物业管理有限公司（102 件，占本镇 13.6%，涉及 7 个小区）。</li><li>风险预警：红色 19 个、橙色 34 个小区（该镇参评 61 个）。</li><li>重复投诉 215 件，重复率 28.6%，低于全区 6.7 个百分点；高优先级 149 件。</li><li>治理成效（2026年1-8月同期口径）：719 件，同比改善 21.5%。</li></ul>
 </div><div class="tab-panel" id="panel-12">
   <div class="kpi-row">
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">537</div></div>
@@ -1590,20 +1609,21 @@
     <div class="kpi"><div class="k">参评小区数</div><div class="v">20</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     <tr><td>1</td><td class='left'>欣嘉苑1-3期</td><td><b>89.4</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>205</td><td class='increase'>+305.3%</td><td>88.8%</td><td>停车管理</td></tr><tr><td>2</td><td class='left'>永兆豪庭</td><td><b>86.6</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>108</td><td class='increase'>+281.8%</td><td>78.7%</td><td>业主大会/业委会</td></tr><tr><td>3</td><td class='left'>桂林住宅小区</td><td><b>80.8</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>70</td><td class='increase'>+140.0%</td><td>68.6%</td><td>停车管理</td></tr><tr><td>4</td><td class='left'>航天新苑</td><td><b>78.9</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>78</td><td class='increase'>+50.0%</td><td>67.9%</td><td>停车管理</td></tr><tr><td>5</td><td class='left'>虹梅小区</td><td><b>78.4</b></td><td><span class='badge-lv lv-red'>红色</span></td><td>97</td><td class='increase'>+6.2%</td><td>79.4%</td><td>停车管理</td></tr>
   </table>
-  <div class="sub-title">治理成效（2026 上半年口径）</div>
+  <div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">470</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">478</div></div>
-  <div class="kpi"><div class="k">同比改善率</div><div class="v down">+1.7%</div></div>
-  <div class="kpi"><div class="k">2025全年</div><div class="v">815</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">515</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">509</div></div>
+  <div class="kpi"><div class="k">同比改善率</div><div class="v up">-1.2%</div></div>
+  <div class="kpi"><div class="k">2025全年</div><div class="v">762</div></div>
 </div>
-  <div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+  <div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
-  <tr><td class='left'>东兰小区</td><td>成功改善</td><td>20</td><td>0</td><td>0</td><td class='increase'>0.0%</td><td>房屋维修</td></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
+  <tr><td class='left'>桂林住宅小区</td><td>反弹</td><td>25</td><td>18</td><td>14</td><td>31</td><td class='increase'>-121.4%</td><td>消防管理</td></tr><tr><td class='left'>永兆豪庭</td><td>恶化</td><td>30</td><td>34</td><td>13</td><td>51</td><td class='increase'>-292.3%</td><td>业主大会/业委会</td></tr><tr><td class='left'>欣嘉苑1-3期</td><td>恶化</td><td>59</td><td>67</td><td>25</td><td>78</td><td class='increase'>-212.0%</td><td>停车管理</td></tr>
 </table>
   <div class="sub-title">外部数据关联（区房管局各科室业务数据）</div>
 <div class="ext-grid"><div class="ext-card"><div class="ext-t">电梯加装（区房管局）</div>
@@ -1616,20 +1636,27 @@
   <div class="chip-wrap"><div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>党建引领重点小区 3 个</div></div>
 
   <div class="sub-title">结论要点</div>
-  <ul class="insight-list"><li>虹梅路：537 件，居全区第 13 位，占全区 3.9%；同比 下降 3.9%（全区 -12.6%），降幅排名全区第 11 位。</li><li>对全区投诉量下降的贡献率为 1.1%（该镇减少 22 件）。</li><li>⚠ 逆势上升类别：停车管理（+22件）、清洁卫生（+17件）、物业服务态度（+9件），需重点关注。</li><li>首要矛盾为停车管理（121 件，占本镇 22.5%，高于全区 9.2 个百分点）。</li><li>投诉最集中小区为华悦家园（126 件，占本镇 23.5%，同比 -6.0%）；Top5 小区集中度 69.5%。</li><li>投诉最多物业企业为上海汇成物业有限公司（126 件，占本镇 23.5%，涉及 1 个小区）。</li><li>风险预警：红色 6 个、橙色 12 个小区（该镇参评 20 个）。</li><li>重复投诉 258 件，重复率 48.0%，高于全区 12.7 个百分点；高优先级 210 件。</li><li>治理成效（2026 上半年口径）：470 件，同比改善 1.7%。</li></ul>
+  <ul class="insight-list"><li>虹梅路：537 件，居全区第 13 位，占全区 3.9%；同比 下降 3.9%（全区 -12.6%），降幅排名全区第 11 位。</li><li>对全区投诉量下降的贡献率为 1.1%（该镇减少 22 件）。</li><li>⚠ 逆势上升类别：停车管理（+22件）、清洁卫生（+17件）、物业服务态度（+9件），需重点关注。</li><li>首要矛盾为停车管理（121 件，占本镇 22.5%，高于全区 9.2 个百分点）。</li><li>投诉最集中小区为华悦家园（126 件，占本镇 23.5%，同比 -6.0%）；Top5 小区集中度 69.5%。</li><li>投诉最多物业企业为上海汇成物业有限公司（126 件，占本镇 23.5%，涉及 1 个小区）。</li><li>风险预警：红色 6 个、橙色 12 个小区（该镇参评 20 个）。</li><li>重复投诉 258 件，重复率 48.0%，高于全区 12.7 个百分点；高优先级 210 件。</li><li>治理成效（2026年1-8月同期口径）：515 件，同比恶化 1.2%。</li></ul>
 </div>
 </div>
 
 <div class="section">
   <div class="section-title">二、全区街镇总表</div>
-  <div class="section-desc">13个街镇 2026年1-8月 投诉量与同比表现（按投诉量排序）；降幅排名 1 为下降最多；重复率为逐月独立去重口径</div>
-  <table class="data-table">
-    <tr>
-      <th>总量<br>排名</th><th>街镇</th><th>2026年<br>1-8月</th><th>2025年<br>1-8月</th>
-      <th>同比</th><th>降幅<br>排名</th><th>占全区</th><th>下降<br>贡献率</th>
-      <th>有投诉<br>小区数</th><th>重复率</th><th>高优先级<br>重复件</th><th>红色/橙色<br>预警小区</th>
-    </tr>
-    <tr class="rank-1">
+  <div class="section-desc">总量排名看规模负担，投诉密度排名看单位小区承载强度；两张表可切换查看</div>
+  <div class="rank-tabs">
+    <button class="rank-tab-btn active" data-rank="rank-total">总量排名</button>
+    <button class="rank-tab-btn" data-rank="rank-density">投诉密度排名</button>
+  </div>
+
+  <div class="rank-panel active" id="rank-total">
+    <div class="section-desc">13个街镇 2026年1-8月 投诉量与同比表现（按投诉量排序）；降幅排名 1 为下降最多；重复率为逐月独立去重口径</div>
+    <table class="data-table">
+      <tr>
+        <th>总量<br>排名</th><th>街镇</th><th>2026年<br>1-8月</th><th>2025年<br>1-8月</th>
+        <th>同比</th><th>降幅<br>排名</th><th>占全区</th><th>下降<br>贡献率</th>
+        <th>有投诉<br>小区数</th><th>重复率</th><th>高优先级<br>重复件</th><th>红色/橙色<br>预警小区</th>
+      </tr>
+      <tr class="rank-1">
   <td>1</td>
   <td class="left"><b>长桥</b></td>
   <td>1,471</td>
@@ -1799,7 +1826,149 @@
   <td>210</td>
   <td><span class="badge-lv lv-red">6</span> / 12</td>
 </tr>
-  </table>
+    </table>
+  </div>
+
+  <div class="rank-panel" id="rank-density">
+    <div class="section-desc">投诉密度 = 2026年1-8月投诉量 ÷ 该街镇有投诉小区数（件/小区），衡量单个小区的平均投诉承载强度；位次差 = 总量排名 − 密度排名，正数表示该街镇"小区不多但每个都很重"</div>
+    <table class="data-table">
+      <tr>
+        <th>密度<br>排名</th><th>街镇</th><th>投诉密度<br>（件/小区）</th><th>2026年<br>1-8月</th>
+        <th>有投诉<br>小区数</th><th>总量<br>排名</th><th>位次差</th><th>同比</th><th>占全区</th>
+      </tr>
+      <tr class="rank-1">
+  <td>1</td>
+  <td class="left"><b>华泾镇</b></td>
+  <td style="font-weight:700;color:#1890ff;">34.8</td>
+  <td>869</td>
+  <td>25</td>
+  <td>11</td>
+  <td style="color:#f5222d;font-weight:700;">+10</td>
+  <td style="color:#52c41a;font-weight:700;">-14.7%</td>
+  <td>6.3%</td>
+</tr><tr>
+  <td>2</td>
+  <td class="left"><b>虹梅路</b></td>
+  <td style="font-weight:700;color:#1890ff;">29.8</td>
+  <td>537</td>
+  <td>18</td>
+  <td>13</td>
+  <td style="color:#f5222d;font-weight:700;">+11</td>
+  <td style="color:#52c41a;font-weight:700;">-3.9%</td>
+  <td>3.9%</td>
+</tr><tr>
+  <td>3</td>
+  <td class="left"><b>长桥</b></td>
+  <td style="font-weight:700;color:#1890ff;">26.7</td>
+  <td>1,471</td>
+  <td>55</td>
+  <td>1</td>
+  <td style="color:#52c41a;font-weight:700;">-2</td>
+  <td style="color:#52c41a;font-weight:700;">-31.1%</td>
+  <td>10.7%</td>
+</tr><tr>
+  <td>4</td>
+  <td class="left"><b>田林</b></td>
+  <td style="font-weight:700;color:#1890ff;">18.8</td>
+  <td>1,260</td>
+  <td>67</td>
+  <td>4</td>
+  <td style="color:#888;font-weight:700;">—</td>
+  <td style="color:#f5222d;font-weight:700;">+15.2%</td>
+  <td>9.2%</td>
+</tr><tr>
+  <td>5</td>
+  <td class="left"><b>龙华</b></td>
+  <td style="font-weight:700;color:#1890ff;">17.1</td>
+  <td>973</td>
+  <td>57</td>
+  <td>8</td>
+  <td style="color:#f5222d;font-weight:700;">+3</td>
+  <td style="color:#52c41a;font-weight:700;">-10.7%</td>
+  <td>7.1%</td>
+</tr><tr>
+  <td>6</td>
+  <td class="left"><b>凌云路</b></td>
+  <td style="font-weight:700;color:#1890ff;">16.3</td>
+  <td>897</td>
+  <td>55</td>
+  <td>9</td>
+  <td style="color:#f5222d;font-weight:700;">+3</td>
+  <td style="color:#52c41a;font-weight:700;">-15.2%</td>
+  <td>6.5%</td>
+</tr><tr>
+  <td>7</td>
+  <td class="left"><b>斜土路</b></td>
+  <td style="font-weight:700;color:#1890ff;">15.9</td>
+  <td>1,131</td>
+  <td>71</td>
+  <td>6</td>
+  <td style="color:#52c41a;font-weight:700;">-1</td>
+  <td style="color:#52c41a;font-weight:700;">-13.5%</td>
+  <td>8.2%</td>
+</tr><tr>
+  <td>8</td>
+  <td class="left"><b>枫林路</b></td>
+  <td style="font-weight:700;color:#1890ff;">13.5</td>
+  <td>1,121</td>
+  <td>83</td>
+  <td>7</td>
+  <td style="color:#52c41a;font-weight:700;">-1</td>
+  <td style="color:#52c41a;font-weight:700;">-25.2%</td>
+  <td>8.2%</td>
+</tr><tr>
+  <td>9</td>
+  <td class="left"><b>漕河泾</b></td>
+  <td style="font-weight:700;color:#1890ff;">13.4</td>
+  <td>1,315</td>
+  <td>98</td>
+  <td>3</td>
+  <td style="color:#52c41a;font-weight:700;">-6</td>
+  <td style="color:#f5222d;font-weight:700;">+4.0%</td>
+  <td>9.6%</td>
+</tr><tr>
+  <td>10</td>
+  <td class="left"><b>康健新村</b></td>
+  <td style="font-weight:700;color:#1890ff;">12.1</td>
+  <td>751</td>
+  <td>62</td>
+  <td>12</td>
+  <td style="color:#f5222d;font-weight:700;">+2</td>
+  <td style="color:#52c41a;font-weight:700;">-23.6%</td>
+  <td>5.5%</td>
+</tr><tr>
+  <td>11</td>
+  <td class="left"><b>湖南路</b></td>
+  <td style="font-weight:700;color:#1890ff;">11.4</td>
+  <td>897</td>
+  <td>79</td>
+  <td>10</td>
+  <td style="color:#52c41a;font-weight:700;">-1</td>
+  <td style="color:#52c41a;font-weight:700;">-5.5%</td>
+  <td>6.5%</td>
+</tr><tr>
+  <td>12</td>
+  <td class="left"><b>徐家汇</b></td>
+  <td style="font-weight:700;color:#1890ff;">10.8</td>
+  <td>1,337</td>
+  <td>124</td>
+  <td>2</td>
+  <td style="color:#52c41a;font-weight:700;">-10</td>
+  <td style="color:#52c41a;font-weight:700;">-8.3%</td>
+  <td>9.7%</td>
+</tr><tr>
+  <td>13</td>
+  <td class="left"><b>天平路</b></td>
+  <td style="font-weight:700;color:#1890ff;">9.9</td>
+  <td>1,160</td>
+  <td>117</td>
+  <td>5</td>
+  <td style="color:#52c41a;font-weight:700;">-8</td>
+  <td style="color:#52c41a;font-weight:700;">-8.9%</td>
+  <td>8.5%</td>
+</tr>
+    </table>
+  </div>
 </div>
 
 <div class="section">
@@ -1841,6 +2010,17 @@ function initCharts(scope) {
     CHARTS[el.id] = c;
   });
 }
+
+// 排名表切换（总量 / 投诉密度），与街镇切换互不影响
+document.querySelectorAll('.rank-tab-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.rank-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.rank-panel').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    var panel = document.getElementById(btn.dataset.rank);
+    if (panel) panel.classList.add('active');
+  });
+});
 
 // 标签页切换
 document.querySelectorAll('.tab-btn').forEach(function (btn) {
