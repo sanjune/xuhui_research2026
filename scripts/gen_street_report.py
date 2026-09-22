@@ -337,6 +337,13 @@ CSS = """<style>
   .tab-panel { display:none; }
   .tab-panel.active { display:block; }
 
+  .rank-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; }
+  .rank-tab-btn { padding:7px 18px; font-size:13px; border:1px solid #d9d9d9; background:#fff; border-radius:18px; cursor:pointer; color:#555; transition:all .2s; }
+  .rank-tab-btn:hover { border-color:#1890ff; color:#1890ff; }
+  .rank-tab-btn.active { background:#1890ff; border-color:#1890ff; color:#fff; font-weight:600; }
+  .rank-panel { display:none; }
+  .rank-panel.active { display:block; }
+
   .kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:6px; }
   .kpi { background:#f6f8fa; border-radius:8px; padding:12px 14px; }
   .kpi .k { font-size:11px; color:#888; } .kpi .v { font-size:20px; font-weight:700; color:#1a3a5f; }
@@ -418,6 +425,24 @@ def overview_section(data):
   <td><span class="badge-lv lv-red">{r['risk_red']}</span> / {r['risk_orange']}</td>
 </tr>""")
 
+    dens_rows = []
+    for r in sorted([x for x in ov if x.get("density") is not None],
+                    key=lambda x: x["rank_density"]):
+        gap = r["rank_total"] - r["rank_density"]      # 正 = 密度位次领先于总量位次
+        gap_txt = "—" if gap == 0 else (f"+{gap}" if gap > 0 else str(gap))
+        gap_color = "#f5222d" if gap > 0 else ("#52c41a" if gap < 0 else "#888")
+        dens_rows.append(f"""<tr{' class="rank-1"' if r['rank_density'] == 1 else ''}>
+  <td>{r['rank_density']}</td>
+  <td class="left"><b>{r['street']}</b></td>
+  <td style="font-weight:700;color:#1890ff;">{r['density']}</td>
+  <td>{n(r['n2026'])}</td>
+  <td>{n(r['communities'])}</td>
+  <td>{r['rank_total']}</td>
+  <td style="color:{gap_color};font-weight:700;">{gap_txt}</td>
+  <td style="color:{color_of(r['yoy'])};font-weight:700;">{pct_txt(r['yoy'])}</td>
+  <td>{r['share']}%</td>
+</tr>""")
+
     return f"""<div class="note-box">
   <b>口径说明</b>
   {notes}
@@ -456,15 +481,34 @@ def overview_section(data):
 
 <div class="section">
   <div class="section-title">二、全区街镇总表</div>
-  <div class="section-desc">13个街镇 2026年1-8月 投诉量与同比表现（按投诉量排序）；降幅排名 1 为下降最多；重复率为逐月独立去重口径</div>
-  <table class="data-table">
-    <tr>
-      <th>总量<br>排名</th><th>街镇</th><th>2026年<br>1-8月</th><th>2025年<br>1-8月</th>
-      <th>同比</th><th>降幅<br>排名</th><th>占全区</th><th>下降<br>贡献率</th>
-      <th>有投诉<br>小区数</th><th>重复率</th><th>高优先级<br>重复件</th><th>红色/橙色<br>预警小区</th>
-    </tr>
-    {''.join(rows)}
-  </table>
+  <div class="section-desc">总量排名看规模负担，投诉密度排名看单位小区承载强度；两张表可切换查看</div>
+  <div class="rank-tabs">
+    <button class="rank-tab-btn active" data-rank="rank-total">总量排名</button>
+    <button class="rank-tab-btn" data-rank="rank-density">投诉密度排名</button>
+  </div>
+
+  <div class="rank-panel active" id="rank-total">
+    <div class="section-desc">13个街镇 2026年1-8月 投诉量与同比表现（按投诉量排序）；降幅排名 1 为下降最多；重复率为逐月独立去重口径</div>
+    <table class="data-table">
+      <tr>
+        <th>总量<br>排名</th><th>街镇</th><th>2026年<br>1-8月</th><th>2025年<br>1-8月</th>
+        <th>同比</th><th>降幅<br>排名</th><th>占全区</th><th>下降<br>贡献率</th>
+        <th>有投诉<br>小区数</th><th>重复率</th><th>高优先级<br>重复件</th><th>红色/橙色<br>预警小区</th>
+      </tr>
+      {''.join(rows)}
+    </table>
+  </div>
+
+  <div class="rank-panel" id="rank-density">
+    <div class="section-desc">投诉密度 = 2026年1-8月投诉量 ÷ 该街镇有投诉小区数（件/小区），衡量单个小区的平均投诉承载强度；位次差 = 总量排名 − 密度排名，正数表示该街镇"小区不多但每个都很重"</div>
+    <table class="data-table">
+      <tr>
+        <th>密度<br>排名</th><th>街镇</th><th>投诉密度<br>（件/小区）</th><th>2026年<br>1-8月</th>
+        <th>有投诉<br>小区数</th><th>总量<br>排名</th><th>位次差</th><th>同比</th><th>占全区</th>
+      </tr>
+      {''.join(dens_rows)}
+    </table>
+  </div>
 </div>
 
 <div class="section">
@@ -548,13 +592,15 @@ def street_panel(i, s, r, active):
     if cases:
         rows = "".join(
             f"<tr><td class='left'>{x['community']}</td><td>{x['kind']}</td>"
-            f"<td>{n(x['n2024'])}</td><td>{n(x['n2025'])}</td><td>{n(x['n2026_h1'])}</td>"
+            f"<td>{n(x['n2024'])}</td><td>{n(x['n2025'])}</td>"
+            f"<td>{n(x['n2025_same'])}</td><td>{n(x['n2026'])}</td>"
             f"<td class='{'decline' if (x['improvement_2026'] or 0) > 0 else 'increase'}'>"
             f"{pct_txt(x['improvement_2026'])}</td><td>{x['top_category']}</td></tr>"
             for x in cases)
-        case_html = f"""<div class="sub-title">治理追踪案例（2026 上半年口径）</div>
+        case_html = f"""<div class="sub-title">治理追踪案例（2026年1-8月同期口径）</div>
 <table class="data-table">
-  <tr><th>小区</th><th>类型</th><th>2024年</th><th>2025年</th><th>2026上半年</th><th>同比</th><th>首要类别</th></tr>
+  <tr><th>小区</th><th>类型</th><th>2024<br>全年</th><th>2025<br>全年</th>
+      <th>2025年<br>1-8月</th><th>2026年<br>1-8月</th><th>同期<br>同比</th><th>首要类别</th></tr>
   {rows}
 </table>"""
 
@@ -614,10 +660,10 @@ def street_panel(i, s, r, active):
     gov = s["governance"]
     gov_html = ""
     if gov.get("effect_2026") is not None:
-        gov_html = f"""<div class="sub-title">治理成效（2026 上半年口径）</div>
+        gov_html = f"""<div class="sub-title">治理成效（2026年1-8月同期口径）</div>
 <div class="kpi-row">
-  <div class="kpi"><div class="k">2026上半年投诉量</div><div class="v">{n(gov['volume_2026_h1'])}</div></div>
-  <div class="kpi"><div class="k">2025上半年</div><div class="v">{n(gov['volume_2025_h1'])}</div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">{n(gov['volume_2026_h1'])}</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">{n(gov['volume_2025_h1'])}</div></div>
   <div class="kpi"><div class="k">同比改善率</div><div class="v {'down' if gov['effect_2026'] > 0 else 'up'}">{pct_txt(gov['effect_2026'], 1)}</div></div>
   <div class="kpi"><div class="k">2025全年</div><div class="v">{n(gov['volume_2025'])}</div></div>
 </div>"""
@@ -690,7 +736,7 @@ def street_panel(i, s, r, active):
     <div class="kpi"><div class="k">参评小区数</div><div class="v">{n(s['risk']['total'])}</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>2026上半年</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     {risk_rows}
   </table>
   {gov_html}
@@ -773,6 +819,17 @@ function initCharts(scope) {{
     CHARTS[el.id] = c;
   }});
 }}
+
+// 排名表切换（总量 / 投诉密度），与街镇切换互不影响
+document.querySelectorAll('.rank-tab-btn').forEach(function (btn) {{
+  btn.addEventListener('click', function () {{
+    document.querySelectorAll('.rank-tab-btn').forEach(function (b) {{ b.classList.remove('active'); }});
+    document.querySelectorAll('.rank-panel').forEach(function (p) {{ p.classList.remove('active'); }});
+    btn.classList.add('active');
+    var panel = document.getElementById(btn.dataset.rank);
+    if (panel) panel.classList.add('active');
+  }});
+}});
 
 // 标签页切换
 document.querySelectorAll('.tab-btn').forEach(function (btn) {{
