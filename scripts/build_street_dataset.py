@@ -203,15 +203,32 @@ STOP = set("市民 反映 诉求 要求 投诉 求助 举报 处理 尽快 相�
            "物业 管理 回复 信息 保密 工单 核实 需要 联系 确认 是否 建议 后续 单位 收到 同志 您好 "
            "感谢 满意 承办 答复 工作人员 部门 请予 予以 尽快处理 悉 经 已 将 与 处理结果 联系我".split())
 
+# 工单模板字段 / 办理流程用语 / 泛义虚词 —— 非诉求主题，出图前必须剔除
+STOP_BOILERPLATE = set("""
+无需 内容 最近 编号 办结 派发 要点 给予 作为 导致 但是 一个 自己 现在 不要 该处
+对方 重新 行为 使用 合理 正常 明确 同意 安排 协助 帮助 介入 解释 核查 查处 解决 居民
+补充 固定 方案 生活 工作 人员 进行 存在 出现 发生 表示 认为 应该 可以 能否 如何 事项
+反映 要求 希望 建议 徐汇区 上海 街道 居委会 居委 同志 先生 女士 来电 反映人 诉求人
+不是 没有 还是 而且 并且 就是 这些 那些 之后 之前 目前 依然 仍旧 经常 偶尔 有时
+现场 查看 检查 排查 落实 跟进 反馈 沟通 联系 通知 告知 处理中 已办 未办
+对于 区内 办理 实际 不符 经过 很多 边上 无人 交办 号楼 书面 主任 情况
+""".split())
+STOP = STOP | STOP_BOILERPLATE
+
 # 高频套话过滤器：出现在超过该比例的工单中，视为模板用语而非诉求主题
 BOILERPLATE_DF = 0.35
 
+# 主题词展示数量（词云）
+KEYWORD_TOPN = 24
 
-def keywords_of(d: pd.DataFrame, topn=12):
-    """提取该街镇诉求主题词。
 
-    只取「诉求：」之后的正文（无则取全文），并按文档频率过滤工单模板套话
-    （如"回复/保密/工单"这类出现在多数工单中的词）。
+def keywords_of(d: pd.DataFrame, topn=KEYWORD_TOPN, street=None):
+    """提取该街镇诉求主题词（供词云展示）。
+
+    只取「诉求：」之后的正文（无则取全文），剔除三类非主题词：
+      1) STOP / STOP_BOILERPLATE 中的停用词与工单模板用语（无需/内容/最近/编号/办结…）
+      2) 本街镇自身地名（长桥/华泾…），避免地址串扰
+      3) 文档频率高于 BOILERPLATE_DF 的高频套话
     """
     texts = []
     for raw in d["content"].tolist():
@@ -225,13 +242,22 @@ def keywords_of(d: pd.DataFrame, topn=12):
     joined = " ".join(texts)
     if not joined.strip():
         return []
+    # 本街镇自身地名及其简称，避免"长桥""华泾"这类地址词混入主题词
+    self_terms = set()
+    if street:
+        self_terms.add(street)
+        for suf in ("镇", "街道", "新村", "路"):
+            if street.endswith(suf) and len(street) > len(suf):
+                self_terms.add(street[: -len(suf)])
     try:
         import jieba
         jieba.setLogLevel(60)
-        per_doc = [[w for w in jieba.lcut(t) if len(w) > 1 and w not in STOP and not w.isdigit()]
+        per_doc = [[w for w in jieba.lcut(t)
+                    if len(w) > 1 and w not in STOP and w not in self_terms and not w.isdigit()]
                    for t in texts]
     except ImportError:
-        per_doc = [[w for w in re.findall(r"[\u4e00-\u9fa5]{2,4}", t) if w not in STOP]
+        per_doc = [[w for w in re.findall(r"[\u4e00-\u9fa5]{2,4}", t)
+                    if w not in STOP and w not in self_terms]
                    for t in texts]
 
     n_doc = max(len(per_doc), 1)
@@ -509,7 +535,7 @@ def build(do_dedup=True) -> dict:
             "externals": externals.get(st, externals.get(key, {})),
             "bottom_lift": {"count": len(blift_st), "names": [b["name"] for b in blift_st][:10]},
             "investigation": inv_st,
-            "keywords": keywords_of(s26),
+            "keywords": keywords_of(s26, street=st),
         }
         streets_data[st] = street_obj
 
