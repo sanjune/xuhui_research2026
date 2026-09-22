@@ -14,7 +14,8 @@
 无头 Chrome 渲染 echarts-wordcloud（与《街镇专项分析报告》同一套配色与字号逻辑），
 逐街镇截图导出 PNG；每个街镇一个独立 URL（?street=…），避免长页面截图的像素上限问题。
 
-数据源：scripts/street_analysis.json → streets[].keywords（Top24，已过滤工单模板用语）
+数据源：scripts/street_analysis.json → streets[].keywords
+        （Top24，案件级词频——同一诉求的催单/重复来电只计首单；已过滤工单模板用语）
 输出：词云图/<街镇>.png（1600×900）
 
 用法：/usr/bin/python3 scripts/export_wordclouds.py

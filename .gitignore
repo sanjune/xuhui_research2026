@@ -27,6 +27,7 @@ logs/
 demo_cache/
 .DS_Store
 .trae-html-share-packages/
+scripts/_wc_export.html
 
 # IDE
 .idea/
