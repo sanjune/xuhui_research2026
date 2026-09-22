@@ -207,7 +207,10 @@ WC_PALETTE = ["#1a3a5f", "#1890ff", "#13c2c2", "#52c41a", "#fa8c16",
 
 
 def chart_wordcloud(kws):
-    """诉求主题词词云。kws: [{'word':..,'cnt':..}]，按词频降序。
+    """诉求主题词词云。kws: [{'word':..,'cnt':..}]，按词频降序（案件级词频）。
+
+    cnt 为「案件级」词频：连带工单（催单/补充/重复来电）已在数据集构建阶段
+    按工单编号引用关系归并，同一诉求只计首单，不再被引用块反复放大。
 
     边界为 16:9 长方形：不设 maskImage（echarts-wordcloud 缺省时布局区域即满矩形），
     配合 keepAspect=False 让词云铺满 16:9 容器，与 词云图/*.png 导出图一致。
@@ -220,7 +223,7 @@ def chart_wordcloud(kws):
              "textStyle": {"color": WC_PALETTE[i % len(WC_PALETTE)]}}
             for i, x in enumerate(items)]
     return {
-        "tooltip": {"formatter": "{b}：{c} 次"},
+        "tooltip": {"formatter": "{b}：{c} 个案件"},
         "series": [{
             "type": "wordCloud",
             "keepAspect": False,
@@ -726,9 +729,9 @@ def street_panel(i, s, r, active):
     <tr><th>#</th><th>企业</th><th>2026年1-8月</th><th>2025年同期</th><th>同比</th><th>占本镇 / 涉及小区</th></tr>
     {comp_rows}
   </table>
-  <div class="sub-title">诉求主题词（已过滤工单模板用语）</div>
-  <div id="c{i}-wordcloud" class="chart-box wordcloud"></div>
-  <div class="wc-note">词云边界＝16:9 长方形 ｜ 字号＝词频，展示 Top24</div>
+    <div class="sub-title">诉求主题词（案件级去重 · 已过滤工单模板用语）</div>
+    <div id="c{i}-wordcloud" class="chart-box wordcloud"></div>
+    <div class="wc-note">词云边界＝16:9 长方形 ｜ 字号＝词频（同一诉求的催单/重复来电只计首单），展示 Top24</div>
 
   <div class="sub-title">重复投诉与数据质量</div>
   {dup_html}

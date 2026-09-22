@@ -51,6 +51,7 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
 .tag-fix { background:#ffebee; color:#c62828; }
 .tag-imp { background:#e8f5e9; color:#2e7d32; }
 .tag-data { background:#fff3e0; color:#e65100; }
+.tag-opt { background:#e0f2f1; color:#00695c; }
 
 .file-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:8px; }
 .file-item { background:#f5f5f5; padding:8px 12px; border-radius:6px; font-size:12px; color:#555; display:flex; align-items:center; gap:6px; }
@@ -94,9 +95,9 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.7.0</span>
+    <span>当前版本：v2.8.0</span>
     <span>更新日期：2026-09-22</span>
-    <span>累计更新：10 次</span>
+    <span>累计更新：11 次</span>
   </div>
 </div>
 
@@ -105,6 +106,45 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <div class="stat-box"><div class="stat-num">+3,482</div><div class="stat-label">新增代码行数</div></div>
   <div class="stat-box"><div class="stat-num">-207</div><div class="stat-label">删除代码行数</div></div>
   <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">已完成成果数</div></div>
+</div>
+
+<!-- ===== v2.8.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.8.0</span>
+    <span class="version-date">2026-09-22</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🔍 数据质量：连带工单污染词频</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">问题</span><strong>长桥"辣椒"主题词溯源</strong> —— 词云中"辣椒"词频 50 次，实际只来自 <strong>1 个案件</strong>（汇成一村56号103室油烟异味纠纷）。另 9 笔均为催单/补充/重复来电，其正文转载的原文引用块把"辣椒"重复计了 9 次，真实词频仅 5 次，虚增 10 倍</li>
+        <li><span class="tag tag-fix">影响面</span><strong>全量 7,523 笔工单（11.3%）含此类引用块</strong>；13 个街镇 Top24 共 312 个词中，69 个（22%）受污染</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">⚙️ 案件级归并（新口径）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">口径</span><strong>主题词统计由「工单流水」改为「案件」</strong> —— 按正文「工单编号」引用关系并查集归并（引用存在链式 A→B→C 与环形，单层映射不够），案件内只取受理最早的首单正文参与分词。全量 66,812 笔 → <strong>52,231 个案件</strong>（归并 14,581 笔，21.8%）；2026年1-8月 13,719 笔 → <strong>10,910 个案件</strong></li>
+        <li><span class="tag tag-opt">兜底</span><strong>引用块剥离</strong> —— <code>strip_quoted()</code> 另剥一次「【最近派发的工单编号：X，工单内容：&lt;原文&gt;】」，覆盖指向本数据之外（跨区/已清洗）的孤立引用</li>
+        <li><span class="tag tag-new">新增字段</span><strong>案件数字段</strong> —— 各街镇 <code>core.cases2026 / core.cases_merged</code>、全区 <code>district.cases2026</code>（案件可能跨街镇，故各街镇之和 ≤ 全区）</li>
+        <li><span class="tag tag-fix">口径边界</span><strong>仅词云走案件级口径</strong> —— 投诉总量、同比、密度等仍按工单流水计，数字一律不变（已逐字段比对确认零变化）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">📊 重算结果</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">报告</span><strong>《街镇专项分析报告》13 个词云全部重算</strong> —— 长桥词云中"业委会、拆除、监控、辣椒、违规"5 个受污染词移出，由"垃圾、堆物、及时"等真实诉求词补入；词云 tooltip 单位由「次」改为「个案件」</li>
+        <li><span class="tag tag-opt">成果</span><strong>词云图/ 13 张 PNG 全部重新导出</strong> —— 1600×900、每镇 Top24 案件级词频，配色与报告一致</li>
+        <li><span class="tag tag-opt">文档</span><strong>PROJECT_GUIDE.md 新增 2.4 案件级归并</strong> —— 记录建边/归并/代表/兜底四环节与口径边界，并注明与既有的逐月去重（<code>dedup_monthly.py</code>）是两套独立口径</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.7.0 ===== -->

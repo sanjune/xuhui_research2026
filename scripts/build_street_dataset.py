@@ -239,18 +239,89 @@ BOILERPLATE_DF = 0.35
 # 主题词展示数量（词云）
 KEYWORD_TOPN = 24
 
+# ─────────────────────── 案件级归并（连带工单去重） ───────────────────────
+# 工单正文里系统会追加引用块，形如：
+#   【最近派发的工单编号：20260512231496，工单内容：<原文全文>】
+# 催单 / 补充信息 / 重复来电 类工单都带它。若不处理，同一诉求会被反复计入词频
+# （实测长桥"辣椒"因此从真实的 5 次虚高到 50 次，虚增 10 倍）。
 
-def keywords_of(d: pd.DataFrame, topn=KEYWORD_TOPN, street=None):
+# 引用块：从「最近派发/办结的工单编号」一直吞到「】」或行尾
+QUOTED_BLOCK_RE = re.compile(r"【?最近(派发|办结)的工单编号[：:][\s\S]*?(?:】|$)")
+
+# 工单编号引用：编号为 14 位数字，引导语写法有十余种
+# （最近派发/最近办结/相关/关联/前工单/最近来电/派发的…），统一按「工单编号+14位数字」抓取
+ORDER_REF_RE = re.compile(r"工单编号[：:]?\s*(\d{14})")
+
+
+def strip_quoted(text: str) -> str:
+    """剔除正文里系统追加的「【最近…的工单编号：X，工单内容：<原文>】」引用块。"""
+    if not text:
+        return ""
+    return QUOTED_BLOCK_RE.sub("", text)
+
+
+def case_representatives(df: pd.DataFrame):
+    """案件级归并：按「工单编号」引用关系并查集分组，每组只保留受理最早的一笔（首单）。
+
+    同一诉求被反复来电时，后续工单正文会追加引用块转载原文，直接分词会把原文词频
+    重复累加。这里按引用关系把连带工单归并为同一「案件」，案件内只取首单正文参与
+    主题词统计，从而让词频与"案件数"对齐，而不是与"工单流水数"对齐。
+
+    注意引用存在链式（A→B→C）与环形，故用并查集而非单层映射。
+
+    返回 (rep_ids, case_key, n_cases, n_merged)：
+      rep_ids  —— 代表工单（首单）order_id 集合
+      case_key —— order_id → 案件键（并查集根）的映射
+      n_cases  —— 案件总数（全量、全时段）
+      n_merged —— 被归并剔除的工单数
+    """
+    ids = set(df["order_id"].astype(str))
+    parent = {}
+
+    def find(x):
+        parent.setdefault(x, x)
+        r = x
+        while parent[r] != r:
+            r = parent[r]
+        while parent[x] != r:
+            parent[x], x = r, parent[x]
+        return r
+
+    for oid, txt in zip(df["order_id"].astype(str), df["content"].fillna("")):
+        for tgt in set(ORDER_REF_RE.findall(txt)):
+            if tgt == oid or tgt not in ids:
+                continue                      # 自引用 / 指向本数据之外（跨区、已清洗掉）
+            ra, rb = find(oid), find(tgt)
+            if ra != rb:
+                parent[ra] = rb
+
+    tmp = pd.DataFrame({
+        "order_id": df["order_id"].astype(str).values,
+        "accept_time": df["accept_time"].values,
+    })
+    tmp["_case"] = tmp["order_id"].map(find)
+    rep = (tmp.sort_values(["accept_time", "order_id"])
+              .groupby("_case")["order_id"].first())
+    rep_ids = set(rep.values)
+    case_key = dict(zip(tmp["order_id"], tmp["_case"]))
+    return rep_ids, case_key, int(len(rep)), int(len(tmp) - len(rep))
+
+
+def keywords_of(d: pd.DataFrame, topn=KEYWORD_TOPN, street=None, rep_ids=None):
     """提取该街镇诉求主题词（供词云展示）。
 
-    只取「诉求：」之后的正文（无则取全文），剔除三类非主题词：
+    先做案件级归并（只留首单，见 case_representatives），再取「诉求：」之后的正文
+    （无则取全文），并剔除引用块与四类非主题词：
       1) STOP / STOP_BOILERPLATE 中的停用词与工单模板用语（无需/内容/最近/编号/办结…）
       2) 本街镇自身地名（长桥/华泾…），避免地址串扰
       3) 文档频率高于 BOILERPLATE_DF 的高频套话
+      4) 连带工单转载的原文引用块（QUOTED_BLOCK_RE）
     """
+    if rep_ids is not None:
+        d = d[d["order_id"].astype(str).isin(rep_ids)]
     texts = []
     for raw in d["content"].tolist():
-        s = raw or ""
+        s = strip_quoted(raw or "")
         for marker in ("诉求：", "诉求:", "诉求是"):
             i = s.find(marker)
             if i >= 0:
@@ -303,6 +374,11 @@ def build(do_dedup=True) -> dict:
     main = df[df["street"] != "无"].copy()
     streets = sorted(main["street"].unique())
 
+    # 案件级归并：连带工单（催单/补充/重复来电）只算 1 个案件、只取首单正文
+    rep_ids, case_key, n_cases_all, n_merged_all = case_representatives(df)
+    print(f"  · 案件级归并：全量 {len(df)} 笔 → {n_cases_all} 个案件"
+          f"（归并 {n_merged_all} 笔，占 {n_merged_all / max(len(df), 1) * 100:.1f}%）")
+
     n26 = period(main, YEAR_NOW, 1, MONTH_NOW)
     n25s = period(main, YEAR_PREV, 1, MONTH_NOW)
     n24s = period(main, YEAR_BASE, 1, MONTH_NOW)
@@ -315,10 +391,14 @@ def build(do_dedup=True) -> dict:
 
     d26 = int(len(n26))
     d25s = int(len(n25s))
+    # 2026年1-8月 案件数（连带工单合并后），案件可能跨街镇，故分街镇案件数之和≤此值
+    d26_cases = len({case_key.get(o, o) for o in n26["order_id"].astype(str)})
     district = {
         "n2026": d26, "n2025_same": d25s, "n2024_same": int(len(n24s)),
         "n2025_full": int(len(n25f)), "n2024_full": int(len(n24f)),
         "yoy": yoy(d26, d25s),
+        "cases2026": d26_cases,
+        "cases_merged": d26 - d26_cases,
         "unassigned": unassigned,
         "unassigned_all": unassigned_all,
         "total_all": d26 + unassigned,
@@ -374,6 +454,9 @@ def build(do_dedup=True) -> dict:
             "active_communities": active_communities,
             "households": households,
             "households_matched": hh_matched,
+            # 案件级：连带工单合并后的案件数（同一诉求多次来电只算 1 件）
+            "cases2026": len({case_key.get(o, o) for o in s26["order_id"].astype(str)}),
+            "cases_merged": a26 - len({case_key.get(o, o) for o in s26["order_id"].astype(str)}),
         }
 
         # ── 月度序列（1-12 月，缺数据为 null）
@@ -563,7 +646,7 @@ def build(do_dedup=True) -> dict:
             "externals": externals.get(st, externals.get(key, {})),
             "bottom_lift": {"count": len(blift_st), "names": [b["name"] for b in blift_st][:10]},
             "investigation": inv_st,
-            "keywords": keywords_of(s26, street=st),
+            "keywords": keywords_of(s26, street=st, rep_ids=rep_ids),
         }
         streets_data[st] = street_obj
 
