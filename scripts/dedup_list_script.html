@@ -1,0 +1,158 @@
+<script>
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var tab = this.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    this.classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  });
+});
+</script>
+
+
+<!-- ===== 右侧浮动目录 ===== -->
+<div class="toc-float collapsed" id="tocFloat">
+  <button class="toc-toggle" id="tocToggle">目 录</button>
+  <div class="toc-panel">
+    <div class="toc-header">
+      <span>📑 报告目录</span>
+      <span class="toc-count" id="tocCount">0章</span>
+    </div>
+    <div class="toc-body" id="tocBody"></div>
+  </div>
+</div>
+
+
+<script>
+// ===== 右侧浮动目录 =====
+document.addEventListener('DOMContentLoaded', function() {
+  var tocFloat = document.getElementById('tocFloat');
+  var tocToggle = document.getElementById('tocToggle');
+  var tocBody = document.getElementById('tocBody');
+  var tocCount = document.getElementById('tocCount');
+  if (!tocFloat || !tocBody) return;
+
+  var expanded = false;
+  tocToggle.addEventListener('click', function() {
+    expanded = !expanded;
+    if (expanded) {
+      tocFloat.classList.remove('collapsed');
+      tocFloat.classList.add('expanded');
+      tocToggle.textContent = '收 起';
+    } else {
+      tocFloat.classList.add('collapsed');
+      tocFloat.classList.remove('expanded');
+      tocToggle.textContent = '目 录';
+    }
+  });
+
+  var sections = document.querySelectorAll('.section');
+  var tocHTML = '';
+  var sectionCount = 0;
+  var idCounter = 0;
+
+  sections.forEach(function(section, idx) {
+    var titleEl = section.querySelector('.section-title');
+    if (!titleEl) return;
+    var title = titleEl.textContent.trim();
+    title = title.replace(/^[^\u4e00-\u9fa5a-zA-Z0-9]+/, '');
+    if (!title) return;
+    sectionCount++;
+    idCounter++;
+    var sectionId = 'sec-' + idCounter;
+    section.id = sectionId;
+    var subTitles = section.querySelectorAll('.sub-title');
+    var hasSub = subTitles.length > 0;
+    var subHTML = '';
+    if (hasSub) {
+      subHTML += '<div class="toc-sub-wrap">';
+      subTitles.forEach(function(sub, subIdx) {
+        idCounter++;
+        var subId = 'sub-' + idCounter;
+        sub.id = subId;
+        var subTitle = sub.textContent.trim();
+        subHTML += '<a class="toc-item level2" href="#' + subId + '" data-target="' + subId + '">' + subTitle + '</a>';
+      });
+      subHTML += '</div>';
+    }
+    tocHTML += '<a class="toc-item level1' + (hasSub ? ' has-sub' : '') + '" href="#' + sectionId + '" data-target="' + sectionId + '">' +
+               title +
+               (hasSub ? '<span class="toc-arrow">▶</span>' : '') +
+               '</a>' + subHTML;
+  });
+
+  tocBody.innerHTML = tocHTML;
+  tocCount.textContent = sectionCount + '章';
+
+  var level1Items = tocBody.querySelectorAll('.toc-item.level1.has-sub');
+  level1Items.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var subWrap = item.nextElementSibling;
+      if (subWrap && subWrap.classList.contains('toc-sub-wrap')) {
+        e.preventDefault();
+        subWrap.classList.toggle('open');
+        item.classList.toggle('open');
+      }
+    });
+  });
+
+  var allTocItems = tocBody.querySelectorAll('.toc-item');
+  allTocItems.forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      var targetId = item.getAttribute('data-target');
+      if (!targetId) return;
+      var target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        var top = target.offsetTop - 60;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  var ticking = false;
+  function updateActive() {
+    var scrollY = window.scrollY + 100;
+    var currentId = null;
+    var allTargets = document.querySelectorAll('.section[id^="sec-"], .sub-title[id^="sub-"]');
+    for (var i = 0; i < allTargets.length; i++) {
+      var el = allTargets[i];
+      if (el.offsetTop <= scrollY) {
+        currentId = el.id;
+      } else {
+        break;
+      }
+    }
+    if (currentId) {
+      allTocItems.forEach(function(item) {
+        item.classList.remove('active');
+      });
+      var activeItem = tocBody.querySelector('.toc-item[data-target="' + currentId + '"]');
+      if (activeItem) {
+        activeItem.classList.add('active');
+        if (activeItem.classList.contains('level2')) {
+          var parentWrap = activeItem.closest('.toc-sub-wrap');
+          if (parentWrap) {
+            parentWrap.classList.add('open');
+            var prevItem = parentWrap.previousElementSibling;
+            if (prevItem) prevItem.classList.add('open');
+          }
+        }
+      }
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateActive);
+      ticking = true;
+    }
+  });
+  updateActive();
+});
+</script>
+
+</body>
+</html>
