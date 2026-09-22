@@ -12,6 +12,7 @@
   · 街镇归属    主数据 street 字段（100% 覆盖），"无" 归属单列不进街镇明细
   · 重复投诉    复用 dedup_monthly.py 的四重策略，按街镇对 2026年1-8月 累计计算
   · 命名映射    主数据「华泾镇」↔ 派生资产「华泾」；外部数据「XX街道」→ 主数据名
+  · 投诉密度    件/千户 = 投诉量 ÷ 户数 × 1000（全区统一口径，不使用「件/小区」）
 
 用法：
     python scripts/build_street_dataset.py                # 全量构建
@@ -30,6 +31,7 @@ import pandas as pd
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PKL = os.path.join(ROOT, "data", "merged_cleaned.pkl")
+NATO = os.path.join(ROOT, "data", "community_linked_data.pkl")
 OUT = os.path.join(ROOT, "scripts", "street_analysis.json")
 SCRIPTS = os.path.join(ROOT, "scripts")
 EXT = os.path.join(ROOT, "徐汇各科室业务数据")
@@ -77,6 +79,22 @@ def load_data() -> pd.DataFrame:
     df["content"] = df["content"].fillna("").astype(str).str.strip()
     df["t"] = pd.to_datetime(df["accept_time"], errors="coerce")
     return df
+
+
+def load_households() -> dict:
+    """小区名 → 总户数。
+
+    来自 data/community_linked_data.pkl（994 个纳统小区档案）。
+    工单主数据与 SQLite 库都没有户数字段，密度计算必须从这里取。
+    """
+    try:
+        df = pd.read_pickle(NATO)
+    except FileNotFoundError:
+        print("  ⚠ 未找到 community_linked_data.pkl，户数相关指标将为空")
+        return {}
+    df = df[df["total_households"] > 0]
+    return dict(zip(df["community_name"].astype(str).str.strip(),
+                    df["total_households"].astype(float)))
 
 
 def period(df, year, m1=1, m2=12) -> pd.DataFrame:
@@ -281,6 +299,7 @@ def keywords_of(d: pd.DataFrame, topn=KEYWORD_TOPN, street=None):
 
 def build(do_dedup=True) -> dict:
     df = load_data()
+    households_map = load_households()
     main = df[df["street"] != "无"].copy()
     streets = sorted(main["street"].unique())
 
@@ -338,7 +357,11 @@ def build(do_dedup=True) -> dict:
         # ── 核心指标
         communities = s26["community_name"].astype(str).str.strip()
         comm_valid = communities[~communities.isin(["", "无", "nan"])]
+        comm_list = list(comm_valid.unique())
         active_communities = int(comm_valid.nunique())
+        # 户数：只累加 2026年1-8月有投诉的小区，与 active_communities 口径一致
+        households = int(sum(households_map.get(c, 0) for c in comm_list))
+        hh_matched = int(sum(1 for c in comm_list if c in households_map))
         core = {
             "n2026": a26, "n2025_same": a25, "n2024_same": a24,
             "n2025_full": int(len(n25f[n25f["street"] == st])),
@@ -349,6 +372,8 @@ def build(do_dedup=True) -> dict:
             "contribution": pct(dec, district_decline) if dec > 0 else None,
             "decline": int(dec),
             "active_communities": active_communities,
+            "households": households,
+            "households_matched": hh_matched,
         }
 
         # ── 月度序列（1-12 月，缺数据为 null）
@@ -547,6 +572,8 @@ def build(do_dedup=True) -> dict:
             "yoy": core["yoy"], "share": core["share"],
             "contribution": core["contribution"],
             "communities": active_communities,
+            "households": households,
+            "households_matched": hh_matched,
             "dup_rate": dup["rate"] if dup else None,
             "dup_high": dup["high_count"] if dup else None,
             "dup_count": dup["dup_count"] if dup else None,
@@ -568,9 +595,11 @@ def build(do_dedup=True) -> dict:
     risk_sorted = sorted(overview, key=lambda x: -(x["risk_red"] or 0))
     for i, r in enumerate(risk_sorted, 1):
         r["rank_risk"] = i
-    # 投诉密度 = 2026年1-8月投诉量 ÷ 有投诉小区数（件/小区），衡量单位小区承载强度
+    # 投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（件/千户）
+    # 户数为该街镇「2026年1-8月有投诉小区」的总户数，与有投诉小区数口径一致
     for r in overview:
-        r["density"] = round(r["n2026"] / r["communities"], 1) if r["communities"] else None
+        r["density"] = round(r["n2026"] / r["households"] * 1000, 1) if r["households"] else None
+        r["density_per_community"] = round(r["n2026"] / r["communities"], 1) if r["communities"] else None
     dens_sorted = sorted([r for r in overview if r["density"] is not None], key=lambda x: -x["density"])
     for i, r in enumerate(dens_sorted, 1):
         r["rank_density"] = i                  # 1 = 密度最高
@@ -578,7 +607,9 @@ def build(do_dedup=True) -> dict:
         sb = streets_data[r["street"]]
         sb["core"].update({"rank_total": r["rank_total"], "rank_yoy": r["rank_yoy"],
                            "rank_dup": r.get("rank_dup"), "rank_risk": r["rank_risk"],
-                           "rank_density": r.get("rank_density"), "density": r.get("density")})
+                           "rank_density": r.get("rank_density"), "density": r.get("density"),
+                           "density_per_community": r.get("density_per_community"),
+                           "households": r.get("households")})
 
     # ── 自动结论
     for r in overview:
@@ -593,6 +624,9 @@ def build(do_dedup=True) -> dict:
         "notes": [
             f"街镇明细合计 {d26:,} 条 + 归属为空 {unassigned} 条 = 全区 {d26 + unassigned:,} 条",
             "同比统一采用同期口径（1-8月 vs 1-8月），不使用全年基数",
+            "投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（件/千户）；"
+            "户数为该街镇「2026年1-8月有投诉小区」的总户数，取自 community_linked_data.pkl 的"
+            " total_households 字段（994 个纳统小区档案；工单主数据与 SQLite 库均无户数字段）",
             f"{YEAR_NOW}年 9-12 月数据未产生，图表以空值呈现",
             "重复投诉率：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，按街镇 1-8 月累计计算",
             "治理成效为 2026年1-8月 vs 2025年同期 口径（已排除「其他」「房屋交易纠纷」等非物业类）；"
