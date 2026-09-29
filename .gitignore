@@ -38,6 +38,9 @@ scripts/audit_reports/
 scripts/_selftest*.py
 scripts/_tmp_*.html
 
+# 发布用静态目录（由 scripts/build_publish_site.py 生成，不入库）
+_publish/
+
 # IDE
 .idea/
 .vscode/
@@ -50,3 +53,4 @@ node_modules/
 
 # WorkBuddy workspace
 .workbuddy/
+.wbapp_*.genie

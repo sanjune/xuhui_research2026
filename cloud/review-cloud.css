@@ -1,0 +1,90 @@
+/* 词云词表审核清单 · 云服务接入样式（Auth + Database） */
+.wcc-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap; margin: 0 0 0; padding: 12px 32px;
+  background: #eef4fd; border-bottom: 1px solid #d6e4f7;
+  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 13px; color: #1f2937;
+}
+.wcc-bar-l { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wcc-bar-r { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.wcc-dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; flex: none; }
+.wcc-dot.on { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.16); }
+.wcc-dot.off { background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.16); }
+.wcc-dot.err { background: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,.16); }
+.wcc-title { font-weight: 600; color: #0d47a1; }
+.wcc-stat { color: #4b5563; }
+.wcc-stat b { color: #0d47a1; }
+.wcc-user { color: #4b5563; max-width: 220px; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap; }
+.wcc-btn {
+  border: 1px solid #c3d4ea; background: #fff; color: #14508f; cursor: pointer;
+  padding: 5px 12px; border-radius: 6px; font-size: 13px; font-family: inherit;
+  transition: background .15s, border-color .15s;
+}
+.wcc-btn:hover { background: #f2f7ff; border-color: #90b8e8; }
+.wcc-btn:disabled { opacity: .55; cursor: not-allowed; }
+.wcc-btn.pri { background: #1976d2; border-color: #1976d2; color: #fff; font-weight: 600; }
+.wcc-btn.pri:hover { background: #1565c0; }
+.wcc-btn.gh { background: transparent; border-color: transparent; color: #5b6572; }
+.wcc-btn.gh:hover { background: #e2ecf9; }
+.wcc-link { color: #1976d2; cursor: pointer; text-decoration: underline;
+            background: none; border: 0; font-size: 12.5px; font-family: inherit; padding: 0; }
+
+.wcc-ledger { margin: 0; padding: 10px 32px 14px; background: #f7fafd;
+              border-bottom: 1px solid #e2e8f0; font-size: 13px; }
+.wcc-ledger > summary { cursor: pointer; color: #14508f; font-weight: 600; outline: none; }
+.wcc-ledger-body { margin-top: 10px; max-height: 260px; overflow: auto;
+                   border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; }
+.wcc-tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.wcc-tbl th, .wcc-tbl td { padding: 7px 12px; text-align: left; border-bottom: 1px solid #eef2f7; }
+.wcc-tbl th { background: #f4f7fb; color: #475569; font-weight: 600;
+              position: sticky; top: 0; }
+.wcc-tbl tr:last-child td { border-bottom: 0; }
+.wcc-mine { color: #1976d2; font-weight: 600; }
+.wcc-other { color: #64748b; }
+.wcc-empty { padding: 14px 12px; color: #94a3b8; }
+
+.wcc-modal { position: fixed; inset: 0; background: rgba(15,23,42,.5); z-index: 9999;
+             display: flex; align-items: center; justify-content: center; padding: 20px; }
+.wcc-modal[hidden] { display: none; }
+.wcc-dlg { position: relative; width: 100%; max-width: 420px; background: #fff;
+           border-radius: 12px; padding: 24px; box-shadow: 0 18px 48px rgba(15,23,42,.28);
+           font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wcc-dlg h3 { margin: 0 0 4px; font-size: 17px; color: #0d47a1; }
+.wcc-dlg .wcc-sub { font-size: 12.5px; color: #64748b; margin-bottom: 16px; }
+.wcc-close { position: absolute; top: 12px; right: 14px; border: 0; background: none;
+             font-size: 22px; line-height: 1; color: #94a3b8; cursor: pointer; }
+.wcc-close:hover { color: #475569; }
+.wcc-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
+.wcc-tabs button { flex: 1; border: 1px solid #dbe4f0; background: #f8fafc; color: #475569;
+                   padding: 8px; border-radius: 7px; cursor: pointer; font-family: inherit;
+                   font-size: 13.5px; }
+.wcc-tabs button.on { background: #1976d2; border-color: #1976d2; color: #fff; font-weight: 600; }
+.wcc-seg { display: flex; gap: 8px; margin-bottom: 12px; }
+.wcc-seg button { border: 0; background: none; color: #64748b; cursor: pointer;
+                  font-size: 12.5px; font-family: inherit; padding: 2px 0;
+                  border-bottom: 2px solid transparent; }
+.wcc-seg button.on { color: #1976d2; border-bottom-color: #1976d2; font-weight: 600; }
+.wcc-field { margin-bottom: 11px; }
+.wcc-field label { display: block; font-size: 12.5px; color: #475569; margin-bottom: 5px; }
+.wcc-field input { width: 100%; padding: 9px 11px; border: 1px solid #cbd5e1;
+                   border-radius: 7px; font-size: 14px; font-family: inherit; }
+.wcc-field input:focus { outline: none; border-color: #1976d2;
+                         box-shadow: 0 0 0 3px rgba(25,118,210,.12); }
+.wcc-with-btn { display: flex; gap: 8px; }
+.wcc-with-btn input { flex: 1; }
+.wcc-with-btn .wcc-btn { white-space: nowrap; }
+.wcc-msg { margin-top: 12px; font-size: 12.5px; min-height: 18px; line-height: 1.5; }
+.wcc-msg.err { color: #dc2626; }
+.wcc-msg.ok { color: #16a34a; }
+.wcc-actions { margin-top: 16px; display: flex; gap: 10px; align-items: center; }
+.wcc-actions .wcc-btn { flex: 1; padding: 10px; }
+.wcc-foot { margin-top: 14px; font-size: 12px; color: #94a3b8; line-height: 1.6; }
+
+.wcc-toast { position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%);
+             background: #1f2937; color: #fff; padding: 10px 18px; border-radius: 8px;
+             font-size: 13px; z-index: 10000; opacity: 0; transition: opacity .2s;
+             pointer-events: none; max-width: 80vw; text-align: center;
+             font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wcc-toast.on { opacity: .95; }
