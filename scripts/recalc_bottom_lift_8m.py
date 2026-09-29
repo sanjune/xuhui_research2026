@@ -34,6 +34,9 @@ ALIAS = {
     "漓江花园": "漓江花园（领馆壹号院）",
 }
 
+# 矛盾类型标签（三、街道分布 与 五、矛盾类型 共用同一套）
+CT_LABEL = {"1": "一类（收费/服务）", "2": "二类（设施/房屋）", "3": "三类（业委会/治理）"}
+
 M8 = 8  # 1-8月
 
 
@@ -153,6 +156,35 @@ def main():
         }
         rec["yoy_2025"] = pct(rec["y2025"], rec["y2024"])
         rec["yoy_m8"] = pct(rec["m8_2026"], rec["m8_2025"])
+        # 该街道的底部抬升小区明细（供报告「重点小区数」下钻抽屉使用）
+        # 以名单为全集：名单内但热线无匹配的，matched=False、各期取 None，
+        # 这样抽屉里既有数字也有「无热线记录」的交代，不隐藏未匹配小区。
+        comms, n_list = [], 0
+        for c in blist:
+            if c["street"] != st:
+                continue
+            n_list += 1
+            std = ALIAS.get(c["name"], c["name"])
+            hit = std in name_map
+            g = sub[sub["community_name"] == std] if hit else None
+            a = int(len(g[(g["year"] == 2025) & (g["month"] <= M8)])) if hit else None
+            b = int(len(g[(g["year"] == 2026) & (g["month"] <= M8)])) if hit else None
+            comms.append({
+                "name": c["name"],
+                "matched": hit,
+                "std": std if hit else None,
+                "m8_2025": a,
+                "m8_2026": b,
+                "yoy_m8": pct(b, a) if (a not in (None, 0)) else None,
+                "y2024": int(len(g[g["year"] == 2024])) if hit else None,
+                "y2025": int(len(g[g["year"] == 2025])) if hit else None,
+                "ctype": CT_LABEL.get(str(c.get("contradiction_type") or ""), "—"),
+                "ctype_raw": str(c.get("contradiction_type") or ""),
+            })
+        # 有热线记录的在前、按 2026年1-8月 投诉量降序；无记录的置底
+        comms.sort(key=lambda x: (not x["matched"], -(x["m8_2026"] or -1), x["name"]))
+        rec["n_list"] = n_list
+        rec["communities"] = comms
         streets.append(rec)
     streets.sort(key=lambda x: (x["yoy_m8"] if x["yoy_m8"] is not None else 999))
     res["street_stats"] = streets
@@ -174,7 +206,7 @@ def main():
     res["category_stats"] = cats
 
     # ---------- 五、矛盾类型 ----------
-    ct_label = {"1": "一类（收费/服务）", "2": "二类（设施/房屋）", "3": "三类（业委会/治理）"}
+    ct_label = CT_LABEL
     ctypes = []
     for ct in ["1", "2", "3"]:
         n_comm = sum(1 for m in name_map.values() if str(m["contradiction_type"]) == ct)

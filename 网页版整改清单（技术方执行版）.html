@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>徐汇物业投诉数据分析项目 · 网页版整改清单（技术方执行版 v2.6）</title>
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:0; background:#f5f7fa; font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif; color:#1f2937; line-height:1.7; }
+  .wrap { max-width:1180px; margin:0 auto; padding:28px 22px 70px; }
+  header { background:linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; border-radius:12px; padding:26px 30px; margin-bottom:22px; }
+  header h1 { margin:0 0 8px; font-size:25px; letter-spacing:0.5px; }
+  header .sub { opacity:.9; font-size:13.5px; }
+  header .meta { margin-top:14px; font-size:12.5px; opacity:.85; border-top:1px solid rgba(255,255,255,.25); padding-top:12px; }
+  .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px; }
+  .sc { background:#fff; border-radius:10px; padding:15px 16px; border-left:4px solid #1976d2; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .sc .n { font-size:26px; font-weight:800; color:#0d47a1; line-height:1.2; }
+  .sc .l { font-size:12px; color:#6b7280; margin-top:3px; }
+  .sc.ok { border-left-color:#22c55e; } .sc.ok .n { color:#15803d; }
+  .sc.warn { border-left-color:#f59e0b; } .sc.warn .n { color:#b45309; }
+  .sc.bad { border-left-color:#ef4444; } .sc.bad .n { color:#b91c1c; }
+  h2.sec { font-size:18px; margin:34px 0 14px; padding-left:12px; border-left:4px solid #0d47a1; color:#0d47a1; }
+  h2.sec small { font-weight:400; font-size:12.5px; color:#6b7280; margin-left:8px; }
+  .item { background:#fff; border-radius:10px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,.06); overflow:hidden; }
+  .item > .hd { padding:14px 18px; background:#f8fafc; border-bottom:1px solid #e5e7eb; display:flex; align-items:flex-start; gap:12px; }
+  .item .no { flex:0 0 30px; height:30px; border-radius:8px; background:#0d47a1; color:#fff; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; }
+  .item .ttl { font-size:15.5px; font-weight:700; flex:1; }
+  .item .tagn { font-size:11.5px; padding:3px 9px; border-radius:20px; font-weight:600; white-space:nowrap; }
+  .t-need { background:#fee2e2; color:#b91c1c; }
+  .t-ok { background:#dcfce7; color:#15803d; }
+  .t-part { background:#fef3c7; color:#b45309; }
+  .t-new { background:#e0e7ff; color:#3730a3; }
+  .item > .bd { padding:15px 18px; }
+  .item h4 { font-size:13px; margin:14px 0 7px; color:#374151; }
+  .item h4:first-child { margin-top:0; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; margin:8px 0; }
+  th,td { border:1px solid #e5e7eb; padding:7px 9px; text-align:left; vertical-align:top; }
+  th { background:#f1f5f9; font-weight:600; color:#334155; white-space:nowrap; }
+  code { background:#f1f5f9; padding:1px 5px; border-radius:4px; font-family:"SF Mono",Consolas,monospace; font-size:11.5px; color:#be123c; }
+  .path { color:#0d47a1; font-weight:600; }
+  .was { color:#b91c1c; }
+  .to { color:#15803d; font-weight:700; }
+  .note { background:#fffbeb; border-left:3px solid #f59e0b; padding:9px 13px; border-radius:0 6px 6px 0; font-size:12.5px; margin:10px 0; }
+  .note.blue { background:#eff6ff; border-left-color:#3b82f6; }
+  .note.red { background:#fef2f2; border-left-color:#ef4444; }
+  .note.green { background:#f0fdf4; border-left-color:#22c55e; }
+  ul.tight { margin:6px 0 6px 18px; padding:0; font-size:13px; }
+  ul.tight li { margin:3px 0; }
+  footer { margin-top:36px; font-size:12px; color:#9ca3af; text-align:center; border-top:1px solid #e5e7eb; padding-top:16px; }
+  .dec { background:#fff; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,.06); overflow:hidden; margin-bottom:16px; border-top:4px solid #22c55e; }
+  .dec .dh { padding:13px 18px; background:#f0fdf4; font-weight:700; font-size:15px; color:#15803d; border-bottom:1px solid #dcfce7; }
+  .dec table { margin:0; }
+  .dec td:first-child { font-weight:700; color:#15803d; white-space:nowrap; }
+  @media print { body{background:#fff;} .item,.sc,.dec{box-shadow:none;border:1px solid #e5e7eb;} .wrap{padding:0;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>徐汇物业投诉数据分析项目 · 网页版整改清单</h1>
+  <div class="sub">技术方执行版 <b>v2.6</b> · 13 项中 <b>12 项已完成</b>（<b>余第 11 项</b>：同比删 2024）；10 条口径决策全部落地 + 全站纳统口径源已统一到 <b>993</b>，<b>无待决项</b></div>
+  <div class="meta">
+    来源：2026-09-23 项目汇报与工单数据获取沟通会议 &nbsp;|&nbsp;
+    v1 整理：2026-09-28 &nbsp;|&nbsp; v2 修订：2026-09-28（并入 6 条口径决策）&nbsp;|&nbsp;
+    v2.1 修订：2026-09-28（预警基数定 799 + 新增全站数字对账规程）&nbsp;|&nbsp;
+    v2.2 修订：2026-09-28（湖南路密度定 50.7 + 同比删 2024 + 治理追踪口径定档）&nbsp;|&nbsp;
+    v2.3 修订：2026-09-28（<b>风险评估类报告改按《纳统小区 (2026 更新版)》统计</b>：参评 772 / 红 254 / 橙 386 / 黄 108 / 蓝 24、治理追踪 390、纳统总数 993）&nbsp;|&nbsp;
+    v2.4 修订：2026-09-28（<b>全站统一到 993</b>：关联库按 2026 更新版重建为 993 行 × 45 字段，多源／根因两份报告的匹配链路重跑、关联字段复算，街镇密度户数改为按纳统小区归并）&nbsp;|&nbsp;
+    v2.5 修订：2026-09-29（<b>第 6/8/9/10/13 项落地</b>：高风险评分改 100 分起扣、底抬小区在街镇单独分类、关键数字下钻抽屉、词云停用词人工审核 249 词、华泾红色占比核查）&nbsp;|&nbsp;
+    v2.6 修订：2026-09-29（<b>第 12 项落地</b>：治理报告新增第八节「物业服务态度投诉专项排名」公司／小区双视图 + <b>全区同比口径修正</b>：-12.6% → <b>-13.1%</b>，减少 2,072 件）<br>
+    代码基线：<code>f120ca2</code>（2026-09-22，线上 GitHub Pages 与本地一致）<br>
+    ⚠️ 行号基于整理时的文件版本；改完一处后续行号会位移，请以「关键词定位」为准。
+  </div>
+</header>
+
+<!-- ============ 决策速览 ============ -->
+<div class="dec">
+  <div class="dh">★ 一、口径决策速览（项目组已定，共 10 条，全清单以此为准）</div>
+  <table>
+    <tr><th style="width:34px;">#</th><th style="width:150px;">事项</th><th>结论</th><th style="width:96px;">影响条目</th></tr>
+    <tr>
+      <td>1</td><td>纳统小区基准数</td>
+      <td><b>993 为准</b>（《纳统小区 (2026 更新版)》档案条数）。<span style="color:#15803d;">v2.4 起关联库 <code>community_linked_data.pkl</code> 亦已重建为 993 行，全站不再存在 994 口径。</span>凡因关联其他业务（如仅关联有热线记录的小区）而收窄样本的，
+        <b>必须在出现处标注「参与统计口径」</b>，例如「纳统小区共993个；其中968个有热线投诉记录，参与本次统计（覆盖率 97.5%）」。</td>
+      <td>第 2 项</td>
+    </tr>
+    <tr>
+      <td>2</td><td>高风险预警基数</td>
+      <td>基数为 <b>「投诉量≥10 件的参评小区」</b>，<b>基数数值已定 = 772</b>
+        （《纳统小区 (2026 更新版)》名单内 + 按纳统小区聚合 + 2026年1-8月口径，红 254 + 橙 386 + 黄 108 + 蓝 24 = 772，数据源闭环）。<br>
+        全站凡出现 <b>620 / 628 / 799</b> 一律改为 <b>772</b>；第五章红色预警 Top30 的说明文字，
+        <b>不再表述为「热线全口径 628 个有投诉记录的小区（1-8月）」</b>，改为与基数同口径。</td>
+      <td>第 2 项</td>
+    </tr>
+    <tr>
+      <td>3</td><td>治理效果追踪口径</td>
+      <td><b>与高风险预警的逻辑保持一致</b>：只统计《纳统小区 (2026 更新版)》名单内小区，按纳统小区聚合，以「投诉量达到门槛的参评小区」为样本，统一表述并在模块开头显著标注口径。<b>追踪小区数 = 390</b>。</td>
+      <td>第 4 项</td>
+    </tr>
+    <tr>
+      <td>4</td><td>时间口径</td>
+      <td><b>全站废除「1-6 月」，一律改为「1-8 月」统计</b>。相应数字同步换为 2026 年 1-8 月口径。</td>
+      <td>第 3 项</td>
+    </tr>
+    <tr>
+      <td>5</td><td>AI 智能体</td>
+      <td><b>隐藏全部智能体功能</b>；智能体的数据<b>不关联任何分析报告</b>（既不作为报告出口，报告中也不得引用其数字）。</td>
+      <td>第 5 项（新增）</td>
+    </tr>
+    <tr>
+      <td>6</td><td>关键数字下钻</td>
+      <td>采用<b>方案二（抽屉 / 弹窗）</b>；范围<b>仅限「小区及数字」</b>，落地为<b>各等级预警小区数 → 对应等级小区清单</b>。
+        <b>不做</b>重复投诉数、投诉总量的明细展示。</td>
+      <td>第 9 项</td>
+    </tr>
+    <tr>
+      <td>7</td><td>湖南路投诉密度</td>
+      <td><b>采用 50.7 件/千户</b>（保留一位小数，<b>不取整为 50</b>）。全站凡出现湖南路/湖南街道投诉密度处，一律为
+        <b>50.7 件/千户（全区最高）</b>；5.0 万人口 · 2,535 件口径不变。</td>
+      <td>第 2 项</td>
+    </tr>
+    <tr>
+      <td>8</td><td>同比只保留两年</td>
+      <td><b>全站同比对比删除 2024 年</b>：图表系列、对比表列、图表标题、叙述句中的「较 2024 年」一律去掉，
+        只保留 <b>2025 与 2026</b> 两年（同期 1-8 月口径）。<br>
+        <b>边界：</b>① 数据周期说明「2024 年 1 月—2026 年 8 月」属数据范围、<b>保留</b>；
+        ② 治理追踪入榜门槛中的 <b>2024 全年≥5 件</b>属筛选条件、<b>必须保留</b>（旧口径下实测：删除会使追溯小区数由 394 变为 414；新口径 390 下的敏感性需重跑确认）。</td>
+      <td>第 11 项</td>
+    </tr>
+    <tr>
+      <td>9</td><td>治理追踪口径</td>
+      <td>入榜口径以 <b>「2025 年同期（1-8 月）投诉量≥10 件」为主导门槛</b>；
+        另叠加「三年合计≥15 件、2024 全年≥5 件」抑制小基数放大（<b>门槛不可简化</b>）。<b>追踪小区数 = 390</b>，
+        <code>governance_tracking.json → meta.thresholds</code> 为唯一口径源，改口径只改 <code>scripts/governance_tracking.py</code>。</td>
+      <td>第 4 项</td>
+    </tr>
+    <tr>
+      <td>10</td><td>风险评估报告纳入范围</td>
+      <td><b>高风险小区预警清单、治理效果追踪分析报告一律只统计《纳统小区 (2026 更新版)》名单内的小区，不在名单中的小区不做统计。</b>
+        统计单元由热线自由文本小区名改为<b>纳统小区</b>（别名与曾用名归并到主名；「尚海湾二期 / 尚海湾豪庭」并入「尚海湾豪庭小区（北区）」）；
+        时间口径统一到 <b>2026年1-8月</b>。投诉数据<b>仍按热线数据表口径</b>统计，不使用关联库派生字段。<br>
+        落地：<code>scripts/nato_match.py</code> 为唯一映射口径源；<code>risk_scoring.py</code> / <code>governance_tracking.py</code>
+        新增 <code>--scope aggregate</code>（默认）。名称近似但未精确匹配的 72 个小区单列《待确认纳统匹配候选清单.xlsx》，<b>不自动纳入</b>待人工确认。</td>
+      <td>第 2 / 4 项</td>
+    </tr>
+  </table>
+</div>
+
+<div class="summary">
+  <div class="sc bad"><div class="n">7</div><div class="l">需修改（数据/口径）</div></div>
+  <div class="sc warn"><div class="n">3</div><div class="l">需改造（展示/交互）</div></div>
+  <div class="sc ok"><div class="n">2</div><div class="l">已符合，仅需复查</div></div>
+  <div class="sc"><div class="n">2</div><div class="l">功能缺失/新增（下钻、智能体下架）</div></div>
+  <div class="sc ok"><div class="n">10/10</div><div class="l">口径决策全部已定，无待决项</div></div>
+</div>
+
+<div class="note red">
+  <b>执行前必读：</b>本项目报告全部为「脚本生成」而非手写 —— 数据类修改必须<b>改脚本 → 重跑 → 覆盖 HTML</b>，
+  不可直接编辑 HTML 数字（否则下次重跑会被覆盖，且与数据源脱钩）。
+  仅「样式 / 交互 / 文案」类改动可直接改 HTML 或对应生成脚本模板。
+</div>
+
+<div class="note green">
+  <b>✅ v2.3→v2.4：10 条口径决策全部落地 + 全站纳统口径源统一到 993，无待决项，可直接开工。</b><br>
+  <b>第一批（6 条）：</b>纳统基准数 / 预警基数 / 治理追踪表述 / 1-8 月统一 / 智能体下架 / 下钻方案二。<br>
+  <b>第二批（3 条）：</b>① 湖南路密度取 <b>50.7</b> 不取整；② 同比<b>删 2024</b>、只留 2025 vs 2026；
+  ③ 治理追踪门槛不可简化，表述统一为「2025 年同期≥10 件」主导门槛。<br>
+  <b>第三批（1 条，本次并入）：</b>④ <b>风险评估类报告改按《纳统小区 (2026 更新版)》统计</b> ——
+  只统计名单内小区、按纳统小区聚合、统一到 2026年1-8月。随之定档：纳统总数 <b>993</b>（968 个有热线记录）、
+  参评基数 <b>772</b>（红 <b>254</b> + 橙 <b>386</b> + 黄 <b>108</b> + 蓝 <b>24</b>）、治理追踪 <b>390</b>
+  （显著改善 217 / 持续恶化 111 / 改善后反弹 58 / 基本稳定 60 / 本期无投诉 2）。<br>
+  页面上原有的 620 / 628 / 799 / 236 / 426 / 112 / 25 / 394 与 635 <b>统统作废</b>，属早期版本遗留。
+  第 2、4、9、11 各项数字与明细条数随之全部确定，
+  <b>不再有阻塞项，可直接按第八节顺序开工</b>。<br>
+  <b style="color:#15803d;">v2.4 追加（全站统一到 993）：</b>关联库已按《纳统小区 (2026 更新版)》<b>独立重建</b>为 993 行 × 45 字段
+  （脚本 <code>scripts/build_linked_data.py</code>，旧库自动备份为 <code>community_linked_data_20260903_994.pkl</code>），
+  电梯／修缮／底部抬升／热线四条匹配链路全部重跑，<b>多源数据清洗与关联分析报告</b>与
+  <b>物业投诉根因分析报告</b>的关联字段与匹配率已复算，街镇密度户数改为按纳统小区归并累加。
+  993 口径下根因报告核心统计量（有投诉 968 / 有电梯 256 / 有修缮 284 / 底部抬升 82 / 相关系数 0.782）
+  <b>全部不变</b>，仅口径标注与匹配率数字更新。
+</div>
+
+<!-- ============ 高优先级 ============ -->
+<h2 class="sec">二、高优先级 <small>核心数据，领导必看，必须先改</small></h2>
+
+<div class="item">
+  <div class="hd"><div class="no">1</div><div class="ttl">底部抬升小区数量统一为 84 个</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>实况核查：84 与 78 混用，另有 1 处为 23</h4>
+    <table>
+      <tr><th>文件</th><th>位置</th><th>当前值</th><th>目标值</th></tr>
+      <tr><td rowspan="3" class="path">底部抬升小区热线数据分析报告.html</td><td>:332 subtitle</td><td class="was">84 个小区</td><td>84 ✅ 保持</td></tr>
+      <tr><td>:333 meta</td><td class="was">匹配成功 <b>78</b> 个小区</td><td class="to">按两级口径改写</td></tr>
+      <tr><td>:793 口径说明</td><td class="was">底部抬升 <b>78</b> 个匹配小区 / 其余 <b>1,298</b> 个普通小区</td><td class="to">84 / 1,292（分母需同步重算）</td></tr>
+      <tr><td class="path">同上</td><td>:804 对比表</td><td class="was">底部抬升 <b>78</b></td><td class="to">84</td></tr>
+      <tr><td class="path">物业投诉根因分析报告.html</td><td>:1345（6）底部抬升 表</td><td class="was">底部抬升 <b>23</b> 个 / 普通小区 <b>21</b> 个</td><td class="to">84 个（均值、每千户、同比需重算）</td></tr>
+      <tr><td class="path">底部抬升小区热线数据分析报告.html</td><td>:731-732 / :762</td><td class="was">38个·50.7% / 38个（50.0%）</td><td class="to">统一为 50.7%（重算后）</td></tr>
+    </table>
+    <h4>根因：84 是名单总数，78 是匹配成功数</h4>
+    <ul class="tight">
+      <li><code>scripts/bottom_lift_communities.json</code> → 实际 <b>84</b> 条（"党建引领重点小区"名单）</li>
+      <li><code>scripts/bottom_lift_analysis.json</code> → <code>total_bottom_lift: 84</code>、<code>matched: 78</code>、<code>unmatched: 6</code></li>
+      <li>6 个未匹配小区：华尔登广场、上海天玺、宫宵小区、福苑小区、高知楼、老沪闵路709弄</li>
+      <li>根因报告的「23 / 21」是一个更小的子集（疑为关联到修缮/物业费数据的交集），需确认取数逻辑后重算</li>
+    </ul>
+    <div class="note green">
+      <b>统一口径：</b>「重点小区 <b>84</b> 个，其中 <b>78</b> 个可匹配到热线数据」。
+      凡页面上的「重点小区数 / 底部抬升小区数」一律用 <b>84</b>；凡涉及投诉量统计的分母用 <b>78</b> 并注明。
+      改法：改 <code>scripts/update_bottom_lift_report.py</code>、<code>scripts/recalc_bottom_lift_8m.py</code> 后重跑。
+    </div>
+    <h4>验收</h4>
+    <p>专题页、街镇汇总、根因分析三处交叉核对，底部抬升小区数量全部 = 84。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">2</div><div class="ttl">核心大数口径统一（纳统小区 / 预警基数 / 密度）</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <table>
+      <tr><th>指标</th><th>决策口径</th><th>实测现状</th><th>结论</th></tr>
+      <tr><td>2026年1-8月全区投诉降幅</td><td class="to">13.1%</td><td>13.1%（12345报告、月报合集、底部抬升）</td><td>✅ 已一致</td></tr>
+      <tr><td>底部抬升小区投诉降幅</td><td class="to">16.9%</td><td>16.9%</td><td>✅ 已一致</td></tr>
+      <tr><td>纳统小区总数</td><td class="to">993（《纳统小区 (2026 更新版)》档案）</td><td class="was">994（旧关联库）/ 968 并存且未区分含义</td><td class="to">✅ 已定：993 为基准，968 为参与口径（见 2-A）</td></tr>
+      <tr><td>高风险预警参评基数</td><td class="to">投诉量≥10件的参评小区，<b>772 个</b></td><td class="was">620 / 628 / 799 三说</td><td class="to">✅ 已定：全站统一 772（见 2-B）</td></tr>
+      <tr><td>湖南街道投诉密度</td><td class="to">50.7 件/千户</td><td>50.7（居首）</td><td class="to">✅ 已定：保留 50.7，不取整（见 2-C）</td></tr>
+      <tr><td>风险评估报告纳入范围</td><td class="to">仅《纳统小区 (2026 更新版)》名单内 · 按纳统小区聚合 · 2026年1-8月</td><td class="was">热线全口径自由文本小区名、1-7月与三年累计混用</td><td class="to">✅ 已定（见 2-D）</td></tr>
+    </table>
+
+    <h4>2-A 纳统小区：993 为基准，收窄必须注明参与口径</h4>
+    <p style="font-size:13px;margin:6px 0;">
+      决策：<b>《纳统小区 (2026 更新版)》共 993 个小区，凡"纳统小区数"这类大数一律以 993 为准</b>。
+      968 并非"总数"，而是"993 个纳统小区中有热线投诉记录的小区数" —— 属于<b>因关联热线业务而收窄样本</b>，
+      因此不能当总数用，必须在其出现处补上口径说明（覆盖率 97.5%）。
+    </p>
+    <table>
+      <tr><th>文件</th><th>位置</th><th>现值</th><th>处理</th></tr>
+      <tr><td rowspan="2" class="path">高风险小区预警清单.html / 治理效果追踪分析报告.html</td><td>概况段</td><td class="was">只有 772 / 390，看不出基准</td><td class="to">✅ <b>已改（v2.3）</b>：补「纳统小区共993个……其中968个有热线投诉记录」</td></tr>
+      <tr><td>多源数据清洗与关联分析报告.html</td><td>:270 / :272 / :284 / :287 / :348 / :644</td><td class="was">994 个纳统小区 / 994 条 × 57 字段</td><td class="to">✅ <b>已改（v2.4）</b>：993 个纳统小区 / 993 条 × 45 字段；各数据源匹配率一并复算</td></tr>
+      <tr><td class="path">同上</td><td>:（质量卡）</td><td class="was">热线投诉覆盖率 <b>97.4% (968/994)</b></td><td class="to">✅ <b>已改（v2.4）</b>：<b>97.5% (968/993)</b></td></tr>
+      <tr><td class="path">课题成果总览.html</td><td>:345 card-tag / :482 / :485</td><td class="was">968小区实证 / 纳统小区(994个) / 994小区</td><td class="to">✅ <b>已改（v2.4）</b>：968小区实证（有热线投诉记录） / 993个 / 993小区</td></tr>
+      <tr><td class="path">物业投诉根因分析报告.html</td><td>:318 / :333 / :336 / :382</td><td class="was">994个小区 / 968个小区实证分析</td><td class="to">✅ <b>已改（v2.4）</b>：993个小区；并新增「统计范围与口径」说明块（关联字段已按 2026 更新版复算）</td></tr>
+      <tr><td class="path">版本更新记录.html</td><td>:357</td><td class="was">968小区深度归因</td><td class="to">✅ 保持（有投诉记录的小区，口径正确）</td></tr>
+      <tr><td class="path">同上</td><td>:269 / :372</td><td>纳统小区（994个）</td><td class="to">✅ 保持（历史条目，指变更前的旧库）</td></tr>
+    </table>
+    <div class="note">
+      <b>统一句式（建议全文照此）：</b>「纳统小区 <b>993</b> 个；其中 <b>968</b> 个有热线投诉记录，参与本次统计（覆盖率 97.5%）。」
+      凡出现"分析小区数 / 实证小区数 / 归因小区数"的地方，均先给基准数，再括注实际参与数。
+    </div>
+    <div class="note green">
+      <b>✅ 口径源已统一（v2.4，2026-09-28）：全站只有一个纳统口径源 —— 《纳统小区 (2026 更新版).xls》＝ 993 个。</b><br>
+      关联库 <code>data/community_linked_data.pkl</code> 已按该档案<b>重建为 993 行 × 45 字段</b>
+      （脚本 <code>scripts/build_linked_data.py</code>），电梯／修缮／底部抬升／热线匹配链路全部重跑，
+      旧库自动备份为 <code>community_linked_data_20260903_994.pkl</code>。<br>
+      <b>归属三处变化：</b>删「钦州大厦」、合并「尚海湾二期 + 尚海湾豪庭」→「尚海湾豪庭小区（北区）」
+      （户数 2049+1595=3644 吻合）、新增「宛南家园」。<br>
+      <b>复算结果：</b>热线覆盖 <b>968/993（97.5%）</b>、电梯 <b>257/268（95.9%）</b>、
+      修缮 <b>285/338（84.3%）</b>、底部抬升 <b>83/84（98.8%）</b>；街镇密度户数改为按纳统小区归并累加
+      （494,966 → <b>507,982</b>），修正原「小区名匹配不上即按 0 户计」导致的密度虚高。<br>
+      <b>另需注意：</b>旧库主表并非旧版《纳统小区.xls》（二者虽同为 994 行，但户数有 8 处不同、
+      名称用半角括号、且有「钦州大厦」这类只在旧库存在的条目），故本次为 <b>独立重建</b> 而非增量改名。
+    </div>
+
+    <h4>2-D 风险评估报告纳入范围收窄 <span style="color:#15803d;">（已定 · 已落地）</span></h4>
+    <p style="font-size:13px;margin:6px 0;">
+      用户指示：<b>所有风险评估报告（高风险小区、治理最终）均按更新后的纳统小区即《纳统小区 (2026 更新版)》的数据进行统计，
+      不在小区列表中的小区不做统计；所有投诉均按热线数据表的口径统计。</b>
+    </p>
+    <table>
+      <tr><th>环节</th><th>旧做法</th><th>新做法（已落地）</th></tr>
+      <tr><td>统计范围</td><td class="was">热线工单里出现的全部小区名（1,374 个，含名单外）</td><td class="to">仅《纳统小区 (2026 更新版)》名单内（993 个中 991 个可命中热线）</td></tr>
+      <tr><td>统计单元</td><td class="was">热线自由文本小区名（同一小区多种写法会拆成多个对象）</td><td class="to">按纳统小区聚合；主名 + 别名 + 曾用名精确匹配后归并到主名</td></tr>
+      <tr><td>时间口径</td><td class="was">1-7 月与三年累计混用</td><td class="to">统一到 2026 年 1-8 月（含 8 月市局表）</td></tr>
+      <tr><td>投诉数据</td><td colspan="2">不变 —— 一律按热线数据表（市局 14 类原始表）口径统计，不使用关联库派生字段</td></tr>
+      <tr><td>名称近似未精确匹配</td><td class="was">—</td><td class="to">暂不自动纳入，单列《待确认纳统匹配候选清单.xlsx》（72 个候选 / 高置信 49 个 / 涉 859 件工单）待人工确认</td></tr>
+    </table>
+    <div class="note green">
+      <b>✅ 已落地的产出：</b><code>scripts/nato_match.py</code>（唯一映射口径源，精确复现原匹配表 989 命中，补曾用名后 991）、
+      <code>risk_scores.json</code>（参评 772）、<code>governance_tracking.json</code>（追踪 390）、
+      3 份报告 HTML（高风险预警清单、治理效果追踪、街镇专项分析）、<code>高风险小区预警清单.xlsx</code>。
+    </div>
+
+    <h4>2-B 高风险预警基数与 Top30 说明修正 <span style="color:#15803d;">（已定 · 全站统一 772）</span></h4>
+    <p style="font-size:13px;margin:6px 0;">
+      决策要求基数为「投诉量≥10件的参评小区」。v2.1 定的 <b>799</b> 是「2024–2026 三年累计投诉量≥10件」的全量口径；
+      v2.3 按第 10 条决策<b>收窄到纳统名单内、按纳统小区聚合、统一到 2026年1-8月</b>后，
+      实测数据源 <code>risk_scores.json</code> 的真实条数为 <b>772</b>，
+      且红 254 + 橙 386 + 黄 108 + 蓝 24 = <b>772 完全闭环</b>。
+      <b>页面上原有的 620 / 628（早期遗留）与 799 / 236 / 426 / 112 / 25（v2.1 的三年累计口径）一律改为 772 及新分级。</b>
+    </p>
+    <table>
+      <tr><th>位置</th><th>原文</th><th>核查结论</th></tr>
+      <tr><td class="path">高风险小区预警清单.html:258 subtitle</td><td class="was">620个小区参评 → 799 → <b>772</b></td><td rowspan="6" style="vertical-align:middle;">
+        <b>620 / 628 无法复现</b>：<br>
+        · 三年合计≥10件（全量口径）→ <b>799</b>；<br>
+        · 只取纳统名单内 + 按纳统小区聚合 + 2026年1-8月 → <b>772</b>（现行）；<br>
+        · 2026年1-8月有投诉记录小区 → 实测 <b>898~900</b>，也不是 628；<br>
+        ⇒ <b>620 与 628 均无口径支撑</b>，属早期版本遗留/错用。
+      </td></tr>
+      <tr><td class="path">:267 总体概况</td><td class="was">对全区 620 个投诉量≥10件的小区进行风险评估</td></tr>
+      <tr><td class="path">:273 stat-card</td><td>参评小区 <b>772</b> 总量</td></tr>
+      <tr><td class="path">:275 下载链接</td><td>完整清单（<b>772</b> 条 Excel）</td></tr>
+      <tr><td class="path">:449 建议一</td><td class="was">更新 620 个小区的风险等级</td></tr>
+      <tr><td class="path">:617 / :624 图表图例</td><td class="was">全区 620 个小区均值</td></tr>
+      <tr><td class="path">:366 第五章 Top30 说明</td><td class="was">数据基于热线全口径 <b>628</b> 个有投诉记录的小区（1-8月），其中红色预警（<b>≥80分</b>）<b>1 个</b></td>
+        <td class="to">三处错误：① 628 非真实基数；② "有投诉记录"与"投诉量≥10件"是两种口径；③ 红色阈值写错（应为 <b>≥60分</b>，<b>254 个</b>，不是"≥80分 1 个"）</td></tr>
+      <tr><td class="path">:472 第五章引言</td><td class="was">对 620 个<b>有投诉记录</b>的小区进行近期风险评估</td>
+        <td class="was">同一页 :267 说 620 = 投诉量≥10件，此处又说 620 = 有投诉记录 —— 语义自相矛盾</td></tr>
+      <tr><td class="path">scripts/risk_scores.json</td><td>total_communities: <b>772</b>；红254 / 橙386 / 黄108 / 蓝24；红色 <b>≥60分</b></td><td class="to">✅ 数据源真实口径（254+386+108+24 = 772，闭环）</td></tr>
+    </table>
+    <div class="note green">
+      <b>✅ 已定：选项 A —— 以数据源为准，全页统一为 772。</b><br>
+      <b>改法：</b>:258 / :267 / :449 / :617 / :624 的 620 → <b>772</b>；:472「620个有投诉记录的小区」→「772 个投诉量≥10件的参评小区」；
+      :366 整句改为「在 772 个投诉量≥10件的参评小区中，红色预警（≥60分）254 个」。<br>
+      <b>理由：</b>明细 Excel、下钻清单、数据源全为 772 条，卡片数与明细数天然闭合，第 9 项下钻点开即对得上。
+    </div>
+    <div class="note">
+      <b>备查（不采用）：选项 B —— 以 620 为基数。</b>已否决。若采用需：① 改 <code>scripts/risk_scoring.py</code> 参评门槛使其结果恰为 620 个；
+      ② 重跑模型 → 重出 <code>risk_scores.json</code>、预警清单 Excel、各等级小区清单；③ 红/橙/黄/蓝数量与新基数重新分布（不再是 254/386/108/24）。
+      成本高且会改动已汇报的核心数字。
+    </div>
+    <div class="note">
+      <b>另需一并修正的红色阈值表述：</b>全站凡出现"红色预警（≥80分）"的字样，一律改为「红色预警（≥60分）」；
+      "1 个"改为实际数量 <b>254 个</b>。
+    </div>
+
+    <h4>2-C 湖南街道投诉密度 <span style="color:#15803d;">（已定 · 采用 50.7，不取整）</span></h4>
+    <ul class="tight">
+      <li><b>结论：</b>保留 <b>50.7 件/千户</b>（保留一位小数），<b>不四舍五入为 50</b>。整改单中「50」视为概数表述，精确值以计算口径为准。</li>
+      <li>现状：<code>街镇专项分析报告.html:1853</code> 显示 <b>50.7</b> 件/千户（居首）；<code>版本更新记录.html:237</code> 亦为 50.7 —— <b>两处均已正确，无需改数</b>。</li>
+      <li>口径：投诉密度 = 投诉量 ÷ 户数 × 1000（<b>件/千户</b>），全站统一，不使用「件/百户」「件/小区」。</li>
+      <li><b>待办（仅查漏）：</b>全站检索「湖南」+ 密度值，确认无第三处写成 50 或 50.0；如 `片区/街镇对比表` 中有取整展示，一并改为 50.7。若确需同时展示概数，写作
+        <b>「50.7 件/千户（约 51 件/千户）」</b>，不得直接写 50。</li>
+    </ul>
+    <h4>验收</h4>
+    <p>主报告、街镇专题、根因分析、底部抬升四个模块交叉核对，上述指标数字完全一致，且收窄口径处均有说明。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">3</div><div class="ttl">全站「1-6 月」统计统一改为「1-8 月」</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>决策</h4>
+    <p style="font-size:13px;">全站废除 1-6 月口径，一律改为 <b>2026 年 1-8 月</b>。基准数字如下（2026年1-8月）：</p>
+    <table>
+      <tr><th>指标</th><th>1-8 月基准值</th><th>说明</th></tr>
+      <tr><td>投诉工单总量</td><td class="to">13,726 件</td><td>与全站既有 1-8 月口径一致</td></tr>
+      <tr><td>判定重复工单</td><td class="to">4,908 件</td><td>须按最新 S2 口径（含「重复来电」系统标记）整年重算后取得</td></tr>
+      <tr><td>整体去重率</td><td class="to">35.8%</td><td>4,908 / 13,726</td></tr>
+    </table>
+    <div class="note red">
+      <b>注意：现有 <code>scripts/dedup_monthly_all.json</code> 是历史沿用值（1-8 月合计 4,753 / 34.6%），
+      未包含 S2 的两次修正。</b>要落地 1-8 月统一口径，必须<b>先整年重跑</b>：
+      <code>dedup_monthly.py</code>（1→8 月）→ 更新 <code>dedup_monthly_all.json</code> → 再重出下列各页。
+      1-7 月若沿用旧值，会与 8 月口径打架，务必整年一起算。
+    </div>
+
+    <h4>需修改位置（全站 1-6 月残留，已逐处扫描）</h4>
+    <table>
+      <tr><th>文件</th><th>位置 / 现状</th><th>目标</th></tr>
+      <tr><td class="path">投诉去重识别方法论说明.html</td>
+        <td class="was">:271 / :275 / :276 / :456 / :460 / :570 / :582 ——「1-6月」×2、<b>9,239</b>×3、<b>3,746</b>×4、<b>40.5%</b>×5</td>
+        <td class="to">改为 1-8 月：13,726 / 4,908 / 35.8%，标题与注释同步</td></tr>
+      <tr><td class="path">2026年1-6月投诉去重建议清单.html</td>
+        <td class="was">文件名 + 全文：「1-6月」×8、<b>9,387</b>×3、<b>4,217</b>×6、<b>44.9%</b>×4</td>
+        <td class="to">该页整体并入 / 替换为《2026年1-8月投诉去重建议清单.html》，原 1-6 月页<b>下架</b>（避免两个时间口径并存）</td></tr>
+      <tr><td class="path">2026年6月投诉去重建议清单.html</td>
+        <td class="was">残留 <b>4,217</b>×2</td><td class="to">校订为 1-8 月口径，或一并下架</td></tr>
+      <tr><td class="path">2026年1-8月投诉去重建议清单.html</td>
+        <td class="was">页内 <b>4,753 / 34.6%</b> 与 <b>35.8%</b> 并存</td><td class="to">统一为 4,908 / 35.8%</td></tr>
+      <tr><td class="path">12345投诉量下降数据报告.html</td><td class="was">:390 残留 <b>40.5%</b>×1</td><td class="to">35.8%</td></tr>
+      <tr><td class="path">课题成果总览.html</td><td class="was"><b>44.9%</b>×1、<b>4217</b>×1</td><td class="to">35.8% / 4,908</td></tr>
+      <tr><td class="path">重点问题专题分析报告（5份）.html</td><td class="was">残留 <b>4,217</b>×1（同页已有 35.8%）</td><td class="to">4,908，全页统一 35.8%</td></tr>
+      <tr><td class="path">版本更新记录.html</td><td class="was">「上半年」×4</td><td class="to">「2026年1-8月」</td></tr>
+      <tr><td class="path">验收演练报告.html</td><td class="was">「1-6月」×1</td><td class="to">1-8月（若该页上线）</td></tr>
+    </table>
+    <div class="note blue">
+      <b>连带影响：</b>去重率从 40.5% / 44.9% 统一到 35.8% 后，「去重后有效投诉量」「月度去重明细」「街镇去重分布」等派生数字需同步重算，
+      不能只替换标题里的百分比。街镇专项报告与专题报告已在用 35.8%，可作为口径对齐的校验基准。
+    </div>
+    <h4>验收</h4>
+    <p>全站全文检索「1-6」「上半年」「9,239」「3,746」「9,387」「4,217」「40.5%」「44.9%」均应<b>零命中</b>；去重率全站唯一值为 35.8%。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">4</div><div class="ttl">治理效果追踪样本口径与高风险预警对齐</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>决策：与高风险预警的逻辑保持一致（仅统一表述，不重算）</h4>
+    <p style="font-size:13px;">
+      高风险预警的做法 = 以「<b>投诉量达到门槛的参评小区</b>」为样本、门槛明确、并在模块开头标注口径。
+      治理追踪按同一逻辑统一表述，消除「≥15 件 / ≥10 件」并列的歧义。<br>
+      <b>项目组已确认：入榜门槛不变（复合三条件），但样本范围随第 10 条决策收窄到纳统名单 → 追踪小区数由 394 变为 390</b>，表述统一到「2025 年同期≥10 件」主导门槛。
+    </p>
+    <h4>实况核查</h4>
+    <table>
+      <tr><th>位置</th><th>原文表述</th><th>结论（v2.3 已定）</th></tr>
+      <tr><td class="path">治理效果追踪分析报告.html:262</td><td><b>390</b>个小区追踪 · 2026年1-8月 vs 2025年同期口径</td><td>✅ 已改（原 394）</td></tr>
+      <tr><td class="path">:271 模块首句</td><td class="was">对全区投诉量 <b>≥15 件</b> 的热线小区（全口径）进行全周期追踪</td>
+        <td class="to">✅ 已改为纳统口径：对《纳统小区 (2026 更新版)》名单内、满足追踪门槛的纳统小区追踪；并补「纳统小区共993个…968个有热线记录…390个入榜」</td></tr>
+      <tr><td class="path">:273 stat-card</td><td>追踪小区总数（满足门槛）：<b>390</b></td>
+        <td class="to">✅ <b>以此为准</b>，数字 390（原 394）</td></tr>
+      <tr><td class="path">:297 口径说明</td><td>入榜门槛为<b>三年合计≥15件、2024全年≥5件、2025年1-8月≥10件</b>（抑制小基数放大）</td>
+        <td class="to">✅ 真实技术口径，保留；已补「纳入范围」句</td></tr>
+      <tr><td class="path">:298 旧注</td><td class="was">另有（55.0%）状态为"改善后稳定"…数据基于热线全口径小区，不依赖纳统匹配</td>
+        <td class="to">✅ 已改为「占比以 390 个追踪小区为分母；反弹 58 为恶化 111 的子集」</td></tr>
+      <tr><td class="path">徐汇AI智能体.html:307 / :199 / :451<br><b>＋ 课题成果总览.html:227 / :232 / :398 / :400</b></td>
+        <td class="was">对 <b>635</b> 个投诉量≥15件的小区进行全周期追踪</td>
+        <td class="to">智能体页 3 处<b>随第 5 项下架消失</b>；
+          <b>课题成果总览 4 处已单独改为 390</b>（不随下架消失）</td></tr>
+    </table>
+    <div class="note green">
+      <b>✅ 已定（v2.3）：追踪小区数 390，统一表述如下（建议全文照此）。</b><br>
+      「入榜门槛：<b>2025 年同期（1-8 月）投诉量≥10 件</b>；另叠加<b>三年合计≥15 件、2024 全年≥5 件</b>
+      以抑制小基数放大，共 <b>390</b> 个小区入榜（仅《纳统小区 (2026 更新版)》名单内、按纳统小区聚合）。」<br>
+      <b>改法：</b>① 把 :297 的完整口径与「纳入范围」上提为模块首句（取代 :271 的「≥15 件」「全口径」）；
+      ② <code>scripts/governance_tracking.json → meta.thresholds</code>（现为 <code>min_total:15 / min_2024:5 / min_2025_same:10</code>）
+      <b>保持不变，它是唯一口径源</b>；<code>total_tracking: 390</code>。
+    </div>
+    <div class="note red">
+      <b>⚠️ 三处雷区（技术方务必注意，改错会导致数字对不上）：</b>
+      <ul class="tight" style="margin:6px 0 0 18px;">
+        <li><b>门槛不可简化为单一条件。</b>实测（<b>旧全量口径</b>）：复合三条件 = <b>394</b>；
+          去掉「2024 全年≥5 件」→ <b>414</b>；只留「2025 年同期≥10 件」→ <b>415</b>。
+          即 <b>入榜数依赖 2024 门槛</b>，「2025 年同期≥10 件」是<b>主导门槛而非唯一门槛</b>。
+          （v2.3 收窄到纳统口径后为 390；上述 394/414/415 三个数是旧口径实测，
+          <b>改门槛前必须用 <code>--scope aggregate</code> 重跑一次敏感性</b>。）</li>
+        <li><b>第 8 条决策（删 2024）不适用于此处门槛。</b>删 2024 只作用于<b>展示层</b>（图表/对比表列/叙述句）；
+          <code>min_2024:5</code> 是<b>筛选条件</b>，删掉会使入榜数显著变多，<b>必须保留</b>。</li>
+        <li><b>门槛值以外的口径说明不得顺手改成「≥10 件」单一写法</b>，否则读者按字面复算会得到另一个数，与卡片 390 冲突。</li>
+      </ul>
+    </div>
+    <h4>验收</h4>
+    <p>报告内不再出现"≥15件"与"≥10件"并列的歧义表述；模块开头有一句完整口径与纳入范围；390 与后文分类数（显著改善217/持续恶化111/改善后反弹58/基本稳定60/本期无投诉2）可追溯。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">5</div><div class="ttl">隐藏全部 AI 智能体功能，数据不关联任何报告</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>决策</h4>
+    <p style="font-size:13px;">
+      ① <b>隐藏全站智能体功能</b>（入口、悬浮按钮、独立页面）；② 智能体的数据<b>不关联任何分析报告</b> ——
+      报告中不得引用智能体口径的数字，智能体也不作为报告的数据出口。
+    </p>
+    <h4>需处理位置（已全站扫描）</h4>
+    <table>
+      <tr><th>文件</th><th>位置</th><th>动作</th></tr>
+      <tr><td class="path">徐汇AI智能体.html</td><td>整页（问答引擎 + 快捷按钮 + 内置数据卡）</td>
+        <td class="to">从发布站点下架（源码可保留备查，但<b>不发布、不可达</b>）</td></tr>
+      <tr><td class="path">课题成果总览.html</td><td>:427–444 成果 #8 卡片「物业数据AI智能体（演示版）」<br>:611–615 右下角浮动「AI智能助手」按钮</td>
+        <td class="to">删除卡片与浮动按钮；成果序号顺延或留空（建议留空并加"预留"说明，避免重排 14 个编号）</td></tr>
+      <tr><td class="path">版本更新记录.html</td><td>6 处（含"AI智能体上线"类条目）</td><td class="to">删除或改写为不指向智能体的描述</td></tr>
+      <tr><td class="path">微信真机测试指南.html</td><td>3 处</td><td class="to">删除智能体相关测试步骤（该页若上线）</td></tr>
+      <tr><td class="path">验收演练报告.html</td><td>3 处</td><td class="to">删除智能体验收项（该页若上线）</td></tr>
+      <tr><td class="path">index.html</td><td>仅跳转课题成果总览</td><td class="to">✅ 无智能体入口，无需改</td></tr>
+    </table>
+    <div class="note red">
+      <b>线上同步：</b>项目已发布在 GitHub Pages（<code>sanjune.github.io/xuhui_research2026/</code>）。
+      仅改本地文件不够 —— 必须推送后确认线上 <code>徐汇AI智能体.html</code> 返回 404 或已删除，否则外链仍可访问。
+      下架后建议全站再检索一次「智能体 / AI / 大模型」确认无残留入口。
+    </div>
+    <div class="note green">
+      <b>✅ 更正（对账脚本实测 + v2.3 已处置）：635 不只存在于智能体页。</b>
+      下架前全站共 <b>5 处</b>：<code>徐汇AI智能体.html</code> 2~3 处（随下架消失）
+      + <code>课题成果总览.html</code> <b>4 处</b>（:227 头部 meta、:232 stat「追踪小区数」、:398 成果描述、:400 card-tag）。
+      <b>课题成果总览 4 处已单独改为 390</b>（不随下架消失），本轮已落地。
+    </div>
+    <div class="note green">
+      <b>随下架自动消失的：</b>治理追踪报告中与智能体页的口径冲突（智能体页 3 处 635）、
+      去重"<b>44.9% / 4,217</b>"的来源之一（智能体 :205 引用旧口径 HTML 的 KB 数据）。
+    </div>
+    <h4>验收</h4>
+    <p>全站检索「智能体」「AI助手」「大模型」零命中；线上环境访问智能体页返回 404；任何分析报告内不再出现 635 等智能体独有数字。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">6</div><div class="ttl">高风险小区评分逻辑改为反扣分</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>实况核查：当前为正向计分（0-100，分越高越危险）</h4>
+    <table>
+      <tr><th>项</th><th>现状</th></tr>
+      <tr><td>模型</td><td>五维正向加权：投诉总量 25 + 同比增长 25 + 重复投诉率 20 + 类别集中度 15 + 月度波动度 15 = 100 分</td></tr>
+      <tr><td>分级</td><td>红色 ≥60 / 橙色 45-59 / 黄色 30-44 / 蓝色 &lt;30</td></tr>
+      <tr><td>数据源</td><td><code>scripts/risk_scoring.py</code> → <code>scripts/risk_scores.json</code></td></tr>
+      <tr><td>页面文案</td><td class="path">高风险小区预警清单.html:287 及 §评分模型与图例</td></tr>
+    </table>
+    <div class="note">
+      <b>改法：</b>把计分改为「100 分起扣」——各维度按风险程度扣分，输出 <code>扣分 = 100 − 原正向分</code>
+      或直接 <code>−原分</code>（负分制）。<br>
+      同时需改：<code>risk_scoring.py</code> 的分级阈值方向、<code>risk_scores.json</code> 的 <code>model_description</code>、
+      预警清单评分模型与图例文案（:287 等），避免出现「80 分是红色」的反直觉。
+    </div>
+    <div class="note">
+      <b>与第 2 / 10 项的联动（已解除）：</b>第 2 项已定<b>选项 A（全站统一 772）</b>，<b>参评与分级已重跑完毕</b>，
+      因此本项与第 2 项不再耦合，可独立按后续批次执行。仅需注意：调整计分方向时同步更新
+      <code>risk_scores.json → model_description</code> 与页面图例文案，勿与 772 基数改动相互覆盖。
+    </div>
+    <h4>验收</h4>
+    <p>小区明细页分数显示为负数或「扣XX分」，配说明文字；红/橙/黄/蓝归属与反扣分后排名一致。</p>
+  </div>
+</div>
+
+<!-- ============ 中优先级 ============ -->
+<h2 class="sec">三、中优先级 <small>展示交互，影响使用体验</small></h2>
+
+<div class="item">
+  <div class="hd"><div class="no">7</div><div class="ttl">颜色规则统一（同比降=绿、涨=红）</div><span class="tagn t-ok">已符合 · 仅需全站复查</span></div>
+  <div class="bd">
+    <h4>实况核查：全站 CSS 已符合要求</h4>
+    <table>
+      <tr><th>类名</th><th>颜色</th><th>含义</th><th>出现文件</th></tr>
+      <tr><td><code>.decline</code></td><td>#52c41a 绿</td><td>下降 ✅</td><td>治理追踪 / 12345下降 / 街镇专项 / 清单页 / 专题5份</td></tr>
+      <tr><td><code>.increase</code></td><td>#f5222d 红</td><td>上升 ✅</td><td>同上</td></tr>
+      <tr><td><code>.trend-down</code></td><td>#2e7d32 绿</td><td>下降 ✅</td><td>根因分析 / 多源清洗 / 底部抬升</td></tr>
+      <tr><td><code>.trend-up</code></td><td>#c62828 红</td><td>上升 ✅</td><td>同上</td></tr>
+    </table>
+    <div class="note blue">
+      规则本身<b>无需修改</b>。剩余风险在「行内硬编码色值」—— 如 <code>color:#00a854</code>（绿，配 -%）、
+      <code>color:#ff4d4f</code>（红，配 +%）。抽查未见反例，但建议全站跑一遍
+      「色值 ↔ 正负号」一致性检查（正则提取 <code>color:#xxx">[+-]\d</code> 逐条核对），
+      尤其关注 ECharts 里的 <code>itemStyle.color</code> 与 <code>visualMap</code> 配色。
+    </div>
+    <h4>验收</h4>
+    <p>所有涉及同比变化的图表、表格、数字标签，颜色规则一致。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">8</div><div class="ttl">底部抬升小区在街镇汇总中单独分类</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>实况核查：目前仅有一个 chip 标签，未成独立列/区块</h4>
+    <ul class="tight">
+      <li><code>scripts/gen_street_report.py:684-686</code>：每街镇渲染 <code>&lt;div class='chip'&gt;党建引领重点小区 N 个&lt;/div&gt;</code></li>
+      <li>数据源：<code>scripts/street_analysis.json → streets[街镇].bottom_lift</code>（已具备按街镇拆分的 count）</li>
+    </ul>
+    <div class="note">
+      <b>改法（数据已就绪，属展示层改造）：</b>在 <code>gen_street_report.py</code> 的街镇汇总表中
+      增加「底部抬升小区数」独立列，或单列一个「底部抬升小区」区块（含该街镇的名单、投诉量、同比）。
+      建议后者，便于与普通小区对比展示。改完重跑 <code>gen_street_report.py</code> → 《街镇专项分析报告.html》。
+    </div>
+    <h4>验收</h4>
+    <p>街镇汇总表/区块中能一眼区分「底部抬升小区」与普通小区，不再混在一起。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">9</div><div class="ttl">关键数字点击直达明细（方案二 · 范围收窄）</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>决策</h4>
+    <p style="font-size:13px;">
+      采用<b>方案二（抽屉 / 弹窗）</b>；可达范围<b>仅限「小区及数字」</b> —— 本轮落地为
+      <b>各等级预警小区数 → 抽屉列出该等级小区清单</b>。
+      <b>不做</b>「重复投诉数」与「投诉总量」的明细展示。
+    </p>
+    <h4>实况核查：全站无任何下钻交互</h4>
+    <table>
+      <tr><th>页面</th><th>onclick 事件</th><th>报告间导航链接</th></tr>
+      <tr><td>课题成果总览.html</td><td class="was">0</td><td>25</td></tr>
+      <tr><td>12345投诉量下降数据报告.html</td><td class="was">0</td><td>14</td></tr>
+      <tr><td>高风险小区预警清单.html</td><td class="was">0</td><td>13</td></tr>
+      <tr><td>街镇专项分析报告.html</td><td class="was">0</td><td>11</td></tr>
+      <tr><td>物业投诉根因分析报告.html</td><td class="was">0</td><td>13</td></tr>
+      <tr><td>治理效果追踪分析报告.html</td><td class="was">0</td><td>13</td></tr>
+    </table>
+
+    <h4>本轮落地的唯一交互：各等级预警小区数</h4>
+    <table>
+      <tr><th>下钻入口</th><th>目标明细</th><th>数据源</th><th>状态</th></tr>
+      <tr><td class="path">高风险小区预警清单.html:269-272<br>红色 254 / 橙色 386 / 黄色 108 / 蓝色 24</td>
+        <td>抽屉 / 弹窗展示该等级小区清单<br>（建议列：小区、街道、物业公司、投诉总量、风险得分、主要问题类别）</td>
+        <td class="to"><code>scripts/risk_scores.json → all_communities</code><br>772 条，含 <code>community / street / company / total / total_score / risk_level / top_category</code> 等 21 字段</td>
+        <td class="to">数据已就绪</td></tr>
+      <tr><td class="was">重复投诉数</td><td class="was">—</td><td class="was">—</td><td class="was">❌ 本轮不做</td></tr>
+      <tr><td class="was">投诉总量 / 街镇投诉量</td><td class="was">—</td><td class="was">—</td><td class="was">❌ 本轮不做</td></tr>
+    </table>
+
+    <div class="note green">
+      <b>实现建议（纯前端，无需服务端）：</b>
+      ① 把 <code>risk_scores.json</code> 按等级预切分为 4 个小 JSON（红/橙/黄/蓝），随页面静态加载或点击时懒加载，避免整页体积；
+      ② 卡片数字加 <code>cursor:pointer</code> 与「点击查看清单」提示，点击后从右侧滑出抽屉（或居中弹窗）；
+      ③ 抽屉内做列排序 + 关键字过滤即可，无需分页；
+      ④ 抽屉标题写明「红色预警小区（共 254 个）」—— 数字必须与卡片、与数据源三方一致。
+    </div>
+    <div class="note green">
+      <b>依赖已解除：</b>第 2 项基数组已定为 <b>772</b>（红 254 / 橙 386 / 黄 108 / 蓝 24，四级之和 = 772），
+      抽屉清单条数随之确定，<b>本项可直接开工</b>。抽屉标题必须写明「红色预警小区（共 254 个）」，
+      与卡片数、数据源三方一致。
+    </div>
+    <h4>验收</h4>
+    <p>红色预警卡片上的 254 可点击，弹出清单恰好 254 条；橙/黄/蓝同理；四级之和等于卡片上的参评基数；全程无页面跳转。</p>
+    <div class="note green">
+      <b>延伸落地（2026-09-29，v2.11.0）：</b>同一套「数字 → 抽屉列清单」模式已延伸到
+      <b>《底部抬升小区热线数据分析报告》三、街道分布与治理效果</b>表的<b>「重点小区数」</b>列 ——
+      13 个街镇的数字均可点击，抽屉列出该街道底部抬升重点小区清单
+      （小区名、2026年1-8月、2025年同期、同期同比、矛盾类型），
+      并明确标注名单数 / 可匹配数，对 6 个热线无记录的小区并列显示「无热线记录」。
+      数据源：<code>scripts/bottom_lift_2026_8m.json → street_stats[].communities</code>；
+      注入脚本：<code>scripts/update_bottom_lift_report.py</code>（幂等，可重复刷新）。
+    </div>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">10</div><div class="ttl">词云去掉无意义词汇</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>实况核查：13 个街镇词云全部含工单模板/无业务含义词，且排名普遍靠前</h4>
+    <table>
+      <tr><th>街镇</th><th>命中无效词（词频）</th></tr>
+      <tr><td>徐家汇</td><td class="was">协调(101)、整治(92)、督促(67)、取缔(67)、整改(48)、加强(24)</td></tr>
+      <tr><td>长桥</td><td class="was">加强(93)、整治(87)、协调(77)、整改(63)、督促(61)、及时(23)</td></tr>
+      <tr><td>天平路</td><td class="was">协调(93)、整治(62)、督促(37)、整改(36)、取缔(25)</td></tr>
+      <tr><td>漕河泾</td><td class="was">协调(91)、整改(72)、整治(66)、督促(59)、取缔(40)、加强(37)</td></tr>
+      <tr><td>斜土路</td><td class="was">整改(82)、协调(67)、督促(55)、整治(54)、加强(31)、取缔(27)</td></tr>
+      <tr><td>枫林路</td><td class="was">整治(74)、协调(69)、整改(62)、督促(58)、加强(47)、取缔(28)</td></tr>
+      <tr><td>田林</td><td class="was">协调(72)、整治(69)、整改(69)、督促(65)、取缔(43)、加强(35)</td></tr>
+      <tr><td>华泾镇</td><td class="was">整治(70)、协调(51)、督促(47)、整改(45)、加强(44)、取缔(20)</td></tr>
+      <tr><td>龙华</td><td class="was">整改(68)、整治(63)、协调(55)、督促(46)、取缔(35)</td></tr>
+      <tr><td>康健新村</td><td class="was">督促(50)、协调(50)、整改(41)、整治(29)、加强(25)、取缔(19)、及时(17)</td></tr>
+      <tr><td>凌云路</td><td class="was">整治(51)、协调(49)、整改(48)、督促(33)、加强(27)</td></tr>
+      <tr><td>湖南路</td><td class="was">协调(48)、整治(47)、督促(36)、整改(36)、取缔(17)、及时(15)、加强(13)</td></tr>
+      <tr><td>虹梅路</td><td class="was">整治(47)、整改(27)、加强(22)、取缔(20)、协调(16)、督促(15)</td></tr>
+    </table>
+    <div class="note">
+      <b>说明：</b>整改单点名的「辣椒」<b>已于 v2.8.0 修复</b>（案件级归并，长桥"辣椒"50 次 → 真实 5 次，已移出词云）。
+      但「取缔 / 加强 / 督促 / 协调 / 整改 / 整治 / 及时」这批<b>更普遍</b>的模板词仍全部在榜，需一并清理。<br>
+      <b>改法：</b>改 <code>scripts/build_street_dataset.py</code> 的分词停用词/过滤表
+      （在现有 <code>STOPWORDS</code> 基础上扩充这批公文用语）→ 重跑
+      <code>build_street_dataset.py</code> → <code>street_analysis.json</code> → <code>gen_street_report.py</code>，
+      词云图另需重跑 <code>scripts/export_wordclouds.py</code>。<br>
+      <b>注意：</b>词表只保留 24 词/街镇，剔除 6 个模板词后需保证仍有足够业务词补位（如维修、停车、业委会、电梯、漏水、垃圾、充电、保安、车位、楼道）。
+    </div>
+    <h4>验收</h4>
+    <p>13 个街镇词云逐一检查，无明显无效词。</p>
+  </div>
+</div>
+
+<!-- ============ 低优先级 ============ -->
+<h2 class="sec">四、低优先级 <small>功能补充和交付准备</small></h2>
+
+<div class="item">
+  <div class="hd"><div class="no">11</div><div class="ttl">同比对比只保留两年数据（去掉 2024）</div><span class="tagn t-need">需修改 · 已定范围</span></div>
+  <div class="bd">
+    <h4>决策：全站同比只保留 2025 与 2026 两年</h4>
+    <p style="font-size:13px;">
+      图表系列、对比表列、图表标题、叙述句中的 <b>2024 一律去掉</b>，只保留 <b>2025 / 2026</b>（同期 1-8 月口径）。
+      修改后全站不再出现「2025 年同比 −19.9%」这类以 2024 为基期的表述。
+    </p>
+
+    <h4>判定规则（先看这条，再动文件）</h4>
+    <table>
+      <tr><th>类别</th><th>处理</th><th>典型写法</th></tr>
+      <tr><td class="to"><b>删除</b>（同比 / 趋势对比）</td><td>去掉 2024 系列、列、标题、叙述</td>
+        <td>图表 <code>series:'2024年'</code>；标题「2024 vs 2025 vs 2026」；表头「2024 全年」；
+          叙述「较 2024 年 −19.9%」「2024 年为基期（月均 2,456 件）」；数组 <code>cat2024 / y24</code></td></tr>
+      <tr><td class="to"><b>保留</b>（非同比）</td><td>不改</td>
+        <td>① 数据周期声明「<b>2024 年 1 月 — 2026 年 8 月</b>」；<br>
+            ② 治理追踪入榜门槛 <code>min_2024:5</code>（筛选条件，旧口径下删了 394 会变 414）；<br>
+            ③ 数据源说明「2024.01–2026.08」等范围描述</td></tr>
+    </table>
+    <div class="note red">
+      <b>⚠️ 最容易误删的一处：</b>治理追踪的入榜门槛中「<b>2024 全年≥5 件</b>」是<b>筛选条件</b>，不是同比展示。
+      实测（旧全量口径）：保留它 = 394；删掉它 = <b>414</b>。本项目「删 2024」只作用于<b>展示层</b>，
+      门槛条件<b>必须保留</b>。详见第 4 项雷区提示。
+    </div>
+
+    <h4>需修改位置（全站实测扫描，按工作量排序）</h4>
+    <table>
+      <tr><th>文件</th><th>位置 / 形态</th><th>改法</th></tr>
+      <tr><td class="path">12345投诉量下降数据报告.html</td>
+        <td class="was">:517 <code>var cat2024=[…]</code>；:527 图表系列 <code>{name:'2024年', data:cat2024}</code>；
+          :535-544+ 表格数据对象含 <code>y24 / yoy25</code>；表头 2024 列 ×10</td>
+        <td class="to">① 删图表 2024 系列 → 变两条柱（2025 / 2026）；② 数据数组与表格对象的 <code>y24 / yoy25</code> 字段一并移除；
+          ③ 表头删「2024年」列、「2025改善率」列</td></tr>
+      <tr><td class="path">街镇专项分析报告.html</td>
+        <td class="was">13 个街镇表表头均有「<b>2024 全年 / 2025 全年</b>」列（:389 / :503 / :617 / :731 / :845 / :959 / :1073 / :1187 / :1299 / :1413 / :1523 / :1635 …）</td>
+        <td class="to">删「2024 全年」列，保留「2025 全年」+ 当期列<br>
+          <span style="color:#15803d;">✅ 图表侧已是两年（:2036 图例 = 2025年1-8月 / 2026年1-8月 / 同比降幅），无需改</span><br>
+          改 <code>scripts/gen_street_report.py</code> 后重跑</td></tr>
+      <tr><td class="path">底部抬升小区热线数据分析报告.html</td>
+        <td class="was">:442 图表标题「2024 vs 2025 vs 2026」；:56 CSS <code>.bar.ba-2024</code>；
+          :352 stat-card「2024年投诉总量」；:386 表头「2024年投诉量」；:333 / :347 叙述含 2024-2026</td>
+        <td class="to">图表改「2025 vs 2026」两条线；删 2024 stat-card 或换为「2025年投诉总量」；
+          删表头 2024 列；叙述改两年。改 <code>scripts/update_bottom_lift_report.py</code> / <code>recalc_bottom_lift_8m.py</code></td></tr>
+      <tr><td class="path">数据分析月报合集.html</td>
+        <td class="was">:315 / :368 卡片「2024年」+「↓ 较 2024 年 −19.9%」；:343 叙述「2024年为基期…2025年降至1,968件（−19.9%）」；:344「2024年9月达到峰值3,070件」</td>
+        <td class="to">删 2024 卡片与「较2024年 −19.9%」；:343 改「2025 年平均 1,968 件 → 2026 年 1-8 月 1,716 件（同期 −13.1%）」；
+          :344 峰值叙述改为不依赖 2024（或整句删除）</td></tr>
+      <tr><td class="path">治理效果追踪分析报告.html</td>
+        <td class="was">:271「对比 2024年（治理前）→2025年（治理中）→2026年（治理后）」；
+          :297「2025同比 = 2025全年 vs 2024全年」；:307 / :332 表头「2024年 / 2025改善率」列；:360+ 案例文字「（2024全年 136 → 2025全年 86）」</td>
+        <td class="to">① :271 改「对比 2025 年（治理中）→ 2026 年 1-8 月（治理后）」；
+          ② :297 删「2025同比 = 2025全年 vs 2024全年」分句，<b>但保留门槛句中的 2024 全年≥5 件</b>；
+          ③ 删表头「2024年 / 2025改善率」列；④ 删案例括号内的 2024 数据；⑤ :605 柱状图删 2024 系列</td></tr>
+      <tr><td class="path">数据质量优化专项报告.html</td><td class="was">图表系列/标题 ×2、表头 ×15</td><td class="to">按同一规则删 2024 系列与列</td></tr>
+      <tr><td class="path">重点问题专题分析报告（5份）.html</td><td class="was">数据数组 ×2、表头 ×17</td><td class="to">按同一规则删 2024 数组与列</td></tr>
+      <tr><td class="path">物业投诉根因分析报告.html</td><td class="was">表头 ×6</td><td class="to">删 2024 列；注意本文件另有「底部抬升 23 → 84」改动（第 1 项），勿冲突</td></tr>
+      <tr><td class="path">多源数据清洗与关联分析报告.html</td><td class="was">表头 ×2</td><td class="to">删 2024 列（若为数据周期声明则保留）</td></tr>
+      <tr><td class="path">课题成果总览.html</td><td class="was">图表系列/标题 ×1、表头 ×2</td><td class="to">删 2024；注意本文件另有 635 → 390 改动（第 4/5 项，<b>本轮已完成</b>）</td></tr>
+      <tr><td class="path">高风险小区预警清单.html · 版本更新记录.html</td><td class="was">表头各 ×1</td><td class="to">核对后删列或改表述</td></tr>
+      <tr><td class="path"><s>徐汇AI智能体.html</s></td><td class="was">表头 ×6</td><td class="to">✅ <b>随第 5 项下架自动消除</b>，无需处理</td></tr>
+    </table>
+    <div class="note blue">
+      <b>口径说明的收尾处理：</b>删除后建议在各报告口径说明中保留一句基期注释（不展示数值），
+      例如「2024 年为本项目数据起点，历史对比数据保留于数据源，不在本页展示」。<br>
+      这样既满足「图表只留两年」，又不会让读者以为数据只到 2025 年。
+    </div>
+    <h4>验收</h4>
+    <p>全站检索「2024 vs 2025」「较 2024 年」「2024 全年」（表头形态）、<code>cat2024</code>、<code>y24</code> 均零命中；
+      所有趋势图、对比表均为两条线 / 两列；数据周期声明与治理追踪门槛中的 2024 仍在（属保留项）。</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">12</div><div class="ttl">物业服务态度投诉增加排名维度</div><span class="tagn t-ok">已完成 · v2.6</span></div>
+  <div class="bd">
+    <h4>实况核查：目前仅有类别汇总，无排名视图</h4>
+    <ul class="tight">
+      <li><code>治理效果追踪分析报告.html:321</code>：物业服务态度仅有类别级一行（2025年 591 → 2026年 637，+7.8%；1-8月 406 → 493，+21.4%），标记「效果不佳」</li>
+      <li>全站未见「按物业公司排名」「按小区排名」的服务态度视图</li>
+    </ul>
+    <div class="note blue">
+      <b>数据可行：</b><code>data/merged_cleaned.pkl</code> 含 <code>property_company</code>、<code>community_name</code>、
+      <code>category_14</code> 三个字段，按「物业服务态度」筛选后 groupby 即可出两个排名。<br>
+      <b>改法：</b>在治理追踪报告（或专题报告）新增「物业服务态度」专节，提供
+      「按物业公司排名 / 按小区排名」两个视图切换；建议同时给出<b>投诉量</b>与<b>同比变化</b>两列，
+      避免只看绝对量误伤大盘物业。
+    </div>
+    <h4>验收</h4>
+    <p>物业服务态度模块可切换「物业排名」和「小区排名」视图。</p>
+    <div class="note green">
+      <b>✅ 已落地（v2.6）：</b>《治理效果追踪分析报告》新增<b>第八节「物业服务态度投诉专项排名」</b>
+      （原「八、治理经验总结」「九、闭环机制建议」顺延为九 / 十）。<br>
+      <b>数据层：</b><code>governance_tracking.py</code> 输出 <code>service_attitude</code> 区块
+      （<code>companies</code> / <code>communities</code> / <code>totals</code>）。<br>
+      <b>展示层：</b><code>update_governance_report.py :: build_service_attitude()</code>，
+      两个按钮切换视图，两表均含「投诉量 + 2025 同期 + 同比 + 关联维度」；一键幂等重跑。<br>
+      <b>实测（2026-09-29）：</b>全区该类别 <b>493 件</b>（2025 年同期 406 件，<b>+21.4%</b>，与「三、十四类治理效果」同源）；
+      入榜物业公司 <b>69 家</b>（两年同期合计 ≥3 件）、入榜小区 <b>101 个</b>，各展示 Top20。
+      首位为上海高建物业（39 件，-15.2%，涉 51 个小区）。<br>
+      <b>口径提示：</b>2025 年同期 &lt; 5 件不给同比（避免 3→11 被放大成 +266.7%），此时显示「基数不足」，
+      2025 同期原值仍在表中可查。
+    </div>
+  </div>
+</div>
+
+<div class="item">
+  <div class="hd"><div class="no">13</div><div class="ttl">华泾红色预警占比数字核查</div><span class="tagn t-ok">已完成 · v2.5</span></div>
+  <div class="bd">
+    <h4>实况核查：表格 57.1%，但三处文字写成 0.0%</h4>
+    <table>
+      <tr><th>文件</th><th>位置</th><th>原文</th><th>应改为</th></tr>
+      <tr><td rowspan="3" class="path">高风险小区预警清单.html</td><td>:356 表格行</td><td>华泾 | 21 个小区 | 红 12 | 9 | 0 | 0 | <b>57.1%</b></td><td>✅ 正确（12/21）</td></tr>
+      <tr><td>:360</td><td class="was">华泾镇红色预警占比 <b>0.0%</b>（全区最高）</td><td class="to">57.1%（全区最高）</td></tr>
+      <tr><td>:437 典型案例表</td><td class="was">华泾镇红色预警占比 <b>0.0%</b>（全区最高）</td><td class="to">57.1%</td></tr>
+      <tr><td class="path">同上</td><td>:457 建议三</td><td class="was">华泾镇红色预警占比 <b>0.0%</b>（全区最高），Top30 中 4 个位于华泾</td><td class="to">57.1%</td></tr>
+    </table>
+    <div class="note">
+      <b>成因推测：</b>文字部分似为早期模板硬编码（占位 0.0%）未随数据更新；
+      同句「龙华街道 36.4%」需一并复算核对。
+    </div>
+    <h4>验收</h4>
+    <p>数字与实际排名一致，无显示 bug；同段落内的全部街镇占比交叉核对无误。</p>
+  </div>
+</div>
+
+<!-- ============ 额外发现 ============ -->
+<h2 class="sec">五、跨报告数字对账表 <small>验收前必须全部闭合</small></h2>
+<div class="item">
+  <div class="hd"><div class="no">!</div><div class="ttl">8 处数字冲突的处置（已并入上文各条目）</div><span class="tagn t-ok">8 项全部已定</span></div>
+  <div class="bd">
+    <table>
+      <tr><th>#</th><th>指标</th><th>互斥值</th><th>处置</th></tr>
+      <tr><td>1</td><td>纳统小区总数</td><td class="was">994 / 968 并存且未区分含义</td><td class="to">✅ 已定：<b>993</b> 为基准（2026 更新版档案），968 注明为参与口径（第 2-A 项）</td></tr>
+      <tr><td>2</td><td>高风险预警参评基数</td><td class="was">620 / 628 / 799 / 772</td><td class="to">✅ 已定：全站统一 <b>772</b>（纳统口径 + 2026年1-8月），620/628/799 一律替换（第 2-B 项）</td></tr>
+      <tr><td>3</td><td>红色预警数量 / 阈值</td><td class="was">236 个（≥60分）/ 1 个（≥80分）</td><td class="to">✅ 统一为 <b>254</b> 个（≥60分）；橙 386 / 黄 108 / 蓝 24</td></tr>
+      <tr><td>4</td><td>治理追踪小区数</td><td class="was">394（治理报告）/ 635（智能体页 + 课题成果总览）</td><td class="to">✅ <b>390</b> 为准；635 已处置（成果总览 4 处改 390，智能体页随下架消失）</td></tr>
+      <tr><td>5</td><td>底部抬升小区数</td><td class="was">84（专题页）/ 78（专题页他处）/ 23（根因报告）</td><td class="to">✅ 统一为 84，统计分母 78 并注明（第 1 项）</td></tr>
+      <tr><td>6</td><td>去重率</td><td class="was">40.5% / 44.9% / 34.6% / 35.8% 四值并存</td><td class="to">✅ 统一为 1-8 月 35.8%（第 3 项）</td></tr>
+      <tr><td>7</td><td>湖南街道投诉密度</td><td class="was">50（整改单）/ 50.7（报告实测）</td><td class="to">✅ 已定：<b>50.7 件/千户</b>，不取整（第 2-C 项）</td></tr>
+      <tr><td>8</td><td>风险评估报告纳入范围<br><span style="font-size:11px;">（v2.3 新增）</span></td><td class="was">热线全口径自由文本小区名（含名单外）；1-7 月与三年累计混用</td><td class="to">✅ 已定：仅《纳统小区 (2026 更新版)》名单内 + 按纳统小区聚合 + 2026年1-8月（第 2-D 项）</td></tr>
+    </table>
+    <p class="note green">本表 8 项现已<b>全部定档</b>。整改完成后<b>必须跑一次全站数字对账</b>（验收步骤，见<b>第八节</b>）：
+      同一指标在所有报告中的出现位置，值必须完全相同。对账脚本已就绪：<code>scripts/audit_consistency.py</code>。</p>
+  </div>
+</div>
+
+<!-- ============ 交付物 ============ -->
+<h2 class="sec">六、交付物要求 <small>验收时需同时提供</small></h2>
+<div class="item">
+  <div class="hd"><div class="no">D</div><div class="ttl">四类交付物清点</div><span class="tagn t-part">2 缺 / 2 有</span></div>
+  <div class="bd">
+    <table>
+      <tr><th>交付物</th><th>要求</th><th>现状</th><th>待办</th></tr>
+      <tr><td>在线网页版</td><td>可交互查询</td><td class="to">已有</td><td>按本清单整改后重新发布（含智能体下架）</td></tr>
+      <tr><td>PDF 版本</td><td>完整报告导出</td><td class="was">缺失</td><td>需新增批量导出（建议按报告分册 + 合并总册）</td></tr>
+      <tr><td>纸质文档</td><td>装订成册，满足审计检查</td><td class="was">缺失</td><td>需排版印刷；建议同步准备目录页与页码</td></tr>
+      <tr><td>过程成果文档</td><td>成果存档完整可查</td><td>已有：年度分析报告 15 份 docx、月度分析报告 19 份 docx、版本更新记录、PROJECT_GUIDE</td><td>核对与最新口径一致性</td></tr>
+    </table>
+    <p class="note">全年项目费用约 60 万，成果存档需完整可查 —— 归档时建议同时留存「脚本 + 数据源 + 生成产物」三者对应关系（本项目报告均为脚本生成，具备可复现条件）。</p>
+  </div>
+</div>
+
+<!-- ============ 时间节点 ============ -->
+<h2 class="sec">七、执行顺序建议 <small>口径已定，无阻塞项，可直接开工</small></h2>
+<div class="item">
+  <div class="hd"><div class="no">T</div><div class="ttl">按依赖关系排的执行顺序</div><span class="tagn t-ok">无待决项</span></div>
+  <div class="bd">
+    <table>
+      <tr><th>批次</th><th>内容</th><th>说明</th></tr>
+      <tr><td><b>第 0 批</b><br>已决（归档）</td>
+        <td>口径决策共 <b>10 条</b>全部落定：第一批 6 条（纳统基准 / 预警基数 / 治理追踪 / 1-8月 / 智能体 / 下钻）<br>
+          ＋ 第二批 3 条（湖南路 50.7 / 同比删 2024 / 治理追踪门槛不可简化）<br>
+          ＋ 第三批 1 条（<b>风险评估报告改按纳统小区统计</b>）</td>
+        <td class="to">✅ <b>已定，无需再议</b>。第 2、4、9、11 四项的数字与明细条数随之全部确定</td></tr>
+      <tr><td><b>第 0.5 批</b><br><span style="color:#15803d;">本轮已完成</span></td>
+        <td>第 10 条决策落地：<code>nato_match.py</code> + <code>risk_scoring.py --scope aggregate</code> +
+          <code>governance_tracking.py --scope aggregate</code> → 参评 <b>772</b>、追踪 <b>390</b>；
+          同步改《高风险小区预警清单》《治理效果追踪分析报告》《街镇专项分析报告》《课题成果总览》</td>
+        <td class="to">✅ <b>已落地</b>；对账脚本冲突已由 5 处收敛到 <b>0 处</b></td></tr>
+      <tr><td><b>第 1 批</b><br>口径固化与下架</td><td>第 2 项（993 基准+参与口径、预警基数 772、湖南路 50.7）、第 4 项（治理追踪表述统一，390）、第 5 项（智能体下架）</td>
+        <td>智能体下架后可自动消除 635、44.9% 两处冲突，宜尽早做</td></tr>
+      <tr><td><b>第 2 批</b><br>核心数据修正</td><td>第 1 项（底部抬升 84）、第 3 项（1-6月→1-8月，含整年重跑）、第 13 项（华泾占比）</td>
+        <td>直接影响向新组织部长汇报，优先级最高；第 3 项需先重跑 <code>dedup_monthly.py</code></td></tr>
+      <tr><td><b>第 3 批</b><br>展示改造</td><td>第 6、8、9、10 项</td>
+        <td class="to">第 9 项（下钻抽屉）依赖已解除，随时可做；第 6 项已与第 2 项解耦，独立执行</td></tr>
+      <tr><td><b>第 4 批</b><br>功能补充</td><td>第 11 项 <span style="color:#15803d;">（第 12 项 ✅ 已完成 · v2.6）</span></td>
+        <td class="to">第 11 项（删 2024）范围<b>已定</b>，按第 11 项「判定规则」执行：<b>展示层删、数据周期与追踪门槛保留</b>；实测反例 <b>201 处</b></td></tr>
+      <tr><td><b>第 5 批</b><br>交付准备</td><td>PDF 导出、纸质装订、重新发布上线</td><td>配合一期项目验收进度推进</td></tr>
+      <tr><td><b>第 6 批</b><br>验收对账</td><td><b>跑全站数字对账</b>（第八节）：同一指标在各报告出现的所有位置，值必须相同</td>
+        <td class="to">用 <code>scripts/audit_consistency.py</code> 一键执行；<b>不通过不得交付</b></td></tr>
+    </table>
+    <div class="note green">
+      <b>原「建议先做的两件事」现状：</b><br>
+      ① 第 2-B 项对数会（基数取几）—— <b>已完成</b>：全量口径 799 → <b>纳统口径 772</b>（v2.3 定）；<br>
+      ② 整改完成后跑全站数字对账 —— <b>已升格为正式验收步骤（第 6 批 / 第八节），并已交付可执行脚本</b>。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 全站数字对账规程 ============ -->
+<h2 class="sec">八、全站数字对账规程 <small>整改后必跑，不通过不得交付</small></h2>
+<div class="item">
+  <div class="hd"><div class="no">V</div><div class="ttl">同一指标在全站所有位置，值必须完全相同</div><span class="tagn t-new">验收步骤 · 已交付脚本</span></div>
+  <div class="bd">
+    <h4>执行方式</h4>
+    <p style="font-size:13px;margin:6px 0;">
+      项目根目录执行：<code>python3 scripts/audit_consistency.py</code>（纯标准库，无需虚拟环境）。<br>
+      脚本自动扫描根目录全部 <code>*.html</code>，对每项基准指标提取全部出现处的取值并比对，最后输出
+      <b>①基准值缺失的报告</b>、<b>②取值与基准不符的位置</b>、<b>③反例残留（必须零命中）</b> 三张清单。
+      退出码 <code>0</code> = 通过，<code>1</code> = 存在不一致。<br>
+      v2.3 起基准表由 18 项增至 <b>19 项</b>（口径变更：纳统总数 993、参评基数 772、红 254/橙 386/黄 108/蓝 24、
+      治理追踪 390），脚本 <code>BASE</code> / <code>BANNED</code> / <code>COMBOS</code> 三表已同步，照常一键执行即可。<br>
+      v2.4 起基准表项数不变（仍 19 项），仅把 <b>994 全面转为反例</b>（<code>BANNED_NOT_NEAR</code> 已清空），
+      并复跑全部匹配链路。
+    </p>
+    <div class="note blue">
+      <b>整改前基线（2026-09-28 实测，供对照）：</b>扫描 20 个 HTML →
+      <b>反例残留 275 处 + 关键词-数值冲突 3 处</b>。<br>
+      <b>· 第一批 6 条决策相关（73 处）：</b>智能体入口 17（按文件汇总）、旧时间口径「1-6月」10、
+      旧去重分子 4,217×7 / 3,746×4 / 9,387×3 / 9,239×3 / 4,753×1、
+      旧去重率 40.5%×6 / 44.9%×6 / 34.6%×1、预警旧基数 620×6 / 628×1、治理追踪旧值 635×3、
+      华泾占比 0.0%×3、红色阈值「≥80分」×1、旧表述「上半年」×1。<br>
+      <b>· 第二批 3 条决策新增（202 处）：</b>展示层「2024 年」引用 141、对比表头「2024 全年」34、
+      2024 同比数据数组 19、「较 2024 年」5、「2024 vs 2025」1、「2024 年为基期」1、「对比 2024 年」1。
+      <span style="color:#b45309;">（2024 类各项有同一位置被多标签命中的情况，唯一位点数略少于合计）</span><br>
+      <b>冲突 3 处：</b><code>课题成果总览.html:398</code>（635）、<code>高风险小区预警清单.html:267 / :624</code>（620）。<br>
+      ✅ <b>已核验无误报：</b>保留项「数据周期 2024 年 1 月—2026 年 8 月」与治理追踪入榜门槛「2024 全年≥5 件」
+      <b>均不计为反例</b>（正则已加负向断言），可放心按 0 收敛。<br>
+      <b>收敛目标：两项均为 0。</b>每次运行的数字以当日输出为准。
+    </div>
+    <div class="note green">
+      <b>v2.3 口径变更后的实测（2026-09-28，<code>audit_consistency.py v1.3</code>）：</b><br>
+      <b>关键词-数值冲突 0 处 ✅</b>（原 5 处：772 被误读为纳统总数 ×2、994 旧值、635、雷达图 772 被误读为红色预警数）。
+      为此脚本做三处规则修正：①「纳统小区总数」需紧跟共/为/计/达 或后接 档案/名单/库，
+      避免把「772个纳统小区参评」这类<b>参评基数</b>误判为总数；②「红色预警数量」要求数字紧跟「红色预警[小区]（阈值）」，
+      排除 ECharts 图例「Top30红色预警小区均值 / 全区772个小区均值」。<br>
+      <b>反例残留 269 处</b>（275 → 269）：减少的 6 处 = 参评基数 799×1、治理追踪 635×2、
+      以及本轮已改的旧值；剩余 269 处<b>全部属第 3 / 11 项</b>（1-6 月去重数字统一 45 处、同比删 2024 类 200 处、
+      智能体下架类 24 处），与本轮口径变更无关，按原计划推进即可。
+    </div>
+    <div class="note green">
+      <b>v2.4 全站统一到 993 后的实测（2026-09-28，<code>audit_consistency.py v1.4</code>）：</b><br>
+      <b>关键词-数值冲突 0 处 ✅</b> —— 基准「纳统小区总数」993 与「有热线记录小区」968 已在 7 / 9 份报告中同现并注明口径。<br>
+      脚本两处规则修正：① 新增基准项「纳统小区总数 = 993」，同时把 994 全面转为反例；
+      ② 清空 <code>BANNED_NOT_NEAR</code> 上下文豁免 —— 关联库重建为 993 行后，
+      <b>全站不再有任何 994 的正确用法</b>，<code>community_linked_data.pkl</code> 语境亦须写 993
+      （仅《版本更新记录》的历史条目经 <code>_CHANGELOG</code> 豁免）。<br>
+      <b>反例残留 270 处</b>（269 → <b>270</b>，净增 1 处随报告改动产生）：<br>
+      · 展示层「2024 年」引用 <b>142</b> · 对比表头「2024 全年」<b>34</b> · 2024 同比数据数组 <b>19</b>
+      · 智能体入口 <b>17</b> · 旧时间口径「1-6月」<b>10</b> · 旧去重率 44.9%×10 / 40.5%×6 / 34.6%×4
+      · 旧去重分子 4,217×7 / 3,746×4 / 9,387×3 / 9,239×3 / 4,753×1
+      · 「较 2024 年」×5 · 635×1 · 「2024 vs 2025」×1 · 「2024 年为基期」×1 · 「对比 2024 年」×1 · 「上半年」×1。<br>
+      <b>「994」反例已清零 ✅</b>（整改清单自身因含反例词表被整体排除，版本记录经豁免）。
+      剩余 270 处<b>全部属第 3 / 11 / 5 项</b>（1-6 月去重数字统一 44 处、同比删 2024 类 202 处、智能体下架 17 处），
+      与本轮纳统口径变更无关。<br>
+      <b>结论：本轮口径变更已闭合；全站对账是否通过取决于第 3 / 5 / 11 项是否完成。</b>
+    </div>
+    <div class="note green">
+      <b>v2.6 实测（2026-09-29，<code>audit_consistency.py v1.5</code>）：</b><br>
+      <b>关键词-数值冲突 0 处 ✅</b>（第 3 / 5 项已完成，智能体入口与「1-6 月」已清零）。<br>
+      <b>反例残留 201 处</b>（270 → <b>201</b>），<b>全部属第 11 项（同比删 2024）</b>，分布为：<br>
+      街镇报告 64 · 12345 报告 42 · 治理追踪 30 · 数据质量 23 · 底部抬升 14 · 月报合集 10 · 重点问题 7 · 根因 5 · 版本记录 4 · 成果总览 1 · 高风险预警 1。<br>
+      <b>本轮新增对账规则「全区投诉降幅」：</b>因对账按<b>行</b>匹配，KPI 卡的「13,726 件」与「同比 -13.1%，减少 2,072 件」被标签分行，
+      故补第三式 <code>同比\s*(-1\d(?:\.\d)?)\s*%[^。；\n]{0,6}(?:减少|下降)</code>；
+      同时把 <code>BASE</code> 中的信息性指标升格为 <code>CHECKS</code> 判定项（原「全区投诉降幅」只在 BASE → 漏检）。<br>
+      <b>本次修正的旧值：</b>街镇报告「全区同比」-12.6% → <b>-13.1%</b>（15 处）、KPI「减少 1,970 件」→ <b>减少 2,072 件</b>、
+      第四节课文补「另 102 件来自『归属为空』工单的减少，无法摊到街镇」；<code>build_street_dataset.py</code> 增加全区口径字段
+      <code>n2026_all</code> / <code>n2025_same_all</code> / <code>yoy_streets</code>（街镇合计口径留档，勿用于「全区」表述）。<br>
+      <b>收敛目标：仅剩第 11 项 201 处。修完第 11 项即为 0。</b>
+    </div>
+
+    <h4>基准值总表（对账唯一依据）</h4>
+    <table>
+      <tr><th>#</th><th>指标</th><th>基准值</th><th>允许的表述</th><th>必须零命中的反例</th></tr>
+      <tr><td>1</td><td>2026年1-8月投诉总量</td><td class="to">13,726 件</td><td>13,726 / 13726</td><td class="was">—</td></tr>
+      <tr><td>2</td><td>1-8月判定重复工单</td><td class="to">4,908 件</td><td>4,908 / 4908</td><td class="was">9,239 · 3,746 · 9,387 · 4,217 · 4,753</td></tr>
+      <tr><td>3</td><td>1-8月整体去重率</td><td class="to">35.8%</td><td>35.8%</td><td class="was">40.5% · 44.9% · 34.6%</td></tr>
+      <tr><td>4</td><td>时间口径</td><td class="to">2026年1-8月</td><td>1-8月 / 1—8月</td><td class="was">1-6月 · 1—6月 · 上半年</td></tr>
+      <tr><td>5</td><td>纳统小区总数</td><td class="to">993 个</td><td>993 个纳统小区 / 纳统小区共993个</td><td class="was">994（全站任何语境，含关联库 pkl 条目）</td></tr>
+      <tr><td>6</td><td>有热线记录小区（参与口径）</td><td class="to">968 个（覆盖率 97.5%）</td><td>968（须与 993 同现并注明口径）</td><td class="was">「968 个小区实证」等无基准数的单独表述</td></tr>
+      <tr><td>7</td><td>底部抬升重点小区</td><td class="to">84 个</td><td>84 个</td><td class="was">23 个（根因报告）</td></tr>
+      <tr><td>8</td><td>底部抬升可匹配小区（分母）</td><td class="to">78 个</td><td>78 个（须注明为匹配成功数）</td><td class="was">把 78 当重点小区总数</td></tr>
+      <tr><td>9</td><td>高风险预警参评基数</td><td class="to">772 个</td><td>772（纳统名单内 + 2026年1-8月 + 投诉量≥10件）</td><td class="was">620 · 628 · 799</td></tr>
+      <tr><td>10</td><td>红色预警数量 / 阈值</td><td class="to">254 个 / ≥60 分</td><td>红色预警（≥60分）254 个</td><td class="was">≥80分 · 「1 个」</td></tr>
+      <tr><td>11</td><td>橙 / 黄 / 蓝预警数量</td><td class="to">386 / 108 / 24</td><td>四级之和 = 772</td><td class="was">426 · 112 · 25</td></tr>
+      <tr><td>12</td><td>治理追踪小区数</td><td class="to">390 个</td><td>390（纳统名单内 + 复合三门槛）</td><td class="was">394 · 635（智能体）</td></tr>
+      <tr><td>13</td><td>全区投诉降幅（1-8月）</td><td class="to">-13.1%<br><span style="font-size:11px;">（13,726÷15,798，减少 2,072 件）</span></td><td>13.1%</td>
+        <td class="was">把 <b>-12.6%</b>（13 街镇合计 13,719÷15,689，减少 1,970 件）标为「全区」<br><span style="font-size:11px;">两口径差 102 件 = 归属为空工单的减少量；街镇口径可用于「街镇明细合计」，但不得冠以「全区」</span></td></tr>
+      <tr><td>14</td><td>底部抬升小区投诉降幅</td><td class="to">-16.9%</td><td>16.9%</td><td class="was">—</td></tr>
+      <tr><td>15</td><td>华泾镇红色预警占比</td><td class="to">47.6%</td><td>47.6%（全区最高）</td><td class="was">0.0% · 57.1%（旧口径）</td></tr>
+      <tr><td>16</td><td>湖南街道投诉密度</td><td class="to">50.7 件/千户</td><td>50.7（全区最高）</td><td class="was">50 · 50.0（取整写法）</td></tr>
+      <tr><td>17</td><td>同比对比年数</td><td class="to">仅 2025 / 2026 两年</td><td>2025年1-8月 vs 2026年1-8月</td>
+        <td class="was">2024 vs 2025 vs 2026 · 较 2024 年 · cat2024 · y24</td></tr>
+      <tr><td>18</td><td>智能体相关</td><td class="to">全站不可出现</td><td>—</td><td class="was">智能体 · AI助手 · 大模型 · 635</td></tr>
+      <tr><td>19</td><td>风险评估报告纳入范围<br><span style="font-size:11px;">（v2.3 新增）</span></td><td class="to">仅纳统名单内 + 按纳统小区聚合 + 2026年1-8月</td>
+        <td>各报告模块开头须有一句「纳入范围」</td><td class="was">「热线全口径小区」「不依赖纳统匹配」等旧表述</td></tr>
+    </table>
+
+    <h4>通过标准（三项同时满足）</h4>
+    <ul class="tight">
+      <li><b>① 唯一性：</b>每项指标在全站所有出现位置的取值，均等于基准值（无第二版本）。</li>
+      <li><b>② 反例零命中：</b>上表「必须零命中」列的全部字符串在全站检索为零。</li>
+      <li><b>③ 口径完整性：</b>凡收窄样本处（968、78、四级分级等）均有「参与统计口径」说明，且大数一律为 993 / 772 / 390 / 84，风险评估类报告均标「纳入范围」。</li>
+    </ul>
+
+    <div class="note red">
+      <b>注意顺序：</b>对账必须在本清单各条目<b>全部改完（含脚本重跑、HTML 重新生成、线上推送）之后</b>执行。
+      中途跑会大量报错，那是正常现象 —— 正是这些报错逐条收敛到零，才算整改完成。
+    </div>
+    <div class="note blue">
+      <b>脚本位置：</b><code>scripts/audit_consistency.py</code>。基准值写在脚本顶部的 <code>BASE</code> 表中，
+      若后续项目组调整口径，先改该表再重跑，确保「清单 ↔ 脚本」两处口径同步。
+      脚本仅<b>只读扫描</b>，不会修改任何报告。
+    </div>
+  </div>
+</div>
+
+<footer>
+  徐汇物业投诉数据分析项目 · 网页版整改清单（技术方执行版 v2.6）<br>
+  v2.6 整理：2026-09-29（第 12 项落地 + 全区同比口径修正）&nbsp;|&nbsp; v2.5 整理：2026-09-29（第 6/8/9/10/13 项落地）&nbsp;|&nbsp; v2.4 整理：2026-09-28 &nbsp;|&nbsp; 代码基线 f120ca2 &nbsp;|&nbsp;
+  核对范围：项目根目录 21 个 HTML 页面 + scripts/ 33 个脚本 + 关键 JSON 数据源<br>
+  口径决策来源：项目组 2026-09-28 反馈（第一批 6 条 + 第二批 3 条 + 第三批「风险评估按纳统小区统计」1 条 + v2.4「全站统一到 993」）<br>
+  配验工具：<code>scripts/audit_consistency.py</code>（19 项基准值）
+</footer>
+
+</div>
+</body>
+</html>

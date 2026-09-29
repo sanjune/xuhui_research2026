@@ -1,18 +1,18 @@
 {
   "1": {
     "total": 1485,
-    "total_dup": 436,
+    "total_dup": 437,
     "dup_rate": 29.4,
-    "s1_count": 11,
-    "s1_groups": 9,
-    "s2_count": 221,
-    "s3_count": 276,
-    "s3_groups": 95,
-    "s4_count": 26,
-    "s4_pairs": 26,
-    "s4_comms": 19,
-    "high_count": 322,
-    "mid_count": 114,
+    "s1_count": 5,
+    "s1_groups": 3,
+    "s2_count": 218,
+    "s3_count": 274,
+    "s3_groups": 94,
+    "s4_count": 154,
+    "s4_pairs": 154,
+    "s4_comms": 68,
+    "high_count": 360,
+    "mid_count": 77,
     "hf20": [
       {
         "rank": 1,
@@ -25,11 +25,11 @@
       },
       {
         "rank": 2,
-        "community": "馨宁公寓",
-        "street": "华泾镇",
+        "community": "周家湾",
+        "street": "龙华",
         "category": "停车管理",
         "count": 8,
-        "property": "上海中星集团申城物业有限公司",
+        "property": "上海诚锦物业管理有限公司",
         "priority": "高"
       },
       {
@@ -43,11 +43,11 @@
       },
       {
         "rank": 4,
-        "community": "周家湾",
-        "street": "龙华",
+        "community": "馨宁公寓",
+        "street": "华泾镇",
         "category": "停车管理",
         "count": 8,
-        "property": "上海中鹊物业服务有限公司",
+        "property": "上海中星集团申城物业有限公司",
         "priority": "高"
       },
       {
@@ -61,29 +61,29 @@
       },
       {
         "rank": 6,
-        "community": "罗秀新二村",
-        "street": "长桥",
-        "category": "清洁卫生",
+        "community": "东方康洛",
+        "street": "虹梅路",
+        "category": "业主大会/业委会",
         "count": 6,
-        "property": "上海中誉物业管理有限公司",
+        "property": "上海乐道物业管理有限公司",
         "priority": "高"
       },
       {
         "rank": 7,
-        "community": "日晖六村",
-        "street": "斜土路",
-        "category": "停车管理",
-        "count": 6,
-        "property": "上海高建物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 8,
         "community": "华泾绿苑",
         "street": "华泾镇",
         "category": "业主大会/业委会",
         "count": 6,
         "property": "上海晏鑫物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 8,
+        "community": "日晖六村",
+        "street": "斜土路",
+        "category": "停车管理",
+        "count": 6,
+        "property": "上海高建物业有限公司",
         "priority": "高"
       },
       {
@@ -97,69 +97,15 @@
       },
       {
         "rank": 10,
-        "community": "东方康洛",
-        "street": "虹梅路",
-        "category": "业主大会/业委会",
+        "community": "罗秀新二村",
+        "street": "长桥",
+        "category": "清洁卫生",
         "count": 6,
-        "property": "上海乐道物业管理有限公司",
+        "property": "上海中誉物业管理有限公司",
         "priority": "高"
       },
       {
         "rank": 11,
-        "community": "薛家宅",
-        "street": "漕河泾",
-        "category": "房屋维修",
-        "count": 5,
-        "property": "上海新明星物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 12,
-        "community": "田林三四村",
-        "street": "田林",
-        "category": "停车管理",
-        "count": 5,
-        "property": "上海徐房物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 13,
-        "community": "金龙花苑茶花玫瑰园",
-        "street": "龙华",
-        "category": "业主大会/业委会",
-        "count": 5,
-        "property": "上海诚锦物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 14,
-        "community": "谨斜小区",
-        "street": "枫林路",
-        "category": "房屋维修",
-        "count": 5,
-        "property": "上海高建物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 15,
-        "community": "紫阳花苑",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "count": 5,
-        "property": "上海晏鑫物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 16,
-        "community": "宛龙小区",
-        "street": "枫林路",
-        "category": "消防管理",
-        "count": 5,
-        "property": "上海高建物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 17,
         "community": "华悦家园",
         "street": "虹梅路",
         "category": "群租管理",
@@ -168,7 +114,7 @@
         "priority": "高"
       },
       {
-        "rank": 18,
+        "rank": 12,
         "community": "华欣家园",
         "street": "华泾镇",
         "category": "停车管理",
@@ -177,7 +123,43 @@
         "priority": "高"
       },
       {
-        "rank": 19,
+        "rank": 13,
+        "community": "吴东小区",
+        "street": "田林",
+        "category": "旧住房改造",
+        "count": 5,
+        "property": "上海天梭物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 14,
+        "community": "宛龙小区",
+        "street": "枫林路",
+        "category": "消防管理",
+        "count": 5,
+        "property": "上海高建物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 15,
+        "community": "田林三四村",
+        "street": "田林",
+        "category": "停车管理",
+        "count": 5,
+        "property": "上海徐房物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 16,
+        "community": "紫阳花苑",
+        "street": "华泾镇",
+        "category": "停车管理",
+        "count": 5,
+        "property": "上海晏鑫物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 17,
         "community": "薛家宅",
         "street": "漕河泾",
         "category": "停车管理",
@@ -186,12 +168,30 @@
         "priority": "高"
       },
       {
-        "rank": 20,
-        "community": "吴东小区",
-        "street": "田林",
-        "category": "旧住房改造",
+        "rank": 18,
+        "community": "薛家宅",
+        "street": "漕河泾",
+        "category": "房屋维修",
         "count": 5,
-        "property": "上海天梭物业管理有限公司",
+        "property": "上海新明星物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 19,
+        "community": "谨斜小区",
+        "street": "枫林路",
+        "category": "房屋维修",
+        "count": 5,
+        "property": "上海高建物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 20,
+        "community": "金龙花苑茶花玫瑰园",
+        "street": "龙华",
+        "category": "业主大会/业委会",
+        "count": 5,
+        "property": "上海诚锦物业管理有限公司",
         "priority": "高"
       }
     ],
@@ -203,13 +203,13 @@
       },
       {
         "cat": "房屋维修",
-        "cnt": 62,
-        "pct": 14.2
+        "cnt": 58,
+        "pct": 13.3
       },
       {
         "cat": "业主大会/业委会",
-        "cnt": 55,
-        "pct": 12.6
+        "cnt": 57,
+        "pct": 13.0
       },
       {
         "cat": "房屋违规使用",
@@ -218,8 +218,8 @@
       },
       {
         "cat": "邻里纠纷",
-        "cnt": 39,
-        "pct": 8.9
+        "cnt": 41,
+        "pct": 9.4
       },
       {
         "cat": "消防管理",
@@ -258,40 +258,40 @@
       },
       {
         "cat": "物业服务态度",
-        "cnt": 6,
-        "pct": 1.4
+        "cnt": 7,
+        "pct": 1.6
       }
     ],
     "streets": [
       {
         "street": "长桥",
-        "cnt": 62,
-        "pct": 14.2
-      },
-      {
-        "street": "徐家汇",
-        "cnt": 51,
-        "pct": 11.7
+        "cnt": 64,
+        "pct": 14.6
       },
       {
         "street": "华泾镇",
         "cnt": 50,
-        "pct": 11.5
+        "pct": 11.4
+      },
+      {
+        "street": "徐家汇",
+        "cnt": 50,
+        "pct": 11.4
       },
       {
         "street": "枫林路",
         "cnt": 46,
-        "pct": 10.6
+        "pct": 10.5
       },
       {
         "street": "田林",
         "cnt": 36,
-        "pct": 8.3
+        "pct": 8.2
       },
       {
         "street": "漕河泾",
-        "cnt": 33,
-        "pct": 7.6
+        "cnt": 34,
+        "pct": 7.8
       },
       {
         "street": "龙华",
@@ -300,33 +300,33 @@
       },
       {
         "street": "斜土路",
-        "cnt": 28,
-        "pct": 6.4
+        "cnt": 29,
+        "pct": 6.6
       },
       {
         "street": "湖南路",
-        "cnt": 28,
-        "pct": 6.4
+        "cnt": 26,
+        "pct": 5.9
       },
       {
         "street": "虹梅路",
-        "cnt": 22,
-        "pct": 5.0
+        "cnt": 21,
+        "pct": 4.8
       },
       {
         "street": "天平路",
-        "cnt": 17,
-        "pct": 3.9
-      },
-      {
-        "street": "凌云路",
-        "cnt": 14,
-        "pct": 3.2
+        "cnt": 18,
+        "pct": 4.1
       },
       {
         "street": "康健新村",
-        "cnt": 14,
-        "pct": 3.2
+        "cnt": 15,
+        "pct": 3.4
+      },
+      {
+        "street": "凌云路",
+        "cnt": 13,
+        "pct": 3.0
       },
       {
         "street": "无",
@@ -336,15 +336,9 @@
     ],
     "sim_top5": [
       {
-        "community": null,
-        "a": "市民反映：小区乱停车问题（详见附件）。诉求：整治。（市民要求信息保密，无需回复）",
-        "b": "市民反映：小区乱停车问题（详见附件）。诉求：整治。（市民要求信息保密，无需回复）",
-        "sim": 1.0
-      },
-      {
-        "community": "上海新村直管公房",
-        "a": "市民来电投诉：上述地址居民在楼道内堆放杂物，有严重消防安全隐患，2025年5月先",
-        "b": "市民来电投诉：上述地址居民在楼道内堆放杂物，有严重消防安全隐患，2025年5月先",
+        "community": "大木小区",
+        "a": "【异常诉求人员】市民来电求助：诉求地址天井内楼层共用老旧水管腐坏多次联系物业经理",
+        "b": "【异常诉求人员】市民来电求助：诉求地址天井内楼层共用老旧水管腐坏多次联系物业经理",
         "sim": 1.0
       },
       {
@@ -354,9 +348,9 @@
         "sim": 1.0
       },
       {
-        "community": "小木桥路320号",
-        "a": "市民来电求助：小木桥路320号204室，2026年1月22日污水管道堵塞，污水返",
-        "b": "市民来电求助：小木桥路320号204室，2026年1月22日污水管道堵塞，污水返",
+        "community": "大木小区",
+        "a": "【异常诉求人员】市民来电求助：诉求地址天井内楼层共用老旧水管腐坏多次联系物业经理",
+        "b": "【异常诉求人员】市民来电求助：诉求地址天井内楼层共用老旧水管腐坏多次联系物业经理",
         "sim": 1.0
       },
       {
@@ -364,13 +358,19 @@
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "sim": 1.0
+      },
+      {
+        "community": "长汇景苑",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "sim": 1.0
       }
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "天钥新村",
-        "street": "枫林路",
+        "oid": "20260114204618",
+        "community": "东湾小区",
+        "street": "华泾镇",
         "category": "停车管理",
         "strategies": "S3",
         "freq": 4,
@@ -379,9 +379,9 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "天钥新村",
-        "street": "枫林路",
+        "oid": "20260122222207",
+        "community": "东湾小区",
+        "street": "华泾镇",
         "category": "停车管理",
         "strategies": "S3",
         "freq": 4,
@@ -390,31 +390,9 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "振兴小区",
-        "street": "枫林路",
-        "category": "房屋违规使用",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "悦汇长庭",
-        "street": "长桥",
-        "category": "其他",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "阳光绿园",
-        "street": "凌云路",
+        "oid": "20260125205870",
+        "community": "东湾小区",
+        "street": "华泾镇",
         "category": "停车管理",
         "strategies": "S3",
         "freq": 4,
@@ -423,10 +401,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "鑫桂苑·侨高中心",
-        "street": "虹梅路",
-        "category": "房屋违规使用",
+        "oid": "20260115231571",
+        "community": "东湾小区",
+        "street": "华泾镇",
+        "category": "邻里纠纷",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -434,7 +412,29 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260120240278",
+        "community": "东湾小区",
+        "street": "华泾镇",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260126227688",
+        "community": "东湾小区",
+        "street": "华泾镇",
+        "category": "邻里纠纷",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.94,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260107244654",
         "community": "中海瀛台",
         "street": "长桥",
         "category": "邻里纠纷",
@@ -445,7 +445,29 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260108245396",
+        "community": "中海瀛台",
+        "street": "长桥",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260109207070",
+        "community": "中海瀛台",
+        "street": "长桥",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260108201975",
         "community": "保利星苑",
         "street": "漕河泾",
         "category": "业主大会/业委会",
@@ -456,18 +478,7 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "长桥三村第一",
-        "street": "长桥",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
+        "oid": "20260108221637",
         "community": "保利星苑",
         "street": "漕河泾",
         "category": "业主大会/业委会",
@@ -478,10 +489,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "中海瀛台",
-        "street": "长桥",
-        "category": "邻里纠纷",
+        "oid": "20260116211350",
+        "community": "保利星苑",
+        "street": "漕河泾",
+        "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -489,10 +500,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "中海瀛台",
-        "street": "长桥",
-        "category": "邻里纠纷",
+        "oid": "20260122217313",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -500,10 +511,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "日晖六村",
-        "street": "斜土路",
-        "category": "房屋违规使用",
+        "oid": "20260122218884",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -511,21 +522,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "长桥三村第一",
-        "street": "长桥",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "长桥三村第一",
-        "street": "长桥",
-        "category": "停车管理",
+        "oid": "20260122225923",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -536,18 +536,18 @@
   },
   "2": {
     "total": 888,
-    "total_dup": 231,
-    "dup_rate": 26.0,
-    "s1_count": 4,
-    "s1_groups": 4,
-    "s2_count": 142,
+    "total_dup": 233,
+    "dup_rate": 26.2,
+    "s1_count": 3,
+    "s1_groups": 3,
+    "s2_count": 139,
     "s3_count": 128,
     "s3_groups": 46,
-    "s4_count": 18,
-    "s4_pairs": 18,
-    "s4_comms": 15,
+    "s4_count": 69,
+    "s4_pairs": 69,
+    "s4_comms": 42,
     "high_count": 183,
-    "mid_count": 48,
+    "mid_count": 50,
     "hf20": [
       {
         "rank": 1,
@@ -569,6 +569,15 @@
       },
       {
         "rank": 3,
+        "community": "桃源村直管公房",
+        "street": "天平路",
+        "category": "房屋维修",
+        "count": 5,
+        "property": "上海衡复物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 4,
         "community": "汇成五村",
         "street": "长桥",
         "category": "物业安保",
@@ -577,21 +586,12 @@
         "priority": "高"
       },
       {
-        "rank": 4,
+        "rank": 5,
         "community": "盛大花园",
         "street": "龙华",
         "category": "邻里纠纷",
         "count": 5,
         "property": "上海永升物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 5,
-        "community": "桃源村直管公房",
-        "street": "天平路",
-        "category": "房屋维修",
-        "count": 5,
-        "property": "上海衡复物业有限公司",
         "priority": "高"
       },
       {
@@ -605,33 +605,15 @@
       },
       {
         "rank": 7,
-        "community": "岳阳小区",
-        "street": "天平路",
-        "category": "房屋维修",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "物业服务态度",
         "count": 4,
-        "property": "上海衡复物业有限公司",
+        "property": "上海栗郡实业有限公司",
         "priority": "中"
       },
       {
         "rank": 8,
-        "community": "田林十三村",
-        "street": "田林",
-        "category": "停车管理",
-        "count": 4,
-        "property": "上海徐房物业有限公司",
-        "priority": "中"
-      },
-      {
-        "rank": 9,
-        "community": "长汇景苑",
-        "street": "长桥",
-        "category": "邻里纠纷",
-        "count": 4,
-        "property": "绿城物业服务集团有限公司上海分公司",
-        "priority": "中"
-      },
-      {
-        "rank": 10,
         "community": "凌云新村",
         "street": "凌云路",
         "category": "停车管理",
@@ -640,7 +622,34 @@
         "priority": "中"
       },
       {
+        "rank": 9,
+        "community": "岳阳小区",
+        "street": "天平路",
+        "category": "房屋维修",
+        "count": 4,
+        "property": "上海衡复物业有限公司",
+        "priority": "中"
+      },
+      {
+        "rank": 10,
+        "community": "田林十三村",
+        "street": "田林",
+        "category": "停车管理",
+        "count": 4,
+        "property": "上海徐房物业有限公司",
+        "priority": "中"
+      },
+      {
         "rank": 11,
+        "community": "长汇景苑",
+        "street": "长桥",
+        "category": "邻里纠纷",
+        "count": 4,
+        "property": "绿城物业服务集团有限公司上海分公司",
+        "priority": "中"
+      },
+      {
+        "rank": 12,
         "community": "馨宁公寓",
         "street": "华泾镇",
         "category": "停车管理",
@@ -649,52 +658,7 @@
         "priority": "中"
       },
       {
-        "rank": 12,
-        "community": "兰桂坊",
-        "street": "田林",
-        "category": "物业服务态度",
-        "count": 4,
-        "property": "上海中鹊物业服务有限公司",
-        "priority": "中"
-      },
-      {
         "rank": 13,
-        "community": "田林五街坊",
-        "street": "田林",
-        "category": "群租管理",
-        "count": 3,
-        "property": "上海徐房物业有限公司",
-        "priority": "中"
-      },
-      {
-        "rank": 14,
-        "community": "滨江小区",
-        "street": "龙华",
-        "category": "停车管理",
-        "count": 3,
-        "property": "上海凤梧物业管理有限公司",
-        "priority": "中"
-      },
-      {
-        "rank": 15,
-        "community": "漕溪三村",
-        "street": "漕河泾",
-        "category": "消防管理",
-        "count": 3,
-        "property": "上海徐房物业有限公司",
-        "priority": "中"
-      },
-      {
-        "rank": 16,
-        "community": "田林三四村",
-        "street": "田林",
-        "category": "房屋维修",
-        "count": 3,
-        "property": "上海徐房物业有限公司",
-        "priority": "中"
-      },
-      {
-        "rank": 17,
         "community": "三江小区",
         "street": "漕河泾",
         "category": "停车管理",
@@ -703,73 +667,109 @@
         "priority": "中"
       },
       {
-        "rank": 18,
-        "community": "罗秀新二村",
-        "street": "长桥",
+        "rank": 14,
+        "community": "兴湖小区",
+        "street": "湖南路",
+        "category": "房屋违规使用",
+        "count": 3,
+        "property": "上海衡复物业有限公司",
+        "priority": "中"
+      },
+      {
+        "rank": 15,
+        "community": "北赵巷",
+        "street": "徐家汇",
+        "category": "邻里纠纷",
+        "count": 3,
+        "property": "上海高建物业有限公司",
+        "priority": "中"
+      },
+      {
+        "rank": 16,
+        "community": "华康直管公房",
+        "street": "湖南路",
+        "category": "房屋违规使用",
+        "count": 3,
+        "property": "上海衡复物业有限公司",
+        "priority": "中"
+      },
+      {
+        "rank": 17,
+        "community": "华悦家园",
+        "street": "虹梅路",
         "category": "停车管理",
         "count": 3,
-        "property": "上海中誉物业管理有限公司",
+        "property": "上海汇成物业有限公司",
+        "priority": "中"
+      },
+      {
+        "rank": 18,
+        "community": "华沁家园",
+        "street": "长桥",
+        "category": "房屋维修",
+        "count": 3,
+        "property": "上海汇成物业有限公司",
         "priority": "中"
       },
       {
         "rank": 19,
-        "community": "紫竹园",
-        "street": "康健新村",
-        "category": "房屋维修",
+        "community": "华沁家园",
+        "street": "长桥",
+        "category": "房屋违规使用",
         "count": 3,
-        "property": "上海轻工物业管理有限公司",
+        "property": "上海汇成物业有限公司",
         "priority": "中"
       },
       {
         "rank": 20,
-        "community": "金龙花苑茶花玫瑰园",
-        "street": "龙华",
-        "category": "业主大会/业委会",
+        "community": "华滨家园",
+        "street": "长桥",
+        "category": "物业安保",
         "count": 3,
-        "property": "上海诚锦物业管理有限公司",
+        "property": "上海复欣物业管理发展有限公司",
         "priority": "中"
       }
     ],
     "cats": [
       {
         "cat": "邻里纠纷",
-        "cnt": 42,
-        "pct": 18.2
+        "cnt": 44,
+        "pct": 18.9
       },
       {
         "cat": "业主大会/业委会",
         "cnt": 35,
-        "pct": 15.2
+        "pct": 15.0
       },
       {
         "cat": "停车管理",
-        "cnt": 34,
-        "pct": 14.7
+        "cnt": 33,
+        "pct": 14.2
       },
       {
         "cat": "房屋维修",
-        "cnt": 31,
-        "pct": 13.4
+        "cnt": 30,
+        "pct": 12.9
       },
       {
         "cat": "房屋违规使用",
         "cnt": 26,
-        "pct": 11.3
+        "pct": 11.2
       },
       {
         "cat": "消防管理",
         "cnt": 23,
-        "pct": 10.0
+        "pct": 9.9
       },
       {
         "cat": "物业安保",
         "cnt": 14,
-        "pct": 6.1
+        "pct": 6.0
       },
       {
         "cat": "旧住房改造",
-        "cnt": 6,
-        "pct": 2.6
+        "cnt": 8,
+        "pct": 3.4
       },
       {
         "cat": "物业服务态度",
@@ -779,12 +779,12 @@
       {
         "cat": "清洁卫生",
         "cnt": 5,
-        "pct": 2.2
+        "pct": 2.1
       },
       {
         "cat": "群租管理",
         "cnt": 5,
-        "pct": 2.2
+        "pct": 2.1
       },
       {
         "cat": "其他",
@@ -800,48 +800,48 @@
     "streets": [
       {
         "street": "龙华",
-        "cnt": 39,
-        "pct": 16.9
+        "cnt": 40,
+        "pct": 17.2
       },
       {
         "street": "田林",
         "cnt": 37,
-        "pct": 16.0
+        "pct": 15.9
       },
       {
         "street": "长桥",
         "cnt": 27,
-        "pct": 11.7
+        "pct": 11.6
       },
       {
         "street": "湖南路",
         "cnt": 22,
-        "pct": 9.5
+        "pct": 9.4
       },
       {
-        "street": "天平路",
+        "street": "徐家汇",
         "cnt": 19,
         "pct": 8.2
       },
       {
-        "street": "徐家汇",
+        "street": "天平路",
         "cnt": 18,
-        "pct": 7.8
+        "pct": 7.7
       },
       {
         "street": "漕河泾",
-        "cnt": 12,
-        "pct": 5.2
+        "cnt": 13,
+        "pct": 5.6
+      },
+      {
+        "street": "凌云路",
+        "cnt": 11,
+        "pct": 4.7
       },
       {
         "street": "枫林路",
         "cnt": 11,
-        "pct": 4.8
-      },
-      {
-        "street": "凌云路",
-        "cnt": 10,
-        "pct": 4.3
+        "pct": 4.7
       },
       {
         "street": "康健新村",
@@ -850,21 +850,27 @@
       },
       {
         "street": "斜土路",
-        "cnt": 10,
-        "pct": 4.3
+        "cnt": 9,
+        "pct": 3.9
       },
       {
         "street": "华泾镇",
         "cnt": 8,
-        "pct": 3.5
+        "pct": 3.4
       },
       {
         "street": "虹梅路",
         "cnt": 8,
-        "pct": 3.5
+        "pct": 3.4
       }
     ],
     "sim_top5": [
+      {
+        "community": "岳阳小区",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电求助：市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管",
+        "sim": 1.0
+      },
       {
         "community": "永福教苑",
         "a": "市民来电反映相同事项。【最近办结的工单编号：20260131210509，工单内",
@@ -884,18 +890,18 @@
         "sim": 1.0
       },
       {
-        "community": "岳阳小区",
-        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
-        "b": "市民来电求助：市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管",
-        "sim": 0.969
+        "community": "长汇景苑",
+        "a": "重复来电，反映相同问题。【最近办结的工单编号:20260129234105，工单",
+        "b": "重复来电，反映相同问题。【最近办结的工单编号:20260129234105，工单",
+        "sim": 1.0
       }
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "馨宁公寓",
-        "street": "华泾镇",
-        "category": "停车管理",
+        "oid": "20260219200422",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "物业服务态度",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -903,10 +909,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "馨宁公寓",
-        "street": "华泾镇",
-        "category": "停车管理",
+        "oid": "20260219201359",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "物业服务态度",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -914,7 +920,18 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260219201772",
+        "community": "兰桂坊",
+        "street": "田林",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.61,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260210207390",
         "community": "凌云新村",
         "street": "凌云路",
         "category": "停车管理",
@@ -925,7 +942,117 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260210209915",
+        "community": "凌云新村",
+        "street": "凌云路",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.75,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260222211047",
+        "community": "凌云新村",
+        "street": "凌云路",
+        "category": "停车管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260216201441",
+        "community": "岳阳小区",
+        "street": "天平路",
+        "category": "房屋维修",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.67,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260216209995",
+        "community": "岳阳小区",
+        "street": "天平路",
+        "category": "房屋维修",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.71,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260216210123",
+        "community": "岳阳小区",
+        "street": "天平路",
+        "category": "房屋维修",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 1.0,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260225222099",
+        "community": "田林十三村",
+        "street": "田林",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.89,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260225223557",
+        "community": "田林十三村",
+        "street": "田林",
+        "category": "停车管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260226220775",
+        "community": "田林十三村",
+        "street": "田林",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.96,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260214225200",
+        "community": "长汇景苑",
+        "street": "长桥",
+        "category": "邻里纠纷",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.77,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260214228309",
+        "community": "长汇景苑",
+        "street": "长桥",
+        "category": "邻里纠纷",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.98,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260227211277",
         "community": "长汇景苑",
         "street": "长桥",
         "category": "邻里纠纷",
@@ -934,144 +1061,23 @@
         "sim": null,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "兰桂坊",
-        "street": "田林",
-        "category": "物业服务态度",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "兰桂坊",
-        "street": "田林",
-        "category": "物业服务态度",
-        "strategies": "S3+S4",
-        "freq": 4,
-        "sim": 0.66,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "凌云新村",
-        "street": "凌云路",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "馨宁公寓",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "华康直管公房",
-        "street": "湖南路",
-        "category": "房屋违规使用",
-        "strategies": "S3",
-        "freq": 3,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "华康直管公房",
-        "street": "湖南路",
-        "category": "房屋违规使用",
-        "strategies": "S3+S4",
-        "freq": 3,
-        "sim": 0.68,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "漕溪三村",
-        "street": "漕河泾",
-        "category": "消防管理",
-        "strategies": "S3",
-        "freq": 3,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "华沁家园",
-        "street": "长桥",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 3,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "阳光绿园",
-        "street": "凌云路",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 3,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "华沁家园",
-        "street": "长桥",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 3,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "田林五街坊",
-        "street": "田林",
-        "category": "群租管理",
-        "strategies": "S3",
-        "freq": 3,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
       }
     ]
   },
   "3": {
     "total": 1682,
-    "total_dup": 602,
-    "dup_rate": 35.8,
-    "s1_count": 8,
-    "s1_groups": 8,
-    "s2_count": 309,
+    "total_dup": 632,
+    "dup_rate": 37.6,
+    "s1_count": 6,
+    "s1_groups": 6,
+    "s2_count": 313,
     "s3_count": 432,
     "s3_groups": 137,
-    "s4_count": 40,
-    "s4_pairs": 40,
-    "s4_comms": 26,
-    "high_count": 474,
-    "mid_count": 128,
+    "s4_count": 404,
+    "s4_pairs": 404,
+    "s4_comms": 127,
+    "high_count": 482,
+    "mid_count": 150,
     "hf20": [
       {
         "rank": 1,
@@ -1093,15 +1099,6 @@
       },
       {
         "rank": 3,
-        "community": "电力建筑小区",
-        "street": "斜土路",
-        "category": "旧住房改造",
-        "count": 9,
-        "property": "上海清枫物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 4,
         "community": "华泾五村",
         "street": "华泾镇",
         "category": "停车管理",
@@ -1110,34 +1107,16 @@
         "priority": "高"
       },
       {
-        "rank": 5,
-        "community": "康平直管公房",
-        "street": "天平路",
-        "category": "房屋违规使用",
-        "count": 8,
-        "property": "上海衡复物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 6,
-        "community": "华欣家园",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "count": 8,
-        "property": "上海华泾泾鸿物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 7,
-        "community": "创世纪花园",
-        "street": "徐家汇",
+        "rank": 4,
+        "community": "电力建筑小区",
+        "street": "斜土路",
         "category": "旧住房改造",
-        "count": 8,
-        "property": "上海同涞物业管理有限公司",
+        "count": 9,
+        "property": "上海清枫物业管理有限公司",
         "priority": "高"
       },
       {
-        "rank": 8,
+        "rank": 5,
         "community": "凯翔",
         "street": "漕河泾",
         "category": "停车管理",
@@ -1146,21 +1125,48 @@
         "priority": "高"
       },
       {
-        "rank": 9,
-        "community": "欣嘉苑1-3期",
-        "street": "虹梅路",
-        "category": "停车管理",
+        "rank": 6,
+        "community": "创世纪花园",
+        "street": "徐家汇",
+        "category": "旧住房改造",
         "count": 8,
-        "property": "上海锦龙物业管理有限公司",
+        "property": "上海同涞物业管理有限公司",
         "priority": "高"
       },
       {
-        "rank": 10,
+        "rank": 7,
         "community": "华悦家园",
         "street": "虹梅路",
         "category": "停车管理",
         "count": 8,
         "property": "上海汇成物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 8,
+        "community": "华欣家园",
+        "street": "华泾镇",
+        "category": "停车管理",
+        "count": 8,
+        "property": "上海华泾泾鸿物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 9,
+        "community": "康平直管公房",
+        "street": "天平路",
+        "category": "房屋违规使用",
+        "count": 8,
+        "property": "上海衡复物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 10,
+        "community": "欣嘉苑1-3期",
+        "street": "虹梅路",
+        "category": "停车管理",
+        "count": 8,
+        "property": "上海锦龙物业管理有限公司",
         "priority": "高"
       },
       {
@@ -1174,33 +1180,6 @@
       },
       {
         "rank": 12,
-        "community": "紫藤苑",
-        "street": "康健新村",
-        "category": "邻里纠纷",
-        "count": 7,
-        "property": "上海向为物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 13,
-        "community": "梅陇五村(多层)",
-        "street": "凌云路",
-        "category": "消防管理",
-        "count": 7,
-        "property": "上海金辉物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 14,
-        "community": "家乐苑",
-        "street": "凌云路",
-        "category": "业主大会/业委会",
-        "count": 7,
-        "property": "秀澜（上海）物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 15,
         "community": "天平路179弄",
         "street": "天平路",
         "category": "邻里纠纷",
@@ -1209,25 +1188,61 @@
         "priority": "高"
       },
       {
-        "rank": 16,
+        "rank": 13,
         "community": "家乐苑",
         "street": "凌云路",
-        "category": "物业安保",
-        "count": 6,
+        "category": "业主大会/业委会",
+        "count": 7,
         "property": "秀澜（上海）物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 14,
+        "community": "梅陇五村(多层)",
+        "street": "凌云路",
+        "category": "消防管理",
+        "count": 7,
+        "property": "上海金辉物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 15,
+        "community": "紫藤苑",
+        "street": "康健新村",
+        "category": "邻里纠纷",
+        "count": 7,
+        "property": "上海向为物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 16,
+        "community": "中海瀛台",
+        "street": "长桥",
+        "category": "房屋维修",
+        "count": 6,
+        "property": "上海中海物业管理有限公司",
         "priority": "高"
       },
       {
         "rank": 17,
-        "community": "家乐苑",
-        "street": "凌云路",
+        "community": "乐山四五村",
+        "street": "徐家汇",
         "category": "停车管理",
         "count": 6,
-        "property": "秀澜（上海）物业管理有限公司",
+        "property": "上海外经贸物业管理有限公司",
         "priority": "高"
       },
       {
         "rank": 18,
+        "community": "华悦家园",
+        "street": "虹梅路",
+        "category": "群租管理",
+        "count": 6,
+        "property": "上海汇成物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 19,
         "community": "华港小区",
         "street": "湖南路",
         "category": "消防管理",
@@ -1236,159 +1251,168 @@
         "priority": "高"
       },
       {
-        "rank": 19,
+        "rank": 20,
         "community": "华馨公寓",
         "street": "长桥",
         "category": "停车管理",
         "count": 6,
         "property": "上海锐翔上房物业管理有限公司",
         "priority": "高"
-      },
-      {
-        "rank": 20,
-        "community": "华悦家园",
-        "street": "虹梅路",
-        "category": "群租管理",
-        "count": 6,
-        "property": "上海汇成物业有限公司",
-        "priority": "高"
       }
     ],
     "cats": [
       {
         "cat": "停车管理",
-        "cnt": 140,
-        "pct": 23.3
+        "cnt": 144,
+        "pct": 22.8
       },
       {
         "cat": "邻里纠纷",
-        "cnt": 76,
-        "pct": 12.6
+        "cnt": 80,
+        "pct": 12.7
       },
       {
         "cat": "房屋维修",
-        "cnt": 62,
-        "pct": 10.3
+        "cnt": 64,
+        "pct": 10.1
       },
       {
         "cat": "业主大会/业委会",
-        "cnt": 59,
-        "pct": 9.8
+        "cnt": 63,
+        "pct": 10.0
       },
       {
         "cat": "房屋违规使用",
-        "cnt": 51,
+        "cnt": 54,
         "pct": 8.5
       },
       {
         "cat": "消防管理",
-        "cnt": 48,
-        "pct": 8.0
+        "cnt": 50,
+        "pct": 7.9
       },
       {
         "cat": "群租管理",
-        "cnt": 47,
-        "pct": 7.8
+        "cnt": 48,
+        "pct": 7.6
       },
       {
         "cat": "旧住房改造",
-        "cnt": 33,
-        "pct": 5.5
+        "cnt": 36,
+        "pct": 5.7
       },
       {
         "cat": "物业安保",
-        "cnt": 33,
-        "pct": 5.5
+        "cnt": 34,
+        "pct": 5.4
       },
       {
         "cat": "其他",
         "cnt": 21,
-        "pct": 3.5
+        "pct": 3.3
       },
       {
         "cat": "物业服务态度",
-        "cnt": 17,
-        "pct": 2.8
+        "cnt": 21,
+        "pct": 3.3
       },
       {
         "cat": "物业收费",
-        "cnt": 8,
-        "pct": 1.3
+        "cnt": 9,
+        "pct": 1.4
       },
       {
         "cat": "清洁卫生",
-        "cnt": 7,
-        "pct": 1.2
+        "cnt": 8,
+        "pct": 1.3
       }
     ],
     "streets": [
       {
-        "street": "徐家汇",
-        "cnt": 60,
-        "pct": 10.0
+        "street": "长桥",
+        "cnt": 66,
+        "pct": 10.4
       },
       {
-        "street": "长桥",
-        "cnt": 60,
-        "pct": 10.0
+        "street": "徐家汇",
+        "cnt": 64,
+        "pct": 10.1
       },
       {
         "street": "凌云路",
-        "cnt": 59,
-        "pct": 9.8
+        "cnt": 60,
+        "pct": 9.5
       },
       {
         "street": "华泾镇",
-        "cnt": 59,
-        "pct": 9.8
+        "cnt": 60,
+        "pct": 9.5
       },
       {
         "street": "斜土路",
-        "cnt": 52,
-        "pct": 8.6
+        "cnt": 53,
+        "pct": 8.4
       },
       {
         "street": "漕河泾",
-        "cnt": 45,
-        "pct": 7.5
+        "cnt": 51,
+        "pct": 8.1
       },
       {
         "street": "天平路",
-        "cnt": 43,
+        "cnt": 45,
         "pct": 7.1
       },
       {
-        "street": "康健新村",
-        "cnt": 41,
+        "street": "田林",
+        "cnt": 43,
         "pct": 6.8
       },
       {
-        "street": "田林",
-        "cnt": 41,
-        "pct": 6.8
+        "street": "康健新村",
+        "cnt": 42,
+        "pct": 6.6
       },
       {
         "street": "枫林路",
-        "cnt": 40,
+        "cnt": 42,
         "pct": 6.6
       },
       {
         "street": "虹梅路",
-        "cnt": 38,
-        "pct": 6.3
+        "cnt": 39,
+        "pct": 6.2
       },
       {
         "street": "湖南路",
-        "cnt": 33,
+        "cnt": 35,
         "pct": 5.5
       },
       {
         "street": "龙华",
-        "cnt": 31,
+        "cnt": 32,
         "pct": 5.1
       }
     ],
     "sim_top5": [
+      {
+        "community": "上医宛一",
+        "a": "重复来电，反映相同问题。【最近办结的工单编号:20260316248239，工单",
+        "b": "市民来电求助：重复来电，反映相同问题。【最近办结的工单编号:2026031624",
+        "sim": 1.0
+      },
+      {
+        "community": "上医宛一",
+        "a": "重复来电，反映相同问题。【最近办结的工单编号:20260316248239，工单",
+        "b": "重复来电，反映相同问题。【最近办结的工单编号:20260316248239，工单",
+        "sim": 1.0
+      },
+      {
+        "community": "上医宛一",
+        "a": "市民来电求助：重复来电，反映相同问题。【最近办结的工单编号:2026031624",
+        "b": "重复来电，反映相同问题。【最近办结的工单编号:20260316248239，工单",
+        "sim": 1.0
+      },
       {
         "community": "创世纪花园",
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
@@ -1400,31 +1424,13 @@
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "sim": 1.0
-      },
-      {
-        "community": "御江瑞庭、徐汇复星中心",
-        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
-        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
-        "sim": 1.0
-      },
-      {
-        "community": "桂平小区",
-        "a": "市民来电投诉：桂平小区，有电动汽车在小区充电，对居民有危害，望管理部门处理。",
-        "b": "市民来电投诉：桂平小区，有电动汽车在小区充电，对居民有危害，望管理部门处理。",
-        "sim": 1.0
-      },
-      {
-        "community": "王家堂小区",
-        "a": "市民来电反映：王家塘小区（南丹东路100弄）晚上停车位紧张，没地方停车，诉求解决",
-        "b": "市民来电反映：王家塘小区（南丹东路100弄）晚上停车位紧张，没地方停车，诉求解决",
-        "sim": 1.0
       }
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "田林六街坊",
-        "street": "田林",
+        "oid": "20260319238250",
+        "community": "创世纪花园",
+        "street": "徐家汇",
         "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
@@ -1433,9 +1439,20 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "田林六街坊",
-        "street": "田林",
+        "oid": "20260321210735",
+        "community": "创世纪花园",
+        "street": "徐家汇",
+        "category": "业主大会/业委会",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.77,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260326205413",
+        "community": "创世纪花园",
+        "street": "徐家汇",
         "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
@@ -1444,51 +1461,7 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "永太直管公房",
-        "street": "天平路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "日晖六村",
-        "street": "斜土路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "田林六街坊",
-        "street": "田林",
-        "category": "业主大会/业委会",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "新湖云庭",
-        "street": "枫林路",
-        "category": "业主大会/业委会",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
+        "oid": "20260306217383",
         "community": "华东花苑",
         "street": "长桥",
         "category": "停车管理",
@@ -1499,9 +1472,9 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "古宜小区",
-        "street": "田林",
+        "oid": "20260307215470",
+        "community": "华东花苑",
+        "street": "长桥",
         "category": "停车管理",
         "strategies": "S3",
         "freq": 4,
@@ -1510,9 +1483,86 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "滨江小区",
-        "street": "龙华",
+        "oid": "20260307215718",
+        "community": "华东花苑",
+        "street": "长桥",
+        "category": "停车管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260311211799",
+        "community": "印象欧洲（滨江108）",
+        "street": "华泾镇",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.68,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260319208020",
+        "community": "印象欧洲（滨江108）",
+        "street": "华泾镇",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.92,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260324212178",
+        "community": "印象欧洲（滨江108）",
+        "street": "华泾镇",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.71,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260306225917",
+        "community": "古宜小区",
+        "street": "田林",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.75,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260310235178",
+        "community": "古宜小区",
+        "street": "田林",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.8,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260315216797",
+        "community": "古宜小区",
+        "street": "田林",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.77,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260308201531",
+        "community": "宛龙小区",
+        "street": "枫林路",
         "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
@@ -1521,10 +1571,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "华东花苑",
-        "street": "长桥",
-        "category": "停车管理",
+        "oid": "20260317224782",
+        "community": "宛龙小区",
+        "street": "枫林路",
+        "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -1532,57 +1582,13 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "华东花苑",
-        "street": "长桥",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "日晖六村",
-        "street": "斜土路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "宜山路655弄2、4号",
-        "street": "田林",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "古宜小区",
-        "street": "田林",
-        "category": "停车管理",
+        "oid": "20260330200235",
+        "community": "宛龙小区",
+        "street": "枫林路",
+        "category": "消防管理",
         "strategies": "S3+S4",
         "freq": 4,
-        "sim": 0.62,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "新湖云庭",
-        "street": "枫林路",
-        "category": "业主大会/业委会",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
+        "sim": 0.71,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       }
@@ -1590,18 +1596,18 @@
   },
   "4": {
     "total": 1704,
-    "total_dup": 612,
-    "dup_rate": 35.9,
-    "s1_count": 31,
-    "s1_groups": 13,
-    "s2_count": 328,
+    "total_dup": 644,
+    "dup_rate": 37.8,
+    "s1_count": 20,
+    "s1_groups": 8,
+    "s2_count": 321,
     "s3_count": 435,
     "s3_groups": 128,
-    "s4_count": 77,
-    "s4_pairs": 77,
-    "s4_comms": 44,
-    "high_count": 497,
-    "mid_count": 115,
+    "s4_count": 721,
+    "s4_pairs": 721,
+    "s4_comms": 136,
+    "high_count": 525,
+    "mid_count": 119,
     "hf20": [
       {
         "rank": 1,
@@ -1632,15 +1638,6 @@
       },
       {
         "rank": 4,
-        "community": "紫阳花苑",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "count": 10,
-        "property": "上海晏鑫物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 5,
         "community": "欣嘉苑1-3期",
         "street": "虹梅路",
         "category": "停车管理",
@@ -1649,16 +1646,16 @@
         "priority": "高"
       },
       {
-        "rank": 6,
-        "community": "陕西直管公房",
-        "street": "天平路",
-        "category": "房屋违规使用",
-        "count": 9,
-        "property": "上海衡复物业有限公司",
+        "rank": 5,
+        "community": "紫阳花苑",
+        "street": "华泾镇",
+        "category": "停车管理",
+        "count": 10,
+        "property": "上海晏鑫物业有限公司",
         "priority": "高"
       },
       {
-        "rank": 7,
+        "rank": 6,
         "community": "康平路100弄",
         "street": "天平路",
         "category": "旧住房改造",
@@ -1667,19 +1664,28 @@
         "priority": "高"
       },
       {
-        "rank": 8,
-        "community": "永嘉新村直管公房",
+        "rank": 7,
+        "community": "陕西直管公房",
         "street": "天平路",
         "category": "房屋违规使用",
+        "count": 9,
+        "property": "上海衡复物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 8,
+        "community": "东湖直管公房",
+        "street": "湖南路",
+        "category": "邻里纠纷",
         "count": 8,
         "property": "上海衡复物业有限公司",
         "priority": "高"
       },
       {
         "rank": 9,
-        "community": "东湖直管公房",
-        "street": "湖南路",
-        "category": "邻里纠纷",
+        "community": "永嘉新村直管公房",
+        "street": "天平路",
+        "category": "房屋违规使用",
         "count": 8,
         "property": "上海衡复物业有限公司",
         "priority": "高"
@@ -1695,24 +1701,6 @@
       },
       {
         "rank": 11,
-        "community": "虹桥大仕馆",
-        "street": "田林",
-        "category": "业主大会/业委会",
-        "count": 7,
-        "property": "—",
-        "priority": "高"
-      },
-      {
-        "rank": 12,
-        "community": "龙南七村",
-        "street": "龙华",
-        "category": "业主大会/业委会",
-        "count": 7,
-        "property": "上海轻工物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 13,
         "community": "华泾五村",
         "street": "华泾镇",
         "category": "停车管理",
@@ -1721,43 +1709,25 @@
         "priority": "高"
       },
       {
-        "rank": 14,
-        "community": "鑫桂苑·侨高中心",
-        "street": "虹梅路",
-        "category": "房屋违规使用",
-        "count": 6,
-        "property": "上海万科物业服务有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 15,
-        "community": "盛大花园",
-        "street": "龙华",
-        "category": "业主大会/业委会",
-        "count": 6,
-        "property": "上海永升物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 16,
-        "community": "钦州花苑",
+        "rank": 12,
+        "community": "虹桥大仕馆",
         "street": "田林",
         "category": "业主大会/业委会",
-        "count": 6,
-        "property": "上海军盛物业管理有限公司",
+        "count": 7,
+        "property": "上海锦江物业管理有限公司",
         "priority": "高"
       },
       {
-        "rank": 17,
-        "community": "龙兆苑",
+        "rank": 13,
+        "community": "龙南七村",
         "street": "龙华",
-        "category": "邻里纠纷",
-        "count": 6,
-        "property": "上海振新物业管理有限公司",
+        "category": "业主大会/业委会",
+        "count": 7,
+        "property": "上海轻工物业管理有限公司",
         "priority": "高"
       },
       {
-        "rank": 18,
+        "rank": 14,
         "community": "东安四村",
         "street": "枫林路",
         "category": "物业收费",
@@ -1766,7 +1736,7 @@
         "priority": "高"
       },
       {
-        "rank": 19,
+        "rank": 15,
         "community": "日晖六村",
         "street": "斜土路",
         "category": "房屋维修",
@@ -1775,159 +1745,189 @@
         "priority": "高"
       },
       {
-        "rank": 20,
-        "community": "华东花苑",
-        "street": "长桥",
+        "rank": 16,
+        "community": "盛大花园",
+        "street": "龙华",
+        "category": "业主大会/业委会",
+        "count": 6,
+        "property": "上海永升物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 17,
+        "community": "鑫桂苑·侨高中心",
+        "street": "虹梅路",
+        "category": "房屋违规使用",
+        "count": 6,
+        "property": "上海万科物业服务有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 18,
+        "community": "钦州花苑",
+        "street": "田林",
+        "category": "业主大会/业委会",
+        "count": 6,
+        "property": "上海军盛物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 19,
+        "community": "龙兆苑",
+        "street": "龙华",
         "category": "邻里纠纷",
+        "count": 6,
+        "property": "上海振新物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 20,
+        "community": "丁香园小区",
+        "street": "康健新村",
+        "category": "群租管理",
         "count": 5,
-        "property": "上海轻工物业管理有限公司",
+        "property": "上海同康物业管理有限公司",
         "priority": "高"
       }
     ],
     "cats": [
       {
         "cat": "业主大会/业委会",
-        "cnt": 92,
-        "pct": 15.0
+        "cnt": 94,
+        "pct": 14.6
       },
       {
         "cat": "停车管理",
+        "cnt": 94,
+        "pct": 14.6
+      },
+      {
+        "cat": "房屋违规使用",
         "cnt": 91,
-        "pct": 14.9
+        "pct": 14.1
       },
       {
         "cat": "邻里纠纷",
         "cnt": 91,
-        "pct": 14.9
-      },
-      {
-        "cat": "房屋违规使用",
-        "cnt": 87,
-        "pct": 14.2
+        "pct": 14.1
       },
       {
         "cat": "房屋维修",
-        "cnt": 54,
-        "pct": 8.8
+        "cnt": 58,
+        "pct": 9.0
       },
       {
         "cat": "旧住房改造",
-        "cnt": 48,
+        "cnt": 50,
         "pct": 7.8
       },
       {
         "cat": "消防管理",
-        "cnt": 33,
+        "cnt": 35,
         "pct": 5.4
       },
       {
         "cat": "群租管理",
-        "cnt": 31,
-        "pct": 5.1
+        "cnt": 32,
+        "pct": 5.0
       },
       {
         "cat": "物业安保",
-        "cnt": 20,
-        "pct": 3.3
+        "cnt": 26,
+        "pct": 4.0
       },
       {
         "cat": "其他",
-        "cnt": 19,
-        "pct": 3.1
+        "cnt": 22,
+        "pct": 3.4
       },
       {
         "cat": "物业服务态度",
-        "cnt": 19,
-        "pct": 3.1
+        "cnt": 21,
+        "pct": 3.3
       },
       {
         "cat": "物业收费",
-        "cnt": 16,
-        "pct": 2.6
+        "cnt": 18,
+        "pct": 2.8
       },
       {
         "cat": "清洁卫生",
-        "cnt": 11,
-        "pct": 1.8
+        "cnt": 12,
+        "pct": 1.9
       }
     ],
     "streets": [
       {
         "street": "田林",
-        "cnt": 72,
-        "pct": 11.8
+        "cnt": 77,
+        "pct": 12.0
       },
       {
         "street": "漕河泾",
-        "cnt": 71,
-        "pct": 11.6
+        "cnt": 72,
+        "pct": 11.2
       },
       {
         "street": "天平路",
-        "cnt": 59,
+        "cnt": 62,
         "pct": 9.6
       },
       {
-        "street": "徐家汇",
-        "cnt": 55,
-        "pct": 9.0
+        "street": "斜土路",
+        "cnt": 61,
+        "pct": 9.5
       },
       {
-        "street": "斜土路",
-        "cnt": 54,
-        "pct": 8.8
+        "street": "徐家汇",
+        "cnt": 59,
+        "pct": 9.2
       },
       {
         "street": "长桥",
-        "cnt": 44,
-        "pct": 7.2
+        "cnt": 47,
+        "pct": 7.3
       },
       {
         "street": "华泾镇",
-        "cnt": 41,
-        "pct": 6.7
-      },
-      {
-        "street": "凌云路",
-        "cnt": 40,
+        "cnt": 42,
         "pct": 6.5
       },
       {
         "street": "龙华",
-        "cnt": 40,
+        "cnt": 42,
         "pct": 6.5
+      },
+      {
+        "street": "凌云路",
+        "cnt": 40,
+        "pct": 6.2
+      },
+      {
+        "street": "枫林路",
+        "cnt": 39,
+        "pct": 6.1
       },
       {
         "street": "湖南路",
         "cnt": 39,
-        "pct": 6.4
-      },
-      {
-        "street": "枫林路",
-        "cnt": 37,
-        "pct": 6.0
+        "pct": 6.1
       },
       {
         "street": "康健新村",
-        "cnt": 30,
-        "pct": 4.9
+        "cnt": 32,
+        "pct": 5.0
       },
       {
         "street": "虹梅路",
-        "cnt": 30,
-        "pct": 4.9
+        "cnt": 32,
+        "pct": 5.0
       }
     ],
     "sim_top5": [
       {
         "community": "东湖直管公房",
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
-        "b": "市民来电求助：市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管",
-        "sim": 1.0
-      },
-      {
-        "community": "东湖直管公房",
-        "a": "市民来电求助：市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管",
         "b": "市民来电求助：市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管",
         "sim": 1.0
       },
@@ -1944,6 +1944,12 @@
         "sim": 1.0
       },
       {
+        "community": "华欣家园",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "sim": 1.0
+      },
+      {
         "community": "家乐苑",
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "b": "市民来电投诉/举报：市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复",
@@ -1952,65 +1958,10 @@
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "玖珑庭",
-        "street": "漕河泾",
-        "category": "物业安保",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "玖珑庭",
-        "street": "漕河泾",
-        "category": "物业安保",
-        "strategies": "S3+S4",
-        "freq": 4,
-        "sim": 0.83,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "秀水苑",
-        "street": "凌云路",
-        "category": "业主大会/业委会",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "徐汇新城",
-        "street": "长桥",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "罗秀三村",
-        "street": "长桥",
-        "category": "清洁卫生",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "天钥新村",
+        "oid": "20260419219859",
+        "community": "三航新村",
         "street": "枫林路",
-        "category": "停车管理",
+        "category": "邻里纠纷",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -2018,7 +1969,29 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260425215838",
+        "community": "三航新村",
+        "street": "枫林路",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260426201239",
+        "community": "三航新村",
+        "street": "枫林路",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260406207903",
         "community": "上海新村直管公房",
         "street": "天平路",
         "category": "房屋维修",
@@ -2029,10 +2002,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "宜仕怡家",
-        "street": "漕河泾",
-        "category": "业主大会/业委会",
+        "oid": "20260422200609",
+        "community": "上海新村直管公房",
+        "street": "天平路",
+        "category": "房屋维修",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -2040,10 +2013,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "秀水苑",
-        "street": "凌云路",
-        "category": "业主大会/业委会",
+        "oid": "20260428224099",
+        "community": "上海新村直管公房",
+        "street": "天平路",
+        "category": "房屋维修",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -2051,9 +2024,9 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "徐汇新城",
-        "street": "长桥",
+        "oid": "20260417208836",
+        "community": "东湾小区",
+        "street": "华泾镇",
         "category": "停车管理",
         "strategies": "S3",
         "freq": 4,
@@ -2062,10 +2035,21 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "海上名门",
-        "street": "漕河泾",
-        "category": "房屋维修",
+        "oid": "20260417209644",
+        "community": "东湾小区",
+        "street": "华泾镇",
+        "category": "停车管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.76,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260429221600",
+        "community": "东湾小区",
+        "street": "华泾镇",
+        "category": "停车管理",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -2073,10 +2057,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "海上名门",
-        "street": "漕河泾",
-        "category": "房屋维修",
+        "oid": "20260426213706",
+        "community": "中科新苑",
+        "street": "斜土路",
+        "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -2084,35 +2068,57 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "海上名门",
-        "street": "漕河泾",
-        "category": "房屋维修",
-        "strategies": "S3",
+        "oid": "20260428201690",
+        "community": "中科新苑",
+        "street": "斜土路",
+        "category": "消防管理",
+        "strategies": "S3+S4",
         "freq": 4,
-        "sim": null,
+        "sim": 0.7,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "芝大厦",
-        "street": "天平路",
-        "category": "物业收费",
-        "strategies": "S3",
+        "oid": "20260428240409",
+        "community": "中科新苑",
+        "street": "斜土路",
+        "category": "消防管理",
+        "strategies": "S3+S4",
         "freq": 4,
-        "sim": null,
+        "sim": 0.68,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "芝大厦",
-        "street": "天平路",
-        "category": "物业收费",
-        "strategies": "S3",
+        "oid": "20260426200470",
+        "community": "乌中小区",
+        "street": "湖南路",
+        "category": "消防管理",
+        "strategies": "S3+S4",
         "freq": 4,
-        "sim": null,
+        "sim": 0.66,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260428200617",
+        "community": "乌中小区",
+        "street": "湖南路",
+        "category": "消防管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.71,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260430200536",
+        "community": "乌中小区",
+        "street": "湖南路",
+        "category": "消防管理",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.96,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       }
@@ -2120,18 +2126,18 @@
   },
   "5": {
     "total": 1772,
-    "total_dup": 589,
-    "dup_rate": 33.2,
-    "s1_count": 6,
-    "s1_groups": 4,
-    "s2_count": 279,
+    "total_dup": 631,
+    "dup_rate": 35.6,
+    "s1_count": 2,
+    "s1_groups": 2,
+    "s2_count": 272,
     "s3_count": 420,
     "s3_groups": 122,
-    "s4_count": 44,
-    "s4_pairs": 44,
-    "s4_comms": 27,
-    "high_count": 465,
-    "mid_count": 124,
+    "s4_count": 440,
+    "s4_pairs": 440,
+    "s4_comms": 132,
+    "high_count": 498,
+    "mid_count": 133,
     "hf20": [
       {
         "rank": 1,
@@ -2207,11 +2213,11 @@
       },
       {
         "rank": 9,
-        "community": "永福一区",
-        "street": "湖南路",
-        "category": "房屋违规使用",
+        "community": "华欣家园",
+        "street": "华泾镇",
+        "category": "停车管理",
         "count": 8,
-        "property": "上海衡复物业有限公司",
+        "property": "上海华泾泾鸿物业管理有限公司",
         "priority": "高"
       },
       {
@@ -2225,20 +2231,20 @@
       },
       {
         "rank": 11,
-        "community": "华欣家园",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "count": 8,
-        "property": "上海华泾泾鸿物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 12,
         "community": "永兆豪庭",
         "street": "虹梅路",
         "category": "业主大会/业委会",
         "count": 8,
         "property": "上海盛熙物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 12,
+        "community": "永福一区",
+        "street": "湖南路",
+        "category": "房屋违规使用",
+        "count": 8,
+        "property": "上海衡复物业有限公司",
         "priority": "高"
       },
       {
@@ -2261,42 +2267,6 @@
       },
       {
         "rank": 15,
-        "community": "虹桥大仕馆",
-        "street": "田林",
-        "category": "业主大会/业委会",
-        "count": 6,
-        "property": "—",
-        "priority": "高"
-      },
-      {
-        "rank": 16,
-        "community": "紫阳花苑",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "count": 6,
-        "property": "上海晏鑫物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 17,
-        "community": "华建一街坊",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "count": 6,
-        "property": "秀澜（上海）物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 18,
-        "community": "汇翠花园",
-        "street": "徐家汇",
-        "category": "房屋违规使用",
-        "count": 6,
-        "property": "上海龙湖物业服务有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 19,
         "community": "冠生苑",
         "street": "漕河泾",
         "category": "业主大会/业委会",
@@ -2305,158 +2275,188 @@
         "priority": "高"
       },
       {
-        "rank": 20,
+        "rank": 16,
+        "community": "华建一街坊",
+        "street": "华泾镇",
+        "category": "停车管理",
+        "count": 6,
+        "property": "秀澜（上海）物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 17,
+        "community": "汇翠花园",
+        "street": "徐家汇",
+        "category": "房屋违规使用",
+        "count": 6,
+        "property": "上海龙湖物业服务有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 18,
         "community": "淮中直管公房",
         "street": "湖南路",
         "category": "群租管理",
         "count": 6,
         "property": "上海衡复物业有限公司",
         "priority": "高"
+      },
+      {
+        "rank": 19,
+        "community": "紫阳花苑",
+        "street": "华泾镇",
+        "category": "停车管理",
+        "count": 6,
+        "property": "上海晏鑫物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 20,
+        "community": "虹桥大仕馆",
+        "street": "田林",
+        "category": "业主大会/业委会",
+        "count": 6,
+        "property": "上海锦江物业管理有限公司",
+        "priority": "高"
       }
     ],
     "cats": [
       {
         "cat": "停车管理",
-        "cnt": 108,
-        "pct": 18.3
+        "cnt": 111,
+        "pct": 17.6
       },
       {
         "cat": "邻里纠纷",
-        "cnt": 97,
+        "cnt": 104,
         "pct": 16.5
       },
       {
         "cat": "房屋违规使用",
-        "cnt": 80,
+        "cnt": 86,
         "pct": 13.6
       },
       {
         "cat": "房屋维修",
-        "cnt": 78,
+        "cnt": 83,
         "pct": 13.2
       },
       {
         "cat": "群租管理",
-        "cnt": 51,
-        "pct": 8.7
+        "cnt": 48,
+        "pct": 7.6
       },
       {
         "cat": "业主大会/业委会",
-        "cnt": 42,
-        "pct": 7.1
+        "cnt": 47,
+        "pct": 7.4
       },
       {
         "cat": "消防管理",
         "cnt": 34,
-        "pct": 5.8
+        "pct": 5.4
       },
       {
         "cat": "物业安保",
-        "cnt": 27,
-        "pct": 4.6
+        "cnt": 32,
+        "pct": 5.1
       },
       {
         "cat": "清洁卫生",
-        "cnt": 24,
-        "pct": 4.1
+        "cnt": 25,
+        "pct": 4.0
       },
       {
         "cat": "旧住房改造",
-        "cnt": 17,
-        "pct": 2.9
+        "cnt": 19,
+        "pct": 3.0
       },
       {
         "cat": "物业服务态度",
-        "cnt": 15,
-        "pct": 2.5
+        "cnt": 19,
+        "pct": 3.0
       },
       {
         "cat": "其他",
-        "cnt": 12,
-        "pct": 2.0
+        "cnt": 17,
+        "pct": 2.7
       },
       {
         "cat": "物业收费",
-        "cnt": 4,
-        "pct": 0.7
+        "cnt": 6,
+        "pct": 1.0
       }
     ],
     "streets": [
       {
         "street": "湖南路",
-        "cnt": 76,
-        "pct": 12.9
+        "cnt": 78,
+        "pct": 12.4
       },
       {
         "street": "长桥",
-        "cnt": 61,
-        "pct": 10.4
+        "cnt": 65,
+        "pct": 10.3
+      },
+      {
+        "street": "龙华",
+        "cnt": 57,
+        "pct": 9.0
+      },
+      {
+        "street": "田林",
+        "cnt": 55,
+        "pct": 8.7
       },
       {
         "street": "凌云路",
-        "cnt": 51,
-        "pct": 8.7
+        "cnt": 52,
+        "pct": 8.2
       },
       {
         "street": "漕河泾",
         "cnt": 49,
-        "pct": 8.3
+        "pct": 7.8
       },
       {
-        "street": "田林",
-        "cnt": 49,
-        "pct": 8.3
-      },
-      {
-        "street": "龙华",
-        "cnt": 49,
-        "pct": 8.3
+        "street": "徐家汇",
+        "cnt": 48,
+        "pct": 7.6
       },
       {
         "street": "虹梅路",
         "cnt": 48,
-        "pct": 8.1
-      },
-      {
-        "street": "徐家汇",
-        "cnt": 43,
-        "pct": 7.3
+        "pct": 7.6
       },
       {
         "street": "枫林路",
-        "cnt": 37,
-        "pct": 6.3
+        "cnt": 39,
+        "pct": 6.2
       },
       {
         "street": "华泾镇",
-        "cnt": 35,
-        "pct": 5.9
+        "cnt": 38,
+        "pct": 6.0
       },
       {
         "street": "斜土路",
-        "cnt": 33,
-        "pct": 5.6
+        "cnt": 35,
+        "pct": 5.5
       },
       {
         "street": "康健新村",
-        "cnt": 31,
-        "pct": 5.3
+        "cnt": 34,
+        "pct": 5.4
       },
       {
         "street": "天平路",
-        "cnt": 27,
-        "pct": 4.6
+        "cnt": 33,
+        "pct": 5.2
       }
     ],
     "sim_top5": [
       {
         "community": "东航小区",
-        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
-        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
-        "sim": 1.0
-      },
-      {
-        "community": "华悦家园",
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "sim": 1.0
@@ -2468,109 +2468,38 @@
         "sim": 1.0
       },
       {
-        "community": "珺汇名邸",
-        "a": "市民反映：前期公示底商空调外机统一安装于楼顶，现违规私自挪至小区公共绿化区域，未",
-        "b": "市民反映：前期公示底商空调外机统一安装于楼顶，现违规私自挪至小区公共绿化区域，未",
+        "community": "梅陇五村(多层)",
+        "a": "重复来电，市民来电查询处理进度。【最近派发的工单编号:2026051524421",
+        "b": "重复来电，市民来电查询处理进度。【最近派发的工单编号:2026051524421",
         "sim": 1.0
       },
       {
-        "community": "欣嘉苑1-3期",
-        "a": "市民补充信息：第100次投诉（从2024年10月起反馈至今都没解决）。小区内有划",
-        "b": "市民补充信息：第102次投诉（从2024年10月起反馈至今都没解决）。小区内有划",
-        "sim": 0.986
+        "community": "汇成一村",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "sim": 1.0
+      },
+      {
+        "community": "长桥八村",
+        "a": "市民来电投诉：在长桥八村居委会换届选举投票中，选票说明要求对不同意的人画叉，但工",
+        "b": "市民反映：在长桥八村居委会换届选举投票中，选票说明要求对不同意的人画叉，但工作人",
+        "sim": 1.0
       }
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "古宜小区",
+        "oid": "20260512221946",
+        "community": "万科华尔兹花园",
         "street": "田林",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "凌云新村",
-        "street": "凌云路",
         "category": "邻里纠纷",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "紫荆园",
-        "street": "康健新村",
-        "category": "邻里纠纷",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "田林六街坊",
-        "street": "田林",
-        "category": "消防管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "宫霄小区",
-        "street": "湖南路",
-        "category": "房屋违规使用",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "明丰新纪苑",
-        "street": "华泾镇",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "古宜小区",
-        "street": "田林",
-        "category": "停车管理",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "凌云新村",
-        "street": "凌云路",
-        "category": "清洁卫生",
         "strategies": "S3+S4",
         "freq": 4,
-        "sim": 0.66,
+        "sim": 0.94,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260514233864",
         "community": "万科华尔兹花园",
         "street": "田林",
         "category": "邻里纠纷",
@@ -2581,10 +2510,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "梅陇四村",
-        "street": "凌云路",
-        "category": "房屋维修",
+        "oid": "20260518224928",
+        "community": "万科华尔兹花园",
+        "street": "田林",
+        "category": "邻里纠纷",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -2592,7 +2521,18 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260513235733",
+        "community": "东方巴黎霞飞苑",
+        "street": "湖南路",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.62,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260514237516",
         "community": "东方巴黎霞飞苑",
         "street": "湖南路",
         "category": "物业服务态度",
@@ -2603,18 +2543,18 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "田林十三村",
-        "street": "田林",
-        "category": "物业安保",
-        "strategies": "S3",
+        "oid": "20260514237732",
+        "community": "东方巴黎霞飞苑",
+        "street": "湖南路",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
         "freq": 4,
-        "sim": null,
+        "sim": 0.7,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260513238836",
         "community": "东方巴黎霞飞苑",
         "street": "湖南路",
         "category": "邻里纠纷",
@@ -2625,24 +2565,90 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "梅陇八村",
-        "street": "凌云路",
-        "category": "清洁卫生",
-        "strategies": "S3+S4",
+        "oid": "20260513244606",
+        "community": "东方巴黎霞飞苑",
+        "street": "湖南路",
+        "category": "邻里纠纷",
+        "strategies": "S3",
         "freq": 4,
-        "sim": 0.61,
+        "sim": null,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "田林六街坊",
-        "street": "田林",
-        "category": "消防管理",
+        "oid": "20260531209285",
+        "community": "东方巴黎霞飞苑",
+        "street": "湖南路",
+        "category": "邻里纠纷",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260517202171",
+        "community": "东湖直管公房",
+        "street": "湖南路",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260519200406",
+        "community": "东湖直管公房",
+        "street": "湖南路",
+        "category": "邻里纠纷",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.77,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260519200432",
+        "community": "东湖直管公房",
+        "street": "湖南路",
+        "category": "邻里纠纷",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260522218711",
+        "community": "中山苑",
+        "street": "枫林路",
+        "category": "房屋维修",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.83,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260522233916",
+        "community": "中山苑",
+        "street": "枫林路",
+        "category": "房屋维修",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260529243820",
+        "community": "中山苑",
+        "street": "枫林路",
+        "category": "房屋维修",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.79,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       }
@@ -2650,18 +2656,18 @@
   },
   "6": {
     "total": 1856,
-    "total_dup": 678,
-    "dup_rate": 36.5,
-    "s1_count": 6,
-    "s1_groups": 6,
-    "s2_count": 316,
+    "total_dup": 707,
+    "dup_rate": 38.1,
+    "s1_count": 5,
+    "s1_groups": 5,
+    "s2_count": 308,
     "s3_count": 498,
     "s3_groups": 144,
-    "s4_count": 58,
-    "s4_pairs": 58,
-    "s4_comms": 36,
-    "high_count": 534,
-    "mid_count": 144,
+    "s4_count": 476,
+    "s4_pairs": 476,
+    "s4_comms": 140,
+    "high_count": 561,
+    "mid_count": 146,
     "hf20": [
       {
         "rank": 1,
@@ -2710,20 +2716,20 @@
       },
       {
         "rank": 6,
-        "community": "实业公寓",
-        "street": "徐家汇",
-        "category": "邻里纠纷",
-        "count": 9,
-        "property": "上海铭杰物业管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 7,
         "community": "华悦家园",
         "street": "虹梅路",
         "category": "群租管理",
         "count": 9,
         "property": "上海汇成物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 7,
+        "community": "实业公寓",
+        "street": "徐家汇",
+        "category": "邻里纠纷",
+        "count": 9,
+        "property": "上海铭杰物业管理有限公司",
         "priority": "高"
       },
       {
@@ -2741,20 +2747,11 @@
         "street": "田林",
         "category": "停车管理",
         "count": 8,
-        "property": "上海中誉城市运营服务有限公司",
+        "property": "",
         "priority": "高"
       },
       {
         "rank": 10,
-        "community": "虹桥大仕馆",
-        "street": "田林",
-        "category": "业主大会/业委会",
-        "count": 8,
-        "property": "—",
-        "priority": "高"
-      },
-      {
-        "rank": 11,
         "community": "武康6.8",
         "street": "湖南路",
         "category": "邻里纠纷",
@@ -2763,16 +2760,16 @@
         "priority": "高"
       },
       {
-        "rank": 12,
-        "community": "永福一区",
-        "street": "湖南路",
-        "category": "房屋违规使用",
-        "count": 7,
-        "property": "上海衡复物业有限公司",
+        "rank": 11,
+        "community": "虹桥大仕馆",
+        "street": "田林",
+        "category": "业主大会/业委会",
+        "count": 8,
+        "property": "",
         "priority": "高"
       },
       {
-        "rank": 13,
+        "rank": 12,
         "community": "尚海湾一期",
         "street": "斜土路",
         "category": "停车管理",
@@ -2781,12 +2778,21 @@
         "priority": "高"
       },
       {
-        "rank": 14,
+        "rank": 13,
         "community": "明丰新纪苑",
         "street": "华泾镇",
         "category": "停车管理",
         "count": 7,
         "property": "上海华泾泾鸿物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 14,
+        "community": "永福一区",
+        "street": "湖南路",
+        "category": "房屋违规使用",
+        "count": 7,
+        "property": "上海衡复物业有限公司",
         "priority": "高"
       },
       {
@@ -2800,6 +2806,15 @@
       },
       {
         "rank": 16,
+        "community": "东航小区",
+        "street": "枫林路",
+        "category": "停车管理",
+        "count": 6,
+        "property": "上海高建物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 17,
         "community": "兴湖小区",
         "street": "湖南路",
         "category": "房屋违规使用",
@@ -2808,174 +2823,165 @@
         "priority": "高"
       },
       {
-        "rank": 17,
-        "community": "恒昌花园",
-        "street": "枫林路",
-        "category": "邻里纠纷",
-        "count": 6,
-        "property": "上海复瑞物业管理有限公司",
-        "priority": "高"
-      },
-      {
         "rank": 18,
-        "community": "日晖二村",
-        "street": "斜土路",
-        "category": "房屋维修",
+        "community": "华泾五村",
+        "street": "华泾镇",
+        "category": "停车管理",
         "count": 6,
-        "property": "上海华欣物业管理有限公司",
+        "property": "秀澜（上海）物业管理有限公司",
         "priority": "高"
       },
       {
         "rank": 19,
-        "community": "零陵小区",
+        "community": "南丹小区",
         "street": "徐家汇",
-        "category": "房屋维修",
+        "category": "旧住房改造",
         "count": 6,
-        "property": "上海高建物业有限公司",
+        "property": "上海汇虹物业管理有限公司",
         "priority": "高"
       },
       {
         "rank": 20,
-        "community": "海螺花园",
+        "community": "实业公寓",
         "street": "徐家汇",
-        "category": "业主大会/业委会",
+        "category": "其他",
         "count": 6,
-        "property": "上海瀛海三幸物业管理有限公司",
+        "property": "上海铭杰物业管理有限公司",
         "priority": "高"
       }
     ],
     "cats": [
       {
         "cat": "停车管理",
-        "cnt": 124,
-        "pct": 18.3
+        "cnt": 128,
+        "pct": 18.1
       },
       {
         "cat": "房屋维修",
-        "cnt": 115,
-        "pct": 17.0
+        "cnt": 119,
+        "pct": 16.8
       },
       {
         "cat": "业主大会/业委会",
-        "cnt": 98,
-        "pct": 14.5
+        "cnt": 97,
+        "pct": 13.7
       },
       {
         "cat": "邻里纠纷",
-        "cnt": 79,
-        "pct": 11.7
+        "cnt": 85,
+        "pct": 12.0
       },
       {
         "cat": "消防管理",
-        "cnt": 69,
-        "pct": 10.2
+        "cnt": 71,
+        "pct": 10.0
       },
       {
         "cat": "房屋违规使用",
-        "cnt": 56,
-        "pct": 8.3
-      },
-      {
-        "cat": "旧住房改造",
-        "cnt": 32,
-        "pct": 4.7
+        "cnt": 60,
+        "pct": 8.5
       },
       {
         "cat": "群租管理",
-        "cnt": 31,
-        "pct": 4.6
+        "cnt": 35,
+        "pct": 5.0
+      },
+      {
+        "cat": "旧住房改造",
+        "cnt": 34,
+        "pct": 4.8
       },
       {
         "cat": "物业安保",
-        "cnt": 25,
+        "cnt": 26,
         "pct": 3.7
       },
       {
         "cat": "清洁卫生",
-        "cnt": 21,
-        "pct": 3.1
+        "cnt": 19,
+        "pct": 2.7
       },
       {
         "cat": "其他",
-        "cnt": 13,
-        "pct": 1.9
+        "cnt": 14,
+        "pct": 2.0
       },
       {
         "cat": "物业服务态度",
         "cnt": 12,
-        "pct": 1.8
+        "pct": 1.7
       },
       {
         "cat": "物业收费",
-        "cnt": 3,
-        "pct": 0.4
+        "cnt": 7,
+        "pct": 1.0
       }
     ],
     "streets": [
       {
         "street": "斜土路",
         "cnt": 84,
-        "pct": 12.4
-      },
-      {
-        "street": "田林",
-        "cnt": 75,
-        "pct": 11.1
-      },
-      {
-        "street": "华泾镇",
-        "cnt": 70,
-        "pct": 10.3
+        "pct": 11.9
       },
       {
         "street": "徐家汇",
-        "cnt": 70,
+        "cnt": 74,
+        "pct": 10.5
+      },
+      {
+        "street": "华泾镇",
+        "cnt": 73,
         "pct": 10.3
+      },
+      {
+        "street": "田林",
+        "cnt": 73,
+        "pct": 10.3
+      },
+      {
+        "street": "长桥",
+        "cnt": 65,
+        "pct": 9.2
       },
       {
         "street": "湖南路",
         "cnt": 60,
-        "pct": 8.8
-      },
-      {
-        "street": "长桥",
-        "cnt": 60,
-        "pct": 8.8
+        "pct": 8.5
       },
       {
         "street": "漕河泾",
-        "cnt": 50,
-        "pct": 7.4
+        "cnt": 55,
+        "pct": 7.8
       },
       {
         "street": "虹梅路",
-        "cnt": 46,
-        "pct": 6.8
-      },
-      {
-        "street": "龙华",
-        "cnt": 45,
+        "cnt": 47,
         "pct": 6.6
       },
       {
-        "street": "天平路",
-        "cnt": 38,
-        "pct": 5.6
+        "street": "龙华",
+        "cnt": 47,
+        "pct": 6.6
       },
       {
         "street": "枫林路",
-        "cnt": 37,
+        "cnt": 41,
+        "pct": 5.8
+      },
+      {
+        "street": "天平路",
+        "cnt": 39,
         "pct": 5.5
       },
       {
         "street": "康健新村",
-        "cnt": 22,
-        "pct": 3.2
+        "cnt": 26,
+        "pct": 3.7
       },
       {
         "street": "凌云路",
-        "cnt": 21,
-        "pct": 3.1
+        "cnt": 23,
+        "pct": 3.3
       }
     ],
     "sim_top5": [
@@ -2992,29 +2998,29 @@
         "sim": 1.0
       },
       {
-        "community": "吴东小区",
-        "a": "市民来电反映相同事项。【最近办结的工单编号：20260518235506 ，工单",
-        "b": "重复来电，反映相同事项。【最近办结的工单编号：20260518235506 ，工",
-        "sim": 1.0
-      },
-      {
         "community": "太原直管公房",
         "a": "市民来电求助：市民居住在徐汇区建国西路384弄34号和隔壁 太原别墅存在2米宽 ",
         "b": "市民来电求助：市民居住在徐汇区建国西路384弄34号和隔壁 太原别墅存在2米宽 ",
         "sim": 1.0
       },
       {
-        "community": "梅陇四村",
-        "a": "市民来电求助：市民是徐汇区梅陇四村92号一楼住户，沿街商铺安装空调外机正对其家窗",
-        "b": "市民来电求助：市民来电求助：市民是徐汇区梅陇四村92号一楼住户，沿街商铺安装空调",
+        "community": "恒昌花园",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "sim": 1.0
+      },
+      {
+        "community": "武康6.8",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
         "sim": 1.0
       }
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "永兆豪庭",
-        "street": "虹梅路",
+        "oid": "20260613223920",
+        "community": "万科华尔兹花园",
+        "street": "田林",
         "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
@@ -3023,9 +3029,20 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "永兆豪庭",
-        "street": "虹梅路",
+        "oid": "20260613230211",
+        "community": "万科华尔兹花园",
+        "street": "田林",
+        "category": "业主大会/业委会",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.82,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260625233472",
+        "community": "万科华尔兹花园",
+        "street": "田林",
         "category": "业主大会/业委会",
         "strategies": "S3",
         "freq": 4,
@@ -3034,19 +3051,8 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "明丰新纪苑",
-        "street": "华泾镇",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "虹二小区",
+        "oid": "20260619209637",
+        "community": "东方曼哈顿",
         "street": "徐家汇",
         "category": "房屋维修",
         "strategies": "S3",
@@ -3056,7 +3062,95 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260619209666",
+        "community": "东方曼哈顿",
+        "street": "徐家汇",
+        "category": "房屋维修",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260622234449",
+        "community": "东方曼哈顿",
+        "street": "徐家汇",
+        "category": "房屋维修",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260614210903",
+        "community": "保利西岸",
+        "street": "斜土路",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.86,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260619207155",
+        "community": "保利西岸",
+        "street": "斜土路",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.89,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260623239334",
+        "community": "保利西岸",
+        "street": "斜土路",
+        "category": "物业服务态度",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.94,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260618202552",
+        "community": "凯悦公寓",
+        "street": "斜土路",
+        "category": "消防管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260622225970",
+        "community": "凯悦公寓",
+        "street": "斜土路",
+        "category": "消防管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260624220686",
+        "community": "凯悦公寓",
+        "street": "斜土路",
+        "category": "消防管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260608243334",
         "community": "华欣家园",
         "street": "华泾镇",
         "category": "消防管理",
@@ -3067,64 +3161,9 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "南宜花苑",
-        "street": "徐家汇",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "钦州花苑",
-        "street": "田林",
-        "category": "房屋违规使用",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "新乐直管公房",
-        "street": "湖南路",
-        "category": "房屋违规使用",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "梅陇四村",
-        "street": "凌云路",
-        "category": "邻里纠纷",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "日晖二村",
-        "street": "斜土路",
-        "category": "邻里纠纷",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "汇成五村",
-        "street": "长桥",
+        "oid": "20260615201543",
+        "community": "华欣家园",
+        "street": "华泾镇",
         "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
@@ -3133,43 +3172,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "钦州花苑",
-        "street": "田林",
-        "category": "房屋违规使用",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "梅陇四村",
-        "street": "凌云路",
-        "category": "邻里纠纷",
-        "strategies": "S3+S4",
-        "freq": 4,
-        "sim": 1.0,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "梅陇四村",
-        "street": "凌云路",
-        "category": "邻里纠纷",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "宜山路701弄",
-        "street": "田林",
-        "category": "邻里纠纷",
+        "oid": "20260619203112",
+        "community": "华欣家园",
+        "street": "华泾镇",
+        "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -3180,18 +3186,18 @@
   },
   "7": {
     "total": 2097,
-    "total_dup": 809,
-    "dup_rate": 38.6,
-    "s1_count": 13,
-    "s1_groups": 9,
-    "s2_count": 364,
+    "total_dup": 829,
+    "dup_rate": 39.5,
+    "s1_count": 3,
+    "s1_groups": 3,
+    "s2_count": 350,
     "s3_count": 598,
     "s3_groups": 178,
-    "s4_count": 63,
-    "s4_pairs": 63,
-    "s4_comms": 43,
-    "high_count": 624,
-    "mid_count": 185,
+    "s4_count": 462,
+    "s4_pairs": 462,
+    "s4_comms": 155,
+    "high_count": 668,
+    "mid_count": 161,
     "hf20": [
       {
         "rank": 1,
@@ -3231,6 +3237,15 @@
       },
       {
         "rank": 5,
+        "community": "东航小区",
+        "street": "枫林路",
+        "category": "房屋违规使用",
+        "count": 9,
+        "property": "上海高建物业有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 6,
         "community": "俞一小区",
         "street": "龙华",
         "category": "邻里纠纷",
@@ -3239,21 +3254,12 @@
         "priority": "高"
       },
       {
-        "rank": 6,
-        "community": "淮中直管公房",
-        "street": "湖南路",
-        "category": "房屋维修",
-        "count": 9,
-        "property": "上海衡复物业有限公司",
-        "priority": "高"
-      },
-      {
         "rank": 7,
-        "community": "东航小区",
+        "community": "新湖云庭",
         "street": "枫林路",
-        "category": "房屋违规使用",
+        "category": "业主大会/业委会",
         "count": 9,
-        "property": "上海高建物业有限公司",
+        "property": "上海东方航空物业有限公司",
         "priority": "高"
       },
       {
@@ -3267,20 +3273,20 @@
       },
       {
         "rank": 9,
-        "community": "新湖云庭",
-        "street": "枫林路",
-        "category": "业主大会/业委会",
+        "community": "淮中直管公房",
+        "street": "湖南路",
+        "category": "房屋维修",
         "count": 9,
-        "property": "上海东方航空物业有限公司",
+        "property": "上海衡复物业有限公司",
         "priority": "高"
       },
       {
         "rank": 10,
-        "community": "永兆豪庭",
-        "street": "虹梅路",
+        "community": "宝能华庭",
+        "street": "龙华",
         "category": "业主大会/业委会",
         "count": 8,
-        "property": "上海盛熙物业管理有限公司",
+        "property": "深圳吉祥服务集团有限公司上海分公司",
         "priority": "高"
       },
       {
@@ -3294,6 +3300,15 @@
       },
       {
         "rank": 12,
+        "community": "永兆豪庭",
+        "street": "虹梅路",
+        "category": "业主大会/业委会",
+        "count": 8,
+        "property": "上海盛熙物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 13,
         "community": "番禺路801弄",
         "street": "徐家汇",
         "category": "房屋违规使用",
@@ -3302,7 +3317,7 @@
         "priority": "高"
       },
       {
-        "rank": 13,
+        "rank": 14,
         "community": "钦州公寓",
         "street": "田林",
         "category": "物业安保",
@@ -3311,43 +3326,7 @@
         "priority": "高"
       },
       {
-        "rank": 14,
-        "community": "宝能华庭",
-        "street": "龙华",
-        "category": "业主大会/业委会",
-        "count": 8,
-        "property": "深圳吉祥服务集团有限公司上海分公司",
-        "priority": "高"
-      },
-      {
         "rank": 15,
-        "community": "俞一小区",
-        "street": "龙华",
-        "category": "清洁卫生",
-        "count": 7,
-        "property": "上海华晅投资管理有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 16,
-        "community": "西木小区",
-        "street": "枫林路",
-        "category": "房屋维修",
-        "count": 7,
-        "property": "上海高建物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 17,
-        "community": "金波直管公房",
-        "street": "湖南路",
-        "category": "房屋维修",
-        "count": 7,
-        "property": "上海衡复物业有限公司",
-        "priority": "高"
-      },
-      {
-        "rank": 18,
         "community": "亚都国际名园",
         "street": "徐家汇",
         "category": "房屋维修",
@@ -3356,7 +3335,25 @@
         "priority": "高"
       },
       {
-        "rank": 19,
+        "rank": 16,
+        "community": "俞一小区",
+        "street": "龙华",
+        "category": "清洁卫生",
+        "count": 7,
+        "property": "上海华晅投资管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 17,
+        "community": "嘉俊庭",
+        "street": "华泾镇",
+        "category": "其他",
+        "count": 7,
+        "property": "上海嘉英物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 18,
         "community": "尚海湾二期",
         "street": "斜土路",
         "category": "业主大会/业委会",
@@ -3365,54 +3362,68 @@
         "priority": "高"
       },
       {
-        "rank": 20,
-        "community": "嘉俊庭",
+        "rank": 19,
+        "community": "盛华景苑",
         "street": "华泾镇",
-        "category": "其他",
+        "category": "房屋维修",
         "count": 7,
-        "property": "上海嘉英物业管理有限公司",
+        "property": "上海华泾泾鸿物业管理有限公司",
+        "priority": "高"
+      },
+      {
+        "rank": 20,
+        "community": "祥和公寓",
+        "street": "斜土路",
+        "category": "邻里纠纷",
+        "count": 7,
+        "property": "上海昆美物业管理有限公司",
         "priority": "高"
       }
     ],
     "cats": [
       {
         "cat": "房屋维修",
-        "cnt": 171,
-        "pct": 21.1
+        "cnt": 169,
+        "pct": 20.4
       },
       {
         "cat": "邻里纠纷",
-        "cnt": 135,
-        "pct": 16.7
+        "cnt": 139,
+        "pct": 16.8
       },
       {
         "cat": "停车管理",
-        "cnt": 125,
-        "pct": 15.5
+        "cnt": 126,
+        "pct": 15.2
       },
       {
         "cat": "业主大会/业委会",
-        "cnt": 95,
-        "pct": 11.7
+        "cnt": 100,
+        "pct": 12.1
       },
       {
         "cat": "房屋违规使用",
-        "cnt": 74,
-        "pct": 9.1
+        "cnt": 72,
+        "pct": 8.7
       },
       {
         "cat": "消防管理",
         "cnt": 55,
-        "pct": 6.8
+        "pct": 6.6
       },
       {
         "cat": "旧住房改造",
         "cnt": 40,
-        "pct": 4.9
+        "pct": 4.8
       },
       {
         "cat": "清洁卫生",
-        "cnt": 25,
+        "cnt": 30,
+        "pct": 3.6
+      },
+      {
+        "cat": "群租管理",
+        "cnt": 26,
         "pct": 3.1
       },
       {
@@ -3421,106 +3432,89 @@
         "pct": 2.8
       },
       {
-        "cat": "群租管理",
-        "cnt": 22,
-        "pct": 2.7
+        "cat": "物业收费",
+        "cnt": 18,
+        "pct": 2.2
       },
       {
-        "cat": "物业收费",
+        "cat": "物业服务态度",
         "cnt": 17,
         "pct": 2.1
       },
       {
-        "cat": "物业服务态度",
-        "cnt": 16,
-        "pct": 2.0
-      },
-      {
         "cat": "其他",
-        "cnt": 11,
-        "pct": 1.4
+        "cnt": 14,
+        "pct": 1.7
       }
     ],
     "streets": [
       {
         "street": "斜土路",
-        "cnt": 89,
-        "pct": 11.0
+        "cnt": 88,
+        "pct": 10.6
       },
       {
         "street": "长桥",
-        "cnt": 84,
+        "cnt": 86,
         "pct": 10.4
       },
       {
         "street": "漕河泾",
-        "cnt": 78,
-        "pct": 9.6
+        "cnt": 81,
+        "pct": 9.8
       },
       {
         "street": "枫林路",
-        "cnt": 73,
-        "pct": 9.0
+        "cnt": 76,
+        "pct": 9.2
       },
       {
         "street": "徐家汇",
-        "cnt": 67,
-        "pct": 8.3
-      },
-      {
-        "street": "凌云路",
-        "cnt": 62,
-        "pct": 7.7
+        "cnt": 72,
+        "pct": 8.7
       },
       {
         "street": "田林",
-        "cnt": 62,
+        "cnt": 64,
         "pct": 7.7
+      },
+      {
+        "street": "凌云路",
+        "cnt": 63,
+        "pct": 7.6
+      },
+      {
+        "street": "湖南路",
+        "cnt": 61,
+        "pct": 7.4
       },
       {
         "street": "龙华",
         "cnt": 61,
-        "pct": 7.5
-      },
-      {
-        "street": "湖南路",
-        "cnt": 60,
         "pct": 7.4
       },
       {
         "street": "天平路",
-        "cnt": 55,
+        "cnt": 56,
         "pct": 6.8
       },
       {
         "street": "虹梅路",
-        "cnt": 42,
-        "pct": 5.2
+        "cnt": 44,
+        "pct": 5.3
       },
       {
         "street": "华泾镇",
-        "cnt": 41,
+        "cnt": 42,
         "pct": 5.1
       },
       {
         "street": "康健新村",
         "cnt": 35,
-        "pct": 4.3
+        "pct": 4.2
       }
     ],
     "sim_top5": [
-      {
-        "community": "俞一小区",
-        "a": "市民反映：徐汇区龙华西路31弄24号西侧204室，一个空调和604室两个空调长期",
-        "b": "市民反映：徐汇区龙华西路31弄24号西侧204室一个空调和604室两个空调长期违",
-        "sim": 1.0
-      },
-      {
-        "community": "俞一小区",
-        "a": "市民反映：徐汇区龙华西路31弄24号西侧204室一个空调和604室两个空调长期违",
-        "b": "市民反映：徐汇区龙华西路31弄24号西侧204室一个空调和604室两个空调长期违",
-        "sim": 1.0
-      },
       {
         "community": "双龙",
         "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
@@ -3534,106 +3528,41 @@
         "sim": 1.0
       },
       {
-        "community": "文馨苑",
-        "a": "市民来电投诉：上述地址小区居委会要强制要动用维修基金进行翻新小区内道路的工程，市",
-        "b": "市民来电投诉：上述地址小区居委会要强制要动用维修基金进行翻新小区内道路的工程，市",
+        "community": "寿祥坊",
+        "a": "重复来电，咨询处理进度。【最近办结的工单编号:20260615209433，工单",
+        "b": "重复来电，咨询处理进度。【最近办结的工单编号:20260615209433，工单",
         "sim": 1.0
+      },
+      {
+        "community": "永兆豪庭",
+        "a": "市民反映相同事项。【最近办结工单编号: 20260511221617, 工单内容",
+        "b": "市民反映相同事项。【最近办结工单编号: 20260511221617, 工单内容",
+        "sim": 1.0
+      },
+      {
+        "community": "漕北小区",
+        "a": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "b": "市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理",
+        "sim": 0.997
       }
     ],
     "list15": [
       {
-        "oid": "",
-        "community": "新乐直管公房",
-        "street": "湖南路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "日晖六村",
-        "street": "斜土路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "日晖六村",
-        "street": "斜土路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "国泰新村",
-        "street": "天平路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "田林三四村",
-        "street": "田林",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "田林三四村",
-        "street": "田林",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "国泰新村",
-        "street": "天平路",
-        "category": "房屋维修",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "康健路1、3、5号",
+        "oid": "20260716241299",
+        "community": "东泉小区（西块）",
         "street": "漕河泾",
-        "category": "房屋维修",
-        "strategies": "S3",
+        "category": "物业收费",
+        "strategies": "S3+S4",
         "freq": 4,
-        "sim": null,
+        "sim": 0.85,
         "suggestion": "文本相似—核实合并",
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "龙华西路309弄",
+        "oid": "20260721226142",
+        "community": "东泉小区（西块）",
         "street": "漕河泾",
-        "category": "房屋维修",
+        "category": "物业收费",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -3641,7 +3570,51 @@
         "priority": "中"
       },
       {
-        "oid": "",
+        "oid": "20260728247573",
+        "community": "东泉小区（西块）",
+        "street": "漕河泾",
+        "category": "物业收费",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260717219302",
+        "community": "俞一小区",
+        "street": "龙华",
+        "category": "房屋违规使用",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.62,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260717221146",
+        "community": "俞一小区",
+        "street": "龙华",
+        "category": "房屋违规使用",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.84,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260718225973",
+        "community": "俞一小区",
+        "street": "龙华",
+        "category": "房屋违规使用",
+        "strategies": "S3+S4",
+        "freq": 4,
+        "sim": 0.92,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260706246160",
         "community": "俞一小区",
         "street": "龙华",
         "category": "消防管理",
@@ -3652,20 +3625,9 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "石龙路33弄",
-        "street": "漕河泾",
-        "category": "业主大会/业委会",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "漕溪三村",
-        "street": "漕河泾",
+        "oid": "20260717202373",
+        "community": "俞一小区",
+        "street": "龙华",
         "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
@@ -3674,10 +3636,10 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "御江瑞庭、徐汇复星中心",
-        "street": "斜土路",
-        "category": "房屋维修",
+        "oid": "20260721231169",
+        "community": "俞一小区",
+        "street": "龙华",
+        "category": "消防管理",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -3685,21 +3647,65 @@
         "priority": "中"
       },
       {
-        "oid": "",
-        "community": "科苑新村（南块）",
-        "street": "漕河泾",
-        "category": "邻里纠纷",
-        "strategies": "S3",
-        "freq": 4,
-        "sim": null,
-        "suggestion": "文本相似—核实合并",
-        "priority": "中"
-      },
-      {
-        "oid": "",
-        "community": "玉兰花苑二区",
+        "oid": "20260708239858",
+        "community": "创世纪花园",
         "street": "徐家汇",
-        "category": "消防管理",
+        "category": "群租管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260708245895",
+        "community": "创世纪花园",
+        "street": "徐家汇",
+        "category": "群租管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260716221380",
+        "community": "创世纪花园",
+        "street": "徐家汇",
+        "category": "群租管理",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260722231887",
+        "community": "华滨家园",
+        "street": "长桥",
+        "category": "清洁卫生",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260723203545",
+        "community": "华滨家园",
+        "street": "长桥",
+        "category": "清洁卫生",
+        "strategies": "S3",
+        "freq": 4,
+        "sim": null,
+        "suggestion": "文本相似—核实合并",
+        "priority": "中"
+      },
+      {
+        "oid": "20260723228577",
+        "community": "华滨家园",
+        "street": "长桥",
+        "category": "清洁卫生",
         "strategies": "S3",
         "freq": 4,
         "sim": null,
@@ -3710,18 +3716,18 @@
   },
   "8": {
     "total": 2242,
-    "total_dup": 796,
+    "total_dup": 795,
     "dup_rate": 35.5,
     "s1_count": 5,
     "s1_groups": 5,
-    "s2_count": 213,
+    "s2_count": 226,
     "s3_count": 592,
     "s3_groups": 182,
     "s4_count": 204,
     "s4_pairs": 204,
     "s4_comms": 126,
-    "high_count": 594,
-    "mid_count": 202,
+    "high_count": 606,
+    "mid_count": 189,
     "hf20": [
       {
         "rank": 1,
@@ -3907,13 +3913,13 @@
     "cats": [
       {
         "cat": "房屋维修",
-        "cnt": 283,
-        "pct": 35.6
+        "cnt": 282,
+        "pct": 35.5
       },
       {
         "cat": "邻里纠纷",
-        "cnt": 110,
-        "pct": 13.8
+        "cnt": 111,
+        "pct": 14.0
       },
       {
         "cat": "业主大会/业委会",
@@ -3922,13 +3928,13 @@
       },
       {
         "cat": "停车管理",
-        "cnt": 88,
-        "pct": 11.1
+        "cnt": 87,
+        "pct": 10.9
       },
       {
         "cat": "消防管理",
-        "cnt": 40,
-        "pct": 5.0
+        "cnt": 38,
+        "pct": 4.8
       },
       {
         "cat": "房屋违规使用",
@@ -3937,13 +3943,13 @@
       },
       {
         "cat": "旧住房改造",
-        "cnt": 31,
-        "pct": 3.9
+        "cnt": 32,
+        "pct": 4.0
       },
       {
         "cat": "清洁卫生",
-        "cnt": 24,
-        "pct": 3.0
+        "cnt": 25,
+        "pct": 3.1
       },
       {
         "cat": "物业安保",
@@ -3974,13 +3980,13 @@
     "streets": [
       {
         "street": "天平路",
-        "cnt": 100,
-        "pct": 12.6
+        "cnt": 99,
+        "pct": 12.5
       },
       {
         "street": "长桥",
-        "cnt": 100,
-        "pct": 12.6
+        "cnt": 98,
+        "pct": 12.3
       },
       {
         "street": "湖南路",
@@ -3989,8 +3995,8 @@
       },
       {
         "street": "漕河泾",
-        "cnt": 78,
-        "pct": 9.8
+        "cnt": 77,
+        "pct": 9.7
       },
       {
         "street": "斜土路",
@@ -3999,8 +4005,8 @@
       },
       {
         "street": "田林",
-        "cnt": 66,
-        "pct": 8.3
+        "cnt": 67,
+        "pct": 8.4
       },
       {
         "street": "枫林路",
@@ -4019,13 +4025,13 @@
       },
       {
         "street": "凌云路",
-        "cnt": 47,
-        "pct": 5.9
+        "cnt": 48,
+        "pct": 6.0
       },
       {
         "street": "龙华",
-        "cnt": 39,
-        "pct": 4.9
+        "cnt": 40,
+        "pct": 5.0
       },
       {
         "street": "康健新村",

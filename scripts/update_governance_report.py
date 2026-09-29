@@ -231,6 +231,142 @@ def build_benchmark_rows(d):
     return "\n        ".join(out)
 
 
+def _sa_chg_cell(change, base):
+    """同比单元格：正=上升=红，负=下降=绿；基数不足时不给百分比。"""
+    if change is None:
+        return ('<td style="color:#bbb;font-size:11px;" title="2025年同期基数不足，'
+                '小基数会放大百分比">基数不足</td>')
+    cls = "increase" if change > 0 else "decline"
+    return f'<td class="{cls}">{change:+.1f}%</td>'
+
+
+def build_service_attitude(d):
+    """八、物业服务态度投诉专项排名（整改清单第 12 项）。
+
+    两个视图（按物业公司 / 按小区）用同一份数据，前端按钮切换。
+    口径：全量工单，2026年1-8月 vs 2025年1-8月 —— 与「三、十四类治理效果」同源。
+    """
+    sa = d.get("service_attitude")
+    if not sa:
+        return ""
+    t = sa["totals"]
+    mn, mb = sa["min_total"], sa["min_base_for_pct"]
+
+    # 全区总述
+    chg_cls = "increase" if (t["change"] or 0) > 0 else "decline"
+    total_line = (f'全区物业服务态度投诉 <b>{t["n2026"]} 件</b>'
+                  f'（2025年同期 {t["n2025_same"]} 件，'
+                  f'<span class="{chg_cls}">{t["change"]:+.1f}%</span>）。'
+                  f'该类别在十四类中属<b>逆势上升</b>项，故单独拆出两个排名维度。')
+
+    def rows_of(items, kind):
+        out = []
+        for i, r in enumerate(items, 1):
+            if kind == "company":
+                out.append(
+                    f'<tr><td>{i}</td>'
+                    f'<td style="text-align:left;font-weight:600;">{r["name"]}</td>'
+                    f'<td style="font-weight:700;">{r["n2026"]}</td>'
+                    f'<td style="color:#888;">{r["n2025_same"]}</td>'
+                    f'{_sa_chg_cell(r["change"], r["n2025_same"])}'
+                    f'<td>{r["n_community"]}</td></tr>')
+            else:
+                out.append(
+                    f'<tr><td>{i}</td>'
+                    f'<td style="text-align:left;font-weight:600;">{r["name"]}</td>'
+                    f'<td>{r["street"]}</td>'
+                    f'<td style="font-weight:700;">{r["n2026"]}</td>'
+                    f'<td style="color:#888;">{r["n2025_same"]}</td>'
+                    f'{_sa_chg_cell(r["change"], r["n2025_same"])}'
+                    f'<td style="text-align:left;color:#666;">{r["company"] or "—"}</td></tr>')
+        return "\n        ".join(out)
+
+    top_n = 20
+    comp_rows = rows_of(sa["companies"][:top_n], "company")
+    comm_rows = rows_of(sa["communities"][:top_n], "community")
+
+    btn = ('padding:7px 18px;border:1px solid #43a047;border-radius:20px;'
+           'font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s;')
+    btn_on = btn + 'background:#43a047;color:#fff;font-weight:700;'
+    btn_off = btn + 'background:#fff;color:#43a047;'
+
+    return f'''
+  <!-- SA-SECTION：物业服务态度投诉专项排名（整改清单第 12 项） -->
+  <div class="section" id="sec-service-attitude">
+    <div class="section-title">八、物业服务态度投诉专项排名</div>
+
+    <p style="font-size:13px;line-height:1.9;color:#444;margin-bottom:6px;">{total_line}</p>
+    <p class="note" style="color:#666;">口径：全量工单（与「三、十四类治理效果」同源），
+      2026年1-8月 vs 2025年1-8月同期对比；小区为热线上报名称，未与纳统档案归并。
+      入榜门槛：两年同期合计 ≥ {mn} 件；2025 年同期 &lt; {mb} 件时不给同比
+      （小基数会把百分比放大成 +700%）。</p>
+
+    <div style="display:flex;gap:10px;margin:16px 0 10px;flex-wrap:wrap;">
+      <button type="button" class="sa-btn" data-sa="company"
+              style="{btn_on}">按物业公司排名</button>
+      <button type="button" class="sa-btn" data-sa="community"
+              style="{btn_off}">按小区排名</button>
+    </div>
+
+    <div id="saViewCompany">
+      <div style="font-size:13px;font-weight:600;color:#1b5e20;margin:6px 0 0;">
+        物业服务态度投诉 · 物业公司 Top{min(top_n, len(sa["companies"]))}
+        <span style="font-weight:400;color:#888;font-size:12px;">
+          （入榜 {t["n_company"]} 家 / 2026年1-8月共 {t["companies_all"]} 家有投诉记录；
+          另有 {t["company_missing"]} 件未标注物业公司）</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>排名</th><th>物业公司</th><th>2026年1-8月</th><th>2025年同期</th>
+        <th>同比</th><th>涉及小区数</th></tr></thead>
+        <tbody>
+        {comp_rows}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="saViewCommunity" style="display:none;">
+      <div style="font-size:13px;font-weight:600;color:#1b5e20;margin:6px 0 0;">
+        物业服务态度投诉 · 小区 Top{min(top_n, len(sa["communities"]))}
+        <span style="font-weight:400;color:#888;font-size:12px;">
+          （入榜 {t["n_community"]} 个 / 2026年1-8月共 {t["communities_all"]} 个小区有投诉记录；
+          另有 {t["community_missing"]} 件无小区名）</span>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>排名</th><th>小区</th><th>街道</th><th>2026年1-8月</th>
+        <th>2025年同期</th><th>同比</th><th>物业公司</th></tr></thead>
+        <tbody>
+        {comm_rows}
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+    (function () {{
+      var btns = document.querySelectorAll('.sa-btn');
+      if (!btns.length) return;
+      btns.forEach(function (b) {{
+        b.addEventListener('click', function () {{
+          var on = b.getAttribute('data-sa');
+          btns.forEach(function (x) {{
+            var active = x.getAttribute('data-sa') === on;
+            x.style.background = active ? '#43a047' : '#fff';
+            x.style.color = active ? '#fff' : '#43a047';
+            x.style.fontWeight = active ? '700' : '400';
+          }});
+          var vc = document.getElementById('saViewCompany');
+          var vm = document.getElementById('saViewCommunity');
+          if (!vc || !vm) return;
+          vc.style.display = (on === 'company') ? '' : 'none';
+          vm.style.display = (on === 'community') ? '' : 'none';
+        }});
+      }});
+    }})();
+    </script>
+  </div>
+  <!-- /SA-SECTION -->
+'''
+
+
 def refresh_stale_text(s, d):
     """把散落在正文里的旧计数（v1 口径）同步为 v2。"""
     pairs = [
@@ -343,19 +479,68 @@ def main():
 
     ok5 = replace_cases("<!-- 五、成功案例Top10 -->", "<!-- 六、", case_cards(d["success_top20"], "success", "改善", 10))
     ok6 = replace_cases("<!-- 六、反弹案例Top5 -->", "<!-- 七、", case_cards(d["rebound_top10"], "rebound", "反弹", 5))
-    ok7 = replace_cases("<!-- 七、恶化案例Top5 -->", "<!-- 八、", case_cards(d["worsening_top10"], "worsening", "恶化", 5))
-    print(f"案例替换: 成功={ok5} 反弹={ok6} 恶化={ok7}")
+    # ⚠ 边界锚点不能用固定的 "<!-- 八、"：
+    #   「八、治理经验总结」的编号会随《物业服务态度》专节注入而顺延为「九」，
+    #   且第二次执行时 "<!-- 八、" 会误命中新专节的注释 → 边界漂移（曾导致 3 字节非幂等）。
+    #   故按「治理经验总结」动态取该区块注释全文。
+    _gy = s.find("治理经验总结")
+    _gyc = s.rfind("<!--", 0, _gy) if _gy > 0 else -1
+    gy_end = (s[_gyc: s.find("-->", _gyc) + 3] if _gyc > 0 else "<!-- 八、")
+    ok7 = replace_cases("<!-- 七、恶化案例Top5 -->", gy_end,
+                        case_cards(d["worsening_top10"], "worsening", "恶化", 5))
+    print(f"案例替换: 成功={ok5} 反弹={ok6} 恶化={ok7}（边界锚点：{gy_end}）")
 
     # ── 7. 章节标题里的口径说明
     s = s.replace("六、治理反弹案例Top5（2025改善→2026恶化）",
                   "六、治理反弹案例Top5（2025年改善→2026年同期恶化）")
 
+    # ── 7.5 第八节：物业服务态度投诉专项排名（整改清单第 12 项，幂等）
+    SA_MARK = "<!-- SA-SECTION：物业服务态度投诉专项排名（整改清单第 12 项） -->"
+    SA_END = "<!-- /SA-SECTION -->"
+    i = s.find(SA_MARK)
+    if i >= 0:                                  # 先移除上一次注入的整块（与注入对称，保证幂等）
+        j = s.find(SA_END, i)
+        if j >= 0:
+            j += len(SA_END)
+            a = i - 1 if i > 0 and s[i - 1] == "\n" else i
+            s = s[:a] + s[j:]
+            print("第八节: 已移除上一版注入块")
+    sec = build_service_attitude(d)
+    if sec:
+        k = s.find("治理经验总结")
+        if k > 0:
+            a = s.rfind("<!--", 0, k)           # 该区块注释起点
+            b = s.rfind("\n", 0, a)             # 注释所在行的行首
+            s = s[:b] + "\n" + sec.strip() + s[b:]
+            print(f"第八节 物业服务态度排名: 已注入"
+                  f"（物业公司 {len(d['service_attitude']['companies'])} 家 / "
+                  f"小区 {len(d['service_attitude']['communities'])} 个）")
+        else:
+            print("第八节 物业服务态度排名: ⚠ 未找到「治理经验总结」锚点")
+        # 原「八、治理经验总结」「九、闭环机制建议」顺延为 九 / 十（幂等：已顺延则跳过）
+        if "九、治理经验总结" not in s:
+            s = s.replace("八、治理经验总结", "九、治理经验总结")
+            print("  章节顺延: 治理经验总结 八 → 九")
+        if "十、闭环机制建议" not in s:
+            s = s.replace("九、闭环机制建议", "十、闭环机制建议")
+            print("  章节顺延: 闭环机制建议 九 → 十")
+
     # ── 8. 口径注释
-    note = ('<p class="note">口径说明：同比采用同期对比 —— 2025同比 = 2025全年 vs 2024全年；'
+    note = ('<p class="note"><b>纳入范围</b>：仅《纳统小区 (2026 更新版)》名单内的小区，'
+            '不在名单中的小区不做统计（统计单元＝纳统小区，别名与曾用名已归并；'
+            '投诉数据按热线数据表口径统计）。<br>'
+            '口径说明：同比采用同期对比 —— 2025同比 = 2025全年 vs 2024全年；'
             '2026同比 = 2026年1-8月 vs 2025年1-8月。'
             '成效判定以2026年同期同比为准（恶化&lt;-10%｜改善&gt;+10%｜稳定±10%内），'
             '入榜门槛为三年合计≥15件、2024全年≥5件、2025年1-8月≥10件（抑制小基数放大）。'
             '首位类别取2026年1-8月实际首位。数据源：data/merged_cleaned.pkl（66,812条）。</p>')
+    # 若已存在旧版口径注释（不含「纳入范围」），先整体替换为新版
+    import re as _re
+    if "纳入范围" not in s:
+        s, _n = _re.subn(r'<p class="note">口径说明：同比采用同期对比[\s\S]*?</p>',
+                         note, s, count=1)
+        if _n:
+            print(f"  口径注释已更新（含纳入范围）")
     if "口径说明：同比采用同期对比" not in s:
         s = s.replace('<p class="note">注：另有346个小区', note + '\n    <p class="note">注：另有')
         if "口径说明：同比采用同期对比" not in s:

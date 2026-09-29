@@ -1,0 +1,334 @@
+{
+  "period": "2026年1-8月（8 个月合计）",
+  "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "total_orders": 13726,
+  "total_repeats": 4908,
+  "overall_rate": 35.8,
+  "communities_involved": 603,
+  "strategy_totals": {
+    "exact_orders": 49,
+    "exact_groups": 35,
+    "urge_orders": 2147,
+    "high_freq_orders": 3377,
+    "high_freq_groups": 1031,
+    "similar_pairs": 2930,
+    "similar_orders": 1754
+  },
+  "priority_distribution": {
+    "高": 3883,
+    "中": 1025,
+    "低": 0
+  },
+  "similar_communities_total": 453,
+  "categories": [
+    {
+      "category": "房屋维修",
+      "count": 863,
+      "share": 17.6
+    },
+    {
+      "category": "停车管理",
+      "count": 812,
+      "share": 16.5
+    },
+    {
+      "category": "邻里纠纷",
+      "count": 695,
+      "share": 14.2
+    },
+    {
+      "category": "业主大会/业委会",
+      "count": 594,
+      "share": 12.1
+    },
+    {
+      "category": "房屋违规使用",
+      "count": 467,
+      "share": 9.5
+    },
+    {
+      "category": "消防管理",
+      "count": 344,
+      "share": 7.0
+    },
+    {
+      "category": "旧住房改造",
+      "count": 241,
+      "share": 4.9
+    },
+    {
+      "category": "群租管理",
+      "count": 234,
+      "share": 4.8
+    },
+    {
+      "category": "物业安保",
+      "count": 204,
+      "share": 4.2
+    },
+    {
+      "category": "清洁卫生",
+      "count": 144,
+      "share": 2.9
+    },
+    {
+      "category": "物业服务态度",
+      "count": 118,
+      "share": 2.4
+    },
+    {
+      "category": "其他",
+      "count": 117,
+      "share": 2.4
+    },
+    {
+      "category": "物业收费",
+      "count": 75,
+      "share": 1.5
+    }
+  ],
+  "top_communities": [
+    {
+      "rank": 1,
+      "community": "安福直管公房",
+      "count": 75
+    },
+    {
+      "rank": 2,
+      "community": "华悦家园",
+      "count": 69
+    },
+    {
+      "rank": 3,
+      "community": "罗秀新二村",
+      "count": 66
+    },
+    {
+      "rank": 4,
+      "community": "欣嘉苑1-3期",
+      "count": 62
+    },
+    {
+      "rank": 5,
+      "community": "日晖六村",
+      "count": 55
+    },
+    {
+      "rank": 6,
+      "community": "紫阳花苑",
+      "count": 55
+    },
+    {
+      "rank": 7,
+      "community": "华欣家园",
+      "count": 51
+    },
+    {
+      "rank": 8,
+      "community": "尚海湾二期",
+      "count": 50
+    },
+    {
+      "rank": 9,
+      "community": "华滨家园",
+      "count": 47
+    },
+    {
+      "rank": 10,
+      "community": "凌云新村",
+      "count": 44
+    }
+  ],
+  "keywords": [
+    {
+      "rank": 1,
+      "word": "业委会",
+      "count": 1170
+    },
+    {
+      "rank": 2,
+      "word": "维修",
+      "count": 999
+    },
+    {
+      "rank": 3,
+      "word": "车位",
+      "count": 808
+    },
+    {
+      "rank": 4,
+      "word": "解决",
+      "count": 808
+    },
+    {
+      "rank": 5,
+      "word": "不符",
+      "count": 748
+    },
+    {
+      "rank": 6,
+      "word": "漏水",
+      "count": 679
+    },
+    {
+      "rank": 7,
+      "word": "停车",
+      "count": 624
+    },
+    {
+      "rank": 8,
+      "word": "任何",
+      "count": 611
+    },
+    {
+      "rank": 9,
+      "word": "电梯",
+      "count": 599
+    },
+    {
+      "rank": 10,
+      "word": "原因",
+      "count": 592
+    }
+  ],
+  "monthly": [
+    {
+      "month": "2026年1月",
+      "total": 1485,
+      "repeat": 437,
+      "rate": 29.4,
+      "exact": 5,
+      "exact_groups": 3,
+      "urge": 218,
+      "high_freq": 274,
+      "high_freq_groups": 94,
+      "similar": 154,
+      "similar_communities": 68,
+      "priority_high": 360,
+      "priority_medium": 77,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年2月",
+      "total": 888,
+      "repeat": 233,
+      "rate": 26.2,
+      "exact": 3,
+      "exact_groups": 3,
+      "urge": 139,
+      "high_freq": 128,
+      "high_freq_groups": 46,
+      "similar": 69,
+      "similar_communities": 42,
+      "priority_high": 183,
+      "priority_medium": 50,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年3月",
+      "total": 1682,
+      "repeat": 632,
+      "rate": 37.6,
+      "exact": 6,
+      "exact_groups": 6,
+      "urge": 313,
+      "high_freq": 432,
+      "high_freq_groups": 137,
+      "similar": 404,
+      "similar_communities": 127,
+      "priority_high": 482,
+      "priority_medium": 150,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年4月",
+      "total": 1704,
+      "repeat": 644,
+      "rate": 37.8,
+      "exact": 20,
+      "exact_groups": 8,
+      "urge": 321,
+      "high_freq": 435,
+      "high_freq_groups": 128,
+      "similar": 721,
+      "similar_communities": 136,
+      "priority_high": 525,
+      "priority_medium": 119,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年5月",
+      "total": 1772,
+      "repeat": 631,
+      "rate": 35.6,
+      "exact": 2,
+      "exact_groups": 2,
+      "urge": 272,
+      "high_freq": 420,
+      "high_freq_groups": 122,
+      "similar": 440,
+      "similar_communities": 132,
+      "priority_high": 498,
+      "priority_medium": 133,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年6月",
+      "total": 1856,
+      "repeat": 707,
+      "rate": 38.1,
+      "exact": 5,
+      "exact_groups": 5,
+      "urge": 308,
+      "high_freq": 498,
+      "high_freq_groups": 144,
+      "similar": 476,
+      "similar_communities": 140,
+      "priority_high": 561,
+      "priority_medium": 146,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年7月",
+      "total": 2097,
+      "repeat": 829,
+      "rate": 39.5,
+      "exact": 3,
+      "exact_groups": 3,
+      "urge": 350,
+      "high_freq": 598,
+      "high_freq_groups": 178,
+      "similar": 462,
+      "similar_communities": 155,
+      "priority_high": 668,
+      "priority_medium": 161,
+      "priority_low": 0
+    },
+    {
+      "month": "2026年8月",
+      "total": 2242,
+      "repeat": 795,
+      "rate": 35.5,
+      "exact": 5,
+      "exact_groups": 5,
+      "urge": 226,
+      "high_freq": 592,
+      "high_freq_groups": 182,
+      "similar": 204,
+      "similar_communities": 126,
+      "priority_high": 606,
+      "priority_medium": 189,
+      "priority_low": 0
+    }
+  ],
+  "source": "scripts/dedup_monthly.py（S1-S4 唯一判定口径源）"
+}

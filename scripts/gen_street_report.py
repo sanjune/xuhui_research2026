@@ -411,7 +411,10 @@ def overview_section(data):
     dup_best = min([r for r in ov if r["dup_rate"]], key=lambda x: x["dup_rate"])
     dup_worst = max([r for r in ov if r["dup_rate"]], key=lambda x: x["dup_rate"])
 
+    # 贡献度分母 = 13 个街镇合计减少量（不含「归属为空」工单的减少，
+    # 那部分无法摊到任何街镇；与 KPI「全区减少 2,072 件」相差 unassigned_prev-unassigned 件）
     district_decline = d["n2025_same"] - d["n2026"]
+    unassigned_decline = d["n2025_same_all"] - d["n2026_all"] - district_decline
     top5_contrib = pct_sum(
         sorted([r["contribution"] for r in ov if r["contribution"] is not None], reverse=True)[:5])
 
@@ -465,7 +468,7 @@ def overview_section(data):
   <div class="stat-card green">
     <div class="stat-label">全区2026年1-8月投诉量</div>
     <div class="stat-value">{n(d['total_all'])}<span class="stat-unit">件</span></div>
-    <div class="stat-sub">同比 {pct_txt(d['yoy'])}，减少 {n(d['n2025_same'] - d['n2026'])} 件</div>
+    <div class="stat-sub">同比 {pct_txt(d['yoy'])}，减少 {n(d['n2025_same_all'] - d['n2026_all'])} 件</div>
   </div>
   <div class="stat-card blue">
     <div class="stat-label">13个街镇投诉量合计</div>
@@ -475,7 +478,7 @@ def overview_section(data):
   <div class="stat-card orange">
     <div class="stat-label">降幅最大街镇</div>
     <div class="stat-value">{top['street']}</div>
-    <div class="stat-sub">同比 {pct_txt(top['yoy'])}，占全区下降 {top['contribution']}%</div>
+    <div class="stat-sub">同比 {pct_txt(top['yoy'])}，占街镇下降合计 {top['contribution']}%</div>
   </div>
   <div class="stat-card red">
     <div class="stat-label">同比上升街镇</div>
@@ -512,7 +515,7 @@ def overview_section(data):
   </div>
 
   <div class="rank-panel" id="rank-density">
-    <div class="section-desc">投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（<b>件/千户</b>），衡量平均每千户居民的投诉强度；户数为该街镇「2026年1-8月有投诉小区」的总户数（取自纳统小区档案 total_households）。位次差 = 总量排名 − 密度排名，正数表示该街镇"总量不大但单位居民投诉更重"；末列「件/小区」为对照口径</div>
+    <div class="section-desc">投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（<b>件/千户</b>），衡量平均每千户居民的投诉强度；户数为该街镇「2026年1-8月有投诉小区」的总户数（取自《纳统小区 (2026 更新版)》档案 total_households，993 个纳统小区）。位次差 = 总量排名 − 密度排名，正数表示该街镇"总量不大但单位居民投诉更重"；末列「件/小区」为对照口径</div>
     <table class="data-table">
       <tr>
         <th>密度<br>排名</th><th>街镇</th><th>投诉密度<br>（件/千户）</th><th>2026年<br>1-8月</th>
@@ -531,7 +534,7 @@ def overview_section(data):
 
 <div class="section">
   <div class="section-title">四、对全区下降的贡献度排行</div>
-  <div class="section-desc">贡献率 = 该街镇减少量 ÷ 全区减少量；{n(district_decline)} 件的全区降幅中，前 5 个街镇贡献了 {top5_contrib}%</div>
+  <div class="section-desc">贡献率 = 该街镇减少量 ÷ 13 个街镇减少量合计；13 个街镇合计减少 {n(district_decline)} 件中，前 5 个街镇贡献了 {top5_contrib}%（全区共减少 {n(d['n2025_same_all'] - d['n2026_all'])} 件，另 {n(unassigned_decline)} 件来自「归属为空」工单的减少，无法摊到街镇）</div>
   <div id="ov-contribution" class="chart-box tall"></div>
 </div>
 
@@ -548,7 +551,7 @@ def street_panel(i, s, r, active):
   <div class="kpi"><div class="k">2026年1-8月投诉量</div><div class="v">{n(c['n2026'])}</div></div>
   <div class="kpi"><div class="k">同比变化</div><div class="v {'up' if (c['yoy'] or 0) > 0 else 'down'}">{pct_txt(c['yoy'])}</div></div>
   <div class="kpi"><div class="k">占全区比重</div><div class="v">{c['share']}%</div></div>
-  <div class="kpi"><div class="k">对全区下降贡献</div><div class="v">{'—' if c['contribution'] is None else str(c['contribution']) + '%'}</div></div>
+  <div class="kpi"><div class="k">对街镇下降合计贡献</div><div class="v">{'—' if c['contribution'] is None else str(c['contribution']) + '%'}</div></div>
   <div class="kpi"><div class="k">总量/降幅排名</div><div class="v">第{c['rank_total']}/第{c['rank_yoy']}</div></div>
   <div class="kpi"><div class="k">有投诉小区数</div><div class="v">{n(c['active_communities'])}</div></div>
   <div class="kpi"><div class="k">重复投诉率</div><div class="v">{'—' if not s['dup'] else str(s['dup']['rate']) + '%'}</div><div class="k" style="font-size:10px;">全区 {r.get('district_dup_rate', '')}</div></div>
@@ -664,7 +667,7 @@ def street_panel(i, s, r, active):
 <table class="data-table">
   <tr><th>策略</th><th>识别件数</th><th>组数</th><th>说明</th></tr>
   <tr><td>S1 完全重复</td><td>{n(dup['s1'])}</td><td>{n(dup['s1_groups'])}</td><td class="left">同小区内容完全一致</td></tr>
-  <tr><td>S2 催办关键词</td><td>{n(dup['s2'])}</td><td>—</td><td class="left">催单/重新交办/反复/相同事项</td></tr>
+  <tr><td>S2 催办关键词</td><td>{n(dup['s2'])}</td><td>—</td><td class="left">催单/催办/重新交办/相同事项<br>＋「反复＋来电·催·投诉」搭配<br>＋系统标记「重复来电」</td></tr>
   <tr><td>S3 同小区同类高频</td><td>{n(dup['s3'])}</td><td>{n(dup['s3_groups'])}</td><td class="left">同小区同十四类≥3次</td></tr>
   <tr><td>S4 文本相似</td><td>{n(dup['s4'])}</td><td>{n(dup['s4_pairs'])}</td><td class="left">TF-IDF 余弦≥0.6 且 90 天内</td></tr>
 </table>"""
@@ -681,9 +684,61 @@ def street_panel(i, s, r, active):
 </div>"""
 
     insights = "".join(f"<li>{x}</li>" for x in s["insights"])
+
+    # ── 底部抬升（党建引领重点小区）独立区块：与普通小区分开展示
     bl = s["bottom_lift"]
-    bl_html = (f"<div class='chip' style='background:#e6fffb;border-color:#b5f5ec;color:#006d75;'>"
-               f"党建引领重点小区 {bl['count']} 个</div>") if bl["count"] else ""
+    bl_html = ""
+    if bl.get("count"):
+        bl_normal_avg = round(bl["normal_n2026"] / bl["normal_comm"], 1) if bl["normal_comm"] else 0
+        rows_html = []
+        for j, r in enumerate(bl["rows"], 1):
+            types_txt = "、".join(r["types"]) or "—"
+            comp_txt = (r["company"] or "—").replace("\n", "").replace("\r", "").strip()
+            if r["matched"]:
+                rows_html.append(
+                    f"<tr><td>{j}</td><td class='left'>{r['name']}</td>"
+                    f"<td class='left'>{types_txt}</td><td class='left'>{comp_txt}</td>"
+                    f"<td>{n(r['n2026'])}</td><td>{n(r['n2025'])}</td>"
+                    f"<td style='color:{color_of(r['yoy'])};font-weight:600;'>{pct_txt(r['yoy'])}</td></tr>")
+            else:
+                rows_html.append(
+                    f"<tr style='color:#999;'><td>{j}</td><td class='left'>{r['name']}</td>"
+                    f"<td class='left'>{types_txt}</td><td class='left'>{comp_txt}</td>"
+                    f"<td colspan='3' class='left'>2026年以来无热线投诉记录（未纳入投诉量统计）</td></tr>")
+        # 有无同比可比的说明
+        pp_note = ""
+        if bl.get("pp_vs_normal") is not None:
+            better = "优于" if bl["pp_vs_normal"] < 0 else "逊于"
+            pp_note = (f"底部抬升小区同比{better}其他小区 {abs(bl['pp_vs_normal'])} 个百分点"
+                       f"（小区均值 {bl['avg2026']} 件 vs {bl_normal_avg} 件）。")
+        bl_html = f"""<div class="sub-title">底部抬升小区（党建引领重点小区 · 单独分类）</div>
+<div class="kpi-row">
+  <div class="kpi"><div class="k">重点小区</div><div class="v">{bl['matched']}<span style="font-size:13px;color:#888;">/{bl['count']}</span></div></div>
+  <div class="kpi"><div class="k">2026年1-8月</div><div class="v">{n(bl['n2026'])}</div></div>
+  <div class="kpi"><div class="k">2025年同期</div><div class="v">{n(bl['n2025'])}</div></div>
+  <div class="kpi"><div class="k">同比</div><div class="v" style="color:{color_of(bl['yoy'])}">{pct_txt(bl['yoy'])}</div></div>
+</div>
+<table class="data-table">
+  <tr><th colspan="6" style="background:#006d75;">底部抬升小区 vs 其他小区（2026年1-8月 同期口径）</th></tr>
+  <tr><th>类型</th><th>小区数</th><th>2026年1-8月</th><th>2025年同期</th><th>同比</th><th>小区均值</th></tr>
+  <tr style="background:#e6fffb;">
+    <td><b>底部抬升</b></td><td>{bl['matched']}</td>
+    <td>{n(bl['n2026'])}</td><td>{n(bl['n2025'])}</td>
+    <td style="color:{color_of(bl['yoy'])};font-weight:700;">{pct_txt(bl['yoy'])}</td>
+    <td>{bl['avg2026']}</td></tr>
+  <tr>
+    <td>其他小区</td><td>{n(bl['normal_comm'])}</td>
+    <td>{n(bl['normal_n2026'])}</td><td>{n(bl['normal_n2025'])}</td>
+    <td style="color:{color_of(bl['normal_yoy'])};">{pct_txt(bl['normal_yoy'])}</td>
+    <td>{bl_normal_avg}</td></tr>
+</table>
+<table class="data-table">
+  <tr><th colspan="7" style="background:#006d75;">底部抬升小区名单（按 2026年1-8月 投诉量排序）</th></tr>
+  <tr><th>#</th><th>小区</th><th>治理类型</th><th>物业公司</th><th>2026年1-8月</th><th>2025年同期</th><th>同比</th></tr>
+  {"".join(rows_html)}
+</table>
+<div class="wc-note">占本街镇 2026年1-8月 投诉量 <b>{bl['share']}%</b>。{pp_note}
+名单共 {bl['count']} 个，其中 {bl['matched']} 个可在热线数据中匹配到小区名{('；' + '、'.join(bl['unmatched']) + ' 等 ' + str(len(bl['unmatched'])) + ' 个无热线记录') if bl.get('unmatched') else ''}。</div>"""
 
     return f"""<div class="tab-panel{' active' if active else ''}" id="panel-{i}">
   {kpi}
@@ -749,13 +804,13 @@ def street_panel(i, s, r, active):
     <div class="kpi"><div class="k">参评小区数</div><div class="v">{n(s['risk']['total'])}</div></div>
   </div>
   <table class="data-table">
-    <tr><th>#</th><th>小区</th><th>风险分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
+    <tr><th>#</th><th>小区</th><th>风险得分</th><th>等级</th><th>三年累计<br>投诉量</th><th>同比增长率</th><th>重复率</th><th>首要类别</th></tr>
     {risk_rows}
   </table>
   {gov_html}
   {case_html}
   {ext_html}
-  <div class="chip-wrap">{bl_html}</div>
+  {bl_html}
 
   <div class="sub-title">结论要点</div>
   <ul class="insight-list">{insights}</ul>

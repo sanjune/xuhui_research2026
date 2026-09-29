@@ -14,6 +14,7 @@
 """
 import json
 import os
+import re
 import sys
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,9 +22,13 @@ HTML = os.path.join(BASE, "底部抬升小区热线数据分析报告.html")
 DATA = os.path.join(BASE, "scripts", "bottom_lift_2026_8m.json")
 
 R = json.load(open(DATA, encoding="utf-8"))
+# 名单总数（党建引领物业治理重点小区 84 个）与「可匹配到热线数据」的匹配数
+LIST_N = len(json.load(open(os.path.join(BASE, "scripts", "bottom_lift_communities.json"),
+                            encoding="utf-8")))
+MATCHED_N = R["matched"]
 html = open(HTML, encoding="utf-8").read()
 
-done, skipped = [], []
+done, skipped, missing = [], [], []
 
 
 def rep(old, new, tag):
@@ -35,7 +40,26 @@ def rep(old, new, tag):
     elif new in html:
         skipped.append(tag + "(已改)")
     else:
-        raise SystemExit(f"[FAIL] 未找到片段: {tag}\n{old[:200]}")
+        # 片段既非旧值也非新值：多为报告已被其他脚本/人工改动。
+        # 记录并继续，避免单点失败导致整篇回填中断（末尾会汇总提示）。
+        missing.append(tag)
+
+
+def rep_re(pattern, new, tag, count=1):
+    """正则替换（幂等：替换后片段若已存在则跳过）。
+
+    用于正文含动态数值、下次重跑时 old 文本已不可复现的场合。
+    """
+    global html
+    m = re.search(pattern, html)
+    if m:
+        if m.group(0) == new:
+            skipped.append(tag + "(已改)")
+        else:
+            html = html[:m.start()] + new + html[m.end():]
+            done.append(tag)
+    else:
+        missing.append(tag)
 
 
 def fmt_pct(v, plus=False):
@@ -58,10 +82,19 @@ def num(v):
 # ============================================================
 # 0. 页头 meta
 # ============================================================
-rep(
-    '<div class="meta">数据周期：2024年-2026年6月 · 匹配成功78个小区 · 占全区投诉量18.0%</div>',
-    '<div class="meta">数据周期：2024年1月-2026年8月 · 匹配成功78个小区 · 2026年1-8月占全区投诉量17.1%</div>',
+rep_re(
+    r'<div class="meta">数据周期：[^<]*</div>',
+    f'<div class="meta">数据周期：2024年1月-2026年8月 · 重点小区{LIST_N}个'
+    f'（其中{MATCHED_N}个可匹配到热线数据）· 2026年1-8月占全区投诉量'
+    f'{R["share"]["m8_2026"]}%</div>',
     "页头meta",
+)
+# 2026-09-28 第 1 项：页头 meta 按「两级口径」改写（名单 84 个 / 可匹配 78 个）
+rep(
+    '<div class="meta">数据周期：2024年1月-2026年8月 · 匹配成功78个小区 · 2026年1-8月占全区投诉量17.1%</div>',
+    '<div class="meta">数据周期：2024年1月-2026年8月 · 重点小区{listn}个（其中{matchn}个可匹配到热线数据）'
+    '· 2026年1-8月占全区投诉量17.1%</div>'.format(listn=LIST_N, matchn=MATCHED_N),
+    "页头meta-两级口径",
 )
 
 # ============================================================
@@ -211,7 +244,8 @@ st_rows = []
 for r in R["street_stats"]:
     st_rows.append(f"""      <tr>
         <td>{r['street']}</td>
-        <td>{r['n_community']}个</td>
+        <td><button type="button" class="bl-drill" data-bl-street="{r['street']}"
+              title="点击查看「{r['street']}」底部抬升重点小区清单">{r['n_community']}个</button></td>
         <td>{num(r['y2024'])}</td>
         <td>{num(r['y2025'])}</td>
         <td class="{cls_of(r['yoy_2025'])}">{fmt_pct(r['yoy_2025'], True)}</td>
@@ -421,7 +455,7 @@ for i2, r in enumerate(R["top10_improve_m8"], 1):
         f'<td class="trend-down">{fmt_pct(r["yoy_m8"])}</td></tr>')
 
 i = html.index("    <div class=\"two-col\">\n      <div>\n        <h4 style=\"font-size:13px; color:#c62828;")
-j = html.index("  <!-- ===== 七-2、2026年近期专项分析 ===== -->")
+j = html.index("  <!-- ===== 七-2、2026年1-8月专项分析 ===== -->")
 html = html[:i] + f"""    <div class="two-col">
       <div>
         <h4 style="font-size:13px; color:#c62828; margin-bottom:8px;">🚨 投诉量Top10（2026年1-8月）</h4>
@@ -495,13 +529,18 @@ worse_txt = "、".join(f'{r["name"]}（{fmt_pct(r["yoy_m8"], True)}）' for r in
 risen = [c for c in cat_sorted if (c["yoy_m8"] or 0) > 0]
 risen_txt = "、".join(f'{c["category"]}（{fmt_pct(c["yoy_m8"], True)}）' for c in risen)
 
-i = html.index("  <!-- ===== 七-2、2026年近期专项分析 ===== -->")
+i = html.index("  <!-- ===== 七-2、2026年1-8月专项分析 ===== -->")
 j = html.index("  <!-- ===== 八、结论与建议 ===== -->")
 html = html[:i] + f"""  <!-- ===== 七-2、2026年1-8月专项分析 ===== -->
   <div class="section">
     <div class="section-title"><span class="icon">📅</span>七-2、2026年1-8月专项分析</div>
     <p class="desc">将2026年1-8月数据单独提取，与2025年同期对比，聚焦底部抬升小区的"当下治理态势"。
-      口径说明：本节与全报告一致，采用<b>全量热线工单口径</b>（底部抬升78个匹配小区 / 其余1,298个普通小区）。</p>
+      口径说明：本节与全报告一致，采用<b>全量热线工单口径</b>（底部抬升{LIST_N}个重点小区，
+      其中{MATCHED_N}个可匹配到热线数据 / 其余{num(vn["normal_comm"])}个普通小区）。
+      小区数分母：底部抬升按名单{LIST_N}个计，其中{LIST_N - MATCHED_N}个小区（华尔登广场、上海天玺、
+      宫宵小区、福苑小区、高知楼、老沪闵路709弄）2024年以来无热线记录，投诉量统计以可匹配的
+      {MATCHED_N}个为分母；两行合计{num(LIST_N + vn["normal_comm"] - (LIST_N - MATCHED_N))}个小区
+      ＝热线数据小区全域。</p>
 
     <div class="highlight" style="background:#e8f5e9; border-left-color:#2e7d32;">
       <strong>核心发现：</strong>2026年1-8月底部抬升小区投诉<b>{num(vn["bl_m8_2026"])}件</b>，
@@ -512,13 +551,23 @@ html = html[:i] + f"""  <!-- ===== 七-2、2026年1-8月专项分析 ===== -->
     <h4 style="font-size:14px; color:#bf360c; margin:15px 0 8px;">7-2.1 底部抬升 vs 普通小区对比</h4>
     <table class="data-table">
       <tr><th>类型</th><th>小区数</th><th>2026年1-8月</th><th>2025年1-8月</th><th>同比</th><th>小区均值</th><th>改善幅度</th></tr>
-      <tr style="background:#e8f5e9;"><td>底部抬升</td><td>{R["matched"]}</td><td>{num(vn["bl_m8_2026"])}件</td>
+      <tr style="background:#e8f5e9;"><td>底部抬升（名单）</td><td>{LIST_N}</td><td>{num(vn["bl_m8_2026"])}件</td>
         <td>{num(vn["bl_m8_2025"])}件</td><td style="color:#00a854;font-weight:700;">{fmt_pct(vn["bl_yoy"])}</td>
-        <td>{vn["bl_avg"]}件</td><td style="color:#00a854;">优于普通{abs(vn["pp"])}pp</td></tr>
+        <td>{round(vn["bl_m8_2026"] / LIST_N, 1)}件</td><td style="color:#00a854;">优于普通{abs(vn["pp"])}pp</td></tr>
+      <tr><td style="padding-left:26px;color:#666;">　其中：可匹配到热线数据</td><td style="color:#666;">{MATCHED_N}</td>
+        <td>{num(vn["bl_m8_2026"])}件</td><td>{num(vn["bl_m8_2025"])}件</td>
+        <td style="color:#00a854;">{fmt_pct(vn["bl_yoy"])}</td><td>{vn["bl_avg"]}件</td><td style="color:#aaa;">—</td></tr>
       <tr><td>普通小区</td><td>{num(vn["normal_comm"])}</td><td>{num(vn["normal_m8_2026"])}件</td>
         <td>{num(vn["normal_m8_2025"])}件</td><td style="color:#00a854;">{fmt_pct(vn["normal_yoy"])}</td>
         <td>{vn["normal_avg"]}件</td><td>—</td></tr>
     </table>
+    <p style="font-size:12px;color:#888;margin-top:4px;line-height:1.8;">
+      注：<b>底部抬升＝党建引领物业治理重点小区名单 {LIST_N} 个</b>，其中 <b>{MATCHED_N} 个</b>可在热线数据中
+      按小区名匹配到；另 {LIST_N - MATCHED_N} 个（华尔登广场、上海天玺、宫宵小区、福苑小区、高知楼、老沪闵路709弄）
+      2024 年以来无热线记录，故投诉量统计以可匹配的 {MATCHED_N} 个为分母（小区均值 {vn["bl_avg"]}件）；
+      按名单全数计则为 {round(vn["bl_m8_2026"] / LIST_N, 1)}件。两种口径下底部抬升均优于普通小区。
+      普通小区 {num(vn["normal_comm"])} 个＝热线数据中出现过的其余小区数；两行小区数合计
+      {num(LIST_N + vn["normal_comm"] - (LIST_N - MATCHED_N))} 个＝热线数据小区全域。</p>
 
     <h4 style="font-size:14px; color:#bf360c; margin:15px 0 8px;">7-2.2 各分类2026年1-8月同比</h4>
     <table class="data-table">
@@ -547,9 +596,8 @@ done.append("七-2专项分析")
 # ============================================================
 # 八、结论与建议
 # ============================================================
-rep(
-    '<li><strong>底部抬升见效慢但正在加速。</strong>2025年同比仅降5.5%，2026上半年扩大至19.2%，'
-    '改善小区比例从50.7%升至58.1%，攻坚行动逐步显效。</li>',
+rep_re(
+    r'<li><strong>底部抬升见效慢[\s\S]*?</li>',
     f'<li><strong>底部抬升见效慢但正在加速，并首次反超全区。</strong>2025年同比仅降5.5%（落后全区14.4pp），'
     f'2026年1-8月扩大至{fmt_pct(yoy["m8_2026_vs_m8_2025"])}，优于全区{fmt_pct(yoy["all_m8_2026"])}'
     f'共{abs(pp["m8_2026_vs_all"])}pp；改善小区{cc["down"]}个（{cc["down_pct"]}%），攻坚行动逐步显效。</li>',
@@ -579,12 +627,199 @@ rep(
     '而虹梅路(+113.3%)、龙华(+37.5%)严重恶化，田林(+11.2%)、天平路(+17.6%)出现反弹，需督导。</li>',
     "结论4",
 )
-rep(
-    '<li><strong>停车管理和邻里纠纷最难治。</strong>两类问题在底部小区中投诉量大且几乎没有下降，需要创新治理手段。</li>',
+rep_re(
+    r'<li><strong>[^<]*最难治。</strong>[\s\S]*?</li>',
     f'<li><strong>{risen_txt.split("（")[0]}最难治。</strong>'
     f'{risen_txt}是2026年1-8月仅有的两个同比上升类别，且投诉量分居第1、3位，需要创新治理手段。</li>',
     "结论5",
 )
+
+# ============================================================
+# 9. 三、街道分布 →「重点小区数」下钻抽屉（幂等注入）
+# ============================================================
+# 数据：直接取 bottom_lift_2026_8m.json 中每条街道的 communities 明细
+# （由 recalc_bottom_lift_8m.py 生成，与表格口径同源，不另行计算）
+BL_DRAWER_CSS = """
+  /* ===== 重点小区明细抽屉（三、街道分布 → 重点小区数） ===== */
+  .bl-drill { font: inherit; font-weight: 700; color: #bf360c; background: #fff3e0;
+    border: 1px solid #ffcc80; border-radius: 12px; padding: 2px 10px; cursor: pointer;
+    transition: background .15s, box-shadow .15s; }
+  .bl-drill:hover { background: #ffe0b2; box-shadow: 0 1px 4px rgba(191,54,12,.25); }
+  .bl-drill:focus-visible { outline: 2px solid #bf360c; outline-offset: 2px; }
+  .bl-drawer-mask { position: fixed; inset: 0; background: rgba(0,0,0,.45); opacity: 0;
+    visibility: hidden; transition: opacity .22s ease, visibility .22s ease; z-index: 900; }
+  .bl-drawer-mask.open { opacity: 1; visibility: visible; }
+  .bl-drawer { position: fixed; top: 0; right: 0; height: 100%; width: min(780px, 94vw);
+    background: #fff; box-shadow: -6px 0 26px rgba(0,0,0,.18); transform: translateX(102%);
+    transition: transform .26s cubic-bezier(.4,0,.2,1); z-index: 901;
+    display: flex; flex-direction: column; }
+  .bl-drawer.open { transform: translateX(0); }
+  .bl-drawer-head { padding: 16px 20px; border-bottom: 1px solid #eee; display: flex;
+    align-items: flex-start; justify-content: space-between; gap: 12px; background: #fffaf5; }
+  .bl-drawer-title { font-size: 16px; font-weight: 700; color: #bf360c; }
+  .bl-drawer-sub { font-size: 12px; color: #888; margin-top: 5px; line-height: 1.7; }
+  .bl-drawer-close { border: 0; background: transparent; font-size: 22px; line-height: 1;
+    color: #999; cursor: pointer; padding: 2px 8px; border-radius: 6px; }
+  .bl-drawer-close:hover { background: #f2f2f2; color: #333; }
+  .bl-drawer-body { flex: 1; overflow: auto; padding: 14px 20px 26px; }
+  .bl-drawer-body table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .bl-drawer-body th { background: #fafafa; color: #666; font-weight: 600; text-align: left;
+    padding: 8px 6px; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1; }
+  .bl-drawer-body td { padding: 7px 6px; border-bottom: 1px solid #f5f5f5; }
+  .bl-drawer-body tr.na td { color: #bbb; }
+  .bl-drawer-note { font-size: 12px; color: #888; line-height: 1.8; margin-top: 12px;
+    background: #fafafa; border-left: 3px solid #ffcc80; padding: 8px 12px;
+    border-radius: 0 6px 6px 0; }
+  @media (max-width: 640px) { .bl-drawer-body table { font-size: 12px; } }
+"""
+
+BL_DRAWER_JS = """
+<script>
+(function () {
+  var node = document.getElementById('blDrawerData');
+  if (!node) { return; }
+  var data = JSON.parse(node.textContent);
+  var drawer = document.getElementById('blDrawer');
+  var mask = document.getElementById('blDrawerMask');
+  var titleEl = document.getElementById('blDrawerTitle');
+  var subEl = document.getElementById('blDrawerSub');
+  var bodyEl = document.getElementById('blDrawerBody');
+  var closeBtn = document.getElementById('blDrawerClose');
+  var lastFocus = null, hideTimer = null;
+
+  function fmt(v) {
+    return (v === null || v === undefined) ? '—' : v.toLocaleString('en-US');
+  }
+  function fmtPct(v) {
+    if (v === null || v === undefined) { return '—'; }
+    return (v > 0 ? '+' : '') + v.toFixed(1) + '%';
+  }
+  function pctStyle(v) {
+    if (v === null || v === undefined) { return 'color:#bbb;'; }
+    if (v < 0) { return 'color:#2e7d32;font-weight:700;'; }
+    if (v > 0) { return 'color:#f5222d;font-weight:700;'; }
+    return '';
+  }
+
+  function render(street) {
+    var d = data[street];
+    if (!d) { return; }
+    titleEl.textContent = street + ' · 底部抬升重点小区';
+    subEl.innerHTML = '名单 ' + d.n_list + ' 个，其中 ' + d.n_matched
+      + ' 个可匹配到热线数据　｜　2026年1-8月 ' + d.m8_2026.toLocaleString('en-US')
+      + ' 件，同期 ' + fmtPct(d.yoy_m8);
+    var h = '<table><thead><tr><th>#</th><th>小区</th><th>2026年1-8月</th>'
+          + '<th>2025年1-8月</th><th>同期同比</th><th>矛盾类型</th></tr></thead><tbody>';
+    for (var i = 0; i < d.rows.length; i++) {
+      var r = d.rows[i];
+      h += '<tr class="' + (r.m ? '' : 'na') + '">'
+        + '<td>' + (i + 1) + '</td>'
+        + '<td>' + r.n + (r.m ? '' : '<span style="font-size:11px;">（无热线记录）</span>') + '</td>'
+        + '<td>' + fmt(r.a) + '</td><td>' + fmt(r.b) + '</td>'
+        + '<td style="' + pctStyle(r.y) + '">' + fmtPct(r.y) + '</td>'
+        + '<td>' + r.c + '</td></tr>';
+    }
+    h += '</tbody></table>';
+    var un = 0;
+    for (var k = 0; k < d.rows.length; k++) { if (!d.rows[k].m) { un++; } }
+    if (un) {
+      h += '<div class="bl-drawer-note">其中 ' + un + ' 个小区在热线数据中无记录，'
+        + '并列显示但不参与投诉量统计；该街道统计分母为可匹配的 '
+        + d.n_matched + ' 个小区。</div>';
+    }
+    h += '<div class="bl-drawer-note">口径：2026年1-8月 与 2025年1-8月 同期对比；'
+      + '同比绿＝下降、红＝上升。全区合计：名单 84 个，其中 78 个可匹配热线数据。</div>';
+    bodyEl.innerHTML = h;
+    bodyEl.scrollTop = 0;
+  }
+
+  function open(street, trigger) {
+    render(street);
+    lastFocus = trigger || document.activeElement;
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    mask.hidden = false;
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    void drawer.offsetWidth;
+    mask.classList.add('open');
+    drawer.classList.add('open');
+    closeBtn.focus();
+  }
+
+  function close() {
+    mask.classList.remove('open');
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    hideTimer = setTimeout(function () { mask.hidden = true; }, 240);
+    if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+  }
+
+  document.querySelectorAll('.bl-drill').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      open(btn.getAttribute('data-bl-street'), btn);
+    });
+  });
+  closeBtn.addEventListener('click', close);
+  mask.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer.classList.contains('open')) { close(); }
+  });
+})();
+</script>
+"""
+
+
+def _bl_rows(r):
+    """街道明细 -> 压缩字段，减小内嵌 JSON 体积"""
+    rows = []
+    for c in r.get("communities", []):
+        rows.append({"n": c["name"], "m": bool(c["matched"]),
+                     "a": c["m8_2026"], "b": c["m8_2025"],
+                     "y": c["yoy_m8"], "c": c["ctype"]})
+    return rows
+
+
+bl_data = {}
+for _r in R["street_stats"]:
+    bl_data[_r["street"]] = {
+        "n_list": _r.get("n_list", _r["n_community"]),
+        "n_matched": _r["n_community"],
+        "m8_2026": _r["m8_2026"],
+        "yoy_m8": _r["yoy_m8"],
+        "rows": _bl_rows(_r),
+    }
+
+MARK_CSS = "/* ===== 重点小区明细抽屉（三、街道分布 → 重点小区数） ===== */"
+MARK_DOM = "<!-- ===== 重点小区明细抽屉（三、街道分布 → 重点小区数） ===== -->"
+
+# 已注入则先移除旧块再重注入 —— 保证数据与脚本始终为最新（可重复刷新，不残留旧数据）
+_refresh = MARK_DOM in html
+if _refresh:
+    html = re.sub(r"\n\s*" + re.escape(MARK_CSS) + r"[\s\S]*?(?=</style>)", "", html, count=1)
+    html = re.sub(re.escape(MARK_DOM) + r"[\s\S]*?(?=</body>)", "", html, count=1)
+
+html = html.replace("</style>", BL_DRAWER_CSS + "</style>", 1)
+drawer_dom = MARK_DOM + """
+<div class="bl-drawer-mask" id="blDrawerMask" hidden></div>
+<aside class="bl-drawer" id="blDrawer" role="dialog" aria-modal="true"
+       aria-labelledby="blDrawerTitle" aria-hidden="true">
+  <div class="bl-drawer-head">
+    <div>
+      <div class="bl-drawer-title" id="blDrawerTitle">底部抬升重点小区</div>
+      <div class="bl-drawer-sub" id="blDrawerSub"></div>
+    </div>
+    <button type="button" class="bl-drawer-close" id="blDrawerClose"
+            aria-label="关闭">×</button>
+  </div>
+  <div class="bl-drawer-body" id="blDrawerBody"></div>
+</aside>
+<script id="blDrawerData" type="application/json">""" + json.dumps(
+    bl_data, ensure_ascii=False, separators=(",", ":")) + """</script>
+""" + BL_DRAWER_JS
+html = html.replace("</body>", drawer_dom + "</body>", 1)
+(skipped if _refresh else done).append(
+    "底抬重点小区抽屉" + ("(已刷新)" if _refresh else ""))
 
 # ============================================================
 open(HTML, "w", encoding="utf-8").write(html)
@@ -595,6 +830,10 @@ if skipped:
     print("跳过（已改造过）：")
     for s in skipped:
         print("  -", s)
+if missing:
+    print("⚠️ 未匹配（既非旧值也非新值，请人工确认）：")
+    for m in missing:
+        print("  !", m)
 
 # 残留下半年口径检查
 left = []

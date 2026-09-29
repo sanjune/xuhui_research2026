@@ -315,7 +315,7 @@
 <!-- Header -->
 <div class="header">
   <h1>物业投诉根因分析报告</h1>
-  <div class="subtitle">多源数据碰撞 · 六维归因模型 · 968个小区实证分析</div>
+  <div class="subtitle">多源数据碰撞 · 六维归因模型 · 968个纳统小区实证分析</div>
   <div class="meta">数据基础：纳统小区+电梯+修缮+物业+热线+征收+拆房+测绘 · 9类数据×45字段</div>
   <div class="stats-row">
     <div class="stat-card"><div class="num">968</div><div class="label">分析小区数</div></div>
@@ -330,13 +330,19 @@
   <!-- ===== 一、概述 ===== -->
   <div class="section" id="sec-1">
     <div class="section-title"><span class="icon">📋</span>一、分析概述</div>
-    <p class="desc">本报告基于纳统小区数据库（994个小区），关联电梯、修缮、物业费、业委会、底部抬升、热线投诉等9类业务数据，构建多维度根因分析模型，揭示物业投诉高发的核心驱动因素。</p>
+    <p class="desc">本报告基于纳统小区数据库（《纳统小区 (2026 更新版)》993个小区），关联电梯、修缮、物业费、业委会、底部抬升、热线投诉等9类业务数据，构建多维度根因分析模型，揭示物业投诉高发的核心驱动因素。</p>
     <div class="highlight" style="background:#e3f2fd; border-left-color:#1565c0;">
       <strong>📅 数据时间范围说明：</strong><br>
-      本报告分析基准为<strong>2024年1月—2026年7月</strong>的12345热线全量投诉数据（共64,570件）。<br>
-      • <strong>"平均投诉量"</strong> = 2024+2025+2026（1-7月）三年累计平均值，反映小区整体投诉强度<br>
+      本报告分析基准为<strong>2024年1月—2026年8月</strong>的12345热线全量投诉数据（共66,812件）。<br>
+      • <strong>"平均投诉量"</strong> = 2024+2025+2026（1-8月）三年累计平均值，反映小区整体投诉强度<br>
       • <strong>"2025同比"</strong> = 2025年全年相对2024年全年的同比变化率，反映治理趋势<br>
-      • 2026年仅含1-7月数据，部分专项分析（如电梯投诉内容）会单独引用
+      • 2026年含1-8月数据（13,726件）；2026年同比统一为「2026年1-8月 vs 2025年1-8月」同期口径
+</div>
+    <div class="highlight" style="background:#e8f5e9; border-left-color:#2e7d32;">
+      <strong>📐 统计范围与口径：</strong><br>
+      • 统计范围＝<strong>《纳统小区 (2026 更新版)》名单内的 993 个纳统小区</strong>，不在名单中的小区不做统计；小区名按主名／别名／曾用名归并到纳统小区<br>
+      • 关联字段（户数、电梯、修缮、车位、底部抬升、物业费、业委会等）已按 2026 更新版档案<strong>重跑匹配链路并复算</strong>：电梯 257/268（95.9%）、修缮 285/338（84.3%）、底部抬升 83/84（98.8%）<br>
+      • 投诉数据按<strong>热线数据表口径</strong>统计（非纳统档案派生字段）；993 个纳统小区中 968 个有热线投诉记录（覆盖率 97.5%）
     </div>
 
     <div class="three-col">
@@ -379,7 +385,7 @@
     </div>
 
     <div class="highlight" style="margin-top:14px;">
-      <strong>分析方法：</strong>采用描述性统计+分组对比+相关性分析三层方法。首先对各因素进行分组统计，对比组间投诉量差异；其次计算数值变量与投诉量的皮尔逊相关系数；最后结合业务逻辑构建归因权重模型。所有结论均有968个小区的大样本支撑。
+      <strong>分析方法：</strong>采用描述性统计+分组对比+相关性分析三层方法。首先对各因素进行分组统计，对比组间投诉量差异；其次计算数值变量与投诉量的皮尔逊相关系数；最后结合业务逻辑构建归因权重模型。所有结论均有968个纳统小区的大样本支撑。
     </div>
   </div>
 
@@ -642,14 +648,14 @@
 
     <table>
       <tbody><th>类别</th><th>小区数</th><th>平均投诉量</th><th>每千户投诉量</th><th>2025同比</th><th>平均户数</th>
-      <tr><td>普通小区</td><td>912</td><td>55.4件</td><td class="trend-up">172.1件</td><td class="trend-up">+32.5%</td><td>492户</td></tr>
-      <tr><td>底部抬升小区</td><td>82</td><td class="trend-up"><strong>131.9件</strong></td><td class="trend-down"><strong>146.8件</strong></td><td class="trend-up">+10.9%</td><td>849户</td></tr>
-      <th>差异</th><th>—</th><th style="color:#c62828;">高137.9%</th><th style="color:#2e7d32;">低14.7%</th><th style="color:#2e7d32;">低21.6pp</th><th>大72.3%</th>
+      <tr><td>普通小区</td><td>911</td><td>56.7件</td><td class="trend-up">25.2件</td><td class="num-down">-6.0%</td><td>491户</td></tr>
+      <tr><td>底部抬升小区</td><td>82</td><td class="trend-up"><strong>136.0件</strong></td><td class="trend-down"><strong>32.7件</strong></td><td class="num-down">-17.4%</td><td>870户</td></tr>
+      <th>差异</th><th>—</th><th style="color:#c62828;">高139.9%</th><th style="color:#c62828;">高29.8%</th><th style="color:#2e7d32;">低11.4pp</th><th>大77.2%</th>
     </tbody></table>
+    <div class="table-note">口径：小区范围＝《纳统小区 (2026 更新版)》993 个中 968 个有投诉记录者；「平均投诉量」＝2024+2025+2026（1-8月）三年累计均值；「每千户投诉量」＝sum(投诉量)/sum(总户数)×1000（2026年1-8月）；「2025同比」＝2025年全年 vs 2024年全年。底部抬升＝名单 84 个重点小区中在纳统档案内的 82 个。</div>
 
     <div class="highlight">
-      <strong>发现：</strong>底部抬升小区投诉总量是普通小区的2.4倍（131.9 vs 55.4），但每千户投诉量反而低14.7%（146.8 vs 172.1）——底部抬升小区虽然户数多（849户 vs 492户），单位投诉强度却更低，说明治理资源投入有成效。2025年同比增速（+10.9%）也远低于普通小区（+32.5%）。
-    </div>
+      <strong>发现：</strong>底部抬升小区三年累计平均投诉量是普通小区的 2.4 倍（136.0 vs 56.7 件），<strong>每千户投诉量同样更高</strong>（32.7 vs 25.2 件，高 29.8%）—— 底部抬升小区户数更多（870 户 vs 491 户），且单位投诉强度并未低于普通小区，说明这批重点小区的治理压力仍显著高于面上。2025 年同比（-17.4% vs -6.0%）降幅更小，印证「底部抬升」攻坚尚处于相持阶段。</div>
 
     <div class="sub-title" id="sub-18">5.3 街道差异：空间分布与投诉强度</div>
 
@@ -1283,293 +1289,145 @@
   </div>
 
   <!-- ===== 七、2026年近期数据专项分析 ===== -->
-  <div class="section" style="border-top:3px solid #1565c0; padding-top:20px; margin-top:30px;" id="sec-23">
-    <div class="section-title"><span class="icon">📅</span>七、2026年近期数据专项分析</div>
-    <p class="desc">为服务部门近期管理决策，本章将2026年1-8月数据（13,726件）和2026年8月单月数据（2,242件）单独提取分析，与三年累计基准对比，聚焦<strong>"当下态势"</strong>。</p>
+<div class="section" style="border-top:3px solid #1565c0; padding-top:20px; margin-top:30px;" id="sec-23">
+<div class="section-title"><span class="icon">📅</span>七、2026年近期数据专项分析</div>
+<p class="desc">为服务部门近期管理决策，本章将 2026 年 1-8 月数据（13,726 件）和 2026 年 8 月单月数据单独提取分析，与三年累计基准对比，聚焦<strong>"当下态势"</strong>。口径：小区范围＝《纳统小区 (2026 更新版)》993 个；投诉按热线数据表口径；同比＝2026年1-8月 vs 2025年1-8月。</p>
 
-    <div class="highlight" style="background:#e3f2fd; border-left-color:#1565c0;">
-      <strong>核心发现：</strong>2026年1-8月投诉总量同比下降13.1%，但<strong>8月单月同比转正+2.8%</strong>，今年首次单月同比上升。夏季高温期房屋维修（+62.7%）、邻里纠纷（+20.2%）暴增，需重点关注。
-    </div>
+<div class="highlight" style="background:#e3f2fd; border-left-color:#1565c0;">
+<strong>核心发现：</strong>2026 年 1-8 月投诉总量同比下降 13.1%，但<strong>8 月单月同比转正</strong>，为今年首次单月同比上升。夏季高温期房屋维修、邻里纠纷走高，需重点关注。
+</div>
 
-    <!-- 7.1 六维2026年数据对比 -->
-    <h3 style="color:#1565c0; margin:20px 0 10px;">7.1 六维2026年1-8月数据对比</h3>
-    
-    <h4 style="color:#333; margin:15px 0 8px;">（1）硬件因素</h4>
+<!-- 7.1 六维2026年数据对比 -->
+<h3 style="color:#1565c0; margin:20px 0 10px;">7.1 六维 2026年1-8月数据对比</h3>
+
+<h4 style="color:#333; margin:15px 0 8px;">（1）房龄</h4>
     <table class="data-table">
-      <tbody><th>分组</th><th>小区数</th><th>2026年1-7月均值</th><th>每千户(2026)</th><th>2026同比</th><th>三年均值</th><th>趋势判断</th>
-      <tr><td>10-20年</td><td>319</td><td>9.5件</td><td>23件</td><td class="num-down">-10.2%</td><td>52.8件</td><td>↓ 改善</td></tr>
-      <tr><td>20-30年</td><td>471</td><td>7.8件</td><td>21.5件</td><td class="num-down">-12.5%</td><td>57.3件</td><td>↓ 改善</td></tr>
-      <tr><td>30-40年</td><td>179</td><td>10.1件</td><td>26.8件</td><td class="num-up">+5.8%</td><td>69.2件</td><td>↑ 恶化</td></tr>
-      <tr><td>40年以上</td><td>24</td><td>12.3件</td><td>31.2件</td><td class="num-up">+8.3%</td><td>82.5件</td><td>↑ 恶化，重点</td></tr>
+      <tbody><th>分组</th><th>小区数</th><th>2026年1-8月均值</th><th>每千户(2026年1-8月)</th><th>2026同比</th><th>趋势判断</th>
+      <tr style="background:#e8f5e9;"><td>10年以内</td><td>27</td><td>17.6件</td><td>15.6件</td><td class="num-down">-26.5%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>10-20年</td><td>48</td><td>25.3件</td><td>19.1件</td><td class="num-down">-10.1%</td><td>🟢 改善</td></tr>
+      <tr><td>20-30年</td><td>332</td><td>10.3件</td><td>25.3件</td><td class="num-down">-4.3%</td><td>🟡 基本持平</td></tr>
+      <tr style="background:#e8f5e9;"><td>30-40年</td><td>371</td><td>15.8件</td><td>27.5件</td><td class="num-down">-6.2%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>40年以上</td><td>209</td><td>12.2件</td><td>34.7件</td><td class="num-down">-13.9%</td><td>🟢 改善</td></tr>
     </tbody></table>
-    
-    <h4 style="color:#333; margin:15px 0 8px;">（2）房屋性质</h4>
-    <table class="data-table">
-      <tbody><th>性质</th><th>小区数</th><th>2026年1-7月均值</th><th>每千户(2026)</th><th>2026同比</th><th>趋势判断</th>
-      <tr><td>直管公房</td><td>41</td><td>17.8件</td><td>34.1件</td><td class="num-up">+13.7%</td><td>↑ 恶化，重点</td></tr>
-      <tr><td>售后房</td><td>340</td><td>7.6件</td><td>33.8件</td><td class="num-down">-3.0%</td><td>↓ 稳定</td></tr>
-      <tr><td>商品房</td><td>407</td><td>7.7件</td><td>20.8件</td><td class="num-up">+16.7%</td><td>↑ 恶化，重点</td></tr>
-      <tr><td>混合</td><td>203</td><td>13.9件</td><td>19.7件</td><td class="num-down">-11.4%</td><td>↓ 改善</td></tr>
-    </tbody></table>
+    <div class="table-note">房龄＝2026 − 竣工年份，取自《纳统小区 (2026 更新版)》「竣工日期」列；6 个小区档案未填竣工日期，未纳入本表。</div>
 
-    <h4 style="color:#333; margin:15px 0 8px;">（3）小区规模</h4>
+<h4 style="color:#333; margin:15px 0 8px;">（2）房屋性质</h4>
     <table class="data-table">
-      <tbody><th>规模</th><th>小区数</th><th>2026年1-7月均值</th><th>每千户(2026)</th><th>2026同比</th><th>趋势判断</th>
-      <tr><td>微型(&lt;200户)</td><td>419</td><td>2.3件</td><td>35件</td><td class="num-down">-8.9%</td><td>↓ 每千户最高</td></tr>
-      <tr><td>小型(200-500)</td><td>236</td><td>6.9件</td><td>20.7件</td><td class="num-up">+14.7%</td><td>↑ 恶化，重点</td></tr>
-      <tr><td>中型(500-1000)</td><td>186</td><td>13.7件</td><td>18.6件</td><td class="num-up">+20.6%</td><td>↑↑ 急剧恶化</td></tr>
-      <tr><td>大型(1000-2000)</td><td>108</td><td>20.1件</td><td>15.3件</td><td class="num-down">-3.3%</td><td>↓ 稳定</td></tr>
-      <tr><td>超大型(&gt;2000)</td><td>45</td><td>43.4件</td><td>16.6件</td><td class="num-down">-20.4%</td><td>↓ 显著改善</td></tr>
+      <tbody><th>分组</th><th>小区数</th><th>2026年1-8月均值</th><th>每千户(2026年1-8月)</th><th>2026同比</th><th>趋势判断</th>
+      <tr style="background:#fff3e0;"><td>直管公房</td><td>41</td><td>28.9件</td><td>48.5件</td><td class="num-up">+12.1%</td><td>🟠 恶化</td></tr>
+      <tr><td>售后房</td><td>340</td><td>11.1件</td><td>29.9件</td><td class="num-down">-3.3%</td><td>🟡 基本持平</td></tr>
+      <tr style="background:#e8f5e9;"><td>商品房</td><td>404</td><td>11.2件</td><td>22.1件</td><td class="num-down">-7.8%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>混合</td><td>202</td><td>20.1件</td><td>25.9件</td><td class="num-down">-17.1%</td><td>🟢 显著改善</td></tr>
     </tbody></table>
+    <div class="table-note">另有公租房 4、动迁房 1、军产 1 共 6 个小区，样本过小未单列。</div>
 
-    <h4 style="color:#333; margin:15px 0 8px;">（4）电梯因素</h4>
+<h4 style="color:#333; margin:15px 0 8px;">（3）小区规模</h4>
     <table class="data-table">
-      <tbody><th>电梯台数</th><th>小区数</th><th>2026年1-7月均值</th><th>每千户(2026)</th><th>2026同比</th><th>趋势判断</th>
-      <tr><td>无电梯</td><td>738</td><td>6.9件</td><td>25.9件</td><td class="num-up">+5.4%</td><td>↑ 恶化，重点</td></tr>
-      <tr><td>1-5台</td><td>182</td><td>12.2件</td><td>25.4件</td><td class="num-up">+7.7%</td><td>↑ 恶化</td></tr>
-      <tr><td>6-10台</td><td>34</td><td>23.5件</td><td>22.1件</td><td class="num-down">-19.5%</td><td>↓ 显著改善</td></tr>
-      <tr><td>11-20台</td><td>22</td><td>31.3件</td><td>24.9件</td><td class="num-down">-31.5%</td><td>↓↓ 大幅改善</td></tr>
-      <tr><td>20台以上</td><td>18</td><td>29.7件</td><td>18.5件</td><td class="num-down">-13.4%</td><td>↓ 改善</td></tr>
+      <tbody><th>分组</th><th>小区数</th><th>2026年1-8月均值</th><th>每千户(2026年1-8月)</th><th>2026同比</th><th>趋势判断</th>
+      <tr><td>微型(<200户)</td><td>420</td><td>3.4件</td><td>35.6件</td><td class="num-down">-4.5%</td><td>🟡 基本持平</td></tr>
+      <tr style="background:#e8f5e9;"><td>小型(200-500)</td><td>235</td><td>10.2件</td><td>30.8件</td><td class="num-down">-10.0%</td><td>🟢 改善</td></tr>
+      <tr><td>中型(500-1000)</td><td>186</td><td>20.1件</td><td>27.3件</td><td>+0.0%</td><td>🟡 基本持平</td></tr>
+      <tr><td>大型(1000-2000)</td><td>107</td><td>30.1件</td><td>22.8件</td><td class="num-down">-4.7%</td><td>🟡 基本持平</td></tr>
+      <tr style="background:#e8f5e9;"><td>超大型(>2000)</td><td>45</td><td>62.1件</td><td>23.0件</td><td class="num-down">-20.4%</td><td>🟢 显著改善</td></tr>
     </tbody></table>
 
-    <h4 style="color:#333; margin:15px 0 8px;">（5）修缮效果</h4>
+<h4 style="color:#333; margin:15px 0 8px;">（4）电梯因素</h4>
     <table class="data-table">
-      <tbody><th>修缮状况</th><th>小区数</th><th>2026年1-7月均值</th><th>每千户(2026)</th><th>2026同比</th><th>趋势判断</th>
-      <tr><td>有修缮</td><td>284</td><td>12.9件</td><td>24.4件</td><td class="num-down">-4.8%</td><td>↓ 修缮见效</td></tr>
-      <tr><td>无修缮</td><td>710</td><td>7.9件</td><td>26件</td><td class="num-up">+7.1%</td><td>↑ 恶化，需投入</td></tr>
+      <tbody><th>分组</th><th>小区数</th><th>2026年1-8月均值</th><th>每千户(2026年1-8月)</th><th>2026同比</th><th>趋势判断</th>
+      <tr style="background:#e8f5e9;"><td>无电梯</td><td>737</td><td>10.1件</td><td>24.6件</td><td class="num-down">-5.9%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>1-5台</td><td>182</td><td>17.4件</td><td>26.9件</td><td class="num-down">-7.9%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>6-10台</td><td>34</td><td>34.8件</td><td>30.5件</td><td class="num-down">-15.6%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>11-20台</td><td>22</td><td>46.3件</td><td>32.9件</td><td class="num-down">-10.4%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>20台以上</td><td>18</td><td>44.3件</td><td>28.0件</td><td class="num-down">-14.3%</td><td>🟢 改善</td></tr>
     </tbody></table>
 
-    <h4 style="color:#333; margin:15px 0 8px;">（6）底部抬升</h4>
+<h4 style="color:#333; margin:15px 0 8px;">（5）修缮效果</h4>
     <table class="data-table">
-      <tbody><th>类型</th><th>小区数</th><th>2026年1-7月均值</th><th>每千户(2026)</th><th>2026同比</th><th>趋势判断</th>
-      <tr><td>底部抬升</td><td>23</td><td>6.7件</td><td>17.7件</td><td class="num-down">-17.5%</td><td>↓ 治理见效</td></tr>
-      <tr><td>普通小区</td><td>21</td><td>26.3件</td><td>34.5件</td><td class="num-up">+10.5%</td><td>↑ 反而恶化</td></tr>
+      <tbody><th>分组</th><th>小区数</th><th>2026年1-8月均值</th><th>每千户(2026年1-8月)</th><th>2026同比</th><th>趋势判断</th>
+      <tr style="background:#e8f5e9;"><td>有修缮</td><td>284</td><td>19.0件</td><td>29.0件</td><td class="num-down">-12.3%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>无修缮</td><td>709</td><td>11.6件</td><td>24.7件</td><td class="num-down">-5.2%</td><td>🟢 改善</td></tr>
     </tbody></table>
 
-    <!-- 7.2 7月单月街道快照 -->
-    <h3 style="color:#1565c0; margin:20px 0 10px;">7.2 2026年7月单月街道快照</h3>
-    <p class="desc">2026年7月全区投诉2,097件，同比2025年7月（2,102件）仅降0.2%，环比6月（1,856件）增长13.0%。各街道7月表现：</p>
+<h4 style="color:#333; margin:15px 0 8px;">（6）底部抬升</h4>
     <table class="data-table">
-      <tbody><tr><th>街道</th><th>7月投诉量</th><th>2025年7月</th><th>同比</th><th>2026年1-7月均值</th><th>1-7月同比</th><th>态势</th></tr>
-      <tr style="background:#ffebee;"><td>斜土路</td><td>207件</td><td>148件</td><td class="num-up">+39.9%</td><td>10.4件</td><td class="num-up">+40.4%</td><td>🔴 急剧恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>漕河泾</td><td>212件</td><td>157件</td><td class="num-up">+35.0%</td><td>8.3件</td><td class="num-up">+35.2%</td><td>🔴 持续恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>徐家汇</td><td>256件</td><td>208件</td><td class="num-up">+23.1%</td><td>6.8件</td><td class="num-up">+23.8%</td><td>🟠 恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>龙华</td><td>174件</td><td>143件</td><td class="num-up">+21.7%</td><td>11.1件</td><td class="num-up">+21.8%</td><td>🟠 恶化</td></tr>
-      <tr><td>田林</td><td>243件</td><td>212件</td><td class="num-up">+14.6%</td><td>12.6件</td><td class="num-up">+14.7%</td><td>🟡 轻微恶化</td></tr>
-      <tr><td>枫林路</td><td>169件</td><td>184件</td><td class="num-down">-8.2%</td><td>8.7件</td><td class="num-down">-8.2%</td><td>🟢 改善</td></tr>
-      <tr><td>虹梅路</td><td>45件</td><td>48件</td><td class="num-down">-6.3%</td><td>18.5件</td><td class="num-down">-6.7%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>凌云路</td><td>141件</td><td>186件</td><td class="num-down">-24.2%</td><td>10.1件</td><td class="num-down">-24.0%</td><td>🟢 显著改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>天平路</td><td>114件</td><td>141件</td><td class="num-down">-19.1%</td><td>4.8件</td><td class="num-down">-19.2%</td><td>🟢 显著改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>康健新村</td><td>122件</td><td>152件</td><td class="num-down">-19.7%</td><td>8.1件</td><td class="num-down">-19.5%</td><td>🟢 显著改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>华泾</td><td>77件</td><td>94件</td><td class="num-down">-18.1%</td><td>27.4件</td><td class="num-down">-18.7%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>长桥</td><td>290件</td><td>349件</td><td class="num-down">-16.9%</td><td>19.3件</td><td class="num-down">-17.0%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>湖南路</td><td>129件</td><td>146件</td><td class="num-down">-11.6%</td><td>6.5件</td><td class="num-down">-11.9%</td><td>🟢 改善</td></tr>
+      <tbody><th>分组</th><th>小区数</th><th>2026年1-8月均值</th><th>每千户(2026年1-8月)</th><th>2026同比</th><th>趋势判断</th>
+      <tr style="background:#e8f5e9;"><td>普通小区</td><td>911</td><td>12.4件</td><td>25.2件</td><td class="num-down">-6.0%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>底部抬升</td><td>82</td><td>28.4件</td><td>32.7件</td><td class="num-down">-17.4%</td><td>🟢 显著改善</td></tr>
+    </tbody></table>
+    <div class="table-note">口径：底部抬升＝党建引领物业治理重点小区名单 <b>84</b> 个，其中 <b>82</b> 个在《纳统小区 (2026 更新版)》档案内（本表范围），<b>78</b> 个可在热线数据中按小区名匹配到；6 个小区 2024 年以来无热线投诉记录。</div>
+
+<!-- 7.2 单月街道快照 -->
+<h3 style="color:#1565c0; margin:20px 0 10px;">7.2 2026年7月单月街道快照</h3>
+<p class="desc">2026年7月全区投诉2,097件，同比2025年7月（2,102件）下降0.2%，环比6月（1,856件）增长13.0%。各街道表现：</p>
+    <table class="data-table">
+      <tbody><tr><th>街道</th><th>7月投诉量</th><th>2025年7月</th><th>7月同比</th><th>2026年1-8月</th><th>1-8月同比</th><th>态势</th></tr>
+      <tr style="background:#fff3e0;"><td>田林</td><td>164件</td><td>107件</td><td class="num-up">+53.3%</td><td>1,260件</td><td class="num-up">+15.2%</td><td>🟠 恶化</td></tr>
+      <tr><td>漕河泾</td><td>226件</td><td>163件</td><td class="num-up">+38.7%</td><td>1,315件</td><td class="num-up">+4.0%</td><td>🟡 基本持平</td></tr>
+      <tr><td>虹梅路</td><td>81件</td><td>65件</td><td class="num-up">+24.6%</td><td>537件</td><td class="num-down">-3.9%</td><td>🟡 基本持平</td></tr>
+      <tr style="background:#e8f5e9;"><td>湖南路</td><td>138件</td><td>92件</td><td class="num-up">+50.0%</td><td>897件</td><td class="num-down">-5.5%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>徐家汇</td><td>204件</td><td>191件</td><td class="num-up">+6.8%</td><td>1,337件</td><td class="num-down">-8.3%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>天平路</td><td>164件</td><td>214件</td><td class="num-down">-23.4%</td><td>1,160件</td><td class="num-down">-8.9%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>龙华</td><td>151件</td><td>154件</td><td class="num-down">-1.9%</td><td>973件</td><td class="num-down">-10.7%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>斜土路</td><td>197件</td><td>205件</td><td class="num-down">-3.9%</td><td>1,131件</td><td class="num-down">-13.5%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>华泾镇</td><td>115件</td><td>166件</td><td class="num-down">-30.7%</td><td>869件</td><td class="num-down">-14.7%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>凌云路</td><td>160件</td><td>118件</td><td class="num-up">+35.6%</td><td>897件</td><td class="num-down">-15.2%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>康健新村</td><td>111件</td><td>162件</td><td class="num-down">-31.5%</td><td>751件</td><td class="num-down">-23.6%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>枫林路</td><td>172件</td><td>194件</td><td class="num-down">-11.3%</td><td>1,121件</td><td class="num-down">-25.2%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>长桥</td><td>214件</td><td>242件</td><td class="num-down">-11.6%</td><td>1,471件</td><td class="num-down">-31.1%</td><td>🟢 显著改善</td></tr>
     </tbody></table>
 
-    <!-- 7.3 7月单月分类快照 -->
-    <h3 style="color:#1565c0; margin:20px 0 10px;">7.3 2026年7月分类投诉快照</h3>
+<!-- 7.3 单月类别快照 -->
+<h3 style="color:#1565c0; margin:20px 0 10px;">7.3 2026年7月分类投诉快照</h3>
     <table class="data-table">
-      <tbody><tr><th>类别</th><th>7月投诉</th><th>2025年7月</th><th>同比</th><th>2026年1-7月</th><th>1-7月同比</th><th>态势</th></tr>
-      <tr style="background:#ffebee;"><td>邻里纠纷</td><td>333件</td><td>214件</td><td class="num-up">+55.6%</td><td>1,595件</td><td class="num-up">+1.7%</td><td>🔴 7月暴增</td></tr>
-      <tr style="background:#ffebee;"><td>清洁卫生</td><td>114件</td><td>81件</td><td class="num-up">+40.7%</td><td>582件</td><td class="num-down">-13.8%</td><td>🔴 7月反弹</td></tr>
-      <tr style="background:#ffebee;"><td>物业服务态度</td><td>70件</td><td>50件</td><td class="num-up">+40.0%</td><td>427件</td><td class="num-up">+22.3%</td><td>🔴 持续恶化</td></tr>
-      <tr style="background:#fff3e0;"><td>物业安保</td><td>101件</td><td>91件</td><td class="num-up">+11.0%</td><td>673件</td><td class="num-down">-15.2%</td><td>🟠 7月反弹</td></tr>
-      <tr style="background:#fff3e0;"><td>消防管理</td><td>147件</td><td>135件</td><td class="num-up">+8.9%</td><td>881件</td><td class="num-down">-3.0%</td><td>🟠 7月反弹</td></tr>
-      <tr style="background:#fff3e0;"><td>房屋维修</td><td>414件</td><td>400件</td><td class="num-up">+3.5%</td><td>1,799件</td><td class="num-down">-14.9%</td><td>🟠 7月反弹</td></tr>
-      <tr style="background:#e8f5e9;"><td>停车管理</td><td>263件</td><td>347件</td><td class="num-down">-24.2%</td><td>1,588件</td><td class="num-down">-27.2%</td><td>🟢 持续改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>群租管理</td><td>102件</td><td>123件</td><td class="num-down">-17.1%</td><td>728件</td><td class="num-down">-15.9%</td><td>🟢 改善</td></tr>
-      <tr style="background:#e8f5e9;"><td>房屋违规使用</td><td>167件</td><td>207件</td><td class="num-down">-19.3%</td><td>1,038件</td><td class="num-down">-24.9%</td><td>🟢 改善</td></tr>
+      <tbody><tr><th>类别</th><th>7月投诉</th><th>2025年7月</th><th>7月同比</th><th>2026年1-8月</th><th>1-8月同比</th><th>态势</th></tr>
+      <tr style="background:#ffebee;"><td>物业服务态度</td><td>70件</td><td>50件</td><td class="num-up">+40.0%</td><td>493件</td><td class="num-up">+21.4%</td><td>🔴 显著恶化</td></tr>
+      <tr><td>邻里纠纷</td><td>333件</td><td>214件</td><td class="num-up">+55.6%</td><td>1,916件</td><td class="num-up">+4.4%</td><td>🟡 基本持平</td></tr>
+      <tr><td>消防管理</td><td>147件</td><td>135件</td><td class="num-up">+8.9%</td><td>1,015件</td><td class="num-down">-2.4%</td><td>🟡 基本持平</td></tr>
+      <tr><td>房屋维修</td><td>414件</td><td>400件</td><td class="num-up">+3.5%</td><td>2,383件</td><td class="num-down">-3.6%</td><td>🟡 基本持平</td></tr>
+      <tr style="background:#e8f5e9;"><td>清洁卫生</td><td>114件</td><td>81件</td><td class="num-up">+40.7%</td><td>709件</td><td class="num-down">-9.1%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>物业收费</td><td>45件</td><td>56件</td><td class="num-down">-19.6%</td><td>284件</td><td class="num-down">-12.6%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>物业安保</td><td>101件</td><td>91件</td><td class="num-up">+11.0%</td><td>781件</td><td class="num-down">-14.6%</td><td>🟢 改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>群租管理</td><td>102件</td><td>123件</td><td class="num-down">-17.1%</td><td>832件</td><td class="num-down">-15.7%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>旧住房改造</td><td>97件</td><td>122件</td><td class="num-down">-20.5%</td><td>648件</td><td class="num-down">-18.7%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>业主大会/业委会</td><td>182件</td><td>207件</td><td class="num-down">-12.1%</td><td>1,225件</td><td class="num-down">-19.5%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>其他</td><td>62件</td><td>69件</td><td class="num-down">-10.1%</td><td>436件</td><td class="num-down">-22.8%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>房屋违规使用</td><td>167件</td><td>207件</td><td class="num-down">-19.3%</td><td>1,185件</td><td class="num-down">-26.6%</td><td>🟢 显著改善</td></tr>
+      <tr style="background:#e8f5e9;"><td>停车管理</td><td>263件</td><td>347件</td><td class="num-down">-24.2%</td><td>1,819件</td><td class="num-down">-28.4%</td><td>🟢 显著改善</td></tr>
     </tbody></table>
 
-    <!-- 7.4 近期预警 -->
-    <h3 style="color:#1565c0; margin:20px 0 10px;">7.4 近期趋势预警</h3>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:10px;">
-      <div style="background:#ffebee; border-left:4px solid #c62828; padding:12px; border-radius:6px;">
-        <div style="font-weight:700; color:#c62828; font-size:13px;">🔴 趋势恶化预警（需立即关注）</div>
-        <ul style="font-size:12px; color:#333; margin:6px 0 0 16px; padding:0;">
-          <li><strong>斜土路街道：</strong>7月+39.9%，1-7月+40.4%，全区恶化最严重</li>
-          <li><strong>漕河泾街道：</strong>7月+35.0%，1-7月+35.2%，持续恶化</li>
-          <li><strong>商品房小区：</strong>1-7月+16.7%，三年数据中增速最快</li>
-          <li><strong>中型小区(500-1000户)：</strong>1-7月+20.6%，规模恶化最严重</li>
-          <li><strong>无电梯小区：</strong>1-7月+5.4%，改善停滞</li>
-          <li><strong>邻里纠纷(7月)：</strong>单月暴增55.6%，夏季矛盾集中爆发</li>
-          <li><strong>物业服务态度：</strong>1-7月+22.3%，物业服务质量下降</li>
-        </ul>
-      </div>
-      <div style="background:#e8f5e9; border-left:4px solid #2e7d32; padding:12px; border-radius:6px;">
-        <div style="font-weight:700; color:#2e7d32; font-size:13px;">🟢 治理成效显著（保持推进）</div>
-        <ul style="font-size:12px; color:#333; margin:6px 0 0 16px; padding:0;">
-          <li><strong>凌云路街道：</strong>7月-24.2%，1-7月-24.0%，持续改善</li>
-          <li><strong>超大型小区(&gt;2000户)：</strong>1-7月-20.4%，规模效应最佳</li>
-          <li><strong>11-20台电梯小区：</strong>1-7月-31.5%，电梯治理见效</li>
-          <li><strong>有修缮小区：</strong>1-7月-4.8%，修缮投入持续见效</li>
-          <li><strong>底部抬升小区：</strong>1-7月-17.5%，专项治理成效显著</li>
-          <li><strong>停车管理：</strong>1-7月-27.2%，全区改善最大类别</li>
-          <li><strong>长桥街道：</strong>1-7月-17.0%，从全区最差转为改善</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="highlight" style="background:#fff3e0; border-left-color:#e65100; margin-top:15px;">
-      <strong>📌 近期管理建议：</strong>三年累计数据中表现好的群体（商品房、中型小区、无电梯小区）在2026年近期出现<strong>趋势反转</strong>，说明治理红利正在消退。建议部门重点关注上述红色预警维度，特别是<strong>斜土路和漕河泾两个恶化街道</strong>，以及<strong>邻里纠纷和物业服务态度两个恶化类别</strong>，启动专项督导。
-    </div>
+<!-- 7.4 近期预警 -->
+<h3 style="color:#1565c0; margin:20px 0 10px;">7.4 近期趋势预警</h3>
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:10px;">
+  <div style="background:#ffebee; border-left:4px solid #c62828; padding:12px; border-radius:6px;">
+    <div style="font-weight:700; color:#c62828; font-size:13px;">🔴 趋势恶化预警（需立即关注）</div>
+    <ul style="font-size:12px; color:#333; margin:6px 0 0 16px; padding:0;">
+      <li><strong>田林街道：</strong>2026年1-8月 1,260 件，同比 +15.2%（7月单月 +53.3%），全区恶化最严重</li>
+      <li><strong>漕河泾街道：</strong>2026年1-8月 1,315 件，同比 +4.0%（7月单月 +38.7%），全区恶化最严重</li>
+      <li><strong>物业服务态度：</strong>1-8月 493 件，同比 +21.4%（7月单月 +40.0%），需重点督导</li>
+      <li><strong>邻里纠纷：</strong>1-8月 1,916 件，同比 +4.4%（7月单月 +55.6%），需重点督导</li>
+      <li><strong>直管公房小区：</strong>1-8月同比 +12.1%，逆势上升</li>
+    </ul>
   </div>
-
+  <div style="background:#e8f5e9; border-left:4px solid #2e7d32; padding:12px; border-radius:6px;">
+    <div style="font-weight:700; color:#2e7d32; font-size:13px;">🟢 治理成效显著（保持推进）</div>
+    <ul style="font-size:12px; color:#333; margin:6px 0 0 16px; padding:0;">
+      <li><strong>长桥街道：</strong>1-8月 1,471 件，同比 -31.1%，持续改善</li>
+      <li><strong>枫林路街道：</strong>1-8月 1,121 件，同比 -25.2%，持续改善</li>
+      <li><strong>康健新村街道：</strong>1-8月 751 件，同比 -23.6%，持续改善</li>
+      <li><strong>停车管理：</strong>1-8月 1,819 件，同比 -28.4%，全区改善最大类别</li>
+      <li><strong>房屋违规使用：</strong>1-8月 1,185 件，同比 -26.6%，改善幅度居前</li>
+      <li><strong>超大型小区(>2000户)：</strong>1-8月同比 -20.4%</li>
+      <li><strong>11-20台电梯小区：</strong>1-8月同比 -10.4%</li>
+      <li><strong>有修缮小区：</strong>1-8月同比 -12.3%</li>
+      <li><strong>底部抬升小区：</strong>1-8月同比 -17.4%</li>
+    </ul>
+  </div>
 </div>
 
-<div class="footer">
-  徐汇区物业课题一期 · 物业投诉根因分析报告 · 2026年8月
+<div class="highlight" style="background:#fff3e0; border-left-color:#e65100; margin-top:15px;">
+<strong>📌 近期管理建议：</strong>三年累计数据中表现好的部分群体在 2026 年近期出现<strong>趋势反转</strong>，说明治理红利正在消退。建议部门重点关注上述红色预警维度，启动专项督导。
 </div>
-
-<script>
-// ===== 右侧浮动目录 =====
-document.addEventListener('DOMContentLoaded', function() {
-  var tocFloat = document.getElementById('tocFloat');
-  var tocToggle = document.getElementById('tocToggle');
-  var tocBody = document.getElementById('tocBody');
-  var tocCount = document.getElementById('tocCount');
-  
-  // 切换展开/收起
-  var expanded = false;
-  tocToggle.addEventListener('click', function() {
-    expanded = !expanded;
-    if (expanded) {
-      tocFloat.classList.remove('collapsed');
-      tocFloat.classList.add('expanded');
-      tocToggle.textContent = '收 起';
-    } else {
-      tocFloat.classList.add('collapsed');
-      tocFloat.classList.remove('expanded');
-      tocToggle.textContent = '目 录';
-    }
-  });
-  
-  // 自动提取章节
-  var sections = document.querySelectorAll('.section');
-  var tocHTML = '';
-  var sectionCount = 0;
-  var idCounter = 0;
-  
-  sections.forEach(function(section, idx) {
-    var titleEl = section.querySelector('.section-title');
-    if (!titleEl) return;
-    
-    var title = titleEl.textContent.trim();
-    // 去掉图标
-    title = title.replace(/^[^\u4e00-\u9fa5a-zA-Z0-9]+/, '');
-    if (!title) return;
-    
-    sectionCount++;
-    idCounter++;
-    var sectionId = 'sec-' + idCounter;
-    section.id = sectionId;
-    
-    // 查找子标题
-    var subTitles = section.querySelectorAll('.sub-title');
-    var hasSub = subTitles.length > 0;
-    var subHTML = '';
-    
-    if (hasSub) {
-        subHTML += '<div class="toc-sub-wrap">';
-        subTitles.forEach(function(sub, subIdx) {
-          idCounter++;
-          var subId = 'sub-' + idCounter;
-          sub.id = subId;
-          var subTitle = sub.textContent.trim();
-          subHTML += '<a class="toc-item level2" href="#' + subId + '" data-target="' + subId + '">' + subTitle + '</a>';
-        });
-        subHTML += '</div>';
-      }
-      
-      var displayTitle = title;
-    
-    tocHTML += '<a class="toc-item level1' + (hasSub ? ' has-sub' : '') + '" href="#' + sectionId + '" data-target="' + sectionId + '">' + 
-               displayTitle + 
-               (hasSub ? '<span class="toc-arrow">▶</span>' : '') + 
-               '</a>' + subHTML;
-  });
-  
-  tocBody.innerHTML = tocHTML;
-  tocCount.textContent = sectionCount + '章';
-  
-  // 点击一级菜单展开/收起子菜单
-  var level1Items = tocBody.querySelectorAll('.toc-item.level1.has-sub');
-  level1Items.forEach(function(item) {
-    item.addEventListener('click', function(e) {
-      var subWrap = item.nextElementSibling;
-      if (subWrap && subWrap.classList.contains('toc-sub-wrap')) {
-        e.preventDefault();
-        subWrap.classList.toggle('open');
-        item.classList.toggle('open');
-      }
-    });
-  });
-  
-  // 所有目录项点击跳转
-  var allTocItems = tocBody.querySelectorAll('.toc-item');
-  allTocItems.forEach(function(item) {
-    item.addEventListener('click', function(e) {
-      var targetId = item.getAttribute('data-target');
-      if (!targetId) return;
-      var target = document.getElementById(targetId);
-      if (target) {
-        e.preventDefault();
-        var top = target.offsetTop - 60;
-        window.scrollTo({ top: top, behavior: 'smooth' });
-      }
-    });
-  });
-  
-  // 滚动高亮当前章节
-  var ticking = false;
-  function updateActive() {
-    var scrollY = window.scrollY + 100;
-    var currentId = null;
-    
-    // 找所有section和sub-title
-    var allTargets = document.querySelectorAll('.section[id^="sec-"], .sub-title[id^="sub-"]');
-    for (var i = 0; i < allTargets.length; i++) {
-      var el = allTargets[i];
-      if (el.offsetTop <= scrollY) {
-        currentId = el.id;
-      } else {
-        break;
-      }
-    }
-    
-    if (currentId) {
-      allTocItems.forEach(function(item) {
-        item.classList.remove('active');
-      });
-      var activeItem = tocBody.querySelector('.toc-item[data-target="' + currentId + '"]');
-      if (activeItem) {
-        activeItem.classList.add('active');
-        // 如果是二级，展开父级
-        if (activeItem.classList.contains('level2')) {
-          var parentWrap = activeItem.closest('.toc-sub-wrap');
-          if (parentWrap) {
-            parentWrap.classList.add('open');
-            var prevItem = parentWrap.previousElementSibling;
-            if (prevItem) prevItem.classList.add('open');
-          }
-        }
-      }
-    }
-    
-    ticking = false;
-  }
-  
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateActive);
-      ticking = true;
-    }
-  });
-  
-  // 初始化
-  updateActive();
-});
-</script>
+  </div>
 
 <!-- ===== 右侧浮动目录 ===== -->
 <div class="toc-float expanded" id="tocFloat">

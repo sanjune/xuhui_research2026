@@ -268,14 +268,15 @@
   <div class="section">
     <div class="section-title"><span class="num">1</span>模型背景与目标</div>
     <p>12345热线投诉数据中存在大量重复投诉，包括同一市民多次提交相同诉求、催办重发、同小区同类问题高频投诉等。重复投诉如不去重，将导致投诉量虚高、趋势失真，无法准确评估实际治理效果。</p>
-    <p>本项目构建了<span class="highlight">"投诉去重识别模型"</span>，通过四重识别策略，对2026年1-6月共9,239条有效工单进行系统性去重分析，识别出3,746条重复投诉工单，重复投诉占比<span class="highlight">40.5%</span>，为准确评估投诉量下降趋势提供了数据基础。</p>
+    <p>本项目构建了<span class="highlight">"投诉去重识别模型"</span>，通过四重识别策略，对2026年1-8月共13,726条有效工单进行系统性去重分析，识别出4,908条重复投诉工单，重复投诉占比<span class="highlight">35.8%</span>，为准确评估投诉量下降趋势提供了数据基础。</p>
 
     <div class="stat-grid">
-      <div class="stat-card"><div class="num">9,239</div><div class="label">有效工单总数</div></div>
-      <div class="stat-card"><div class="num">3,746</div><div class="label">重复投诉工单</div></div>
-      <div class="stat-card"><div class="num">40.5%</div><div class="label">重复投诉占比</div></div>
-      <div class="stat-card"><div class="num">499</div><div class="label">涉及小区数</div></div>
+      <div class="stat-card"><div class="num">13,726</div><div class="label">有效工单总数</div></div>
+      <div class="stat-card"><div class="num">4,908</div><div class="label">重复投诉工单</div></div>
+      <div class="stat-card"><div class="num">35.8%</div><div class="label">重复投诉占比</div></div>
+      <div class="stat-card"><div class="num">603</div><div class="label">涉及小区数</div></div>
     </div>
+    <p style="font-size:12px;color:#888;margin-top:8px;">口径：2026年1-8月；13,726 / 4,908 / 35.8% 为全站统一值（数据源 <span class="code">scripts/dedup_monthly.py</span> 四重策略并集，汇总见 <span class="code">scripts/dedup_18_summary.json</span>）。</p>
   </div>
 
   <!-- 二、四重识别策略 -->
@@ -303,7 +304,7 @@
       </div>
       <div class="criteria-box">
         <div class="criteria-label">识别结果</div>
-        <div class="criteria-value">37组，涉及89条工单。占重复投诉总量比例较小，但识别精度最高（100%确定重复）。</div>
+        <div class="criteria-value">35组，涉及49条工单。占重复投诉总量比例较小，但识别精度最高（100%确定重复）。</div>
       </div>
     </div>
 
@@ -317,17 +318,21 @@
       <div class="criteria-box">
         <div class="criteria-label">判定条件</div>
         <div class="criteria-value">
-          内容描述（<span class="code">内容描述</span>字段）中包含以下任一关键词：
-          <br>① <span class="code">"催单"</span> &nbsp; ② <span class="code">"重新交办"</span> &nbsp; ③ <span class="code">"反复"</span> &nbsp; ④ <span class="code">"相同事项"</span>
+          本单正文段（已剥离系统追加的引用块）命中以下任一判据：<br>
+          ① <span class="code">"催单"</span> / <span class="code">"催办"</span> / <span class="code">"重新交办"</span> / <span class="code">"相同事项"</span><br>
+          ② 「反复」与催办动作搭配：<span class="code">反复</span> + 来电/催/投诉/反映/举报/交办（同句、间隔≤6字）<br>
+          ③ 系统标记 <span class="code">"重复来电"</span>（话务平台直接打在本单上的标签）
         </div>
       </div>
       <div class="criteria-box">
         <div class="criteria-label">识别逻辑</div>
-        <div class="criteria-value">对每条工单的<span class="code">内容描述</span>文本进行关键词检索，命中任一关键词即判定为催办/重发类重复投诉。</div>
+        <div class="criteria-value">对每条工单的<span class="code">内容描述</span>文本进行关键词检索，命中任一判据即判定为催办/重发类重复投诉。<br>
+          <span style="color:#888;font-size:12px;">注：「反复」<b>不自成判据</b> —— 它大量出现在「杜绝反复积水」「现象反复发生」这类普通描述中，单独匹配会误判；仅在携带催办动作时计入。系统标记「重复来电」须<b>剥离引用块后</b>再匹配，避免把引用块内转载的历史原文措辞误当本单标记。</span>
+        </div>
       </div>
       <div class="criteria-box">
         <div class="criteria-label">识别结果</div>
-        <div class="criteria-value">1,909条，是四类策略中数量最多的，反映了首次办理质量和处理速度是重复投诉的核心成因。</div>
+        <div class="criteria-value">2,147条，是四类策略中数量最多的，反映了首次办理质量和处理速度是重复投诉的核心成因。</div>
       </div>
     </div>
 
@@ -352,7 +357,7 @@
       </div>
       <div class="criteria-box">
         <div class="criteria-label">识别结果</div>
-        <div class="criteria-value">4,942条，涉及大量小区-类别组合，反映了停车管理、邻里纠纷等长期未解决的共性问题在小区层面的集中爆发。</div>
+        <div class="criteria-value">3,377条（1,031组），涉及大量小区-类别组合，反映了停车管理、邻里纠纷等长期未解决的共性问题在小区层面的集中爆发。</div>
       </div>
       <div class="criteria-box">
         <div class="criteria-label">阈值设定依据</div>
@@ -387,7 +392,7 @@
       </div>
       <div class="criteria-box">
         <div class="criteria-label">识别结果</div>
-        <div class="criteria-value">4,755对高度相似工单对，覆盖499个小区。这一策略的价值在于捕捉了前三类策略无法发现的"软重复"——市民换了说法但实质相同的投诉。</div>
+        <div class="criteria-value">2,930对高度相似工单对，覆盖453个小区。这一策略的价值在于捕捉了前三类策略无法发现的"软重复"——市民换了说法但实质相同的投诉。</div>
       </div>
     </div>
   </div>
@@ -411,7 +416,7 @@
         </div>
         <div class="flow-strategy">
           <div class="s-name">策略二：催办/重发</div>
-          <div class="s-detail">关键词检索<br>"催单""重新交办""反复""相同事项"</div>
+          <div class="s-detail">关键词 + 系统标记<br>"催单""催办""重新交办""相同事项"／"重复来电"</div>
         </div>
         <div class="flow-strategy">
           <div class="s-name">策略三：同小区同类高频</div>
@@ -449,15 +454,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td style="text-align:left;font-weight:600;">策略一：完全重复</td><td>89</td><td>条（37组）</td><td>字符串精确匹配</td><td>100%</td></tr>
-        <tr><td style="text-align:left;font-weight:600;">策略二：催办/重发</td><td>1,909</td><td>条</td><td>关键词检索</td><td>高</td></tr>
-        <tr><td style="text-align:left;font-weight:600;">策略三：同小区同类高频</td><td>4,942</td><td>条</td><td>分组统计 + 阈值过滤</td><td>中高</td></tr>
-        <tr><td style="text-align:left;font-weight:600;">策略四：TF-IDF相似度</td><td>4,755</td><td>对（499小区）</td><td>NLP文本挖掘</td><td>中高（≥0.6）</td></tr>
-        <tr style="background:#e6f7ff;font-weight:700;"><td style="text-align:left;">合并去重后总计</td><td>3,746</td><td>条</td><td>四策略并集去重</td><td>—</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略一：完全重复</td><td>49</td><td>条（35组）</td><td>字符串精确匹配</td><td>100%</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略二：催办/重发</td><td>2,147</td><td>条</td><td>关键词 + 系统标记</td><td>高</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略三：同小区同类高频</td><td>3,377</td><td>条（1,031组）</td><td>分组统计 + 阈值过滤</td><td>中高</td></tr>
+        <tr><td style="text-align:left;font-weight:600;">策略四：TF-IDF相似度</td><td>2,930</td><td>对（453小区）</td><td>NLP文本挖掘</td><td>中高（≥0.6）</td></tr>
+        <tr style="background:#e6f7ff;font-weight:700;"><td style="text-align:left;">合并去重后总计</td><td>4,908</td><td>条</td><td>四策略并集去重</td><td>—</td></tr>
       </tbody>
     </table>
 
-    <p style="margin-top:12px;font-size:13px;color:#888;">注：四种策略的结果存在交叉（同一条工单可能同时被多个策略识别），合并后按工单编号去重，最终重复投诉为3,746条，占有效工单总量的40.5%。</p>
+    <p style="margin-top:12px;font-size:13px;color:#888;">注：四种策略的结果存在交叉（同一条工单可能同时被多个策略识别），合并后按工单编号去重，最终重复投诉为4,908条，占有效工单总量（13,726条）的35.8%。各策略条数之和大于合并值属正常现象。</p>
   </div>
 
   <!-- 五、重复投诉特征分析 -->
@@ -466,23 +471,27 @@
 
     <p><strong>5.1 月度趋势</strong></p>
     <table class="data-table">
-      <thead><tr><th>月份</th><th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th></tr></thead>
-      <tbody><tr><td>重复投诉量</td><td>895</td><td>469</td><td>825</td><td>737</td><td>496</td><td>324</td></tr></tbody>
+      <thead><tr><th>月份</th><th>1月</th><th>2月</th><th>3月</th><th>4月</th><th>5月</th><th>6月</th><th>7月</th><th>8月</th></tr></thead>
+      <tbody>
+        <tr><td>工单总量</td><td>1,485</td><td>888</td><td>1,682</td><td>1,704</td><td>1,772</td><td>1,856</td><td>2,097</td><td>2,242</td></tr>
+        <tr><td>重复投诉量</td><td>437</td><td>233</td><td>632</td><td>644</td><td>631</td><td>707</td><td>829</td><td>795</td></tr>
+        <tr><td>重复投诉率</td><td>29.4%</td><td>26.2%</td><td>37.6%</td><td>37.8%</td><td>35.6%</td><td>38.1%</td><td>39.5%</td><td>35.5%</td></tr>
+      </tbody>
     </table>
-    <p style="font-size:13px;color:#888;">从1月895条降至6月324条，降幅64%，表明治理措施逐步见效。</p>
+    <p style="font-size:13px;color:#888;">1-2月为春节前后，工单总量与重复量均处于年内低点（重复率 26.2%–29.4%）；3月起随工单量上升，重复率抬升至 35%–39.5% 区间并保持高位，8月回落至 35.5%。<b>重复率整体高于年初，说明首次办理质量仍是治理短板</b>——重复投诉量（4,908 件）占全量的三分之一以上。</p>
 
     <p style="margin-top:20px;"><strong>5.2 类别分布</strong></p>
     <table class="data-table">
       <thead><tr><th>排名</th><th>投诉类别</th><th>重复投诉量</th><th>占比</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td style="text-align:left;">停车管理</td><td>466</td><td>15.3%</td></tr>
-        <tr><td>2</td><td style="text-align:left;">邻里纠纷</td><td>442</td><td>14.5%</td></tr>
-        <tr><td>3</td><td style="text-align:left;">房屋违规使用</td><td>346</td><td>11.4%</td></tr>
-        <tr><td>4</td><td style="text-align:left;">房屋维修</td><td>331</td><td>10.9%</td></tr>
-        <tr><td>5</td><td style="text-align:left;">业主大会/业委会</td><td>316</td><td>10.4%</td></tr>
-        <tr><td>6</td><td style="text-align:left;">消防管理</td><td>261</td><td>8.6%</td></tr>
-        <tr><td>7</td><td style="text-align:left;">物业安保</td><td>171</td><td>5.6%</td></tr>
-        <tr><td>8</td><td style="text-align:left;">群租管理</td><td>164</td><td>5.4%</td></tr>
+        <tr><td>1</td><td style="text-align:left;">房屋维修</td><td>863</td><td>17.6%</td></tr>
+        <tr><td>2</td><td style="text-align:left;">停车管理</td><td>812</td><td>16.5%</td></tr>
+        <tr><td>3</td><td style="text-align:left;">邻里纠纷</td><td>695</td><td>14.2%</td></tr>
+        <tr><td>4</td><td style="text-align:left;">业主大会/业委会</td><td>594</td><td>12.1%</td></tr>
+        <tr><td>5</td><td style="text-align:left;">房屋违规使用</td><td>467</td><td>9.5%</td></tr>
+        <tr><td>6</td><td style="text-align:left;">消防管理</td><td>344</td><td>7.0%</td></tr>
+        <tr><td>7</td><td style="text-align:left;">旧住房改造</td><td>241</td><td>4.9%</td></tr>
+        <tr><td>8</td><td style="text-align:left;">群租管理</td><td>234</td><td>4.8%</td></tr>
       </tbody>
     </table>
 
@@ -490,32 +499,30 @@
     <table class="data-table">
       <thead><tr><th>排名</th><th>小区名称</th><th>重复投诉量</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td style="text-align:left;">欣嘉苑1-3期</td><td>56</td></tr>
-        <tr><td>2</td><td style="text-align:left;">安福直管公房</td><td>43</td></tr>
-        <tr><td>3</td><td style="text-align:left;">家乐苑</td><td>40</td></tr>
-        <tr><td>4</td><td style="text-align:left;">紫阳花苑</td><td>39</td></tr>
-        <tr><td>5</td><td style="text-align:left;">吴东小区</td><td>38</td></tr>
-        <tr><td>6</td><td style="text-align:left;">南丹小区</td><td>38</td></tr>
-        <tr><td>7</td><td style="text-align:left;">宛龙小区</td><td>35</td></tr>
-        <tr><td>8</td><td style="text-align:left;">华欣家园</td><td>33</td></tr>
-        <tr><td>9</td><td style="text-align:left;">凌云新村</td><td>33</td></tr>
-        <tr><td>10</td><td style="text-align:left;">淮中直管公房</td><td>29</td></tr>
+        <tr><td>1</td><td style="text-align:left;">安福直管公房</td><td>75</td></tr>
+        <tr><td>2</td><td style="text-align:left;">华悦家园</td><td>69</td></tr>
+        <tr><td>3</td><td style="text-align:left;">罗秀新二村</td><td>66</td></tr>
+        <tr><td>4</td><td style="text-align:left;">欣嘉苑1-3期</td><td>62</td></tr>
+        <tr><td>5</td><td style="text-align:left;">日晖六村</td><td>55</td></tr>
+        <tr><td>6</td><td style="text-align:left;">紫阳花苑</td><td>55</td></tr>
+        <tr><td>7</td><td style="text-align:left;">华欣家园</td><td>51</td></tr>
+        <tr><td>8</td><td style="text-align:left;">尚海湾二期</td><td>50</td></tr>
+        <tr><td>9</td><td style="text-align:left;">华滨家园</td><td>47</td></tr>
+        <tr><td>10</td><td style="text-align:left;">凌云新村</td><td>44</td></tr>
       </tbody>
     </table>
 
     <p style="margin-top:20px;"><strong>5.4 高频关键词</strong></p>
-    <p style="font-size:13px;">通过对重复投诉内容描述进行jieba分词和词频统计，高频关键词如下：</p>
+    <p style="font-size:13px;">通过对重复投诉内容描述进行jieba分词和词频统计（已剔除工单模板与公文用语），高频关键词如下：</p>
     <table class="data-table">
       <thead><tr><th>排名</th><th>关键词</th><th>出现次数</th><th>关联问题</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td>车位</td><td>909</td><td>停车管理</td></tr>
-        <tr><td>2</td><td>维修</td><td>901</td><td>房屋维修</td></tr>
-        <tr><td>3</td><td>电梯</td><td>856</td><td>旧住房改造/房屋维修</td></tr>
-        <tr><td>4</td><td>停车</td><td>850</td><td>停车管理</td></tr>
-        <tr><td>5</td><td>漏水</td><td>691</td><td>房屋维修/邻里纠纷</td></tr>
-        <tr><td>6</td><td>安装</td><td>717</td><td>旧住房改造（加装电梯）</td></tr>
-        <tr><td>7</td><td>公共</td><td>709</td><td>消防管理/物业安保</td></tr>
-        <tr><td>8</td><td>至今</td><td>718</td><td>反映问题久拖不决</td></tr>
+        <tr><td>1</td><td>业委会</td><td>1,170</td><td>业主大会/业委会</td></tr>
+        <tr><td>2</td><td>维修</td><td>999</td><td>房屋维修</td></tr>
+        <tr><td>3</td><td>车位</td><td>808</td><td>停车管理</td></tr>
+        <tr><td>4</td><td>漏水</td><td>679</td><td>房屋维修/邻里纠纷</td></tr>
+        <tr><td>5</td><td>停车</td><td>624</td><td>停车管理</td></tr>
+        <tr><td>6</td><td>电梯</td><td>599</td><td>旧住房改造/房屋维修</td></tr>
       </tbody>
     </table>
   </div>
@@ -567,11 +574,11 @@
 
     <div class="finding-card" style="border-left-color:#1890ff;">
       <div class="finding-title">价值一：准确评估投诉量下降趋势</div>
-      <div class="finding-desc">去除40.5%的重复投诉后，投诉量下降趋势更加真实。2026年1-6月原始工单9,239条，去重后5,493条，去重后的同比下降幅度更能反映实际治理效果，避免重复投诉虚高掩盖治理成效。</div>
+      <div class="finding-desc">去除35.8%的重复投诉后，投诉量下降趋势更加真实。2026年1-8月原始工单13,726条，去重后8,818条，去重后的同比下降幅度更能反映实际治理效果，避免重复投诉虚高掩盖治理成效。</div>
     </div>
     <div class="finding-card" style="border-left-color:#1890ff;">
       <div class="finding-title">价值二：定位治理盲区</div>
-      <div class="finding-desc">催办/重发类重复投诉1,909条，直接指向首次办理质量不高的小区和物业企业；同小区同类高频投诉4,942条，指向长期未解决的共性问题。这些识别结果为精准施策提供了明确的靶向。</div>
+      <div class="finding-desc">催办/重发类重复投诉2,147条，直接指向首次办理质量不高的小区和物业企业；同小区同类高频投诉3,377条，指向长期未解决的共性问题。这些识别结果为精准施策提供了明确的靶向。</div>
     </div>
     <div class="finding-card" style="border-left-color:#1890ff;">
       <div class="finding-title">价值三：建立预警机制</div>
@@ -579,7 +586,7 @@
     </div>
     <div class="finding-card" style="border-left-color:#1890ff;">
       <div class="finding-title">价值四：首次办理质量评估</div>
-      <div class="finding-desc">重复投诉率（40.5%）可作为各物业企业、各街道首次办理质量的量化评估指标，纳入物业监管考核体系，推动从"解决投诉"向"一次解决"转变。</div>
+      <div class="finding-desc">重复投诉率（35.8%）可作为各物业企业、各街道首次办理质量的量化评估指标，纳入物业监管考核体系，推动从"解决投诉"向"一次解决"转变。</div>
     </div>
     <div class="finding-card" style="border-left-color:#1890ff;">
       <div class="finding-title">价值五：技术可复制性</div>

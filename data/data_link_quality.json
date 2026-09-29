@@ -1,39 +1,47 @@
 {
-  "total_communities": 994,
+  "total_communities": 993,
   "total_streets": 13,
+  "nato_source": "《纳统小区 (2026 更新版).xls》",
   "data_sources": {
     "纳统小区(主表)": {
-      "records": 994,
+      "records": 993,
       "match": "100%",
       "level": "小区级"
     },
     "电梯基本信息": {
       "records": 1617,
       "communities": 268,
-      "matched": 256,
-      "match_rate": "95.5%"
+      "matched": 257,
+      "match_rate": 95.9,
+      "level": "小区级"
     },
     "修缮项目": {
       "records": 553,
-      "communities": 339,
-      "matched": 284,
-      "match_rate": "83.8%"
+      "communities": 338,
+      "matched": 285,
+      "match_rate": 84.3,
+      "level": "小区级"
+    },
+    "底部抬升小区": {
+      "records": 84,
+      "communities": 84,
+      "matched": 83,
+      "match_rate": 98.8,
+      "level": "小区级"
     },
     "失信计分": {
       "records": 37,
       "communities": 18,
       "matched": 18,
-      "match_rate": "100.0%"
-    },
-    "底部抬升小区": {
-      "records": 84,
-      "matched": 82,
-      "match_rate": "97.6%"
+      "match_rate": "100.0%",
+      "note": "原始数据源不在项目目录，沿用旧库迁移值"
     },
     "热线投诉": {
-      "records": 64570,
-      "matched_by_id": 1049,
-      "matched_by_name": 967
+      "records": 66812,
+      "records_with_community": 65073,
+      "records_nato": 62804,
+      "matched_by_name": 968,
+      "coverage": 97.5
     },
     "征收": {
       "records": 105,
@@ -52,5 +60,6 @@
     }
   },
   "community_level_fields": 45,
-  "street_level_fields": 24
+  "street_level_fields": 24,
+  "scope": "统计单元＝纳统小区（《纳统小区 (2026 更新版)》名单，993 个）；投诉按热线数据表口径统计，2026 年取 1-8 月"
 }

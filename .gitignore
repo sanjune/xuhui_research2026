@@ -29,6 +29,15 @@ demo_cache/
 .trae-html-share-packages/
 scripts/_wc_export.html
 
+# Backups / off-line archive / generated audit output
+_archive/
+*.off
+*.bak
+*.bak_*
+scripts/audit_reports/
+scripts/_selftest*.py
+scripts/_tmp_*.html
+
 # IDE
 .idea/
 .vscode/
