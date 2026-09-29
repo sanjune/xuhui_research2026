@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>徐汇区1-8月工单综合分析与目标测算</title>
+<script src="assets/vendor/echarts.min.js"></script>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+--red:#dc2626;--green:#16a34a;--blue:#2563eb;--amber:#d97706;--purple:#7c3aed;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+line-height:1.65;font-size:15px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 60px}
+h1{font-size:26px;font-weight:700;letter-spacing:.5px;margin-bottom:6px}
+.sub{color:var(--sub);font-size:13px;margin-bottom:22px}
+h2{font-size:19px;font-weight:700;margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--blue)}
+h2 .n{color:var(--blue);margin-right:8px}
+h3{font-size:15px;font-weight:600;margin:20px 0 10px;color:#374151}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:18px;
+box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:6px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--blue)}
+.kpi.r::before{background:var(--red)}.kpi.g::before{background:var(--green)}.kpi.a::before{background:var(--amber)}
+.kpi .lab{font-size:12px;color:var(--sub);margin-bottom:4px}
+.kpi .val{font-size:24px;font-weight:700}
+.kpi .val small{font-size:13px;font-weight:500;color:var(--sub)}
+.kpi .tag{font-size:12px;margin-top:3px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{background:#f3f4f6;text-align:left;padding:9px 12px;font-weight:600;color:#374151;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid #f1f3f5;white-space:nowrap}
+tr:hover td{background:#fafbfc}
+.r{text-align:right}.c{text-align:center}
+.bad{color:var(--red);font-weight:600}.good{color:var(--green);font-weight:600}
+.chart{width:100%;height:380px}
+.chart.s{height:320px}
+.note{font-size:12.5px;color:var(--sub);margin-top:8px;line-height:1.6}
+.callout{background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid #bfdbfe;border-left:4px solid var(--blue);
+border-radius:8px;padding:14px 18px;margin:12px 0;font-size:14px}
+.callout.warn{background:linear-gradient(135deg,#fff7ed,#fff);border-color:#fed7aa;border-left-color:var(--amber)}
+.callout.danger{background:linear-gradient(135deg,#fef2f2,#fff);border-color:#fecaca;border-left-color:var(--red)}
+.tag{display:inline-block;padding:1px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.t-red{background:#fee2e2;color:#b91c1c}.t-green{background:#dcfce7;color:#15803d}
+.t-amber{background:#fef3c7;color:#b45309}.t-blue{background:#dbeafe;color:#1e40af}
+.flex{display:flex;gap:12px;flex-wrap:wrap}
+.flex>.card{flex:1;min-width:280px}
+.legend{font-size:12px;color:var(--sub);margin-top:6px}
+.foot{text-align:center;color:var(--sub);font-size:12px;margin-top:30px;padding-top:16px;border-top:1px solid var(--line)}
+@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.chart{height:300px}}
+</style></head><body><div class="wrap">
+
+<h1>徐汇区物业投诉 1–8 月综合分析与目标测算</h1>
+<div class="sub">数据周期 2024.01–2026.08 ｜ 街镇对比用项目主数据口径（13,627件）｜ 全市对比用市局十四类口径（13,726件）｜ 生成于 2026-09-29</div>
+
+<div class="callout danger"><b>核心判断：</b>徐汇 1–8 月累计同比 <b>-13.1%</b>（全市第 13/17，低于全市平均 -15.4%），但月度环比已连续 4 个月上涨，<b>8 月单月同比转正 +2.84%</b>、日均已达 <b>72 件</b>。若 9–12 月维持 8 月高位，全年降幅将收窄至约 <b>-5.6%</b>、排名跌至第 16/17。<b>要保持全年下降态势，9–12 月日均工单需控制在 51–56 件</b>，较 8 月回落约 16–21 件/日。</div>
+
+<div class="kpis">
+<div class="kpi"><div class="lab">1-8月工单量(市局)</div><div class="val">13,726<small>件</small></div><div class="tag good">同比 ↓13.1% <small style="color:#6b7280">全市第13</small></div></div>
+<div class="kpi r"><div class="lab">8月单月同比</div><div class="val">+2.84%<small></small></div><div class="tag bad">环比 ↑6.9% 连续4月上涨</div></div>
+<div class="kpi a"><div class="lab">诉求密度(全市)</div><div class="val">3.83<small>件/千户</small></div><div class="tag" style="color:#b45309">中心城区第1高 / 全市第2</div></div>
+<div class="kpi g"><div class="lab">保持前列 日均阈值</div><div class="val">≤56<small>件/日</small></div><div class="tag good">8月实为72件 需回落</div></div>
+</div>
+
+<h2><span class="n">一、</span>街镇横向对比（1–8 月）</h2>
+<div class="card">
+<p style="margin-bottom:10px;font-size:13px;color:#6b7280">按 2026 年 1–8 月工单量降序。密度＝工单量÷户数×1000（件/千户，项目口径，518,389户）。同比＝2026年1-8月 vs 2025年1-8月。<b style="color:#dc2626">红</b>表示同比上升（警示），<b style="color:#16a34a">绿</b>表示同比下降。</p>
+<table id="t-street"><thead><tr>
+<th class="c">排名</th><th>街镇</th><th class="r">1-8月工单</th><th class="r">2025同期</th><th class="r">同比增降</th><th class="r">户数</th><th class="r">密度(件/千户)</th><th class="c">态势</th>
+</tr></thead><tbody></tbody></table>
+</div>
+<div class="card"><div class="chart" id="c-street1"></div></div>
+<div class="flex">
+<div class="card"><h3>同比降幅排序</h3><div class="chart s" id="c-street2"></div></div>
+<div class="card"><h3>诉求密度对比</h3><div class="chart s" id="c-street3"></div></div>
+</div>
+<div class="callout warn"><b>街镇观察：</b>① <b>田林（+14.3%）、漕河泾（+3.4%）</b>是仅有的两个同比上升街镇，田林尤甚，需重点介入；② <b>长桥（-32.1%）、枫林路（-25.6%）、康健（-24.4%）</b>降幅领先，治理成效突出；③ 密度上 <b>湖南路（48.9）、天平路（37.6）</b>远高于均值，老城区压力集中；康健（18.4）、龙华（21.2）密度最低。</div>
+
+<h2><span class="n">二、</span>徐汇在全市的水平与月度走势</h2>
+<div class="card">
+<p style="margin-bottom:10px;font-size:13px;color:#6b7280">基于市局十四类工单口径，1–8 月全市 17 个区（含临港新片区）排名。</p>
+<table id="t-city"><thead><tr>
+<th class="c">降幅排名</th><th>行政区</th><th class="r">1-8月工单</th><th class="r">2025同期</th><th class="r">同比增降</th><th class="r">平均密度(件/千户)</th><th class="c">密度排名</th>
+</tr></thead><tbody></tbody></table>
+<div class="note">全市平均降幅 <b>-15.4%</b>。徐汇 <b>-13.1%</b> 低于全市平均，降幅排第 13/17；密度 3.83 件/千户排第 2/17（中心城区最高）。</div>
+</div>
+<div class="card"><h3>各区降幅排名（降序，绿深=降幅大，紫=徐汇）</h3><div class="chart" id="c-city1"></div></div>
+<div class="flex">
+<div class="card"><h3>徐汇月度工单量与同比</h3><div class="chart s" id="c-xh1"></div></div>
+<div class="card"><h3>徐汇月度诉求密度走势</h3><div class="chart s" id="c-xh2"></div></div>
+</div>
+<div class="callout warn"><b>全市走势：</b>徐汇月度工单从 1 月 1,485 件攀升至 8 月 <b>2,242 件</b>（+51%），密度从 3.12 翻倍至 <b>5.29 件/千户</b>；同比降幅从 1 月 -16.4% 持续收窄，<b>8 月已转正 +2.84%</b>，是 7 个中心城区中夏季反弹较明显的一个。7–8 月为历年投诉高峰季，但 2026 年反弹力度高于多数可比城区。</div>
+
+<h2><span class="n">三、</span>保持前列的目标工单水平测算</h2>
+<div class="card">
+<p style="margin-bottom:10px;font-size:13px;color:#6b7280">测算口径：2025 全年徐汇 <b>23,618 件</b>（市局），其中 9–12 月 <b>7,820 件</b>；2026 年 1–8 月已发生 <b>13,726 件</b>。设全年同比目标为 r，则 9–12 月所需工单 X = 23618×(1+r) − 13726。</p>
+<table id="t-target"><thead><tr>
+<th>目标档位</th><th class="r">全年同比</th><th class="r">9-12月总量</th><th class="r">月均</th><th class="r">日均(122天)</th><th class="r">vs2025同期</th><th class="c">说明</th>
+</tr></thead><tbody></tbody></table>
+<div class="note">参照：2025 年 9–12 月实际 <b>7,820 件</b>（月均 1,955、日均 64.1）；2026 年 8 月单月 <b>2,242 件</b>（日均 72.3）；1–8 月日均 <b>56.5 件</b>。</div>
+</div>
+<div class="card"><h3>不同目标下的 9-12 月工单控制线</h3><div class="chart" id="c-target1"></div></div>
+<div class="callout danger"><b>关键阈值：</b>
+<div style="margin-top:8px">
+<b>① 维持当前位次（全年 -13.1%，全市第13）</b>：9–12 月 ≤ <b>6,796 件</b>，月均 ≤1,700、日均 ≤<b>56 件</b>。<br>
+<b>② 达全市平均（-15.4%，进前9）</b>：9–12 月 ≤ <b>6,255 件</b>，月均 ≤1,564、日均 ≤<b>51 件</b>。<br>
+<b>③ 警戒线（若 9–12 月持平 2025 同期）</b>：全年降幅仅 <b>-8.8%</b>，排名将跌至约第 15/17，明显掉队。
+</div></div>
+
+<h3>若 9 月已按 8 月趋势发生（假设 9 月≈2,250 件），10–12 月 / 11–12 月补救空间</h3>
+<div class="card"><table id="t-rem"><thead><tr>
+<th>情景</th><th class="r">10-12月需</th><th class="r">10-12月日均</th><th class="r">若10月也2,200，11-12月需</th><th class="r">11-12月日均</th>
+</tr></thead><tbody></tbody></table>
+<div class="note">说明：若 9–10 月延续 8 月高位，要靠 11–12 月补回缺口需日均低至 30–38 件，<b>现实中几乎不可达成</b>。结论：<b>压降必须从 9 月立即启动，越晚越被动。</b></div></div>
+
+<div class="callout"><b>行动建议：</b>
+<div style="margin-top:8px;font-size:13.5px;line-height:1.8">
+1. <b>立即设日均红线 56 件</b>（维持位次线），争取 51 件（进前 9 线）；8 月已达 72 件，须回落 ≥16 件/日。<br>
+2. <b>重点压降反弹街镇</b>：田林（+14.3%）、漕河泾（+3.4%）为同比上升区，是拖累全局的主因，建议单列专项。<br>
+3. <b>夏季高峰前置干预</b>：7–8 月为历史高峰且 2026 反弹强，9 月起对停车管理、群租、物业安保等高频类目开展集中整治。<br>
+4. <b>密度治理聚焦湖南路、天平路</b>（老城区密度超均值 1.5 倍），结合加装电梯、老旧小区改造推进根源治理。<br>
+5. <b>9 月数据入库后</b>可一键更新本测算；若 9 月仍 >2,200 件，建议将全年目标从"维持-13.1%"下调为"保-10%底线"。
+</div></div>
+
+<div class="foot">口径：街镇统计含全量工单（含其他/房屋交易纠纷），不剔除；密度按纳统小区户数（993个/518,389户）。<br>全市对比以市局12345十四类口径为准，徐汇1-8月13,726件、2025全年23,618件。9月数据待市局入库后补充更新。</div>
+</div>
+
+<script>
+var DATA = {"street": {"rows": [{"name": "长桥", "c26": 1450, "c25": 2135, "yoy": -32.08, "hh": 56474, "density": 25.7}, {"name": "徐家汇", "c26": 1334, "c25": 1458, "yoy": -8.5, "hh": 57441, "density": 23.2}, {"name": "漕河泾", "c26": 1308, "c25": 1265, "yoy": 3.4, "hh": 50477, "density": 25.9}, {"name": "田林", "c26": 1250, "c25": 1094, "yoy": 14.26, "hh": 47202, "density": 26.5}, {"name": "天平路", "c26": 1155, "c25": 1274, "yoy": -9.34, "hh": 30763, "density": 37.5}, {"name": "斜土路", "c26": 1123, "c25": 1308, "yoy": -14.14, "hh": 39121, "density": 28.7}, {"name": "枫林路", "c26": 1115, "c25": 1498, "yoy": -25.57, "hh": 40319, "density": 27.7}, {"name": "龙华", "c26": 964, "c25": 1089, "yoy": -11.48, "hh": 45440, "density": 21.2}, {"name": "凌云路", "c26": 895, "c25": 1058, "yoy": -15.41, "hh": 40410, "density": 22.1}, {"name": "湖南路", "c26": 894, "c25": 949, "yoy": -5.8, "hh": 18299, "density": 48.9}, {"name": "华泾镇", "c26": 861, "c25": 1019, "yoy": -15.51, "hh": 35426, "density": 24.3}, {"name": "康健新村", "c26": 743, "c25": 983, "yoy": -24.42, "hh": 40412, "density": 18.4}, {"name": "虹梅路", "c26": 535, "c25": 559, "yoy": -4.29, "hh": 16605, "density": 32.2}], "t26": 13627, "t25": 15689, "thh": 518389, "t_yoy": -13.1, "t_density": 26.3}, "city": {"rows": [{"name": "崇明区", "c26": 2012, "c25": 2862, "yoy": -29.7, "density": 1.29, "dr": 1, "ddr": 17}, {"name": "奉贤区", "c26": 9028, "c25": 12397, "yoy": -27.2, "density": 2.63, "dr": 2, "ddr": 15}, {"name": "黄浦区", "c26": 5157, "c25": 6584, "yoy": -21.7, "density": 3.36, "dr": 3, "ddr": 6}, {"name": "松江区", "c26": 14639, "c25": 18607, "yoy": -21.3, "density": 2.83, "dr": 4, "ddr": 12}, {"name": "长宁区", "c26": 7557, "c25": 9422, "yoy": -19.8, "density": 3.04, "dr": 5, "ddr": 10}, {"name": "青浦区", "c26": 9015, "c25": 11168, "yoy": -19.3, "density": 2.7, "dr": 6, "ddr": 14}, {"name": "闵行区", "c26": 21068, "c25": 25194, "yoy": -16.4, "density": 2.81, "dr": 7, "ddr": 13}, {"name": "嘉定区", "c26": 14790, "c25": 17684, "yoy": -16.4, "density": 3.09, "dr": 8, "ddr": 9}, {"name": "宝山区", "c26": 20283, "c25": 24101, "yoy": -15.8, "density": 2.93, "dr": 9, "ddr": 11}, {"name": "临港新片区", "c26": 2703, "c25": 3141, "yoy": -13.9, "density": 4.17, "dr": 10, "ddr": 1}, {"name": "普陀区", "c26": 15194, "c25": 17645, "yoy": -13.9, "density": 3.56, "dr": 11, "ddr": 3}, {"name": "虹口区", "c26": 7418, "c25": 8605, "yoy": -13.8, "density": 3.13, "dr": 12, "ddr": 8}, {"name": "徐汇区", "c26": 13726, "c25": 15798, "yoy": -13.1, "density": 3.83, "dr": 13, "ddr": 2}, {"name": "金山区", "c26": 4314, "c25": 4947, "yoy": -12.8, "density": 2.0, "dr": 14, "ddr": 16}, {"name": "静安区", "c26": 11185, "c25": 12769, "yoy": -12.4, "density": 3.38, "dr": 15, "ddr": 5}, {"name": "浦东新区", "c26": 52726, "c25": 59420, "yoy": -11.3, "density": 3.2, "dr": 16, "ddr": 7}, {"name": "杨浦区", "c26": 13300, "c25": 14495, "yoy": -8.2, "density": 3.54, "dr": 17, "ddr": 4}], "xh_rank_dr": 13, "xh_rank_ddr": 2, "avg_yoy": -15.4, "xh_c26": 13726, "xh_c25": 15798, "xh_yoy": -13.1, "xh_density": 3.83}, "xh_monthly": [{"m": "1月", "vol": 1485, "yoy": -16.4, "mom": -18.1, "density": 3.12}, {"m": "2月", "vol": 888, "yoy": -37.4, "mom": -40.2, "density": 1.86}, {"m": "3月", "vol": 1682, "yoy": -22.0, "mom": 89.2, "density": 3.77}, {"m": "4月", "vol": 1704, "yoy": -18.6, "mom": 1.3, "density": 3.82}, {"m": "5月", "vol": 1772, "yoy": -11.1, "mom": 4.0, "density": 3.97}, {"m": "6月", "vol": 1856, "yoy": -10.6, "mom": 4.7, "density": 4.15}, {"m": "7月", "vol": 2097, "yoy": -0.2, "mom": 13.0, "density": 4.69}, {"m": "8月", "vol": 2242, "yoy": 2.8, "mom": 6.9, "density": 5.29}], "target": {"base_full_2025": 23618, "base_9525": 7820, "cur_18": 13726, "scenarios": [{"label": "-15.4% · 达全市平均（进前9）", "r": -15.4, "full": 19981, "x": 6255, "mo": 1564, "day": 51.3, "vs25": -20.0}, {"label": "-15.0% · 挑战线", "r": -15.0, "full": 20075, "x": 6349, "mo": 1587, "day": 52.0, "vs25": -18.8}, {"label": "-13.1% · 维持当前位次", "r": -13.1, "full": 20524, "x": 6798, "mo": 1700, "day": 55.7, "vs25": -13.1}, {"label": "-10.0% · 底线（仍为下降）", "r": -10.0, "full": 21256, "x": 7530, "mo": 1883, "day": 61.7, "vs25": -3.7}, {"label": "-8.8% · 持平2025同期（警惕）", "r": -8.8, "full": 21540, "x": 7814, "mo": 1953, "day": 64.0, "vs25": -0.1}, {"label": "0% · 持平全年", "r": 0.0, "full": 23618, "x": 9892, "mo": 2473, "day": 81.1, "vs25": 26.5}], "remediate": [{"label": "维持-13.1%", "r": -13.1, "octdec": 4548, "octdec_day": 49.4, "novdec": 2348, "novdec_day": 38.5}, {"label": "达全市平均-15.4%", "r": -15.4, "octdec": 4005, "octdec_day": 43.5, "novdec": 1805, "novdec_day": 29.6}, {"label": "保-10%底线", "r": -10.0, "octdec": 5280, "octdec_day": 57.4, "novdec": 3080, "novdec_day": 50.5}], "aug_vol": 2242, "aug_day": 72.3, "h1_day": 56.5}};
+// ===== 街镇表 =====
+var tb=document.querySelector('#t-street tbody');
+DATA.street.rows.forEach(function(r,i){
+  var up=r.yoy>0;
+  tb.insertAdjacentHTML('beforeend','<tr class="'+(up?'warnb':'')+'"><td class="c">'+(i+1)+'</td><td>'+r.name+'</td><td class="r"><b>'+r.c26+'</b></td><td class="r">'+r.c25+'</td><td class="r">'+(up?'<span class="bad">↑'+r.yoy.toFixed(1)+'%</span>':'<span class="good">↓'+Math.abs(r.yoy).toFixed(1)+'%</span>')+'</td><td class="r">'+r.hh.toLocaleString()+'</td><td class="r">'+r.density.toFixed(1)+'</td><td class="c">'+(up?'<span class="tag t-red">上升</span>':'<span class="tag t-green">下降</span>')+'</td></tr>');
+});
+// 全市表
+var tc=document.querySelector('#t-city tbody');
+DATA.city.rows.forEach(function(r){
+  tc.insertAdjacentHTML('beforeend','<tr style="'+(r.name==='徐汇区'?'background:#eff6ff;font-weight:600':'')+'"><td class="c">'+r.dr+'</td><td>'+r.name+'</td><td class="r">'+r.c26.toLocaleString()+'</td><td class="r">'+r.c25.toLocaleString()+'</td><td class="r">'+(r.yoy<0?'<span class="good">↓'+Math.abs(r.yoy).toFixed(1)+'%</span>':'<span class="bad">↑'+r.yoy.toFixed(1)+'%</span>')+'</td><td class="r">'+r.density.toFixed(2)+'</td><td class="c">'+r.ddr+'</td></tr>');
+});
+// 目标表
+var tt=document.querySelector('#t-target tbody');
+var lvl=['挑战','挑战','基准','底线','警惕','警戒'];
+var cls=['t-green','t-green','t-blue','t-amber','t-amber','t-red'];
+DATA.target.scenarios.forEach(function(r,i){
+  tt.insertAdjacentHTML('beforeend','<tr style="'+(r.r<=-13.1&&r.r>=-15.4?'background:#f0fdf4':'')+'"><td>'+r.label+'</td><td class="r"><b>'+r.r.toFixed(1)+'%</b></td><td class="r"><b>'+r.x.toLocaleString()+'</b>件</td><td class="r">'+r.mo.toLocaleString()+'件</td><td class="r"><b>'+r.day+'</b>件</td><td class="r">'+(r.vs25<0?'<span class="good">↓'+Math.abs(r.vs25).toFixed(1)+'%</span>':'<span class="bad">↑'+r.vs25.toFixed(1)+'%</span>')+'</td><td class="c"><span class="tag '+cls[i]+'">'+lvl[i]+'</span></td></tr>');
+});
+// 补救表
+var tr=document.querySelector('#t-rem tbody');
+DATA.target.remediate.forEach(function(r){
+  tr.insertAdjacentHTML('beforeend','<tr><td>'+r.label+'</td><td class="r"><b>'+r.octdec.toLocaleString()+'</b>件</td><td class="r">'+r.octdec_day+'件</td><td class="r">'+r.novdec.toLocaleString()+'件</td><td class="r"><b style="'+(r.novdec_day<40?'color:#dc2626':'')+'">'+r.novdec_day+'件</b></td></tr>');
+});
+
+// ===== ECharts =====
+var C1=echarts.init(document.getElementById('c-street1'));
+var sr=DATA.street.rows;
+C1.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+  legend:{data:['1-8月工单(件)','2025同期(件)'],top:0},
+  grid:{left:50,right:50,bottom:40,top:40},
+  xAxis:{type:'category',data:sr.map(r=>r.name),axisLabel:{rotate:30,fontSize:11}},
+  yAxis:[{type:'value',name:'工单量(件)'},{type:'value',name:'同比%',position:'right',axisLabel:{formatter:'{value}%'}}],
+  series:[{name:'1-8月工单(件)',type:'bar',data:sr.map(r=>r.c26),itemStyle:{color:'#2563eb'}},
+    {name:'2025同期(件)',type:'bar',data:sr.map(r=>r.c25),itemStyle:{color:'#94a3b8'}},
+    {name:'同比%',type:'line',yAxisIndex:1,data:sr.map(r=>r.yoy),itemStyle:{color:'#dc2626'},lineStyle:{width:2},symbol:'circle',symbolSize:6,
+      markLine:{silent:true,data:[{yAxis:0}],lineStyle:{color:'#9ca3af',type:'dashed'}}}]
+});
+var sr2=sr.slice().sort((a,b)=>a.yoy-b.yoy);
+var C2=echarts.init(document.getElementById('c-street2'));
+C2.setOption({
+  tooltip:{trigger:'axis'},
+  grid:{left:70,right:40,bottom:20,top:20},
+  xAxis:{type:'value',axisLabel:{formatter:'{value}%'}},
+  yAxis:{type:'category',data:sr2.map(r=>r.name),axisLabel:{fontSize:11}},
+  series:[{type:'bar',data:sr2.map(r=>({value:r.yoy,itemStyle:{color:r.yoy<0?'#16a34a':'#dc2626'}})),barWidth:'60%',
+    label:{show:true,position:'right',formatter:p=>p.value<0?'↓'+Math.abs(p.value).toFixed(1)+'%':'↑'+p.value.toFixed(1)+'%',fontSize:10}}]
+});
+var sr3=sr.slice().sort((a,b)=>b.density-a.density);
+var C3=echarts.init(document.getElementById('c-street3'));
+C3.setOption({
+  tooltip:{trigger:'axis'},
+  grid:{left:70,right:40,bottom:20,top:20},
+  xAxis:{type:'value',name:'件/千户'},
+  yAxis:{type:'category',data:sr3.map(r=>r.name),axisLabel:{fontSize:11}},
+  series:[{type:'bar',data:sr3.map(r=>({value:r.density,itemStyle:{color:r.density>35?'#dc2626':(r.density>25?'#d97706':'#16a34a')}})),barWidth:'60%',
+    label:{show:true,position:'right',fontSize:10},markLine:{silent:true,data:[{xAxis:DATA.street.t_density}],lineStyle:{color:'#2563eb',type:'dashed'},label:{formatter:'均值'+DATA.street.t_density,fontSize:10}}}]
+});
+var cr=DATA.city.rows.slice().sort((a,b)=>a.yoy-b.yoy);
+var C4=echarts.init(document.getElementById('c-city1'));
+C4.setOption({
+  tooltip:{trigger:'axis',formatter:p=>p[0].name+'<br/>同比 '+p[0].value.toFixed(1)+'%'},
+  grid:{left:80,right:60,bottom:40,top:30},
+  xAxis:{type:'category',data:cr.map(r=>r.name),axisLabel:{rotate:40,fontSize:10}},
+  yAxis:{type:'value',name:'同比%',axisLabel:{formatter:'{value}%'}},
+  series:[{type:'bar',data:cr.map(r=>({value:r.yoy,itemStyle:{color:r.name==='徐汇区'?'#7c3aed':(r.yoy<-15.4?'#16a34a':'#d97706')}})),barWidth:'55%',
+    label:{show:true,position:'top',formatter:p=>(p.value<0?'↓':'↑')+Math.abs(p.value).toFixed(1),fontSize:9,color:'#555'},
+    markLine:{silent:true,data:[{yAxis:-15.4}],lineStyle:{color:'#dc2626',type:'dashed'},label:{formatter:'全市平均-15.4%',fontSize:10}}}]
+});
+var C5=echarts.init(document.getElementById('c-xh1'));
+var xm=DATA.xh_monthly;
+C5.setOption({
+  tooltip:{trigger:'axis'},
+  legend:{data:['工单量(件)','同比%'],top:0},
+  grid:{left:50,right:45,bottom:30,top:40},
+  xAxis:{type:'category',data:xm.map(r=>r.m)},
+  yAxis:[{type:'value',name:'件'},{type:'value',name:'%',position:'right',axisLabel:{formatter:'{value}%'}}],
+  series:[{name:'工单量(件)',type:'bar',data:xm.map(r=>r.vol),itemStyle:{color:'#2563eb'},barWidth:'50%'},
+    {name:'同比%',type:'line',yAxisIndex:1,data:xm.map(r=>r.yoy),itemStyle:{color:'#dc2626'},lineStyle:{width:2.5},symbol:'circle',symbolSize:7,
+      markLine:{silent:true,data:[{yAxis:0}],lineStyle:{color:'#9ca3af',type:'dashed'}}}]
+});
+var C6=echarts.init(document.getElementById('c-xh2'));
+C6.setOption({
+  tooltip:{trigger:'axis'},
+  grid:{left:45,right:30,bottom:30,top:30},
+  xAxis:{type:'category',data:xm.map(r=>r.m)},
+  yAxis:{type:'value',name:'件/千户'},
+  series:[{type:'line',data:xm.map(r=>r.density),itemStyle:{color:'#7c3aed'},lineStyle:{width:3},symbol:'circle',symbolSize:8,
+    areaStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'rgba(124,58,237,0.25)'},{offset:1,color:'rgba(124,58,237,0.02)'}])},
+    label:{show:true,position:'top',fontSize:10}}]
+});
+var C7=echarts.init(document.getElementById('c-target1'));
+var sc=DATA.target.scenarios.slice().reverse();
+C7.setOption({
+  tooltip:{trigger:'axis',formatter:p=>p[0].name+'<br/>日均 '+p[0].value+'件 / 总量 '+p[0].data.total+'件'},
+  grid:{left:200,right:60,bottom:30,top:20},
+  xAxis:{type:'value',name:'日均工单(件)',axisLabel:{formatter:'{value}'}},
+  yAxis:{type:'category',data:sc.map(r=>r.label),axisLabel:{fontSize:11}},
+  series:[{type:'bar',data:sc.map(r=>({value:r.day,total:r.x,itemStyle:{color:r.r<=-15?'#16a34a':(r.r<=-13.1?'#2563eb':(r.r<=-10?'#d97706':'#dc2626'))}})),barWidth:'55%',
+    label:{show:true,position:'right',formatter:p=>p.value+'件/日',fontSize:11},
+    markLine:{silent:true,data:[{xAxis:72}],lineStyle:{color:'#dc2626',type:'dashed'},label:{formatter:'8月实际72件',fontSize:10,color:'#dc2626'}}}]
+});
+window.addEventListener('resize',function(){[C1,C2,C3,C4,C5,C6,C7].forEach(c=>c.resize())});
+</script></body></html>

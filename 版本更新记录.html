@@ -95,17 +95,327 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.8.0</span>
-    <span>更新日期：2026-09-22</span>
-    <span>累计更新：11 次</span>
+    <span>当前版本：v2.15.0</span>
+    <span>更新日期：2026-09-29</span>
+    <span>累计更新：18 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">19</div><div class="stat-label">本次更新文件数</div></div>
-  <div class="stat-box"><div class="stat-num">+3,482</div><div class="stat-label">新增代码行数</div></div>
-  <div class="stat-box"><div class="stat-num">-207</div><div class="stat-label">删除代码行数</div></div>
-  <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">已完成成果数</div></div>
+  <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">报告清除编辑器注入</div></div>
+  <div class="stat-box"><div class="stat-num">4,508</div><div class="stat-label">删除的注入属性（处）</div></div>
+  <div class="stat-box"><div class="stat-num">189 KB</div><div class="stat-label">全站瘦身</div></div>
+  <div class="stat-box"><div class="stat-num">0</div><div class="stat-label">正文/结构改动</div></div>
+</div>
+
+<!-- ===== v2.15.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">PATCH</span>
+    <span class="version-num">v2.15.0</span>
+    <span class="version-date">2026-09-29</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🧹 清除外部编辑器回写的注入属性（拆掉此前标签损坏的引信）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增脚本</span><code>scripts/clean_editor_attrs.py</code> —— 只删除编辑器注入属性，<b>不碰正文、样式、脚本、结构</b>；默认先备份到 <code>_archive/</code>，支持 <code>--dry-run</code> / <code>--no-backup</code></li>
+        <li><span class="tag tag-data">清理范围</span><b>4 份报告、4,508 处</b>：《物业投诉根因分析报告》2,593 · 《高风险小区预警清单》1,177 · 《数据质量优化专项报告》463 · 《课题成果总览》275（含 1 处 <code>data-dm-ref</code>）</li>
+        <li><span class="tag tag-opt">体积</span>全站瘦身 <b>189 KB</b>：根因 220→111 KB、预警清单 183→133 KB、数据质量 59→39 KB、成果总览 37→26 KB</li>
+        <li><span class="tag tag-opt">为什么要清</span>该属性无任何运行时用途，却是「<b>正则吞标签</b>」事故的直接诱因 —— <code>update_risk_report.py</code> 曾用 <code>\S+?</code> 做前缀匹配，而 <code>\S</code> 会匹配 <code>&lt;</code> <code>&gt;</code> <code>"</code> <code>=</code>，于是属性连同标签一起被吞掉、替换后又不补回，导致 <code>&lt;p</code> 丢掉 <code>&gt;</code>、<b>整句话在页面上完全不显示</b>。属性已删除后，同类隐患不再具备触发条件</li>
+        <li><span class="tag tag-opt">澄清</span>《版本更新记录》正文中的若干处同名文字是<b>转义引用的事故示例</b>（写在 <code>&lt;code&gt;</code> 内），<b>属正文、不在清理范围</b>，脚本只在标签内部匹配属性，不会误删</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">✅ 四项自检 + 幂等性</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">自检</span>每份文件写盘前跑四项断言，任一不过即拒绝写盘：<b>正文一致</b>（去标签后逐字比对）· <b>标签多重集一致</b> · <b>标签计数一致</b> · <b>残留为 0</b> —— 4/4 全部通过</li>
+        <li><span class="tag tag-opt">未误删</span>本项目自用的 <code>data-target</code>（Tab 切换，23→23 / 3→3 处）与 <code>data-level</code>（预警等级卡抽屉，4→4 处）全部保留；<code>&lt;script&gt;</code> 标签配平、内嵌 JSON 可解析</li>
+        <li><span class="tag tag-opt">幂等</span>连跑第二次输出「<b>0 处改动</b>」，可安全重复执行</li>
+        <li><span class="tag tag-opt">渲染对照</span>无头浏览器实测：《物业投诉根因分析报告》清洗前后<b>正文均为 15,637 字</b>、注入属性 2,593→<b>0</b>、乱码 class <b>0</b>；《课题成果总览》正文 1,743 字、注入属性 0、乱码 0</li>
+        <li><span class="tag tag-opt">依赖核查</span>全站 21 个 HTML 与 <code>scripts/*.py</code> 检索确认：<b>没有任何代码或 CSS 选择器读取该属性</b>（仅有一处注释提及），删除无功能影响</li>
+        <li><span class="tag tag-opt">全站对账</span>清洗后复跑：<b>反例 201 处（全属第 11 项）· 关键词-数值冲突 0 处</b> —— 与清洗前完全一致，未引入新问题</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">📌 后续约定</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">约定</span>报告仍<b>不要交给可视化编辑器打开保存</b> —— 一旦保存，属性会被重新注入（且存在把标签写坏的风险）。若不慎再次注入，直接重跑 <code>clean_editor_attrs.py</code> 即可</li>
+        <li><span class="tag tag-opt">存档</span>清洗前的 4 份原件已备份在 <code>_archive/*.注入属性备份_20260929_1459.html</code>，可用于回溯比对</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.14.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.14.0</span>
+    <span class="version-date">2026-09-29</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">🎯 整改清单第 12 项落地：物业服务态度投诉专项排名</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>《治理效果追踪分析报告》新增<b>第八节「物业服务态度投诉专项排名」</b>，设<b>公司 / 小区双视图</b>切换，各展示 Top20</li>
+        <li><span class="tag tag-data">数据层</span><code>governance_tracking.py</code> 新增 <code>SA_CAT="物业服务态度"</code> / <code>SA_MIN=3</code> / <code>SA_BASE_PCT=5</code>，遍历 2026 年 1-8 月与 2025 年同期做同比，JSON 新增 <code>service_attitude</code> 区块</li>
+        <li><span class="tag tag-data">口径</span>采用<b>全量口径</b>（行业公司 × 全部投诉，含无公司归属工单），与「三、十四类治理效果」同源：2026 年 1-8 月 <b>493 件</b> / 2025 年同期 <b>406 件</b>（<b>+21.4%</b>）。窗口内<b>公司 125 个 / 小区 268 个</b></li>
+        <li><span class="tag tag-opt">展示规则</span>总量 &lt; 3 件的组合剔除；2025 年基数占比 &lt; 5% 的不给同比百分比，单元格显示灰字「基数不足」；同比<b>正红负绿</b>（沿用 A 股配色约定）</li>
+        <li><span class="tag tag-new">验收</span>无头浏览器实测：公司表 <b>20 行</b>、小区表 <b>20 行</b>、视图切换正常、章节序号「一…十」共 <b>10 章</b>、乱码标签 <b>0</b></li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 全区同比口径修正：-12.6% → -13.1%</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">问题</span>《街镇专项分析报告》KPI 卡把 <b>-12.6%</b> 标为「全区同比」——该值实为<b>13 个街镇合计口径</b>（13,719 ÷ 15,689，减少 1,970 件），与「全区 13,726 件」的分子口径不一致（混搭）</li>
+        <li><span class="tag tag-fix">根因</span>主数据中 <code>street == "无"</code> 的「归属为空」工单未纳入街镇口径：2026 年 7 条、2025 年同期 109 条，进入分子却不进分母</li>
+        <li><span class="tag tag-new">修正</span>全区口径 = <b>13,726 ÷ 15,798 = -13.1%</b>（减少 <b>2,072 件</b>）；街镇合计口径 -12.6% 留档于 <code>yoy_streets</code>，<b>勿用于「全区」表述</b>。差 <b>102 件</b>即归属为空工单的减少量</li>
+        <li><span class="tag tag-data">落地</span><code>build_street_dataset.py</code> 新增 <code>n2026_all</code> / <code>n2025_same_all</code> / <code>yoy_streets</code> / <code>unassigned_prev</code> 字段；KPI 改「减少 2,072 件」；第四节课文改「对 13 个街镇投诉量下降合计的贡献率」，并注明另 102 件无法摊到街镇</li>
+        <li><span class="tag tag-opt">实测</span>重跑后全站 <b>-13.1% × 15 处</b>；残留 -12.6% 仅 2 处，均为正确用法（专节口径 note + 房屋维修类别真值）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">🧪 对账脚本升级 + 幂等性修复</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">对账盲区</span>「全区投诉降幅」此前只写在 <code>BASE</code>（信息性统计）而未进 <code>CHECKS</code>（冲突判定）→ <b>漏检</b>；本次升格为判定项并新增三式匹配</li>
+        <li><span class="tag tag-fix">按行匹配</span>KPI 卡的投诉总量与降幅文字被标签<b>分行</b>，逐行匹配抓不到 → 补一条跨标签的降幅-减少量联合式（<code>同比 …%…减少</code>），实测命中 <b>14 处</b>，反向模拟旧值亦能抓住</li>
+        <li><span class="tag tag-fix">幂等 bug</span><code>update_governance_report.py</code> 注入新专节后连跑出现 <b>3 字节漂移</b>：根因是 <code>replace_cases</code> 的结束锚点固定写 <code>&lt;!-- 八、</code>，新专节占了「八」、原「八／九」顺延为「九／十」，且标记同时以该串开头造成撞车 → 改<b>动态锚点</b>（取「治理经验总结」区块注释全文），标记改名 <code>SA-SECTION</code>；连跑 <b>3 次 md5 完全一致</b></li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">📊 全站对账实测（2026-09-29）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">冲突</span><b>关键词-数值冲突 0 处 ✅</b>（第 3 / 5 项已完成，旧口径残留已清零）</li>
+        <li><span class="tag tag-opt">反例</span>残留 <b>201 处</b>（270 → 201），<b>全部属第 11 项（同比只保留两年）</b>：街镇 64 · 12345 42 · 治理追踪 30 · 数据质量 23 · 底抬 14 · 月报合集 10 · 重点问题 7 · 根因 5 · 版本记录 4 · 成果总览 1 · 高风险 1</li>
+        <li><span class="tag tag-new">完成度</span>整改清单 <b>13 项中 12 项已完成</b>，仅余第 11 项；清单本体升 <b>v2.6</b></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.13.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">PATCH</span>
+    <span class="version-num">v2.13.0</span>
+    <span class="version-date">2026-09-29</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🔍 华泾红色预警占比核查（整改清单第 13 项）结论</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">数字正确</span>会议中发现的原始错误是：华泾镇的红色预警占比<b>显示为 0</b>，却仍标注「全区最高」—— 该错误<b>已不存在</b>。现全站统一显示 <b>47.6%（全区最高）</b>，并经核算确认：华泾参评 21 个小区中红色 10 个 = <b>10÷21 = 47.6%</b>，确为全区最高；次高漕河泾 <b>35÷84 = 41.7%</b>。两个旧错值全站已无残留</li>
+        <li><span class="tag tag-fix">但查出更深的问题</span>承载这句话的 <code>&lt;p&gt;</code> 标签已损坏 —— 写成 <code>&lt;p 华泾红色预警占比47.6%…&lt;/p data-page-node-id="…"&gt;</code>，浏览器将其解析为一串乱码属性，导致<b>整句话在页面上完全不显示</b>（无头浏览器 innerText 实测：不可见）。也就是说，会议上看不到这条结论，不只是数字问题</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 根因修复：脚本正则吞掉标签</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">根因</span><code>update_risk_report.py</code> 第 7 条规则用 <code>\S+?</code> 做前缀匹配。而 <code>\S</code> <b>会匹配 <code>&lt;</code> <code>&gt;</code> <code>"</code> <code>=</code></b>，于是 <code>data-page-node-id="…"&gt;</code> 连同标签一起被吞进匹配范围，替换后又不补回 —— <code>&lt;p</code> 就此丢掉 <code>&gt;</code>。<b>每跑一次脚本就重现一次损坏</b></li>
+        <li><span class="tag tag-fix">修复</span>前缀改为 <code>[^\s&lt;&gt;"=/]+?</code>（只吃词、不碰标签与属性），并已修复 HTML 中破损的标签</li>
+        <li><span class="tag tag-new">验证</span>修复后连跑两次脚本，文件字符数 <b>160,542 → 160,542</b>、md5 <b>完全一致</b>（幂等）；该句恢复可见</li>
+        <li><span class="tag tag-opt">全站排查</span>该模式<b>全脚本库仅此一处</b>；另对全站 16 个报告做标签完整性扫描（闭合标签带属性 / 标签内混入正文），并按「渲染后是否出现乱码标签」复核了 4 个被编辑器注入过的报告 —— <b>0 处残留</b></li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">⚠️ 顺带发现（未处理，待定夺）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">死规则</span><code>update_risk_report.py</code> 有 <b>21 条规则长期失效</b>（每次运行都报「未命中」）。逐条核对后确认：它们期望的是<b>旧的「正向加分制」文案</b>（如「分数越高代表风险越大」「&lt;th&gt;总分&lt;/th&gt;」「对数缩放，投诉总量越大得分越高」），而文件在第 6 项整改后已换成新版（「100 分起扣」「风险得分」「…越大扣分越多」），因此匹配不上 —— <b>属死代码，当前无实际损害</b>（关键数值对账冲突 0 处，文案确为新版）</li>
+        <li><span class="tag tag-opt">隐患</span>这些规则现在无法更新对应内容：一旦数据变化（如参评数由 772 变动），相关文案不会跟进；且「未命中」告警与真实缺陷混在一起，容易被忽略 —— <b>本次的真 bug 恰恰就藏在这片告警里</b>。建议后续按新文案重写或清理这批规则</li>
+        <li><span class="tag tag-opt">观察</span>《高风险小区预警清单》《物业投诉根因分析报告》《数据质量优化专项报告》《课题成果总览》4 份报告带 <b>4,500+ 个 <code>data-page-node-id</code></b> 属性（外部编辑器打开保存时注入），本次标签损坏即发生在其中 —— 建议避免再用编辑器打开保存这些报告 <span class="tag tag-new">后续</span>该批注入属性已于 <b>v2.15.0 全部清除</b>（4,508 处），隐患引信已拆除</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.12.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.12.0</span>
+    <span class="version-date">2026-09-29</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">🧹 词云词表人工审核：删除 45 个中性词（第 10 项延伸）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>新增审核工具链 <code>dump_wordcloud_terms.py</code> + <code>gen_wordcloud_review.py</code>，产出《词云词表审核清单.html》。把 13 街镇候选词由 Top24 放大到 Top60（去重 <b>190 个</b>），支持勾选删除、搜索、「只看当前展示词」、按街镇展开，勾选结果一键复制</li>
+        <li><span class="tag tag-opt">口径</span>审核清单<b>必须同时给出补位候选</b>：词云取的是动态 Top24，删掉一个词第 25 名会立刻顶上 —— 不给候选池就看不到「删完会变成什么」。实测补位后冒出新的地址碎片「永嘉」（天平路「永嘉路」被切开），已一并清理</li>
+        <li><span class="tag tag-fix">数据</span><code>build_street_dataset.py</code> 新增两个停用词组：
+          <code>STOP_MANUAL</code>（<b>39 个</b>泛指虚词/流程词：上门、恢复、安装、更换、解决方案、现象、针对、规定、彻底、事宜、按照、或者、杜绝…，无诉求指向、不构成主题）
+          与 <code>STOP_PLACE</code>（<b>6 个</b>地址碎片：建国、西路、桂林、家园、漕路、永嘉，来自「建国西路」「桂林路」「漕溪路」被分词切开，与 <code>self_terms</code> 同一目的）</li>
+        <li><span class="tag tag-opt">可追溯</span>人工审核删除的词<b>单独成组</b>而非并入既有模板词组，便于日后回溯「哪些是人工判断删的」。停用词总量 <b>205 → 249</b></li>
+        <li><span class="tag tag-new">效果</span>词云去重展示词 <b>67 → 65 个</b>；补位词由「上楼/现象/有关/解决方案」一类泛词，替换为「保洁、停放、水管、空调、快递、物业管理」等具体业务词</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">📐 口径描述修正</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">修正</span>《词云总览》页头原写「数据口径：2024.01–2026.08 全量工单」，与词云实际口径不符 —— 词云取的是 <b>2026年1-8月 + 案件级归并</b>（同一诉求的催单/重复来电只计首单），已改正</li>
+        <li><span class="tag tag-opt">补充</span>总览页说明由「剔除工单模板用语与地名」细化为四类非主题词的完整口径：工单模板用语、公文套话、泛指虚词、地址碎片</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">✅ 影响范围与验证</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">影响面</span>停用词<b>只作用于 <code>keywords_of()</code></b>，而 <code>keywords</code> 字段仅用于词云 —— 街镇总数、同比、密度、重复率、风险评分等<b>全部数字零变化</b>（街镇明细合计仍 13,719 条，全区 13,726 条、同比 -13.1%）</li>
+        <li><span class="tag tag-fix">验证</span>《街镇专项分析报告》重跑后：<b>81 个图表全部有配置、13 张词云、157 张表格</b>，第 8 项底抬区块完整保留</li>
+        <li><span class="tag tag-new">出图</span>13 张词云 PNG（1600×900）全部重新渲染导出</li>
+        <li><span class="tag tag-fix">对账</span>全站反例仍 <b>201 处（全属第 11 项「同比删 2024」，未开工）</b>、关键词-数值冲突 <b>0 处</b> —— 本次改动<b>未新增任何反例</b></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.11.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.11.0</span>
+    <span class="version-date">2026-09-29</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">🖱️ 底部抬升报告「重点小区数」下钻抽屉（第 9 项模式延伸）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>《底部抬升小区热线数据分析报告》<b>三、街道分布与治理效果</b>表中「重点小区数」一列，13 个街镇的数字全部<b>可点击</b>，从右侧滑出抽屉列出该街道的<b>底部抬升重点小区清单</b>（小区名、2026年1-8月、2025年同期、同期同比、矛盾类型）</li>
+        <li><span class="tag tag-opt">口径</span>抽屉顶部标明「名单 N 个，其中 M 个可匹配到热线数据」；全区 <b>84 个名单 / 78 个可匹配</b>。湖南路、凌云路、田林共 <b>6 个小区</b>（上海天玺、华尔登广场、宫宵小区、老沪闵路709弄、福苑小区、高知楼）在热线数据中无记录，抽屉内<b>并列显示并标注「无热线记录」</b>，不参与投诉量统计 —— 不隐藏未匹配小区，与报告既有二级口径一致</li>
+        <li><span class="tag tag-fix">一致性</span>13 个街镇逐一校验：抽屉内可匹配小区数与表内「N个」<b>全部吻合（13/13）</b>；长桥罗秀新二村 <b>142 件 / -4.1%</b> 与街镇专项报告、热点小区榜三处一致</li>
+        <li><span class="tag tag-new">交互</span>Esc／点击遮罩／关闭按钮均可关闭，打开时锁定页面滚动，键盘 Enter/Space 可用（与第 9 项预警抽屉同款交互）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 顺带修复</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">脚本</span><code>recalc_bottom_lift_8m.py</code> 为每条街道新增 <code>communities</code> 小区明细（含匹配标记、各期投诉量、同比、矛盾类型），明细与表格口径同源、不另起一套计算</li>
+        <li><span class="tag tag-new">新增</span><code>update_bottom_lift_report.py</code> 增加街道级下钻抽屉注入；抽屉块采用「<b>先移除再重注入</b>」，数据或脚本更新后重跑即为最新，不残留旧数据</li>
+        <li><span class="tag tag-fix">幂等</span>该脚本另有三处含动态数值的替换规则（页头 meta、结论 1、结论 5）改为正则幂等写法，此前每次重跑都会报「未匹配」告警；现已做到<b>重复执行字节数完全一致</b></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.10.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.10.0</span>
+    <span class="version-date">2026-09-29</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title opt">🧭 整改第 6 项：高风险评分逻辑改为「100 分起扣」</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">模型</span><strong>计分方向反转</strong> —— 原「五维正向加权，总分 100、分数越高越危险」改为 <b>100 分起扣</b>：满分 100 分，各维度按风险程度<b>扣分</b>（扣分额＝该维度风险程度 × 权重），展示分＝100 − 扣分合计，<b>得分越低代表风险越高</b>，消除「80 分是红色」的反直觉</li>
+        <li><span class="tag tag-fix">分档</span>红色 <b>≤30</b>／橙色 <b>31-45</b>／黄色 <b>46-60</b>／蓝色 <b>61-75</b>／绿色 <b>&gt;75</b>，与改造前正向阈值 ≥70/≥55/≥40/≥25 一一对应，<b>各级小区数完全不变</b>（红 254 / 橙 386 / 黄 108 / 蓝 24，参评 772）</li>
+        <li><span class="tag tag-fix">顺带修正</span>页面「评分区间」表此前写 <code>≥70分</code>，而 Top30 说明却写 <code>≥60分</code>，两处自相矛盾；已统一为反扣分制的 <code>≤30分</code></li>
+        <li><span class="tag tag-opt">连带</span>《街镇专项分析报告》风险表列名改「风险得分」、排序改为按低分取 Top；维度说明、图例、建议五的激励口径同步改写</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">📊 整改第 8 项：街镇汇总中底部抬升小区单独分类</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>13 个街镇分页各增<b>「底部抬升小区（党建引领重点小区）」独立区块</b>，含该街镇名单、投诉量与同比，不再与普通小区混在一枚 chip 标签里</li>
+        <li><span class="tag tag-new">新增</span>区块内含 <b>底部抬升 vs 其他小区</b>对比表（小区数／2026年1-8月／2025年同期／同比／小区均值）与小区级明细表（治理类型、物业公司、首位类别）</li>
+        <li><span class="tag tag-opt">口径</span>全区 84 个重点小区中 <b>78 个</b>可匹配到热线数据，2026年1-8月 <b>2,354 件</b>、2025年同期 2,832 件、同比 <b>-16.9%</b> —— 与《底部抬升小区热线数据分析报告》完全一致（别名映射复用同一口径源）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">🖱️ 整改第 9 项：预警等级卡片点击直达明细抽屉</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>《高风险小区预警清单》首页<b>红/橙/黄/蓝四张预警卡片可点击</b>，从右侧滑出抽屉列出该等级<b>全部小区清单</b>（小区名、街道、风险得分、投诉总量、同比增长率、重复投诉率、主要问题）</li>
+        <li><span class="tag tag-new">新增</span>支持<b>键盘操作</b>（Tab 聚焦 + Enter/Space 打开）、<b>Esc 或点击遮罩关闭</b>、打开时锁定页面滚动，遮罩与抽屉带过渡动画</li>
+        <li><span class="tag tag-opt">范围</span>按整改清单收窄：<b>仅「各等级预警小区数 → 该等级小区清单」</b>，不做「重复投诉数」「投诉总量」的下钻明细</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 顺带修复</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">文案</span>《高风险小区预警清单》第五章提示语重复出现「2026年1-8月投诉量Top30中」，已去重</li>
+        <li><span class="tag tag-fix">脚本</span><code>update_risk_report.py</code> 中 6 条因文本已更新而失效的替换规则改为幂等写法，重复执行不再产生「未命中」告警</li>
+        <li><span class="tag tag-new">新增脚本</span><code>add_risk_drawer.py</code> —— 幂等的抽屉注入脚本，数据源仍为 <code>risk_scores.json</code>（100 分起扣制）</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.9.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.9.0</span>
+    <span class="version-date">2026-09-28</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title opt">📐 口径变更：风险评估类报告改按纳统小区统计</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">口径</span><strong>参评范围收窄至《纳统小区 (2026 更新版)》名单</strong> —— 高风险小区预警清单、治理效果追踪分析报告一律只统计名单内小区，不在名单中的小区不做统计；统计单元由热线自由文本小区名改为<b>纳统小区</b>（别名与曾用名归并到主名）。投诉数据仍按热线数据表口径统计</li>
+        <li><span class="tag tag-opt">时间口径</span><strong>风险评估统一到 2026年1-8月</strong>（此前 1-7 月与三年累计混用）</li>
+        <li><span class="tag tag-fix">高风险预警</span><b>参评基数 772（原 799）</b>；红色 <b>254</b>（原 236）、橙色 <b>386</b>（原 426）、黄色 <b>108</b>（原 112）、蓝色 <b>24</b>（原 25）—— 红 254 + 橙 386 + 黄 108 + 蓝 24 = 772，均按纳统小区口径</li>
+        <li><span class="tag tag-fix">治理追踪</span><b>追踪小区数 390（原 394）</b>（门槛不变：三年合计≥15件 ∧ 2024全年≥5件 ∧ 2025年1-8月≥10件）；显著改善 217（55.6%）、持续恶化 111（28.5%）、改善后反弹 58（14.9%）、基本稳定 60（15.4%）</li>
+        <li><span class="tag tag-new">新增说明</span><strong>各报告新增「纳入范围」口径注</strong> —— 明确「仅《纳统小区 (2026 更新版)》名单内的小区，不在名单中的小区不做统计（统计单元＝纳统小区，别名与曾用名已归并；投诉数据按热线数据表口径统计）」</li>
+        <li><span class="tag tag-fix">成果总览同步</span>《课题成果总览》头部「635个小区」→ <b>390</b>、成果 #6 卡「799/236/426/112/25」→ <b>772/254/386/108/24</b>、成果 #7 卡 635 → <b>390</b> 并同步四类成效数；《街镇专项分析报告》口径注「风险评估为 799 个参评小区」→ <b>772</b></li>
+        <li><span class="tag tag-new">新增交付</span><strong>《待确认纳统匹配候选清单.xlsx》</strong> —— 名称近似但未精确匹配的 72 个小区（高置信 49 个，涉 859 件工单）单列待人工确认，本次不自动纳入统计</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">⚙️ 工程资产</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新脚本</span><strong>nato_match.py</strong> —— 热线小区名 → 纳统小区名的唯一映射口径源（规范化 + 主名/别名精确匹配 + 曾用名归并），供风险、治理等脚本统一调用</li>
+        <li><span class="tag tag-opt">脚本改造</span><code>risk_scoring.py</code> / <code>governance_tracking.py</code> 新增 <code>--scope aggregate|filter|all</code>；8 月市局表按 xls 兜底读取（文件名 .xlsx 实为 xls）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">📦 全站统一到 993：关联库重建与关联字段复算</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">口径</span><strong>小区级关联库主表由旧版《纳统小区.xls》（994）切换为《纳统小区 (2026 更新版).xls》（993）</strong> —— 全站不再使用 994 口径。名单归属三处变化：删「钦州大厦」、合并「尚海湾二期 + 尚海湾豪庭」→「尚海湾豪庭小区（北区）」（户数 2049+1595=3644 吻合）、新增「宛南家园」</li>
+        <li><span class="tag tag-new">新脚本</span><strong>build_linked_data.py</strong> —— 以 2026 更新版为唯一主表重建 <code>community_linked_data.pkl</code>（993 行 × 45 字段），重跑电梯／修缮／底部抬升／热线匹配链路，复算 <code>data_link_quality.json</code>；旧库自动备份为 <code>community_linked_data_20260903_994.pkl</code></li>
+        <li><span class="tag tag-fix">匹配复算</span>电梯 <b>257/268（95.9%）</b>、修缮 <b>285/338（84.3%）</b>、底部抬升 <b>83/84（98.8%）</b>、热线覆盖 <b>968/993（97.5%）</b>；小区级 45 字段、街道级 24 字段不变</li>
+        <li><span class="tag tag-fix">投诉字段</span>关联库投诉字段由「截至 2026年7月的快照」重算为<b>含 2026年1-8月</b>：2024 年 26,887 件／2025 年 22,321 件／2026年1-8月 13,596 件（纳统口径）</li>
+        <li><span class="tag tag-fix">街镇密度</span><strong>户数改为「按纳统小区归并后」累加</strong>（同一小区的别名／曾用名只计一次），并修正原「小区名匹配不上即按 0 户计」导致的密度虚高：全区有投诉小区户数 494,966 → <b>507,982</b>，凌云路 25.1→22.4、华泾 27.0→24.5、漕河泾 28.2→26.8 件/千户；湖南路 50.7 保持不变（仍居首）</li>
+        <li><span class="tag tag-fix">报告同步</span>《多源数据清洗与关联分析报告》993 小区／59 字段、各数据源匹配率全部复算；《物业投诉根因分析报告》纳入范围与关联字段说明更新（968 个有投诉纳统小区、256 有电梯、284 有修缮、82 底部抬升在新口径下不变）；《课题成果总览》数据底座卡 994 → <b>993</b> 小区</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">🧹 功能下架与条目清理</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">下架</span><strong>原 AI 问答模块（独立页面 + 总览页入口卡片 + 右下角浮动按钮）已从发布站点整体下架</strong> —— 源码归档至 <code>_archive/</code> 保留备查，不再发布、不可访问；各分析报告一律不引用其口径数字</li>
+        <li><span class="tag tag-opt">同步</span>《课题成果总览》已删除入口卡片与浮动按钮（<b>成果编号 #8 预留、编号不重排</b>）；相关页面与历史条目中的表述一并清理</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.8.0 ===== -->
@@ -205,7 +515,6 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
         <li><span class="tag tag-new">结论变化</span><strong>底部抬升治理评价反转</strong> —— 2026年1-8月同比 -16.9%，优于全区（-13.1%）3.8pp，由"追平全区"改为"首次反超"；矛盾主战场由二类（设施/房屋，-30.5%）转移至三类（业委会/治理，+20.3%，唯一上升）</li>
         <li><span class="tag tag-fix">数据修正</span><strong>七、重点小区榜单列名修正</strong> —— 「2025H1 / 2026H1」为上半年缩写，已改为「2025年1-8月 / 2026年1-8月」并同步重算数据</li>
         <li><span class="tag tag-new">新增说明</span><strong>pp（百分点）含义注释</strong> —— 总体概况表下新增注释：pp=percentage point，两个百分数直接相减的差值（如 -5.5% 与 -19.9% 之差为 +14.4pp）</li>
-        <li><span class="tag tag-opt">口径</span><strong>徐汇AI智能体页同步</strong> —— "2026年上半年同比-15.7%" 更正为 "2026年1-8月同比-13.1%"</li>
       </ul>
     </div>
 
@@ -274,7 +583,6 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
         <li><span class="tag tag-fix">数据修正</span><strong>2026年8-12月数据显示问题</strong> — 修复专题报告中2026年8-12月显示为0的问题，改为null并断开折线，避免误导</li>
         <li><span class="tag tag-fix">数据修正</span><strong>2024年投诉总量修正</strong> — 全报告统一：2024年总量从29,070件修正为29,468件（基于清洗后标准数据），同比变化率从-18.8%修正为-19.9%</li>
         <li><span class="tag tag-fix">数据修正</span><strong>物业公司关联数据补全</strong> — 纳统小区物业公司关联率从93.0%提升至94.4%，根因报告Top10物业公司排名同步更新</li>
-        <li><span class="tag tag-fix">数据修正</span><strong>验收演练报告数据修正</strong> — 2026年同期同比从-51.4%修正为-15.7%，总量从23,618修正为13,618</li>
       </ul>
     </div>
 
@@ -299,8 +607,6 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
         <div class="file-item"><span class="icon">✏️</span><span class="name">12345投诉量下降数据报告.html</span><span class="change change-mod">新增章节</span></div>
         <div class="file-item"><span class="icon">✏️</span><span class="name">高风险小区预警清单.html</span><span class="change change-mod">新增章节</span></div>
         <div class="file-item"><span class="icon">✏️</span><span class="name">课题成果总览.html</span><span class="change change-mod">进度更新</span></div>
-        <div class="file-item"><span class="icon">✏️</span><span class="name">徐汇AI智能体.html</span><span class="change change-mod">数据修正</span></div>
-        <div class="file-item"><span class="icon">✏️</span><span class="name">验收演练报告.html</span><span class="change change-mod">数据修正</span></div>
         <div class="file-item"><span class="icon">✏️</span><span class="name">数据质量优化专项报告.html</span><span class="change change-mod">数据修正</span></div>
         <div class="file-item"><span class="icon">➕</span><span class="name">scripts/investigation_targets.json</span><span class="change change-add">新增</span></div>
         <div class="file-item"><span class="icon">➕</span><span class="name">scripts/root_cause_2026_data.json</span><span class="change change-add">新增</span></div>
@@ -327,7 +633,6 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
         <li><span class="tag tag-new">新成果</span><strong>数据分析月报合集</strong>（成果#9）—— 2024-2026年31期月度数据全览，按年份Tab切换，含街道Top5、小区Top10、类别Top5、热点问题Top5</li>
         <li><span class="tag tag-new">新成果</span><strong>多源数据清洗与关联分析报告</strong> — 9类业务数据全量清洗关联（小区级45字段+街道级24字段），匹配率评估和质量报告</li>
         <li><span class="tag tag-new">新成果</span><strong>底部抬升小区热线数据分析报告</strong>（成果#7附件）—— 84个党建引领重点小区全周期追踪分析</li>
-        <li><span class="tag tag-new">新功能</span><strong>徐汇AI智能体H5页面</strong> — 悬浮AI按钮 + 10大主题知识库聊天界面</li>
       </ul>
     </div>
 

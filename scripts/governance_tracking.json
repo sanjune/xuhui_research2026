@@ -1,7 +1,13 @@
 {
   "meta": {
-    "version": 2,
+    "version": 3,
     "source": "data/merged_cleaned.pkl（66,812 条，2024.01–2026.08）",
+    "scope": {
+      "unit": "纳统小区（《纳统小区 (2026 更新版).xls》）",
+      "mode": "aggregate",
+      "exclude_outside_nato": true,
+      "note": "仅统计纳统名单内小区；不在名单中的小区不做统计"
+    },
     "period_label": "2026年1-8月",
     "rule": "2025同比=2025全年vs2024全年；2026同比=2026年1-8月vs2025年1-8月",
     "status_rule": "以2026年同期同比判定：恶化<-10%｜改善>+10%｜稳定±10%",
@@ -11,26 +17,13 @@
       "min_2025_same": 10
     }
   },
-  "total_tracking": 394,
-  "success_count": 218,
-  "worsening_count": 109,
-  "rebound_count": 57,
-  "stable_count": 57,
-  "nodata_count": 10,
+  "total_tracking": 390,
+  "success_count": 217,
+  "worsening_count": 111,
+  "rebound_count": 58,
+  "stable_count": 60,
+  "nodata_count": 2,
   "success_top20": [
-    {
-      "community": "江南新村",
-      "street": "斜土路",
-      "company": "上海高建物业有限公司",
-      "n2024": 136,
-      "n2025": 86,
-      "n2025_same": 62,
-      "n2026": 3,
-      "improvement_2025": 36.8,
-      "improvement_2026": 95.2,
-      "top_category": "物业收费",
-      "status": "改善"
-    },
     {
       "community": "景泰大厦",
       "street": "斜土路",
@@ -118,19 +111,6 @@
       "n2025_same": 10,
       "n2026": 1,
       "improvement_2025": 50.0,
-      "improvement_2026": 90.0,
-      "top_category": "邻里纠纷",
-      "status": "改善"
-    },
-    {
-      "community": "东安路240弄1-4号",
-      "street": "枫林路",
-      "company": "无",
-      "n2024": 9,
-      "n2025": 13,
-      "n2025_same": 10,
-      "n2026": 1,
-      "improvement_2025": -44.4,
       "improvement_2026": 90.0,
       "top_category": "邻里纠纷",
       "status": "改善"
@@ -277,6 +257,32 @@
       "improvement_2026": 76.7,
       "top_category": "邻里纠纷",
       "status": "改善"
+    },
+    {
+      "community": "绿邑翠苑",
+      "street": "漕河泾",
+      "company": "上海中海物业管理有限公司",
+      "n2024": 47,
+      "n2025": 91,
+      "n2025_same": 72,
+      "n2026": 17,
+      "improvement_2025": -93.6,
+      "improvement_2026": 76.4,
+      "top_category": "业主大会/业委会",
+      "status": "改善"
+    },
+    {
+      "community": "陕西南路550弄",
+      "street": "天平路",
+      "company": "上海衡复物业有限公司",
+      "n2024": 7,
+      "n2025": 34,
+      "n2025_same": 29,
+      "n2026": 7,
+      "improvement_2025": -385.7,
+      "improvement_2026": 75.9,
+      "top_category": "房屋违规使用",
+      "status": "改善"
     }
   ],
   "worsening_top10": [
@@ -323,11 +329,11 @@
       "community": "新湖云庭",
       "street": "枫林路",
       "company": "上海益镇物业管理有限公司",
-      "n2024": 62,
+      "n2024": 63,
       "n2025": 42,
       "n2025_same": 28,
       "n2026": 92,
-      "improvement_2025": 32.3,
+      "improvement_2025": 33.3,
       "improvement_2026": -228.6,
       "top_category": "业主大会/业委会",
       "status": "恶化"
@@ -442,11 +448,11 @@
       "community": "新湖云庭",
       "street": "枫林路",
       "company": "上海益镇物业管理有限公司",
-      "n2024": 62,
+      "n2024": 63,
       "n2025": 42,
       "n2025_same": 28,
       "n2026": 92,
-      "improvement_2025": 32.3,
+      "improvement_2025": 33.3,
       "improvement_2026": -228.6,
       "top_category": "业主大会/业委会",
       "status": "恶化"
@@ -762,5 +768,1559 @@
       "effect_2025": 13.9,
       "effect_2026": 10.7
     }
+  },
+  "service_attitude": {
+    "category": "物业服务态度",
+    "scope": "全量工单（含纳统名单外小区），与「三、十四类治理效果」同源；小区为热线上报名称，未与纳统档案归并",
+    "period": "2026年1-8月 vs 2025年1-8月",
+    "min_total": 3,
+    "min_base_for_pct": 5,
+    "totals": {
+      "n2024": 591,
+      "n2025": 637,
+      "n2025_same": 406,
+      "n2026": 493,
+      "change": 21.4,
+      "company_missing": 19,
+      "community_missing": 1,
+      "n_company": 69,
+      "n_community": 101,
+      "communities_all": 268,
+      "companies_all": 125
+    },
+    "companies": [
+      {
+        "name": "上海高建物业有限公司",
+        "n2026": 39,
+        "n2025_same": 46,
+        "total": 85,
+        "change": -15.2,
+        "n_community": 51,
+        "n_street": 6
+      },
+      {
+        "name": "上海衡复物业有限公司",
+        "n2026": 31,
+        "n2025_same": 26,
+        "total": 57,
+        "change": 19.2,
+        "n_community": 55,
+        "n_street": 2
+      },
+      {
+        "name": "上海徐房物业有限公司",
+        "n2026": 29,
+        "n2025_same": 26,
+        "total": 55,
+        "change": 11.5,
+        "n_community": 35,
+        "n_street": 5
+      },
+      {
+        "name": "上海汇成物业有限公司",
+        "n2026": 22,
+        "n2025_same": 12,
+        "total": 34,
+        "change": 83.3,
+        "n_community": 15,
+        "n_street": 7
+      },
+      {
+        "name": "上海安得物业管理有限公司",
+        "n2026": 15,
+        "n2025_same": 7,
+        "total": 22,
+        "change": 114.3,
+        "n_community": 10,
+        "n_street": 4
+      },
+      {
+        "name": "上海中鹊物业服务有限公司",
+        "n2026": 13,
+        "n2025_same": 2,
+        "total": 15,
+        "change": null,
+        "n_community": 12,
+        "n_street": 6
+      },
+      {
+        "name": "秀澜（上海）物业管理有限公司",
+        "n2026": 11,
+        "n2025_same": 3,
+        "total": 14,
+        "change": null,
+        "n_community": 8,
+        "n_street": 4
+      },
+      {
+        "name": "上海中海物业管理有限公司",
+        "n2026": 8,
+        "n2025_same": 6,
+        "total": 14,
+        "change": 33.3,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海轻工物业管理有限公司",
+        "n2026": 8,
+        "n2025_same": 4,
+        "total": 12,
+        "change": null,
+        "n_community": 10,
+        "n_street": 6
+      },
+      {
+        "name": "上海华晅投资管理有限公司",
+        "n2026": 8,
+        "n2025_same": 2,
+        "total": 10,
+        "change": null,
+        "n_community": 7,
+        "n_street": 2
+      },
+      {
+        "name": "上海抚远物业管理有限公司",
+        "n2026": 8,
+        "n2025_same": 1,
+        "total": 9,
+        "change": null,
+        "n_community": 4,
+        "n_street": 1
+      },
+      {
+        "name": "上海益镇物业管理有限公司",
+        "n2026": 7,
+        "n2025_same": 6,
+        "total": 13,
+        "change": 16.7,
+        "n_community": 9,
+        "n_street": 5
+      },
+      {
+        "name": "上海锐翔上房物业管理有限公司",
+        "n2026": 7,
+        "n2025_same": 6,
+        "total": 13,
+        "change": 16.7,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海汇虹物业管理有限公司",
+        "n2026": 7,
+        "n2025_same": 2,
+        "total": 9,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海万科物业服务有限公司",
+        "n2026": 7,
+        "n2025_same": 0,
+        "total": 7,
+        "change": null,
+        "n_community": 3,
+        "n_street": 3
+      },
+      {
+        "name": "保利城市建设服务有限公司",
+        "n2026": 7,
+        "n2025_same": 0,
+        "total": 7,
+        "change": null,
+        "n_community": 2,
+        "n_street": 2
+      },
+      {
+        "name": "绿城物业服务集团有限公司上海分公司",
+        "n2026": 6,
+        "n2025_same": 7,
+        "total": 13,
+        "change": -14.3,
+        "n_community": 4,
+        "n_street": 3
+      },
+      {
+        "name": "上海中誉物业管理有限公司",
+        "n2026": 6,
+        "n2025_same": 6,
+        "total": 12,
+        "change": 0.0,
+        "n_community": 3,
+        "n_street": 2
+      },
+      {
+        "name": "上海诚锦物业管理有限公司",
+        "n2026": 6,
+        "n2025_same": 5,
+        "total": 11,
+        "change": 20.0,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海晏鑫物业有限公司",
+        "n2026": 6,
+        "n2025_same": 3,
+        "total": 9,
+        "change": null,
+        "n_community": 3,
+        "n_street": 2
+      },
+      {
+        "name": "上海永升物业管理有限公司",
+        "n2026": 6,
+        "n2025_same": 3,
+        "total": 9,
+        "change": null,
+        "n_community": 3,
+        "n_street": 2
+      },
+      {
+        "name": "好伙伴（上海）物业服务管理有限公司",
+        "n2026": 6,
+        "n2025_same": 2,
+        "total": 8,
+        "change": null,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海东方航空物业有限公司",
+        "n2026": 6,
+        "n2025_same": 0,
+        "total": 6,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海阳光投资（集团）物业管理有限公司",
+        "n2026": 5,
+        "n2025_same": 6,
+        "total": 11,
+        "change": -16.7,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海良宇物业管理有限公司",
+        "n2026": 5,
+        "n2025_same": 3,
+        "total": 8,
+        "change": null,
+        "n_community": 4,
+        "n_street": 2
+      },
+      {
+        "name": "沃棠（上海）物业管理有限公司",
+        "n2026": 5,
+        "n2025_same": 3,
+        "total": 8,
+        "change": null,
+        "n_community": 6,
+        "n_street": 1
+      },
+      {
+        "name": "上海龙湖物业服务有限公司",
+        "n2026": 5,
+        "n2025_same": 1,
+        "total": 6,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海东湖物业管理有限公司",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海中鑫物业管理有限公司",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海乾宁物业管理有限公司",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海金辉物业有限公司",
+        "n2026": 4,
+        "n2025_same": 9,
+        "total": 13,
+        "change": -55.6,
+        "n_community": 6,
+        "n_street": 1
+      },
+      {
+        "name": "上海旭程物业管理有限公司",
+        "n2026": 4,
+        "n2025_same": 7,
+        "total": 11,
+        "change": -42.9,
+        "n_community": 5,
+        "n_street": 1
+      },
+      {
+        "name": "上海亿绵物业管理有限公司",
+        "n2026": 4,
+        "n2025_same": 4,
+        "total": 8,
+        "change": null,
+        "n_community": 3,
+        "n_street": 1
+      },
+      {
+        "name": "上海凤梧物业管理有限公司",
+        "n2026": 4,
+        "n2025_same": 2,
+        "total": 6,
+        "change": null,
+        "n_community": 5,
+        "n_street": 2
+      },
+      {
+        "name": "上海栗郡实业有限公司",
+        "n2026": 4,
+        "n2025_same": 1,
+        "total": 5,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海航新物业管理有限公司",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海贴欣物业管理有限公司",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "n_community": 4,
+        "n_street": 3
+      },
+      {
+        "name": "上海天骥物业有限公司",
+        "n2026": 3,
+        "n2025_same": 8,
+        "total": 11,
+        "change": -62.5,
+        "n_community": 4,
+        "n_street": 2
+      },
+      {
+        "name": "上海恒联物业有限公司",
+        "n2026": 3,
+        "n2025_same": 6,
+        "total": 9,
+        "change": -50.0,
+        "n_community": 3,
+        "n_street": 2
+      },
+      {
+        "name": "上海乐道物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 4,
+        "total": 7,
+        "change": null,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海古北物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 3,
+        "total": 6,
+        "change": null,
+        "n_community": 3,
+        "n_street": 3
+      },
+      {
+        "name": "上海中城佶团物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 2,
+        "total": 5,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海军盛物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 2,
+        "total": 5,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海永协物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 2,
+        "total": 5,
+        "change": null,
+        "n_community": 2,
+        "n_street": 2
+      },
+      {
+        "name": "上海外经贸物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "n_community": 5,
+        "n_street": 3
+      },
+      {
+        "name": "上海志昕物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "n_community": 3,
+        "n_street": 1
+      },
+      {
+        "name": "上海通翼物业有限公司",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "n_community": 2,
+        "n_street": 2
+      },
+      {
+        "name": "上海吴安物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海招商局物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "n_community": 2,
+        "n_street": 2
+      },
+      {
+        "name": "上海沪泽物业管理有限公司",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海绿地物业服务有限公司",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海中星集团申城物业有限公司",
+        "n2026": 2,
+        "n2025_same": 13,
+        "total": 15,
+        "change": -84.6,
+        "n_community": 8,
+        "n_street": 4
+      },
+      {
+        "name": "上海华泾泾鸿物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 5,
+        "total": 7,
+        "change": -60.0,
+        "n_community": 3,
+        "n_street": 1
+      },
+      {
+        "name": "上海恒浩物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 4,
+        "total": 6,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海润美物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 3,
+        "total": 5,
+        "change": null,
+        "n_community": 8,
+        "n_street": 4
+      },
+      {
+        "name": "上海南希物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海殷阳物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "n_community": 3,
+        "n_street": 2
+      },
+      {
+        "name": "上海联源物业发展有限公司",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "n_community": 4,
+        "n_street": 2
+      },
+      {
+        "name": "上海古北物业（集团）有限公司",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "n_community": 4,
+        "n_street": 4
+      },
+      {
+        "name": "上海梓班物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "n_community": 3,
+        "n_street": 1
+      },
+      {
+        "name": "上海辰开物业管理有限公司",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "n_community": 3,
+        "n_street": 1
+      },
+      {
+        "name": "尚物博（上海）物业服务有限公司",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      },
+      {
+        "name": "上海申大物业有限公司",
+        "n2026": 1,
+        "n2025_same": 7,
+        "total": 8,
+        "change": -85.7,
+        "n_community": 6,
+        "n_street": 3
+      },
+      {
+        "name": "上海铭杰物业管理有限公司",
+        "n2026": 1,
+        "n2025_same": 3,
+        "total": 4,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海同康物业管理有限公司",
+        "n2026": 0,
+        "n2025_same": 6,
+        "total": 6,
+        "change": -100.0,
+        "n_community": 3,
+        "n_street": 2
+      },
+      {
+        "name": "上海裕明物业管理有限公司",
+        "n2026": 0,
+        "n2025_same": 5,
+        "total": 5,
+        "change": -100.0,
+        "n_community": 6,
+        "n_street": 3
+      },
+      {
+        "name": "上海清枫物业管理有限公司",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "n_community": 2,
+        "n_street": 2
+      },
+      {
+        "name": "上海长峰物业管理有限公司",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "n_community": 1,
+        "n_street": 1
+      },
+      {
+        "name": "上海陶朱正永物业管理有限公司",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "n_community": 2,
+        "n_street": 1
+      }
+    ],
+    "communities": [
+      {
+        "name": "罗秀新二村",
+        "n2026": 8,
+        "n2025_same": 6,
+        "total": 14,
+        "change": 33.3,
+        "street": "长桥",
+        "company": "上海中誉物业管理有限公司"
+      },
+      {
+        "name": "田林三街坊",
+        "n2026": 8,
+        "n2025_same": 0,
+        "total": 8,
+        "change": null,
+        "street": "田林",
+        "company": "上海徐房物业有限公司"
+      },
+      {
+        "name": "南丹小区",
+        "n2026": 7,
+        "n2025_same": 2,
+        "total": 9,
+        "change": null,
+        "street": "徐家汇",
+        "company": "上海汇虹物业管理有限公司"
+      },
+      {
+        "name": "汇成一村",
+        "n2026": 7,
+        "n2025_same": 1,
+        "total": 8,
+        "change": null,
+        "street": "长桥",
+        "company": "上海汇成物业有限公司"
+      },
+      {
+        "name": "凌云新村",
+        "n2026": 6,
+        "n2025_same": 3,
+        "total": 9,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海徐房物业有限公司"
+      },
+      {
+        "name": "罗秀三村",
+        "n2026": 6,
+        "n2025_same": 2,
+        "total": 8,
+        "change": null,
+        "street": "长桥",
+        "company": "上海汇成物业有限公司"
+      },
+      {
+        "name": "徐汇新城",
+        "n2026": 6,
+        "n2025_same": 1,
+        "total": 7,
+        "change": null,
+        "street": "长桥",
+        "company": "上海锐翔上房物业管理有限公司"
+      },
+      {
+        "name": "陕新直管公房",
+        "n2026": 6,
+        "n2025_same": 1,
+        "total": 7,
+        "change": null,
+        "street": "湖南路",
+        "company": "上海衡复物业有限公司"
+      },
+      {
+        "name": "保利西岸",
+        "n2026": 6,
+        "n2025_same": 0,
+        "total": 6,
+        "change": null,
+        "street": "斜土路",
+        "company": "保利城市建设服务有限公司"
+      },
+      {
+        "name": "新湖云庭",
+        "n2026": 6,
+        "n2025_same": 0,
+        "total": 6,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海东方航空物业有限公司"
+      },
+      {
+        "name": "罗秀家园",
+        "n2026": 6,
+        "n2025_same": 0,
+        "total": 6,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海抚远物业管理有限公司"
+      },
+      {
+        "name": "嘉汇广场",
+        "n2026": 5,
+        "n2025_same": 1,
+        "total": 6,
+        "change": null,
+        "street": "徐家汇",
+        "company": "上海龙湖物业服务有限公司"
+      },
+      {
+        "name": "东方巴黎霞飞苑",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "湖南路",
+        "company": "上海东湖物业管理有限公司"
+      },
+      {
+        "name": "中海瀛台",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "长桥",
+        "company": "上海中海物业管理有限公司"
+      },
+      {
+        "name": "印象欧洲（滨江108）",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "华泾",
+        "company": "上海永升物业管理有限公司"
+      },
+      {
+        "name": "罗城路700弄",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海益镇物业管理有限公司"
+      },
+      {
+        "name": "金衡公寓",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海中鑫物业管理有限公司"
+      },
+      {
+        "name": "鑫桂苑·侨高中心",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "虹梅路",
+        "company": "上海万科物业服务有限公司"
+      },
+      {
+        "name": "钦州公寓",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "田林",
+        "company": "上海安得物业管理有限公司"
+      },
+      {
+        "name": "铁路新村",
+        "n2026": 5,
+        "n2025_same": 0,
+        "total": 5,
+        "change": null,
+        "street": "徐家汇",
+        "company": "上海乾宁物业管理有限公司"
+      },
+      {
+        "name": "长汇景苑",
+        "n2026": 4,
+        "n2025_same": 7,
+        "total": 11,
+        "change": -42.9,
+        "street": "长桥",
+        "company": "绿城物业服务集团有限公司上海分公司"
+      },
+      {
+        "name": "馨伴寓",
+        "n2026": 4,
+        "n2025_same": 7,
+        "total": 11,
+        "change": -42.9,
+        "street": "田林",
+        "company": "上海华鑫物业管理顾问有限公司"
+      },
+      {
+        "name": "华东花苑",
+        "n2026": 4,
+        "n2025_same": 2,
+        "total": 6,
+        "change": null,
+        "street": "长桥",
+        "company": "上海轻工物业管理有限公司"
+      },
+      {
+        "name": "斜土清真小区",
+        "n2026": 4,
+        "n2025_same": 1,
+        "total": 5,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "汇景苑",
+        "n2026": 4,
+        "n2025_same": 1,
+        "total": 5,
+        "change": null,
+        "street": "天平路",
+        "company": "上海良宇物业管理有限公司"
+      },
+      {
+        "name": "兰桂坊",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "street": "田林",
+        "company": "上海栗郡实业有限公司"
+      },
+      {
+        "name": "家乐苑",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "street": "凌云路",
+        "company": "秀澜（上海）物业管理有限公司"
+      },
+      {
+        "name": "徐汇苑",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海航新物业管理有限公司"
+      },
+      {
+        "name": "漕东公寓",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海徐房物业有限公司"
+      },
+      {
+        "name": "田林二村",
+        "n2026": 4,
+        "n2025_same": 0,
+        "total": 4,
+        "change": null,
+        "street": "田林",
+        "company": "无"
+      },
+      {
+        "name": "紫阳花苑",
+        "n2026": 3,
+        "n2025_same": 3,
+        "total": 6,
+        "change": null,
+        "street": "华泾",
+        "company": "上海晏鑫实业有限公司"
+      },
+      {
+        "name": "长桥七村",
+        "n2026": 3,
+        "n2025_same": 3,
+        "total": 6,
+        "change": null,
+        "street": "长桥",
+        "company": "上海恒联物业有限公司"
+      },
+      {
+        "name": "三江小区",
+        "n2026": 3,
+        "n2025_same": 2,
+        "total": 5,
+        "change": null,
+        "street": "漕河泾",
+        "company": "好伙伴（上海）物业服务管理有限公司"
+      },
+      {
+        "name": "漕河景苑",
+        "n2026": 3,
+        "n2025_same": 2,
+        "total": 5,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海汇成物业有限公司"
+      },
+      {
+        "name": "俞一小区",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "龙华",
+        "company": "上海华晅投资管理有限公司"
+      },
+      {
+        "name": "柿子湾小区",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "徐家汇",
+        "company": "上海沪泽物业管理有限公司"
+      },
+      {
+        "name": "梅陇四村",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海金辉物业有限公司"
+      },
+      {
+        "name": "楼园",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "长桥",
+        "company": "上海通翼物业有限公司"
+      },
+      {
+        "name": "滨江小区",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "龙华",
+        "company": "上海凤梧物业管理有限公司"
+      },
+      {
+        "name": "钦州花苑",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "田林",
+        "company": "上海军盛物业管理有限公司"
+      },
+      {
+        "name": "青松小区",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "龙山新村",
+        "n2026": 3,
+        "n2025_same": 1,
+        "total": 4,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "东安四村",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "古宜小区",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "田林",
+        "company": "无"
+      },
+      {
+        "name": "吴中公寓",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "田林",
+        "company": "上海吴安物业管理有限公司"
+      },
+      {
+        "name": "寿益坊（北）",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "康健新村",
+        "company": "上海安得物业管理有限公司"
+      },
+      {
+        "name": "永福一区",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "湖南路",
+        "company": "上海衡复物业有限公司"
+      },
+      {
+        "name": "海波花苑",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "龙华",
+        "company": "上海徐汇房地产市场管理有限公司"
+      },
+      {
+        "name": "海珀旭晖",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海绿地物业服务有限公司"
+      },
+      {
+        "name": "西木小区",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "长乐小区",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "湖南路",
+        "company": "上海衡复物业有限公司"
+      },
+      {
+        "name": "闵朱小区",
+        "n2026": 3,
+        "n2025_same": 0,
+        "total": 3,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海诚锦物业管理有限公司"
+      },
+      {
+        "name": "东荡小区",
+        "n2026": 2,
+        "n2025_same": 4,
+        "total": 6,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海恒浩物业管理有限公司"
+      },
+      {
+        "name": "日晖六村",
+        "n2026": 2,
+        "n2025_same": 4,
+        "total": 6,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "虹二小区",
+        "n2026": 2,
+        "n2025_same": 4,
+        "total": 6,
+        "change": null,
+        "street": "徐家汇",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "天钥新村",
+        "n2026": 2,
+        "n2025_same": 3,
+        "total": 5,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "斜土小区",
+        "n2026": 2,
+        "n2025_same": 3,
+        "total": 5,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "漕溪四村双号",
+        "n2026": 2,
+        "n2025_same": 3,
+        "total": 5,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海徐房物业有限公司"
+      },
+      {
+        "name": "长桥八村",
+        "n2026": 2,
+        "n2025_same": 3,
+        "total": 5,
+        "change": null,
+        "street": "长桥",
+        "company": "上海恒联物业有限公司"
+      },
+      {
+        "name": "乌中小区",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "湖南路",
+        "company": "上海永协物业管理有限公司"
+      },
+      {
+        "name": "尚海湾二期",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海阳光投资（集团）物业管理有限公司"
+      },
+      {
+        "name": "田林十一村高层",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "田林",
+        "company": "上海裕明物业管理有限公司"
+      },
+      {
+        "name": "长丰坊",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "康健新村",
+        "company": "上海中城佶团物业管理有限公司"
+      },
+      {
+        "name": "阳光绿园",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海阳光投资（集团）物业管理有限公司"
+      },
+      {
+        "name": "馨汇南苑",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海乐道物业管理有限公司"
+      },
+      {
+        "name": "龙州小区",
+        "n2026": 2,
+        "n2025_same": 2,
+        "total": 4,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海诚锦物业管理有限公司"
+      },
+      {
+        "name": "凯翔",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "漕河泾",
+        "company": "尚物博（上海）物业服务有限公司"
+      },
+      {
+        "name": "悦汇长庭",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "长桥",
+        "company": "上海古北物业（集团）有限公司"
+      },
+      {
+        "name": "桂平小区",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "康健新村",
+        "company": "沃棠（上海）物业管理有限公司"
+      },
+      {
+        "name": "永嘉小区",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "天平路",
+        "company": "上海衡复物业有限公司"
+      },
+      {
+        "name": "汇成桂苑",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海殷阳物业管理有限公司"
+      },
+      {
+        "name": "汇达苑",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "长桥",
+        "company": "上海轻工物业管理有限公司"
+      },
+      {
+        "name": "科汇景苑",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海旭程物业管理有限公司"
+      },
+      {
+        "name": "锦隆苑",
+        "n2026": 2,
+        "n2025_same": 1,
+        "total": 3,
+        "change": null,
+        "street": "凌云路",
+        "company": "上海抚远物业管理有限公司"
+      },
+      {
+        "name": "华欣家园",
+        "n2026": 1,
+        "n2025_same": 7,
+        "total": 8,
+        "change": -85.7,
+        "street": "华泾",
+        "company": "上海华泾泾鸿物业管理有限公司"
+      },
+      {
+        "name": "馨宁公寓",
+        "n2026": 1,
+        "n2025_same": 7,
+        "total": 8,
+        "change": -85.7,
+        "street": "华泾",
+        "company": "上海中星集团申城物业有限公司"
+      },
+      {
+        "name": "实业公寓",
+        "n2026": 1,
+        "n2025_same": 6,
+        "total": 7,
+        "change": -83.3,
+        "street": "徐家汇",
+        "company": "上海百联物业管理有限公司"
+      },
+      {
+        "name": "盛华景苑",
+        "n2026": 1,
+        "n2025_same": 6,
+        "total": 7,
+        "change": -83.3,
+        "street": "华泾",
+        "company": "上海华泾泾鸿物业管理有限公司"
+      },
+      {
+        "name": "东泉小区（西块）",
+        "n2026": 1,
+        "n2025_same": 4,
+        "total": 5,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海旭程物业管理有限公司"
+      },
+      {
+        "name": "康乐小区",
+        "n2026": 1,
+        "n2025_same": 4,
+        "total": 5,
+        "change": null,
+        "street": "康健新村",
+        "company": "上海徐房物业有限公司"
+      },
+      {
+        "name": "田林十四村多层",
+        "n2026": 1,
+        "n2025_same": 4,
+        "total": 5,
+        "change": null,
+        "street": "田林",
+        "company": "上海安得物业管理有限公司"
+      },
+      {
+        "name": "瑞金南苑",
+        "n2026": 1,
+        "n2025_same": 3,
+        "total": 4,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海中海物业管理有限公司"
+      },
+      {
+        "name": "龙南五村",
+        "n2026": 1,
+        "n2025_same": 3,
+        "total": 4,
+        "change": null,
+        "street": "龙华",
+        "company": "上海亿绵物业管理有限公司"
+      },
+      {
+        "name": "乐山大楼",
+        "n2026": 1,
+        "n2025_same": 2,
+        "total": 3,
+        "change": null,
+        "street": "徐家汇",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "复永直管公房",
+        "n2026": 1,
+        "n2025_same": 2,
+        "total": 3,
+        "change": null,
+        "street": "湖南路",
+        "company": "上海衡复物业有限公司"
+      },
+      {
+        "name": "太原直管公房",
+        "n2026": 1,
+        "n2025_same": 2,
+        "total": 3,
+        "change": null,
+        "street": "天平路",
+        "company": "上海衡复物业有限公司"
+      },
+      {
+        "name": "漕溪二村第一",
+        "n2026": 1,
+        "n2025_same": 2,
+        "total": 3,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海旭程物业管理有限公司"
+      },
+      {
+        "name": "臻庭",
+        "n2026": 1,
+        "n2025_same": 2,
+        "total": 3,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海古北物业管理有限公司"
+      },
+      {
+        "name": "航天新苑",
+        "n2026": 1,
+        "n2025_same": 2,
+        "total": 3,
+        "change": null,
+        "street": "虹梅路",
+        "company": "上海天骥物业有限公司"
+      },
+      {
+        "name": "中恒苑",
+        "n2026": 0,
+        "n2025_same": 6,
+        "total": 6,
+        "change": -100.0,
+        "street": "长桥",
+        "company": "上海天骥物业有限公司"
+      },
+      {
+        "name": "宛龙小区",
+        "n2026": 0,
+        "n2025_same": 6,
+        "total": 6,
+        "change": -100.0,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "东安五村",
+        "n2026": 0,
+        "n2025_same": 5,
+        "total": 5,
+        "change": -100.0,
+        "street": "枫林路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "景泰大厦",
+        "n2026": 0,
+        "n2025_same": 5,
+        "total": 5,
+        "change": -100.0,
+        "street": "斜土路",
+        "company": "上海同康物业管理有限公司"
+      },
+      {
+        "name": "梅陇七村",
+        "n2026": 0,
+        "n2025_same": 5,
+        "total": 5,
+        "change": -100.0,
+        "street": "凌云路",
+        "company": "上海金辉物业有限公司"
+      },
+      {
+        "name": "上海望族城",
+        "n2026": 0,
+        "n2025_same": 4,
+        "total": 4,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海益镇物业管理有限公司"
+      },
+      {
+        "name": "嘉萱苑",
+        "n2026": 0,
+        "n2025_same": 4,
+        "total": 4,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海申大物业有限公司"
+      },
+      {
+        "name": "康巨小区",
+        "n2026": 0,
+        "n2025_same": 4,
+        "total": 4,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海高建物业有限公司"
+      },
+      {
+        "name": "中海馨园",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "street": "漕河泾",
+        "company": "上海中海物业管理有限公司"
+      },
+      {
+        "name": "枫林申航小区",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "street": "枫林路",
+        "company": "上海陶朱正永物业管理有限公司"
+      },
+      {
+        "name": "百汇园小区",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "street": "龙华",
+        "company": "上海中星集团申城物业有限公司"
+      },
+      {
+        "name": "鼎园",
+        "n2026": 0,
+        "n2025_same": 3,
+        "total": 3,
+        "change": null,
+        "street": "斜土路",
+        "company": "上海长峰物业管理有限公司"
+      }
+    ]
   }
 }

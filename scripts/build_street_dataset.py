@@ -34,6 +34,9 @@ PKL = os.path.join(ROOT, "data", "merged_cleaned.pkl")
 NATO = os.path.join(ROOT, "data", "community_linked_data.pkl")
 OUT = os.path.join(ROOT, "scripts", "street_analysis.json")
 SCRIPTS = os.path.join(ROOT, "scripts")
+sys.path.insert(0, SCRIPTS)
+import nato_match as NM  # noqa: E402  （小区名规范化，与全站口径一致）
+from recalc_bottom_lift_8m import ALIAS as BL_ALIAS  # noqa: E402  （底部抬升别名映射，唯一口径源）
 EXT = os.path.join(ROOT, "徐汇各科室业务数据")
 
 YEAR_NOW, MONTH_NOW = 2026, 8
@@ -84,8 +87,13 @@ def load_data() -> pd.DataFrame:
 def load_households() -> dict:
     """小区名 → 总户数。
 
-    来自 data/community_linked_data.pkl（994 个纳统小区档案）。
+    来自 data/community_linked_data.pkl（《纳统小区 (2026 更新版)》993 个纳统小区档案，
+    由 scripts/build_linked_data.py 重建）。
     工单主数据与 SQLite 库都没有户数字段，密度计算必须从这里取。
+
+    键统一为**规范化名**（去空白、全角括号/字母转半角），并登记档案「小区别名」。
+    否则热线侧写法（如「梅陇十一村(A块)」）会查不到而把户数按 0 计 —— 密度虚高。
+    查询侧务必同样规范化：`households_map.get(NM.norm(小区名), 0)`。
     """
     try:
         df = pd.read_pickle(NATO)
@@ -93,8 +101,36 @@ def load_households() -> dict:
         print("  ⚠ 未找到 community_linked_data.pkl，户数相关指标将为空")
         return {}
     df = df[df["total_households"] > 0]
-    return dict(zip(df["community_name"].astype(str).str.strip(),
-                    df["total_households"].astype(float)))
+    m: dict = {}
+    for nm, hh in zip(df["community_name"].astype(str), df["total_households"].astype(float)):
+        m[NM.norm(nm)] = hh
+    # 档案别名（可含多个，用 、，;/ 分隔）+ 2026 版曾用名（合并改名前的旧名，如
+    # 「尚海湾二期」→「尚海湾豪庭小区（北区）」）。
+    # 不登记这两类，热线侧的旧写法就会查不到而把户数按 0 计 —— 密度虚高。
+    try:
+        arc = pd.read_excel(os.path.join(EXT, "纳统小区 (2026 更新版).xls"))
+        hh_of = dict(zip(arc["小区名称"].astype(str).str.strip(),
+                         pd.to_numeric(arc["总户数"], errors="coerce").fillna(0)))
+        for nm, al in zip(arc["小区名称"].astype(str).str.strip(), arc["小区别名"]):
+            if not isinstance(al, str) or hh_of.get(nm, 0) <= 0:
+                continue
+            for one in re.split(r"[、,，;；/／\s]+", al):
+                k = NM.norm(one)
+                if len(k) >= 3 and k not in m:
+                    m[k] = float(hh_of[nm])
+        # 曾用名：旧名 → 新名小区的户数
+        alias_of_new = {}
+        for new_name, olds in getattr(NM, "_MERGED_INTO_2026", {}).items():
+            hh = hh_of.get(new_name)
+            if hh and hh > 0:
+                for one in olds:
+                    k = NM.norm(one)
+                    if k and k not in m:
+                        alias_of_new[k] = float(hh)
+        m.update(alias_of_new)
+    except Exception as e:
+        print(f"  ⚠ 别名/曾用名登记失败：{e}")
+    return m
 
 
 def period(df, year, m1=1, m2=12) -> pd.DataFrame:
@@ -231,7 +267,32 @@ STOP_BOILERPLATE = set("""
 现场 查看 检查 排查 落实 跟进 反馈 沟通 联系 通知 告知 处理中 已办 未办
 对于 区内 办理 实际 不符 经过 很多 边上 无人 交办 号楼 书面 主任 情况
 """.split())
-STOP = STOP | STOP_BOILERPLATE
+
+# 公文/办理流程套话（2026-09-28 整改第 10 项）：
+# 13 个街镇词云**全部**命中这一批词且排名普遍靠前（协调/整治/督促/整改/取缔/加强/及时），
+# 它们是承办过程描述而非市民诉求主题，属"无意义词"，必须整体剔除；
+# 剔除后 Top24 会自动由下一档业务词（维修/停车/电梯/漏水/垃圾/充电/保安…）补位。
+STOP_OFFICIALESE = set("""
+取缔 加强 督促 协调 整改 整治 及时 加大 力度 严格 依法 依规 专项 推进 落实 规范
+监管 长效 常态 切实 进一步 有效 全面 强化 提升 开展 实施 会同 牵头 专项治理
+""".split())
+
+# 人工审核删除 · 泛指虚词/流程词（2026-09-29）：
+# 由《词云词表审核清单.html》人工勾选产出，共 39 词 —— 无诉求指向，不构成主题
+# （进入/按照/或者/根据/直接/结果/全部/其他/属于/做好/杜绝…）。
+# 保留本组而不并入 STOP_BOILERPLATE，便于日后追溯"哪些是人工判断删的"。
+STOP_MANUAL = set("""
+上门 恢复 安装 更换 解决方案 提供 家中 责令 现象 针对 时间 立即 有关 说法 规定 彻底
+事宜 成立 位置 原因 其是 进入 家里 按照 全部 给出 属于 做好 或者 杜绝 结果 发现 根据
+直接 其他 认可 再次 结构 里面
+""".split())
+
+# 地址碎片（2026-09-29）：来自「建国西路」「桂林路」「漕溪路」「XX家园」「永嘉路」被分词切开，
+# 属地址串扰而非诉求主题 —— 与 keywords_of 里的 self_terms 同一目的。
+# 判定口径：纯方位/通名/路名残片，单独成词时无诉求含义；发现同类碎片直接加入本组。
+STOP_PLACE = set("建国 西路 桂林 家园 漕路 永嘉".split())
+
+STOP = STOP | STOP_BOILERPLATE | STOP_OFFICIALESE | STOP_MANUAL | STOP_PLACE
 
 # 高频套话过滤器：出现在超过该比例的工单中，视为模板用语而非诉求主题
 BOILERPLATE_DF = 0.35
@@ -245,12 +306,17 @@ KEYWORD_TOPN = 24
 # 催单 / 补充信息 / 重复来电 类工单都带它。若不处理，同一诉求会被反复计入词频
 # （实测长桥"辣椒"因此从真实的 5 次虚高到 50 次，虚增 10 倍）。
 
-# 引用块：从「最近派发/办结的工单编号」一直吞到「】」或行尾
-QUOTED_BLOCK_RE = re.compile(r"【?最近(派发|办结)的工单编号[：:][\s\S]*?(?:】|$)")
+# 引用块：从「最近派发/办结/…的工单(编)(号)」一直吞到「】」或行尾
+# ⚠️ 2026-09-28：正则已迁到唯一判定口径源 `dedup_monthly.py`（见其 QUOTED_BLOCK_RE），
+#    本处改为引用，避免两处口径漂移 —— 旧严格版 `【?最近(派发|办结)的工单编号[：:]`
+#    会漏掉「关联工单20260822223850」「最近办结工单：…」「最近发的…」等十余种变体。
+import dedup_monthly as D  # noqa: E402  唯一判定口径源
+
+QUOTED_BLOCK_RE = D.QUOTED_BLOCK_RE
 
 # 工单编号引用：编号为 14 位数字，引导语写法有十余种
 # （最近派发/最近办结/相关/关联/前工单/最近来电/派发的…），统一按「工单编号+14位数字」抓取
-ORDER_REF_RE = re.compile(r"工单编号[：:]?\s*(\d{14})")
+ORDER_REF_RE = D.ORDER_REF_RE
 
 
 def strip_quoted(text: str) -> str:
@@ -374,6 +440,17 @@ def build(do_dedup=True) -> dict:
     main = df[df["street"] != "无"].copy()
     streets = sorted(main["street"].unique())
 
+    # 热线小区名 → 纳统小区名（一次性建好，13 个街镇复用）。
+    # 户数必须按**纳统小区**累加：同一小区的多种写法（别名/曾用名/全半角）
+    # 只能算一次，否则「尚海湾二期」+「尚海湾豪庭」会把同一批 3644 户重复计入。
+    _st_of = df.groupby("community_name")["street"].agg(
+        lambda s: s.mode().iloc[0] if len(s.mode()) else "").to_dict()
+    _allc = [c for c in df["community_name"].astype(str).str.strip().unique()
+             if c not in ("", "无", "nan", "None")]
+    _kmp = NM.build_map(sorted(_allc), version="new", streets=_st_of)
+    NATO_OF = dict(zip(_kmp["hotline_name"], _kmp["nato_name"]))
+    print(f"  · 小区名归并：{len(_allc)} 个热线名 → {int(_kmp['matched'].sum())} 个命中纳统小区")
+
     # 案件级归并：连带工单（催单/补充/重复来电）只算 1 个案件、只取首单正文
     rep_ids, case_key, n_cases_all, n_merged_all = case_representatives(df)
     print(f"  · 案件级归并：全量 {len(df)} 笔 → {n_cases_all} 个案件"
@@ -387,21 +464,32 @@ def build(do_dedup=True) -> dict:
 
     na = df[df["street"] == "无"]
     unassigned = int(len(period(na, YEAR_NOW, 1, MONTH_NOW)))          # 同期口径
+    unassigned_prev = int(len(period(na, YEAR_PREV, 1, MONTH_NOW)))    # 同期口径（上一年）
     unassigned_all = int(len(na))                                       # 全期（含 2024-2026）
 
     d26 = int(len(n26))
     d25s = int(len(n25s))
+    # 全区口径（含「归属为空」）：2026年1-8月 13,726 = 13,719 + 7
+    #                             2025年1-8月 15,798 = 15,689 + 109
+    # ⚠ 2026-09-29 修正：此前 district["yoy"] 用 13街镇口径（13,719 vs 15,689 = -12.6），
+    #   但页面标签写的是「全区」；分子含归属为空、分母不含，属口径混搭。
+    #   现统一为全区口径 → -13.1%，与全站基准（audit_consistency.py BASE）一致。
+    d26_all = d26 + unassigned
+    d25s_all = d25s + unassigned_prev
     # 2026年1-8月 案件数（连带工单合并后），案件可能跨街镇，故分街镇案件数之和≤此值
     d26_cases = len({case_key.get(o, o) for o in n26["order_id"].astype(str)})
     district = {
         "n2026": d26, "n2025_same": d25s, "n2024_same": int(len(n24s)),
+        "n2026_all": d26_all, "n2025_same_all": d25s_all,
         "n2025_full": int(len(n25f)), "n2024_full": int(len(n24f)),
-        "yoy": yoy(d26, d25s),
+        "yoy": yoy(d26_all, d25s_all),          # 全区口径（含归属为空）→ -13.1%
+        "yoy_streets": yoy(d26, d25s),          # 13 街镇合计口径（留档，勿用于「全区」表述）
         "cases2026": d26_cases,
         "cases_merged": d26 - d26_cases,
         "unassigned": unassigned,
+        "unassigned_prev": unassigned_prev,
         "unassigned_all": unassigned_all,
-        "total_all": d26 + unassigned,
+        "total_all": d26_all,
         "dup": dedup_for_street(n26) if do_dedup else None,
     }
 
@@ -410,6 +498,8 @@ def build(do_dedup=True) -> dict:
     gov = json.load(open(os.path.join(SCRIPTS, "governance_tracking.json"), encoding="utf-8"))
     blift = json.load(open(os.path.join(SCRIPTS, "bottom_lift_communities.json"), encoding="utf-8"))
     inv = json.load(open(os.path.join(SCRIPTS, "investigation_targets.json"), encoding="utf-8"))
+    # 热线侧真实存在的小区名集合（用于判定底部抬升名单能否匹配到工单）
+    COMM_SET = set(main["community_name"].dropna().astype(str))
 
     risk_street = risk.get("street_distribution", {})
     risk_comm = risk.get("all_communities", [])
@@ -439,9 +529,18 @@ def build(do_dedup=True) -> dict:
         comm_valid = communities[~communities.isin(["", "无", "nan"])]
         comm_list = list(comm_valid.unique())
         active_communities = int(comm_valid.nunique())
-        # 户数：只累加 2026年1-8月有投诉的小区，与 active_communities 口径一致
-        households = int(sum(households_map.get(c, 0) for c in comm_list))
-        hh_matched = int(sum(1 for c in comm_list if c in households_map))
+        # 户数：把热线小区名归并到纳统小区后累加（同一小区的多种写法只算一次），
+        # 再取档案户数。分母与《纳统小区 (2026 更新版)》口径一致
+        units: dict = {}
+        for c in comm_list:
+            u = NATO_OF.get(c)
+            if not isinstance(u, str) or not u:
+                continue
+            hh = households_map.get(NM.norm(u))
+            if hh:
+                units[u] = hh
+        households = int(sum(units.values()))
+        hh_matched = len(units)
         core = {
             "n2026": a26, "n2025_same": a25, "n2024_same": a24,
             "n2025_full": int(len(n25f[n25f["street"] == st])),
@@ -570,7 +669,8 @@ def build(do_dedup=True) -> dict:
         key = DERIVED_ALIAS.get(st, st)
         rd = risk_street.get(key, {})
         risk_comm_st = [c for c in risk_comm if c.get("street") == key]
-        risk_comm_st.sort(key=lambda x: -x.get("total_score", 0))
+        # 100 分起扣制：得分越低风险越高 → 升序取 Top
+        risk_comm_st.sort(key=lambda x: x.get("total_score", 0))
         risk_info = {
             "total": int(rd.get("total", len(risk_comm_st))),
             "red": int(rd.get("红色", 0)), "orange": int(rd.get("橙色", 0)),
@@ -609,7 +709,55 @@ def build(do_dedup=True) -> dict:
             "cases_worsening": gov_cases("worsening_top10", "恶化"),
         }
 
+        # ── 底部抬升（党建引领重点小区）在本街镇的分布
+        # 别名映射复用 recalc_bottom_lift_8m.ALIAS —— 全项目唯一口径源
         blift_st = [b for b in blift if b.get("street") == key]
+        bl_rows, bl_std, bl_n26, bl_n25 = [], set(), 0, 0
+        for meta in blift_st:
+            std = BL_ALIAS.get(meta["name"], meta["name"])
+            matched = std in COMM_SET
+            if matched:
+                bl_std.add(std)
+                g26 = s26[s26["community_name"] == std]
+                g25 = s25[s25["community_name"] == std]
+                c26, c25 = len(g26), len(g25)
+                bl_n26 += c26
+                bl_n25 += c25
+                bl_rows.append({
+                    "name": meta["name"], "matched": True, "n2026": c26, "n2025": c25,
+                    "yoy": yoy(c26, c25),
+                    "top_category": (g26["category_14"].value_counts().index[0] if c26 else ""),
+                    "company": meta.get("company", ""),
+                    "types": [t for t, flag in (("热线热点", "category_hotline"),
+                                                ("低物业费", "category_low_fee"),
+                                                ("沉降风险", "category_fall_risk"),
+                                                ("单一物业", "category_single_prop"),
+                                                ("无业委会", "category_no_committee"))
+                              if meta.get(flag)],
+                })
+            else:
+                bl_rows.append({
+                    "name": meta["name"], "matched": False, "n2026": 0, "n2025": 0,
+                    "yoy": None, "top_category": "", "company": meta.get("company", ""),
+                    "types": [],
+                })
+        bl_rows.sort(key=lambda r: (-r["n2026"], r["name"]))
+        bl_obj = {
+            "count": len(blift_st),
+            "matched": len(bl_std),
+            "unmatched": [r["name"] for r in bl_rows if not r["matched"]],
+            "names": [b["name"] for b in blift_st][:10],
+            "n2026": bl_n26, "n2025": bl_n25, "yoy": yoy(bl_n26, bl_n25),
+            "share": pct(bl_n26, a26),
+            "avg2026": round(bl_n26 / len(bl_std), 1) if bl_std else 0,
+            "normal_comm": max(active_communities - len(bl_std), 0),
+            "normal_n2026": a26 - bl_n26, "normal_n2025": a25 - bl_n25,
+            "normal_yoy": yoy(a26 - bl_n26, a25 - bl_n25),
+            "pp_vs_normal": (round((yoy(bl_n26, bl_n25) or 0) - (yoy(a26 - bl_n26, a25 - bl_n25) or 0), 1)
+                             if bl_n25 and (a25 - bl_n25) else None),
+            "rows": bl_rows,
+        }
+
         inv_st = [{"community": k, "addr": v.get("target_addr"), "street": v.get("street"),
                    "n2026": v.get("total_2026"), "n2025": v.get("total_2025"), "n2024": v.get("total_2024")}
                   for k, v in inv.items() if v.get("street") == key]
@@ -644,7 +792,7 @@ def build(do_dedup=True) -> dict:
             "risk": risk_info,
             "governance": gov_info,
             "externals": externals.get(st, externals.get(key, {})),
-            "bottom_lift": {"count": len(blift_st), "names": [b["name"] for b in blift_st][:10]},
+            "bottom_lift": bl_obj,
             "investigation": inv_st,
             "keywords": keywords_of(s26, street=st, rep_ids=rep_ids),
         }
@@ -705,16 +853,24 @@ def build(do_dedup=True) -> dict:
         "compare_label": f"{YEAR_PREV}年1-{MONTH_NOW}月",
         "street_count": len(streets),
         "notes": [
-            f"街镇明细合计 {d26:,} 条 + 归属为空 {unassigned} 条 = 全区 {d26 + unassigned:,} 条",
+            f"街镇明细合计 {d26:,} 条 + 归属为空 {unassigned} 条 = 全区 {d26_all:,} 条",
             "同比统一采用同期口径（1-8月 vs 1-8月），不使用全年基数",
+            f"<b>同比须区分两个口径</b>："
+            f"<b>全区</b> = {d26_all:,} vs {d25s_all:,}（含「归属为空」，2025年同期归属为空 {unassigned_prev} 条）"
+            f" → <b>{district['yoy']}%</b>；"
+            f"<b>13 个街镇合计</b> = {d26:,} vs {d25s:,} → {district['yoy_streets']}%。"
+            f"正文中的「全区同比」一律取前者；贡献度分母取后者（见第四节）",
             "投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（件/千户）；"
-            "户数为该街镇「2026年1-8月有投诉小区」的总户数，取自 community_linked_data.pkl 的"
-            " total_households 字段（994 个纳统小区档案；工单主数据与 SQLite 库均无户数字段）",
+            "户数为该街镇「2026年1-8月有投诉小区」按<b>纳统小区归并后</b>的总户数，"
+            "取自《纳统小区 (2026 更新版)》档案 total_households 字段（993 个纳统小区；"
+            "同一小区的别名/曾用名只计一次；工单主数据与 SQLite 库均无户数字段）",
             f"{YEAR_NOW}年 9-12 月数据未产生，图表以空值呈现",
             "重复投诉率：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，按街镇 1-8 月累计计算",
             "治理成效为 2026年1-8月 vs 2025年同期 口径（已排除「其他」「房屋交易纠纷」等非物业类）；"
-            "案例判定以 2026 年同期同比为准：恶化<-10%｜改善>+10%；2026年1-8月零工单的小区单列「本期无投诉」，不参与排名；"
-            "风险评估为 799 个参评小区口径",
+            "案例判定以 2026 年同期同比为准：恶化 &lt;-10%｜改善 &gt;+10%；"
+            "2026年1-8月零工单的小区单列「本期无投诉」，不参与排名；"
+            "风险评估为 772 个参评小区口径（仅《纳统小区 (2026 更新版)》名单内小区，"
+            "按纳统小区聚合，2026年1-8月投诉量≥10件）",
         ],
     }
     return {"meta": meta, "district": district, "overview": overview, "streets": streets_data}
@@ -732,7 +888,8 @@ def make_insights(sb, row, district, dist_cat, d26):
                f"（全区 {district['yoy']}%），降幅排名全区第 {c['rank_yoy']} 位。")
 
     if c["contribution"] and c["contribution"] > 0:
-        out.append(f"对全区投诉量下降的贡献率为 {c['contribution']}%（该镇减少 {c['decline']:,} 件）。")
+        out.append(f"对 13 个街镇投诉量下降合计的贡献率为 {c['contribution']}%"
+                   f"（该镇减少 {c['decline']:,} 件）。")
 
     if sb["rising"]:
         names = "、".join(f"{x['cat']}（+{x['delta']}件）" for x in sb["rising"][:3])
@@ -789,9 +946,10 @@ def main():
         json.dump(data, f, ensure_ascii=False)
     ov = data["overview"]
     print(f"\n✔ 完成，输出 {OUT}（{os.path.getsize(OUT)/1024:.1f} KB）")
-    print(f"  街镇 {len(ov)} 个 | 全区 {data['district']['n2026']:,} 条 "
+    print(f"  街镇 {len(ov)} 个 | 全区 {data['district']['n2026_all']:,} 条 "
           f"| 同比 {data['district']['yoy']}% | 对账 {data['district']['n2026']:,}+"
-          f"{data['district']['unassigned']} = {data['district']['total_all']:,}")
+          f"{data['district']['unassigned']} = {data['district']['total_all']:,}"
+          f" | 13街镇口径 {data['district']['yoy_streets']}%")
     for r in ov:
         print(f"  {r['street']:6s} {r['n2026']:5d} 件  同比 {str(r['yoy']):>6s}%  "
               f"贡献 {str(r['contribution']):>6s}%  重复率 {str(r['dup_rate']):>5s}%")

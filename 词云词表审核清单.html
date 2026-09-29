@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>词云词表审核清单 · 徐汇物业课题一期</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; background:#f5f7fa; color:#1f2937;
+         font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
+  .hd { background:linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; padding:26px 32px 22px; }
+  .hd h1 { margin:0 0 6px; font-size:23px; letter-spacing:.4px; }
+  .hd .sub { font-size:13px; opacity:.92; }
+  .hd .meta { font-size:12px; opacity:.78; margin-top:8px; }
+  .wrap { max-width:1420px; margin:0 auto; padding:0 22px 130px; }
+  .tip { margin:18px 0 0; padding:12px 18px; background:#fff8e1; border-left:4px solid #f9a825;
+         border-radius:6px; font-size:13px; color:#7a5b00; line-height:1.85; }
+  .tip b { color:#5d4400; }
+  .bar2 { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:16px 0 4px; }
+  .tabs { display:flex; gap:8px; }
+  .tabs button { border:1px solid #d3dce6; background:#fff; color:#334155; padding:7px 16px;
+                 border-radius:20px; font-size:13px; cursor:pointer; }
+  .tabs button.on { background:#1976d2; border-color:#1976d2; color:#fff; font-weight:600; }
+  .tools { margin-left:auto; display:flex; gap:10px; align-items:center; }
+  .tools input[type=search] { border:1px solid #d3dce6; border-radius:18px; padding:7px 14px;
+                              font-size:13px; width:190px; outline:none; }
+  .tools input[type=search]:focus { border-color:#1976d2; }
+  .legend { display:flex; flex-wrap:wrap; gap:16px; font-size:12px; color:#64748b; margin:14px 0 12px; }
+  .legend i { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:5px;
+              vertical-align:-1px; }
+  .sec-title { font-size:15px; font-weight:700; color:#0d47a1; margin:22px 0 12px;
+               padding-left:10px; border-left:4px solid #1976d2; }
+  .wgrid { display:flex; flex-wrap:wrap; gap:9px; }
+  .w { display:inline-flex; flex-direction:column; gap:2px; padding:7px 13px; border-radius:9px;
+       border:1px solid #e3e8ef; background:#fafbfc; cursor:pointer; user-select:none;
+       transition:all .13s; min-width:96px; }
+  .w:hover { border-color:#1976d2; box-shadow:0 2px 8px rgba(25,118,210,.14); }
+  .w .wd { font-size:15px; font-weight:600; color:#334155; line-height:1.25; }
+  .w .wm { font-size:10.5px; color:#94a3b8; line-height:1.3; white-space:nowrap; }
+  .w.show { background:#eaf3ff; border-color:#1976d2; }
+  .w.show .wd { color:#0d47a1; }
+  .w.show .wm { color:#5b8fd6; }
+  .w.sug { border-style:dashed; border-color:#f9a825; background:#fffdf5; }
+  .w.del { background:#ffecec; border-color:#f5222d; border-style:solid; }
+  .w.del .wd { color:#f5222d; text-decoration:line-through; }
+  .w.del .wm { color:#e08a8a; }
+  .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  @media (max-width:1080px) { .cards { grid-template-columns:1fr; } }
+  .card { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.06); overflow:hidden; }
+  .card-head { display:flex; align-items:baseline; gap:10px; padding:12px 16px;
+               border-bottom:1px solid #eef1f5; background:#f8fafc; }
+  .card-head .nm { font-size:15px; font-weight:700; color:#0d47a1; }
+  .card-head .tag { font-size:11px; color:#78909c; background:#eef2f7; padding:2px 9px;
+                    border-radius:10px; }
+  .card-body { padding:12px 16px 14px; }
+  .card-body .lbl { font-size:12px; color:#64748b; margin:2px 0 8px; font-weight:600; }
+  .card-body .lbl.pad { margin-top:16px; }
+  .cand { margin-top:16px; border-top:1px dashed #e3e8ef; padding-top:12px; }
+  .cand summary { font-size:12px; color:#64748b; cursor:pointer; font-weight:600; outline:none; }
+  .cand .wgrid { margin-top:10px; }
+  .hide { display:none; }
+  .footer { text-align:center; font-size:12px; color:#90a4ae; padding:26px 20px 20px; }
+  .bar { position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #e3e8ef;
+         box-shadow:0 -3px 14px rgba(0,0,0,.07); padding:11px 22px; display:flex;
+         align-items:center; gap:14px; flex-wrap:wrap; z-index:20; }
+  .bar .st { font-size:13px; color:#334155; }
+  .bar .st b { color:#f5222d; font-size:16px; }
+  .bar input { flex:1; min-width:200px; border:1px solid #d3dce6; border-radius:8px;
+               padding:8px 12px; font-size:13px; font-family:ui-monospace,Menlo,monospace;
+               color:#334155; background:#f8fafc; outline:none; }
+  .bar button { border:none; border-radius:8px; padding:8px 16px; font-size:13px; cursor:pointer; }
+  .bar button.pri { background:#1976d2; color:#fff; font-weight:600; }
+  .bar button.pri:hover { background:#0d47a1; }
+  .bar button.gh { background:#eef2f7; color:#475569; }
+  .bar button.gh:hover { background:#e2e8f0; }
+</style>
+</head>
+<body>
+<div class="hd">
+  <h1>词云词表审核清单（人工删除中性词）</h1>
+  <div class="sub">13 个街镇 · 190 个候选词 · 当前展示 Top24 ／ 第 25 名以后为补位候选</div>
+  <div class="meta">口径：2026年1-8月 ｜ 案件级归并（同一诉求的催单/重复来电只计首单）｜ 已剥离工单引用块 ｜ 数据源 scripts/wordcloud_terms.json</div>
+</div>
+
+<div class="wrap">
+  <div class="tip">
+    <b>怎么用：</b>点击任意词即标记为「待删除」（再点一次取消）。标记完成后，把底部输入框里的清单复制发我，
+    我会写入停用词表并重跑生成脚本 —— <b>删除后 Top24 会由「补位候选」自动顶上</b>，所以黄框里的候选词也值得一并看一眼。<br>
+    <b>提示：</b>虚线黄框标出的是系统认为「疑似中性/泛指/流程词」的 32 个词（如「有关/事宜/现象/说法」），
+    仅供快速定位，<b>不是结论</b>，是否删除完全由你判断。
+  </div>
+
+  <div class="bar2">
+    <div class="tabs">
+      <button id="tabAll" class="on">全部词（去重）</button>
+      <button id="tabStreet">按街镇查看</button>
+    </div>
+    <div class="tools">
+      <input type="search" id="q" placeholder="搜索词…">
+      <label style="font-size:13px;color:#475569;display:flex;align-items:center;gap:5px;cursor:pointer">
+        <input type="checkbox" id="onlyShow"> 只看当前展示词
+      </label>
+    </div>
+  </div>
+
+  <div id="paneAll">
+    <div class="legend">
+      <span><i style="background:#eaf3ff;border:1px solid #1976d2"></i>当前展示中（任一街镇 Top24）</span>
+      <span><i style="background:#fafbfc;border:1px solid #e3e8ef"></i>补位候选（第 25 名以后）</span>
+      <span><i style="background:#fffdf5;border:1px dashed #f9a825"></i>疑似中性词（提示）</span>
+      <span><i style="background:#ffecec;border:1px solid #f5222d"></i>已标记待删除</span>
+    </div>
+    <div class="sec-title" id="allTitle">全部候选词</div>
+    <div class="wgrid" id="gridAll"></div>
+  </div>
+
+  <div id="paneStreet" class="hide">
+    <div class="sec-title">按街镇查看（Top24 展示 + 补位候选）</div>
+    <div class="cards" id="gridStreet"></div>
+  </div>
+</div>
+
+<div class="bar">
+  <span class="st">已标记待删除 <b id="nDel">0</b> 个词</span>
+  <input id="outText" readonly placeholder="（点击上方词条后，这里会生成可复制的删除清单）">
+  <button class="pri" id="btnCopy">复制删除清单</button>
+  <button class="gh" id="btnReset">清空标记</button>
+</div>
+
+<div class="footer">徐汇区物业课题一期 · 词云词表审核清单 · 生成脚本 scripts/gen_wordcloud_review.py</div>
+
+<script>
+var DATA = {"meta": {"scope": "2026年1-8月", "unit": "案件级（同一诉求的催单/重复来电只计首单）", "topn_shown": 24, "cand_n": 60, "streets": 13, "unique_words": 201, "source": "scripts/build_street_dataset.py → keywords_of()"}, "streets": {"凌云路": [{"word": "维修", "cnt": 96, "rank": 1}, {"word": "漏水", "cnt": 39, "rank": 2}, {"word": "车位", "cnt": 37, "rank": 3}, {"word": "停车", "cnt": 34, "rank": 4}, {"word": "电梯", "cnt": 32, "rank": 5}, {"word": "清理", "cnt": 32, "rank": 6}, {"word": "业委会", "cnt": 32, "rank": 7}, {"word": "充电", "cnt": 26, "rank": 8}, {"word": "楼道", "cnt": 25, "rank": 9}, {"word": "业主", "cnt": 24, "rank": 10}, {"word": "加装", "cnt": 23, "rank": 11}, {"word": "修复", "cnt": 18, "rank": 12}, {"word": "保安", "cnt": 17, "rank": 13}, {"word": "公共", "cnt": 17, "rank": 14}, {"word": "房屋", "cnt": 15, "rank": 15}, {"word": "群租", "cnt": 14, "rank": 16}, {"word": "车辆", "cnt": 14, "rank": 17}, {"word": "监控", "cnt": 12, "rank": 18}, {"word": "停车位", "cnt": 12, "rank": 19}, {"word": "垃圾", "cnt": 12, "rank": 20}, {"word": "公示", "cnt": 11, "rank": 21}, {"word": "空调", "cnt": 11, "rank": 22}, {"word": "物业公司", "cnt": 11, "rank": 23}, {"word": "堆物", "cnt": 11, "rank": 24}, {"word": "制止", "cnt": 11, "rank": 25}, {"word": "城管", "cnt": 11, "rank": 26}, {"word": "施工", "cnt": 10, "rank": 27}, {"word": "合规", "cnt": 10, "rank": 28}, {"word": "自行车", "cnt": 10, "rank": 29}, {"word": "加梯", "cnt": 10, "rank": 30}, {"word": "杂物", "cnt": 9, "rank": 31}, {"word": "新村", "cnt": 9, "rank": 32}, {"word": "费用", "cnt": 9, "rank": 33}, {"word": "楼上", "cnt": 9, "rank": 34}, {"word": "流程", "cnt": 9, "rank": 35}, {"word": "经理", "cnt": 9, "rank": 36}, {"word": "飞线", "cnt": 9, "rank": 37}, {"word": "调查", "cnt": 9, "rank": 38}, {"word": "修剪", "cnt": 8, "rank": 39}, {"word": "占用", "cnt": 8, "rank": 40}, {"word": "违规", "cnt": 8, "rank": 41}, {"word": "态度", "cnt": 8, "rank": 42}, {"word": "扰民", "cnt": 8, "rank": 43}, {"word": "安全", "cnt": 8, "rank": 44}, {"word": "如果", "cnt": 8, "rank": 45}, {"word": "阳台", "cnt": 8, "rank": 46}, {"word": "表决", "cnt": 8, "rank": 47}, {"word": "投票", "cnt": 8, "rank": 48}, {"word": "疏通", "cnt": 7, "rank": 49}, {"word": "物业管理", "cnt": 7, "rank": 50}, {"word": "通过", "cnt": 7, "rank": 51}, {"word": "不合理", "cnt": 7, "rank": 52}, {"word": "彻底解决", "cnt": 7, "rank": 53}, {"word": "楼栋", "cnt": 7, "rank": 54}, {"word": "承重墙", "cnt": 7, "rank": 55}, {"word": "收益", "cnt": 7, "rank": 56}, {"word": "电话", "cnt": 7, "rank": 57}, {"word": "堆放", "cnt": 7, "rank": 58}, {"word": "绿化", "cnt": 7, "rank": 59}, {"word": "门禁", "cnt": 7, "rank": 60}], "华泾镇": [{"word": "停车", "cnt": 72, "rank": 1}, {"word": "维修", "cnt": 60, "rank": 2}, {"word": "车位", "cnt": 41, "rank": 3}, {"word": "清理", "cnt": 37, "rank": 4}, {"word": "业主", "cnt": 29, "rank": 5}, {"word": "群租", "cnt": 25, "rank": 6}, {"word": "停车位", "cnt": 24, "rank": 7}, {"word": "漏水", "cnt": 21, "rank": 8}, {"word": "楼道", "cnt": 21, "rank": 9}, {"word": "保安", "cnt": 20, "rank": 10}, {"word": "公共", "cnt": 18, "rank": 11}, {"word": "车辆", "cnt": 18, "rank": 12}, {"word": "修复", "cnt": 17, "rank": 13}, {"word": "包月", "cnt": 16, "rank": 14}, {"word": "房屋", "cnt": 16, "rank": 15}, {"word": "违规", "cnt": 16, "rank": 16}, {"word": "城管", "cnt": 14, "rank": 17}, {"word": "垃圾", "cnt": 14, "rank": 18}, {"word": "充电", "cnt": 14, "rank": 19}, {"word": "收费", "cnt": 14, "rank": 20}, {"word": "扰民", "cnt": 13, "rank": 21}, {"word": "业委会", "cnt": 12, "rank": 22}, {"word": "公示", "cnt": 12, "rank": 23}, {"word": "修剪", "cnt": 11, "rank": 24}, {"word": "破坏", "cnt": 11, "rank": 25}, {"word": "噪音", "cnt": 11, "rank": 26}, {"word": "排队", "cnt": 11, "rank": 27}, {"word": "停放", "cnt": 10, "rank": 28}, {"word": "通行", "cnt": 10, "rank": 29}, {"word": "堆物", "cnt": 10, "rank": 30}, {"word": "监控", "cnt": 10, "rank": 31}, {"word": "不管", "cnt": 9, "rank": 32}, {"word": "骚扰", "cnt": 9, "rank": 33}, {"word": "不合理", "cnt": 9, "rank": 34}, {"word": "电梯", "cnt": 9, "rank": 35}, {"word": "装修", "cnt": 9, "rank": 36}, {"word": "楼上", "cnt": 9, "rank": 37}, {"word": "租客", "cnt": 8, "rank": 38}, {"word": "绿化", "cnt": 8, "rank": 39}, {"word": "住户", "cnt": 8, "rank": 40}, {"word": "制止", "cnt": 8, "rank": 41}, {"word": "物业管理", "cnt": 8, "rank": 42}, {"word": "龙吴", "cnt": 8, "rank": 43}, {"word": "拆除", "cnt": 8, "rank": 44}, {"word": "不让", "cnt": 7, "rank": 45}, {"word": "不善", "cnt": 7, "rank": 46}, {"word": "阳台", "cnt": 7, "rank": 47}, {"word": "合规", "cnt": 7, "rank": 48}, {"word": "责任人", "cnt": 7, "rank": 49}, {"word": "收益", "cnt": 7, "rank": 50}, {"word": "计划", "cnt": 7, "rank": 51}, {"word": "邻居", "cnt": 6, "rank": 52}, {"word": "造成", "cnt": 6, "rank": 53}, {"word": "区域", "cnt": 6, "rank": 54}, {"word": "基金", "cnt": 6, "rank": 55}, {"word": "占用", "cnt": 6, "rank": 56}, {"word": "保障", "cnt": 6, "rank": 57}, {"word": "电话", "cnt": 6, "rank": 58}, {"word": "登记", "cnt": 6, "rank": 59}, {"word": "物业费", "cnt": 6, "rank": 60}], "天平路": [{"word": "维修", "cnt": 191, "rank": 1}, {"word": "漏水", "cnt": 103, "rank": 2}, {"word": "清理", "cnt": 50, "rank": 3}, {"word": "修复", "cnt": 36, "rank": 4}, {"word": "违规", "cnt": 32, "rank": 5}, {"word": "拆除", "cnt": 30, "rank": 6}, {"word": "房屋", "cnt": 28, "rank": 7}, {"word": "疏通", "cnt": 28, "rank": 8}, {"word": "电梯", "cnt": 26, "rank": 9}, {"word": "充电", "cnt": 23, "rank": 10}, {"word": "停车", "cnt": 22, "rank": 11}, {"word": "楼道", "cnt": 22, "rank": 12}, {"word": "业委会", "cnt": 22, "rank": 13}, {"word": "住户", "cnt": 21, "rank": 14}, {"word": "保安", "cnt": 21, "rank": 15}, {"word": "管道", "cnt": 20, "rank": 16}, {"word": "群租", "cnt": 19, "rank": 17}, {"word": "业主", "cnt": 19, "rank": 18}, {"word": "公共", "cnt": 18, "rank": 19}, {"word": "积水", "cnt": 17, "rank": 20}, {"word": "扰民", "cnt": 16, "rank": 21}, {"word": "安全隐患", "cnt": 15, "rank": 22}, {"word": "制止", "cnt": 15, "rank": 23}, {"word": "邻居", "cnt": 15, "rank": 24}, {"word": "空调", "cnt": 15, "rank": 25}, {"word": "噪音", "cnt": 14, "rank": 26}, {"word": "堆物", "cnt": 14, "rank": 27}, {"word": "垃圾", "cnt": 14, "rank": 28}, {"word": "报修", "cnt": 14, "rank": 29}, {"word": "门口", "cnt": 13, "rank": 30}, {"word": "加装", "cnt": 13, "rank": 31}, {"word": "装修", "cnt": 13, "rank": 32}, {"word": "施工", "cnt": 12, "rank": 33}, {"word": "厨房", "cnt": 12, "rank": 34}, {"word": "修剪", "cnt": 12, "rank": 35}, {"word": "屋顶", "cnt": 12, "rank": 36}, {"word": "车位", "cnt": 12, "rank": 37}, {"word": "楼上", "cnt": 12, "rank": 38}, {"word": "区域", "cnt": 12, "rank": 39}, {"word": "改非", "cnt": 11, "rank": 40}, {"word": "摄像头", "cnt": 11, "rank": 41}, {"word": "老人", "cnt": 11, "rank": 42}, {"word": "通行", "cnt": 11, "rank": 43}, {"word": "渗水", "cnt": 11, "rank": 44}, {"word": "堵塞", "cnt": 10, "rank": 45}, {"word": "院子", "cnt": 10, "rank": 46}, {"word": "经理", "cnt": 10, "rank": 47}, {"word": "南路", "cnt": 10, "rank": 48}, {"word": "城管", "cnt": 10, "rank": 49}, {"word": "外机", "cnt": 10, "rank": 50}, {"word": "电瓶车", "cnt": 10, "rank": 51}, {"word": "外墙", "cnt": 10, "rank": 52}, {"word": "卫生间", "cnt": 10, "rank": 53}, {"word": "太原", "cnt": 10, "rank": 54}, {"word": "污水", "cnt": 9, "rank": 55}, {"word": "地方", "cnt": 9, "rank": 56}, {"word": "承重墙", "cnt": 9, "rank": 57}, {"word": "大楼", "cnt": 9, "rank": 58}, {"word": "前往", "cnt": 9, "rank": 59}, {"word": "造成", "cnt": 9, "rank": 60}], "康健新村": [{"word": "维修", "cnt": 69, "rank": 1}, {"word": "漏水", "cnt": 44, "rank": 2}, {"word": "清理", "cnt": 33, "rank": 3}, {"word": "停车", "cnt": 27, "rank": 4}, {"word": "业主", "cnt": 27, "rank": 5}, {"word": "车位", "cnt": 24, "rank": 6}, {"word": "楼道", "cnt": 22, "rank": 7}, {"word": "违规", "cnt": 21, "rank": 8}, {"word": "电梯", "cnt": 21, "rank": 9}, {"word": "业委会", "cnt": 21, "rank": 10}, {"word": "停车位", "cnt": 19, "rank": 11}, {"word": "群租", "cnt": 17, "rank": 12}, {"word": "房屋", "cnt": 17, "rank": 13}, {"word": "装修", "cnt": 16, "rank": 14}, {"word": "加装", "cnt": 14, "rank": 15}, {"word": "充电", "cnt": 14, "rank": 16}, {"word": "安全隐患", "cnt": 12, "rank": 17}, {"word": "公共", "cnt": 11, "rank": 18}, {"word": "车辆", "cnt": 11, "rank": 19}, {"word": "监控", "cnt": 11, "rank": 20}, {"word": "楼上", "cnt": 11, "rank": 21}, {"word": "施工", "cnt": 11, "rank": 22}, {"word": "修复", "cnt": 10, "rank": 23}, {"word": "垃圾", "cnt": 10, "rank": 24}, {"word": "拆除", "cnt": 9, "rank": 25}, {"word": "噪音", "cnt": 9, "rank": 26}, {"word": "扰民", "cnt": 9, "rank": 27}, {"word": "绿化", "cnt": 9, "rank": 28}, {"word": "保安", "cnt": 9, "rank": 29}, {"word": "电话", "cnt": 8, "rank": 30}, {"word": "收费", "cnt": 8, "rank": 31}, {"word": "制止", "cnt": 8, "rank": 32}, {"word": "公示", "cnt": 8, "rank": 33}, {"word": "树木", "cnt": 8, "rank": 34}, {"word": "区域", "cnt": 8, "rank": 35}, {"word": "堆物", "cnt": 7, "rank": 36}, {"word": "禁止", "cnt": 7, "rank": 37}, {"word": "修剪", "cnt": 7, "rank": 38}, {"word": "彻底解决", "cnt": 6, "rank": 39}, {"word": "空调", "cnt": 6, "rank": 40}, {"word": "物业费", "cnt": 6, "rank": 41}, {"word": "责任", "cnt": 6, "rank": 42}, {"word": "服务", "cnt": 6, "rank": 43}, {"word": "管道", "cnt": 6, "rank": 44}, {"word": "堆放", "cnt": 6, "rank": 45}, {"word": "合同", "cnt": 6, "rank": 46}, {"word": "城管", "cnt": 6, "rank": 47}, {"word": "破坏", "cnt": 6, "rank": 48}, {"word": "调解", "cnt": 6, "rank": 49}, {"word": "改造", "cnt": 6, "rank": 50}, {"word": "避免", "cnt": 6, "rank": 51}, {"word": "记录", "cnt": 6, "rank": 52}, {"word": "排队", "cnt": 6, "rank": 53}, {"word": "摄像头", "cnt": 6, "rank": 54}, {"word": "居住", "cnt": 5, "rank": 55}, {"word": "具体", "cnt": 5, "rank": 56}, {"word": "外墙", "cnt": 5, "rank": 57}, {"word": "材料", "cnt": 5, "rank": 58}, {"word": "选举", "cnt": 5, "rank": 59}, {"word": "停放", "cnt": 5, "rank": 60}], "徐家汇": [{"word": "维修", "cnt": 92, "rank": 1}, {"word": "群租", "cnt": 81, "rank": 2}, {"word": "漏水", "cnt": 69, "rank": 3}, {"word": "业委会", "cnt": 62, "rank": 4}, {"word": "电梯", "cnt": 59, "rank": 5}, {"word": "清理", "cnt": 53, "rank": 6}, {"word": "业主", "cnt": 47, "rank": 7}, {"word": "停车", "cnt": 35, "rank": 8}, {"word": "保安", "cnt": 30, "rank": 9}, {"word": "楼道", "cnt": 25, "rank": 10}, {"word": "垃圾", "cnt": 24, "rank": 11}, {"word": "公共", "cnt": 23, "rank": 12}, {"word": "装修", "cnt": 21, "rank": 13}, {"word": "物业公司", "cnt": 20, "rank": 14}, {"word": "修复", "cnt": 20, "rank": 15}, {"word": "堆物", "cnt": 19, "rank": 16}, {"word": "房屋", "cnt": 19, "rank": 17}, {"word": "违规", "cnt": 18, "rank": 18}, {"word": "拆除", "cnt": 18, "rank": 19}, {"word": "修剪", "cnt": 18, "rank": 20}, {"word": "管道", "cnt": 17, "rank": 21}, {"word": "监控", "cnt": 17, "rank": 22}, {"word": "车位", "cnt": 16, "rank": 23}, {"word": "加装", "cnt": 15, "rank": 24}, {"word": "停车位", "cnt": 15, "rank": 25}, {"word": "空调", "cnt": 14, "rank": 26}, {"word": "施工", "cnt": 14, "rank": 27}, {"word": "合规", "cnt": 14, "rank": 28}, {"word": "制止", "cnt": 13, "rank": 29}, {"word": "改造", "cnt": 13, "rank": 30}, {"word": "调查", "cnt": 13, "rank": 31}, {"word": "非机动车", "cnt": 13, "rank": 32}, {"word": "监督", "cnt": 12, "rank": 33}, {"word": "疏通", "cnt": 12, "rank": 34}, {"word": "公示", "cnt": 12, "rank": 35}, {"word": "水管", "cnt": 12, "rank": 36}, {"word": "承重墙", "cnt": 12, "rank": 37}, {"word": "电瓶车", "cnt": 12, "rank": 38}, {"word": "物业管理", "cnt": 12, "rank": 39}, {"word": "停放", "cnt": 11, "rank": 40}, {"word": "破坏", "cnt": 11, "rank": 41}, {"word": "收费", "cnt": 11, "rank": 42}, {"word": "住户", "cnt": 11, "rank": 43}, {"word": "区域", "cnt": 11, "rank": 44}, {"word": "车辆", "cnt": 11, "rank": 45}, {"word": "经理", "cnt": 11, "rank": 46}, {"word": "楼上", "cnt": 11, "rank": 47}, {"word": "公司", "cnt": 11, "rank": 48}, {"word": "扰民", "cnt": 10, "rank": 49}, {"word": "堵塞", "cnt": 10, "rank": 50}, {"word": "绿化", "cnt": 10, "rank": 51}, {"word": "噪音", "cnt": 10, "rank": 52}, {"word": "房办", "cnt": 10, "rank": 53}, {"word": "通过", "cnt": 9, "rank": 54}, {"word": "公开", "cnt": 9, "rank": 55}, {"word": "业主大会", "cnt": 9, "rank": 56}, {"word": "违法", "cnt": 9, "rank": 57}, {"word": "安全隐患", "cnt": 9, "rank": 58}, {"word": "此事", "cnt": 9, "rank": 59}, {"word": "流程", "cnt": 8, "rank": 60}], "斜土路": [{"word": "维修", "cnt": 136, "rank": 1}, {"word": "业委会", "cnt": 75, "rank": 2}, {"word": "清理", "cnt": 54, "rank": 3}, {"word": "漏水", "cnt": 50, "rank": 4}, {"word": "电梯", "cnt": 49, "rank": 5}, {"word": "楼道", "cnt": 39, "rank": 6}, {"word": "修复", "cnt": 38, "rank": 7}, {"word": "车位", "cnt": 37, "rank": 8}, {"word": "业主", "cnt": 31, "rank": 9}, {"word": "群租", "cnt": 29, "rank": 10}, {"word": "违规", "cnt": 24, "rank": 11}, {"word": "车库", "cnt": 23, "rank": 12}, {"word": "拆除", "cnt": 22, "rank": 13}, {"word": "开发商", "cnt": 22, "rank": 14}, {"word": "筹备", "cnt": 22, "rank": 15}, {"word": "停车", "cnt": 21, "rank": 16}, {"word": "垃圾", "cnt": 21, "rank": 17}, {"word": "充电", "cnt": 20, "rank": 18}, {"word": "公示", "cnt": 20, "rank": 19}, {"word": "收取", "cnt": 19, "rank": 20}, {"word": "停放", "cnt": 17, "rank": 21}, {"word": "保安", "cnt": 16, "rank": 22}, {"word": "水管", "cnt": 16, "rank": 23}, {"word": "堆物", "cnt": 16, "rank": 24}, {"word": "公共", "cnt": 16, "rank": 25}, {"word": "停止", "cnt": 16, "rank": 26}, {"word": "施工", "cnt": 16, "rank": 27}, {"word": "疏通", "cnt": 15, "rank": 28}, {"word": "装修", "cnt": 15, "rank": 29}, {"word": "制止", "cnt": 14, "rank": 30}, {"word": "收费", "cnt": 14, "rank": 31}, {"word": "车辆", "cnt": 13, "rank": 32}, {"word": "空调", "cnt": 13, "rank": 33}, {"word": "服务", "cnt": 13, "rank": 34}, {"word": "保障", "cnt": 13, "rank": 35}, {"word": "楼上", "cnt": 12, "rank": 36}, {"word": "安全隐患", "cnt": 12, "rank": 37}, {"word": "承重墙", "cnt": 12, "rank": 38}, {"word": "合格", "cnt": 12, "rank": 39}, {"word": "投票", "cnt": 12, "rank": 40}, {"word": "加装", "cnt": 12, "rank": 41}, {"word": "标准", "cnt": 12, "rank": 42}, {"word": "规约", "cnt": 12, "rank": 43}, {"word": "积水", "cnt": 11, "rank": 44}, {"word": "管道", "cnt": 11, "rank": 45}, {"word": "海湾", "cnt": 11, "rank": 46}, {"word": "验收", "cnt": 11, "rank": 47}, {"word": "检测", "cnt": 11, "rank": 48}, {"word": "原样", "cnt": 10, "rank": 49}, {"word": "楼下", "cnt": 10, "rank": 50}, {"word": "周边", "cnt": 10, "rank": 51}, {"word": "停车位", "cnt": 10, "rank": 52}, {"word": "房屋", "cnt": 10, "rank": 53}, {"word": "排水", "cnt": 10, "rank": 54}, {"word": "完成", "cnt": 10, "rank": 55}, {"word": "电瓶车", "cnt": 9, "rank": 56}, {"word": "消防通道", "cnt": 9, "rank": 57}, {"word": "调查", "cnt": 9, "rank": 58}, {"word": "此事", "cnt": 9, "rank": 59}, {"word": "合规", "cnt": 9, "rank": 60}], "枫林路": [{"word": "维修", "cnt": 113, "rank": 1}, {"word": "漏水", "cnt": 47, "rank": 2}, {"word": "停车", "cnt": 44, "rank": 3}, {"word": "群租", "cnt": 37, "rank": 4}, {"word": "电梯", "cnt": 36, "rank": 5}, {"word": "业主", "cnt": 35, "rank": 6}, {"word": "清理", "cnt": 34, "rank": 7}, {"word": "车辆", "cnt": 30, "rank": 8}, {"word": "公共", "cnt": 28, "rank": 9}, {"word": "楼道", "cnt": 27, "rank": 10}, {"word": "充电", "cnt": 26, "rank": 11}, {"word": "保安", "cnt": 25, "rank": 12}, {"word": "业委会", "cnt": 25, "rank": 13}, {"word": "房屋", "cnt": 25, "rank": 14}, {"word": "施工", "cnt": 23, "rank": 15}, {"word": "违规", "cnt": 21, "rank": 16}, {"word": "停车位", "cnt": 20, "rank": 17}, {"word": "疏通", "cnt": 18, "rank": 18}, {"word": "修复", "cnt": 18, "rank": 19}, {"word": "公示", "cnt": 18, "rank": 20}, {"word": "管道", "cnt": 18, "rank": 21}, {"word": "拆除", "cnt": 18, "rank": 22}, {"word": "车位", "cnt": 18, "rank": 23}, {"word": "物业管理", "cnt": 17, "rank": 24}, {"word": "垃圾", "cnt": 16, "rank": 25}, {"word": "扰民", "cnt": 15, "rank": 26}, {"word": "服务", "cnt": 13, "rank": 27}, {"word": "木桥", "cnt": 13, "rank": 28}, {"word": "堆物", "cnt": 12, "rank": 29}, {"word": "制止", "cnt": 11, "rank": 30}, {"word": "物业公司", "cnt": 11, "rank": 31}, {"word": "噪音", "cnt": 11, "rank": 32}, {"word": "装修", "cnt": 11, "rank": 33}, {"word": "修剪", "cnt": 11, "rank": 34}, {"word": "加装", "cnt": 11, "rank": 35}, {"word": "停放", "cnt": 10, "rank": 36}, {"word": "堵塞", "cnt": 10, "rank": 37}, {"word": "民宿", "cnt": 10, "rank": 38}, {"word": "保洁", "cnt": 10, "rank": 39}, {"word": "收益", "cnt": 10, "rank": 40}, {"word": "收费", "cnt": 9, "rank": 41}, {"word": "楼上", "cnt": 9, "rank": 42}, {"word": "不合理", "cnt": 9, "rank": 43}, {"word": "云庭", "cnt": 9, "rank": 44}, {"word": "外来", "cnt": 8, "rank": 45}, {"word": "区域", "cnt": 8, "rank": 46}, {"word": "高建", "cnt": 8, "rank": 47}, {"word": "造成", "cnt": 8, "rank": 48}, {"word": "晚上", "cnt": 8, "rank": 49}, {"word": "如果", "cnt": 7, "rank": 50}, {"word": "允许", "cnt": 7, "rank": 51}, {"word": "能够", "cnt": 7, "rank": 52}, {"word": "空调", "cnt": 7, "rank": 53}, {"word": "公开", "cnt": 7, "rank": 54}, {"word": "公司", "cnt": 7, "rank": 55}, {"word": "斜土路", "cnt": 7, "rank": 56}, {"word": "不能", "cnt": 7, "rank": 57}, {"word": "包月", "cnt": 7, "rank": 58}, {"word": "邻居", "cnt": 7, "rank": 59}, {"word": "地下", "cnt": 7, "rank": 60}], "湖南路": [{"word": "维修", "cnt": 135, "rank": 1}, {"word": "漏水", "cnt": 53, "rank": 2}, {"word": "清理", "cnt": 38, "rank": 3}, {"word": "房屋", "cnt": 31, "rank": 4}, {"word": "楼道", "cnt": 25, "rank": 5}, {"word": "违规", "cnt": 18, "rank": 6}, {"word": "修复", "cnt": 17, "rank": 7}, {"word": "公共", "cnt": 17, "rank": 8}, {"word": "群租", "cnt": 16, "rank": 9}, {"word": "原样", "cnt": 14, "rank": 10}, {"word": "堆物", "cnt": 14, "rank": 11}, {"word": "扰民", "cnt": 13, "rank": 12}, {"word": "清扫", "cnt": 12, "rank": 13}, {"word": "拆除", "cnt": 12, "rank": 14}, {"word": "疏通", "cnt": 11, "rank": 15}, {"word": "垃圾", "cnt": 11, "rank": 16}, {"word": "屋顶", "cnt": 11, "rank": 17}, {"word": "改非", "cnt": 10, "rank": 18}, {"word": "保安", "cnt": 10, "rank": 19}, {"word": "噪音", "cnt": 10, "rank": 20}, {"word": "堆放", "cnt": 10, "rank": 21}, {"word": "装修", "cnt": 10, "rank": 22}, {"word": "制止", "cnt": 10, "rank": 23}, {"word": "快递", "cnt": 10, "rank": 24}, {"word": "充电", "cnt": 9, "rank": 25}, {"word": "楼上", "cnt": 9, "rank": 26}, {"word": "积水", "cnt": 9, "rank": 27}, {"word": "排水", "cnt": 9, "rank": 28}, {"word": "业委会", "cnt": 8, "rank": 29}, {"word": "区域", "cnt": 8, "rank": 30}, {"word": "渗水", "cnt": 8, "rank": 31}, {"word": "管道", "cnt": 8, "rank": 32}, {"word": "住户", "cnt": 8, "rank": 33}, {"word": "催单", "cnt": 8, "rank": 34}, {"word": "恢复原状", "cnt": 7, "rank": 35}, {"word": "保洁", "cnt": 7, "rank": 36}, {"word": "物品", "cnt": 7, "rank": 37}, {"word": "一楼", "cnt": 7, "rank": 38}, {"word": "安全隐患", "cnt": 7, "rank": 39}, {"word": "师傅", "cnt": 7, "rank": 40}, {"word": "避免", "cnt": 7, "rank": 41}, {"word": "树木", "cnt": 7, "rank": 42}, {"word": "城管", "cnt": 7, "rank": 43}, {"word": "门口", "cnt": 6, "rank": 44}, {"word": "业主", "cnt": 6, "rank": 45}, {"word": "开门", "cnt": 6, "rank": 46}, {"word": "停车", "cnt": 6, "rank": 47}, {"word": "停车位", "cnt": 6, "rank": 48}, {"word": "卫生间", "cnt": 6, "rank": 49}, {"word": "彻底解决", "cnt": 6, "rank": 50}, {"word": "电梯", "cnt": 6, "rank": 51}, {"word": "墙面", "cnt": 5, "rank": 52}, {"word": "其为", "cnt": 5, "rank": 53}, {"word": "五原", "cnt": 5, "rank": 54}, {"word": "外墙", "cnt": 5, "rank": 55}, {"word": "原来", "cnt": 5, "rank": 56}, {"word": "居住", "cnt": 5, "rank": 57}, {"word": "车棚", "cnt": 5, "rank": 58}, {"word": "隐患", "cnt": 5, "rank": 59}, {"word": "允许", "cnt": 5, "rank": 60}], "漕河泾": [{"word": "维修", "cnt": 118, "rank": 1}, {"word": "电梯", "cnt": 64, "rank": 2}, {"word": "清理", "cnt": 55, "rank": 3}, {"word": "业主", "cnt": 54, "rank": 4}, {"word": "停车", "cnt": 52, "rank": 5}, {"word": "业委会", "cnt": 51, "rank": 6}, {"word": "群租", "cnt": 46, "rank": 7}, {"word": "车辆", "cnt": 44, "rank": 8}, {"word": "车位", "cnt": 43, "rank": 9}, {"word": "漏水", "cnt": 40, "rank": 10}, {"word": "楼道", "cnt": 37, "rank": 11}, {"word": "违规", "cnt": 35, "rank": 12}, {"word": "公共", "cnt": 28, "rank": 13}, {"word": "停车位", "cnt": 26, "rank": 14}, {"word": "充电", "cnt": 24, "rank": 15}, {"word": "保安", "cnt": 23, "rank": 16}, {"word": "房屋", "cnt": 22, "rank": 17}, {"word": "修复", "cnt": 21, "rank": 18}, {"word": "合规", "cnt": 20, "rank": 19}, {"word": "施工", "cnt": 20, "rank": 20}, {"word": "基金", "cnt": 19, "rank": 21}, {"word": "收费", "cnt": 18, "rank": 22}, {"word": "费用", "cnt": 18, "rank": 23}, {"word": "堆物", "cnt": 18, "rank": 24}, {"word": "制止", "cnt": 16, "rank": 25}, {"word": "监控", "cnt": 16, "rank": 26}, {"word": "物业公司", "cnt": 16, "rank": 27}, {"word": "安全隐患", "cnt": 15, "rank": 28}, {"word": "停放", "cnt": 15, "rank": 29}, {"word": "垃圾", "cnt": 14, "rank": 30}, {"word": "加装", "cnt": 14, "rank": 31}, {"word": "损坏", "cnt": 14, "rank": 32}, {"word": "高空", "cnt": 14, "rank": 33}, {"word": "公开", "cnt": 13, "rank": 34}, {"word": "排队", "cnt": 13, "rank": 35}, {"word": "原样", "cnt": 13, "rank": 36}, {"word": "噪音", "cnt": 13, "rank": 37}, {"word": "公示", "cnt": 13, "rank": 38}, {"word": "合同", "cnt": 13, "rank": 39}, {"word": "扰民", "cnt": 13, "rank": 40}, {"word": "拆除", "cnt": 11, "rank": 41}, {"word": "开发商", "cnt": 11, "rank": 42}, {"word": "抛物", "cnt": 11, "rank": 43}, {"word": "门禁", "cnt": 11, "rank": 44}, {"word": "禁止", "cnt": 11, "rank": 45}, {"word": "物业费", "cnt": 10, "rank": 46}, {"word": "取消", "cnt": 10, "rank": 47}, {"word": "住户", "cnt": 10, "rank": 48}, {"word": "楼上", "cnt": 10, "rank": 49}, {"word": "监督", "cnt": 10, "rank": 50}, {"word": "流浪", "cnt": 10, "rank": 51}, {"word": "空调", "cnt": 9, "rank": 52}, {"word": "态度", "cnt": 9, "rank": 53}, {"word": "停车费", "cnt": 9, "rank": 54}, {"word": "恢复原状", "cnt": 9, "rank": 55}, {"word": "收取", "cnt": 9, "rank": 56}, {"word": "月份", "cnt": 9, "rank": 57}, {"word": "服务", "cnt": 9, "rank": 58}, {"word": "业主大会", "cnt": 9, "rank": 59}, {"word": "摄像头", "cnt": 9, "rank": 60}], "田林": [{"word": "维修", "cnt": 89, "rank": 1}, {"word": "业委会", "cnt": 82, "rank": 2}, {"word": "业主", "cnt": 65, "rank": 3}, {"word": "清理", "cnt": 51, "rank": 4}, {"word": "群租", "cnt": 48, "rank": 5}, {"word": "电梯", "cnt": 47, "rank": 6}, {"word": "漏水", "cnt": 43, "rank": 7}, {"word": "停车", "cnt": 37, "rank": 8}, {"word": "违规", "cnt": 35, "rank": 9}, {"word": "公共", "cnt": 33, "rank": 10}, {"word": "车辆", "cnt": 31, "rank": 11}, {"word": "楼道", "cnt": 31, "rank": 12}, {"word": "车位", "cnt": 28, "rank": 13}, {"word": "公示", "cnt": 26, "rank": 14}, {"word": "垃圾", "cnt": 25, "rank": 15}, {"word": "拆除", "cnt": 25, "rank": 16}, {"word": "充电", "cnt": 22, "rank": 17}, {"word": "修复", "cnt": 20, "rank": 18}, {"word": "房屋", "cnt": 20, "rank": 19}, {"word": "扰民", "cnt": 19, "rank": 20}, {"word": "物业管理", "cnt": 18, "rank": 21}, {"word": "堆物", "cnt": 18, "rank": 22}, {"word": "施工", "cnt": 18, "rank": 23}, {"word": "区域", "cnt": 17, "rank": 24}, {"word": "装修", "cnt": 17, "rank": 25}, {"word": "加装", "cnt": 17, "rank": 26}, {"word": "住户", "cnt": 16, "rank": 27}, {"word": "保安", "cnt": 16, "rank": 28}, {"word": "不合理", "cnt": 16, "rank": 29}, {"word": "停车位", "cnt": 15, "rank": 30}, {"word": "门口", "cnt": 15, "rank": 31}, {"word": "公开", "cnt": 15, "rank": 32}, {"word": "征询", "cnt": 15, "rank": 33}, {"word": "噪音", "cnt": 14, "rank": 34}, {"word": "责任", "cnt": 14, "rank": 35}, {"word": "物业公司", "cnt": 14, "rank": 36}, {"word": "占用", "cnt": 13, "rank": 37}, {"word": "停放", "cnt": 13, "rank": 38}, {"word": "调查", "cnt": 13, "rank": 39}, {"word": "合规", "cnt": 12, "rank": 40}, {"word": "电瓶车", "cnt": 12, "rank": 41}, {"word": "道歉", "cnt": 12, "rank": 42}, {"word": "电话", "cnt": 12, "rank": 43}, {"word": "流程", "cnt": 12, "rank": 44}, {"word": "堆放", "cnt": 11, "rank": 45}, {"word": "门禁", "cnt": 11, "rank": 46}, {"word": "费用", "cnt": 11, "rank": 47}, {"word": "表决", "cnt": 11, "rank": 48}, {"word": "禁止", "cnt": 10, "rank": 49}, {"word": "任何", "cnt": 10, "rank": 50}, {"word": "能够", "cnt": 10, "rank": 51}, {"word": "杂物", "cnt": 10, "rank": 52}, {"word": "制止", "cnt": 10, "rank": 53}, {"word": "完成", "cnt": 10, "rank": 54}, {"word": "钦州", "cnt": 10, "rank": 55}, {"word": "投票", "cnt": 10, "rank": 56}, {"word": "业主大会", "cnt": 10, "rank": 57}, {"word": "环境", "cnt": 10, "rank": 58}, {"word": "安全隐患", "cnt": 10, "rank": 59}, {"word": "公寓", "cnt": 10, "rank": 60}], "虹梅路": [{"word": "群租", "cnt": 32, "rank": 1}, {"word": "清理", "cnt": 28, "rank": 2}, {"word": "维修", "cnt": 24, "rank": 3}, {"word": "电梯", "cnt": 19, "rank": 4}, {"word": "业委会", "cnt": 16, "rank": 5}, {"word": "业主", "cnt": 15, "rank": 6}, {"word": "楼道", "cnt": 14, "rank": 7}, {"word": "保安", "cnt": 13, "rank": 8}, {"word": "车位", "cnt": 12, "rank": 9}, {"word": "停车", "cnt": 12, "rank": 10}, {"word": "修复", "cnt": 11, "rank": 11}, {"word": "违规", "cnt": 11, "rank": 12}, {"word": "公共", "cnt": 11, "rank": 13}, {"word": "修剪", "cnt": 11, "rank": 14}, {"word": "漏水", "cnt": 10, "rank": 15}, {"word": "原样", "cnt": 9, "rank": 16}, {"word": "垃圾", "cnt": 9, "rank": 17}, {"word": "非机动车", "cnt": 8, "rank": 18}, {"word": "房屋", "cnt": 8, "rank": 19}, {"word": "堆物", "cnt": 7, "rank": 20}, {"word": "物业管理", "cnt": 7, "rank": 21}, {"word": "停车位", "cnt": 6, "rank": 22}, {"word": "玻璃窗", "cnt": 6, "rank": 23}, {"word": "通行", "cnt": 6, "rank": 24}, {"word": "充电", "cnt": 6, "rank": 25}, {"word": "保洁", "cnt": 6, "rank": 26}, {"word": "监控", "cnt": 5, "rank": 27}, {"word": "换届", "cnt": 5, "rank": 28}, {"word": "开发商", "cnt": 5, "rank": 29}, {"word": "租房", "cnt": 5, "rank": 30}, {"word": "收益", "cnt": 5, "rank": 31}, {"word": "树木", "cnt": 5, "rank": 32}, {"word": "停放", "cnt": 5, "rank": 33}, {"word": "公示", "cnt": 5, "rank": 34}, {"word": "车库", "cnt": 5, "rank": 35}, {"word": "噪音", "cnt": 5, "rank": 36}, {"word": "不善", "cnt": 5, "rank": 37}, {"word": "服务", "cnt": 5, "rank": 38}, {"word": "居住", "cnt": 5, "rank": 39}, {"word": "快递", "cnt": 5, "rank": 40}, {"word": "管道", "cnt": 5, "rank": 41}, {"word": "制止", "cnt": 5, "rank": 42}], "长桥": [{"word": "维修", "cnt": 132, "rank": 1}, {"word": "清理", "cnt": 99, "rank": 2}, {"word": "停车", "cnt": 77, "rank": 3}, {"word": "电梯", "cnt": 61, "rank": 4}, {"word": "漏水", "cnt": 49, "rank": 5}, {"word": "楼道", "cnt": 48, "rank": 6}, {"word": "车位", "cnt": 44, "rank": 7}, {"word": "业主", "cnt": 43, "rank": 8}, {"word": "保安", "cnt": 36, "rank": 9}, {"word": "垃圾", "cnt": 32, "rank": 10}, {"word": "充电", "cnt": 32, "rank": 11}, {"word": "违规", "cnt": 31, "rank": 12}, {"word": "车辆", "cnt": 28, "rank": 13}, {"word": "堆物", "cnt": 26, "rank": 14}, {"word": "业委会", "cnt": 25, "rank": 15}, {"word": "公共", "cnt": 22, "rank": 16}, {"word": "收费", "cnt": 21, "rank": 17}, {"word": "楼上", "cnt": 21, "rank": 18}, {"word": "监控", "cnt": 21, "rank": 19}, {"word": "施工", "cnt": 19, "rank": 20}, {"word": "制止", "cnt": 18, "rank": 21}, {"word": "加装", "cnt": 18, "rank": 22}, {"word": "保洁", "cnt": 18, "rank": 23}, {"word": "修复", "cnt": 18, "rank": 24}, {"word": "停车位", "cnt": 17, "rank": 25}, {"word": "停放", "cnt": 17, "rank": 26}, {"word": "拆除", "cnt": 17, "rank": 27}, {"word": "非机动车", "cnt": 17, "rank": 28}, {"word": "修剪", "cnt": 17, "rank": 29}, {"word": "噪音", "cnt": 16, "rank": 30}, {"word": "占用", "cnt": 15, "rank": 31}, {"word": "物业管理", "cnt": 14, "rank": 32}, {"word": "渗水", "cnt": 14, "rank": 33}, {"word": "物业公司", "cnt": 14, "rank": 34}, {"word": "群租", "cnt": 14, "rank": 35}, {"word": "不善", "cnt": 13, "rank": 36}, {"word": "堆放", "cnt": 13, "rank": 37}, {"word": "费用", "cnt": 13, "rank": 38}, {"word": "树木", "cnt": 13, "rank": 39}, {"word": "禁止", "cnt": 12, "rank": 40}, {"word": "服务", "cnt": 12, "rank": 41}, {"word": "电瓶车", "cnt": 12, "rank": 42}, {"word": "区域", "cnt": 12, "rank": 43}, {"word": "维护", "cnt": 12, "rank": 44}, {"word": "标准", "cnt": 12, "rank": 45}, {"word": "空调", "cnt": 12, "rank": 46}, {"word": "安全隐患", "cnt": 11, "rank": 47}, {"word": "安全", "cnt": 11, "rank": 48}, {"word": "电话", "cnt": 11, "rank": 49}, {"word": "每天", "cnt": 11, "rank": 50}, {"word": "装修", "cnt": 11, "rank": 51}, {"word": "管道", "cnt": 11, "rank": 52}, {"word": "扰民", "cnt": 11, "rank": 53}, {"word": "不合理", "cnt": 10, "rank": 54}, {"word": "房屋", "cnt": 10, "rank": 55}, {"word": "物业费", "cnt": 10, "rank": 56}, {"word": "合规", "cnt": 10, "rank": 57}, {"word": "清扫", "cnt": 10, "rank": 58}, {"word": "绿化", "cnt": 10, "rank": 59}, {"word": "造成", "cnt": 10, "rank": 60}], "龙华": [{"word": "维修", "cnt": 72, "rank": 1}, {"word": "业委会", "cnt": 71, "rank": 2}, {"word": "业主", "cnt": 54, "rank": 3}, {"word": "漏水", "cnt": 49, "rank": 4}, {"word": "群租", "cnt": 48, "rank": 5}, {"word": "清理", "cnt": 43, "rank": 6}, {"word": "公共", "cnt": 40, "rank": 7}, {"word": "停车", "cnt": 36, "rank": 8}, {"word": "违规", "cnt": 30, "rank": 9}, {"word": "车位", "cnt": 29, "rank": 10}, {"word": "电梯", "cnt": 28, "rank": 11}, {"word": "车辆", "cnt": 26, "rank": 12}, {"word": "拆除", "cnt": 26, "rank": 13}, {"word": "充电", "cnt": 26, "rank": 14}, {"word": "公示", "cnt": 24, "rank": 15}, {"word": "垃圾", "cnt": 24, "rank": 16}, {"word": "楼道", "cnt": 21, "rank": 17}, {"word": "施工", "cnt": 20, "rank": 18}, {"word": "停车位", "cnt": 19, "rank": 19}, {"word": "房屋", "cnt": 19, "rank": 20}, {"word": "保安", "cnt": 18, "rank": 21}, {"word": "选举", "cnt": 18, "rank": 22}, {"word": "停放", "cnt": 17, "rank": 23}, {"word": "规划", "cnt": 15, "rank": 24}, {"word": "噪音", "cnt": 15, "rank": 25}, {"word": "空调", "cnt": 15, "rank": 26}, {"word": "绿化", "cnt": 15, "rank": 27}, {"word": "装修", "cnt": 14, "rank": 28}, {"word": "外机", "cnt": 14, "rank": 29}, {"word": "原貌", "cnt": 14, "rank": 30}, {"word": "加装", "cnt": 14, "rank": 31}, {"word": "扰民", "cnt": 13, "rank": 32}, {"word": "安全隐患", "cnt": 13, "rank": 33}, {"word": "城管", "cnt": 13, "rank": 34}, {"word": "投票", "cnt": 13, "rank": 35}, {"word": "公开", "cnt": 12, "rank": 36}, {"word": "临时", "cnt": 12, "rank": 37}, {"word": "电话", "cnt": 12, "rank": 38}, {"word": "房办", "cnt": 12, "rank": 39}, {"word": "堆物", "cnt": 12, "rank": 40}, {"word": "楼顶", "cnt": 12, "rank": 41}, {"word": "统一", "cnt": 12, "rank": 42}, {"word": "物业公司", "cnt": 11, "rank": 43}, {"word": "失责", "cnt": 11, "rank": 44}, {"word": "楼上", "cnt": 11, "rank": 45}, {"word": "按原", "cnt": 11, "rank": 46}, {"word": "履职", "cnt": 11, "rank": 47}, {"word": "追责", "cnt": 11, "rank": 48}, {"word": "造成", "cnt": 10, "rank": 49}, {"word": "堆放", "cnt": 10, "rank": 50}, {"word": "原样", "cnt": 10, "rank": 51}, {"word": "修复", "cnt": 10, "rank": 52}, {"word": "监控", "cnt": 10, "rank": 53}, {"word": "任何", "cnt": 10, "rank": 54}, {"word": "调查", "cnt": 10, "rank": 55}, {"word": "物业管理", "cnt": 10, "rank": 56}, {"word": "停止", "cnt": 10, "rank": 57}, {"word": "已装", "cnt": 10, "rank": 58}, {"word": "禁止", "cnt": 9, "rank": 59}, {"word": "疏通", "cnt": 9, "rank": 60}]}};
+var SUGGEST = ["有关", "事宜", "现象", "说法", "提供", "针对", "立即", "彻底", "原样", "时间", "家中", "楼上", "位置", "合规", "成立", "规定", "住户", "解决方案", "上门", "恢复", "更换", "安装", "拆除", "责令", "疏通", "清扫", "修剪", "监控", "包月", "城管", "开发商", "筹备"];
+var SHOWN = DATA.meta.topn_shown;
+var DEL = {};
+
+/* ── 词条索引：word → {streets:[{name,rank,cnt}], total, cover, shown} ── */
+var INDEX = {}, ORDER = [];
+(function () {
+  var m = {};
+  for (var st in DATA.streets) {
+    DATA.streets[st].forEach(function (it) {
+      if (!m[it.word]) m[it.word] = { word: it.word, streets: [], total: 0, shown: false };
+      m[it.word].streets.push({ name: st, rank: it.rank, cnt: it.cnt });
+      m[it.word].total += it.cnt;
+      if (it.rank <= SHOWN) m[it.word].shown = true;
+    });
+  }
+  ORDER = Object.keys(m).sort(function (a, b) {
+    var A = m[a], B = m[b];
+    if (A.shown !== B.shown) return A.shown ? -1 : 1;      // 展示中的排前
+    if (A.streets.length !== B.streets.length) return B.streets.length - A.streets.length;
+    return B.total - A.total;
+  });
+  INDEX = m;
+})();
+var SUG = {}; SUGGEST.forEach(function (w) { SUG[w] = 1; });
+
+function pct(n) { return n.toLocaleString('en-US'); }
+
+function chip(word) {
+  var it = INDEX[word];
+  var cls = 'w' + (it.shown ? ' show' : '') + (SUG[word] ? ' sug' : '') + (DEL[word] ? ' del' : '');
+  var dist = it.streets.sort(function (a, b) { return a.rank - b.rank; })
+    .map(function (s) { return s.name + ' #' + s.rank + '（' + s.cnt + '）'; }).join('；');
+  return '<div class="' + cls + '" data-w="' + word + '" title="' + dist + '">'
+    + '<span class="wd">' + word + '</span>'
+    + '<span class="wm">' + it.streets.length + ' 镇 · ' + pct(it.total) + ' 次 · '
+    + (it.shown ? '展示中' : '候补') + '</span></div>';
+}
+
+/* ── 全部词视图 ── */
+function renderAll() {
+  var q = (document.getElementById('q').value || '').trim();
+  var onlyShow = document.getElementById('onlyShow').checked;
+  var html = '';
+  ORDER.forEach(function (w) {
+    if (q && w.indexOf(q) < 0) return;
+    if (onlyShow && !INDEX[w].shown) return;
+    html += chip(w);
+  });
+  document.getElementById('gridAll').innerHTML = html || '<p style="color:#94a3b8;font-size:13px">没有匹配的词</p>';
+}
+
+/* ── 按街镇视图 ── */
+function renderStreet() {
+  var colors = ['#1a3a5f', '#1890ff', '#13c2c2', '#52c41a', '#fa8c16', '#f5222d', '#7b1fa2', '#0f6e56'];
+  var html = '';
+  Object.keys(DATA.streets).forEach(function (st) {
+    var items = DATA.streets[st];
+    var top = items.filter(function (x) { return x.rank <= SHOWN; });
+    var cand = items.filter(function (x) { return x.rank > SHOWN; });
+    html += '<div class="card"><div class="card-head"><span class="nm">' + st + '</span>'
+      + '<span class="tag">展示 Top' + top.length + ' · 候选 ' + cand.length + ' 词</span></div>'
+      + '<div class="card-body"><div class="lbl">当前词云展示</div>'
+      + '<div class="wgrid">' + top.map(function (x) { return chip(x.word); }).join('') + '</div>';
+    if (cand.length) {
+      html += '<details class="cand"><summary>补位候选（第 ' + (SHOWN + 1) + '–' + items.length
+        + ' 名，删词后自动顶上）</summary><div class="wgrid">'
+        + cand.map(function (x) { return chip(x.word); }).join('') + '</div></details>';
+    }
+    html += '</div></div>';
+  });
+  document.getElementById('gridStreet').innerHTML = html;
+}
+
+/* ── 交互 ── */
+function refresh() {
+  var n = 0, list = [];
+  ORDER.forEach(function (w) { if (DEL[w]) { n++; list.push(w); } });
+  document.getElementById('nDel').textContent = n;
+  document.getElementById('outText').value = list.join('、');
+  document.querySelectorAll('.w').forEach(function (el) {
+    var w = el.getAttribute('data-w');
+    el.classList.toggle('del', !!DEL[w]);
+  });
+}
+
+document.addEventListener('click', function (e) {
+  var el = e.target.closest && e.target.closest('.w');
+  if (!el) return;
+  var w = el.getAttribute('data-w');
+  if (DEL[w]) delete DEL[w]; else DEL[w] = 1;
+  refresh();
+});
+
+document.getElementById('q').addEventListener('input', renderAll);
+document.getElementById('onlyShow').addEventListener('change', renderAll);
+document.getElementById('tabAll').addEventListener('click', function () {
+  this.classList.add('on'); document.getElementById('tabStreet').classList.remove('on');
+  document.getElementById('paneAll').classList.remove('hide');
+  document.getElementById('paneStreet').classList.add('hide');
+});
+document.getElementById('tabStreet').addEventListener('click', function () {
+  this.classList.add('on'); document.getElementById('tabAll').classList.remove('on');
+  document.getElementById('paneStreet').classList.remove('hide');
+  document.getElementById('paneAll').classList.add('hide');
+  renderStreet();
+});
+document.getElementById('btnCopy').addEventListener('click', function () {
+  var v = document.getElementById('outText').value;
+  if (!v) { alert('还没有标记任何词'); return; }
+  var ta = document.createElement('textarea');
+  ta.value = v; document.body.appendChild(ta); ta.select();
+  document.execCommand('copy'); document.body.removeChild(ta);
+  this.textContent = '已复制 ✓';
+  var self = this;
+  setTimeout(function () { self.textContent = '复制删除清单'; }, 1600);
+});
+document.getElementById('btnReset').addEventListener('click', function () {
+  DEL = {}; refresh();
+});
+
+renderAll();
+</script>
+</body>
+</html>

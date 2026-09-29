@@ -21,16 +21,32 @@ v2 口径：
   · 基数门槛  三年合计≥15 且 2024全年≥5 且 2025年1-8月≥10（抑制小基数放大）
   · 首位类别  取 2026年1-8月 的实际首位类别
 
+v3 口径（2026-09-28 项目组决策）：
+  · **参评范围**：仅《纳统小区 (2026 更新版).xls》名单内的小区；不在名单中的不做统计
+  · **统计单元**：按纳统小区聚合（别名/曾用名归并）—— `--scope aggregate` 默认；
+                 `--scope filter` 仅过滤名单；`--scope all` 为改造前旧口径
+
 产出：scripts/governance_tracking.json
 """
+import argparse
 import json
 import os
+import sys
 
 import pandas as pd
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import nato_match as NM  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PKL = os.path.join(ROOT, "data", "merged_cleaned.pkl")
 OUT = os.path.join(ROOT, "scripts", "governance_tracking.json")
+
+_ap = argparse.ArgumentParser(add_help=True)
+_ap.add_argument("--scope", choices=["aggregate", "filter", "all"], default="aggregate",
+                 help="aggregate=按纳统小区聚合（默认）；filter=仅过滤名单；all=旧口径")
+_ap.add_argument("--dry-run", action="store_true", help="只打印，不写 json")
+ARGS, _unknown = _ap.parse_known_args()
 
 YEAR_NOW, MONTH_NOW = 2026, 8
 YEAR_PREV, YEAR_BASE = 2025, 2024
@@ -38,16 +54,43 @@ YEAR_PREV, YEAR_BASE = 2025, 2024
 # 主数据街镇名 → 派生资产街镇名（与 risk_scores.json、街镇报告保持一致）
 STREET_ALIAS = {"华泾镇": "华泾"}
 
+# 收窄范围后的匹配表（模块级，供输出时取纳统档案街道）
+NATO_MAP = None
+NATO_STREET = {}
+
 def load_data():
     """返回 (全量 df, 仅含有效小区名的 df)。
 
     口径与街镇专项分析报告保持一致：街道级 / 类别级统计用**全量**（不排除任何十四类），
     只有「按小区追踪」才要求 community_name 有效（否则无法归属到小区）。
+    v3：按项目组决策，小区级追踪再叠加「仅纳统名单 + 按纳统小区聚合」。
     """
+    global NATO_MAP, NATO_STREET
     df = pd.read_pickle(PKL)
     df["street"] = df["street"].map(lambda x: STREET_ALIAS.get(x, x))
     comm = df[df["community_name"].notna()
               & (df["community_name"] != "无") & (df["community_name"] != "")].copy()
+    comm["community_name"] = comm["community_name"].astype(str).str.strip()
+
+    if ARGS.scope == "all":
+        comm["_unit"] = comm["community_name"]
+        return df, comm
+
+    _st = comm.groupby("community_name")["street"].agg(
+        lambda s: s.mode().iloc[0] if len(s.mode()) else "").to_dict()
+    NATO_MAP = NM.build_map(sorted(_st), streets=_st)
+    NATO_STREET = dict(zip(NATO_MAP["nato_name"], NATO_MAP["nato_street"]))
+    ok = set(NATO_MAP.loc[NATO_MAP["matched"], "hotline_name"])
+    n0 = len(comm)
+    comm = comm[comm["community_name"].isin(ok)].copy()
+    if ARGS.scope == "aggregate":
+        comm = NM.aggregate_key(comm, col="community_name", mp=NATO_MAP)
+        comm["_unit"] = comm["nato_community"]
+        comm = comm[comm["_unit"] != ""]
+    else:
+        comm["_unit"] = comm["community_name"]
+    print(f"参评范围收窄（{ARGS.scope}）：{n0:,} → {len(comm):,} 条"
+          f"（剔除 {n0-len(comm):,} 条）｜统计单元 {comm['_unit'].nunique()} 个")
     return df, comm
 
 # 判定阈值
@@ -56,6 +99,11 @@ BETTER_TH = 10.0     # 2026年同期同比高于此值 → 改善
 MIN_TOTAL = 15       # 三年合计最小工单量
 MIN_2024 = 5         # 2024 全年最小基数
 MIN_2025_SAME = 10   # 2025年1-8月最小基数（抑制小基数放大百分比）
+
+# 物业服务态度专项排名（整改清单第 12 项）
+SA_CAT = "物业服务态度"
+SA_MIN = 3           # 入榜门槛：两年同期（2025年1-8月 + 2026年1-8月）合计 ≥ 此值
+SA_BASE_PCT = 5      # 2025 同期基数 < 此值时不展示同比（否则 3→11 会变成 +266.7%）
 
 
 def eff(prev: int, curr: int):
@@ -84,7 +132,7 @@ def main():
     print("=" * 64)
 
     tracking = []
-    for community, g in dfc.groupby("community_name"):
+    for community, g in dfc.groupby("_unit"):
         if len(g) < MIN_TOTAL:
             continue
         g24, g25, g26 = g[g["year"] == YEAR_BASE], g[g["year"] == YEAR_PREV], g[g["year"] == YEAR_NOW]
@@ -107,7 +155,8 @@ def main():
 
         tracking.append({
             "community": community,
-            "street": g["street"].iloc[0],
+            "street": (NATO_STREET.get(community) or g["street"].iloc[0]).replace("街道", "").replace("镇", "").strip()
+                      if (NATO_STREET.get(community) or g["street"].iloc[0]) else "未知",
             "company": str(g["property_company"].iloc[0])[:20]
                        if pd.notna(g["property_company"].iloc[0]) else "未知",
             "total": len(g),
@@ -205,6 +254,78 @@ def main():
         print(f"  {s:6s}: 2025同期{e['2025_h1']:5d} → 2026同期{e['2026_h1']:5d} "
               f"(同期同比 {e['effect_2026']:+.1f}%)")
 
+    # ─── 4.5 物业服务态度投诉专项排名（整改清单第 12 项）───
+    print("\n" + "=" * 64)
+    print("4. 物业服务态度投诉专项排名")
+    print("=" * 64)
+
+    sa = df[df["category_14"] == SA_CAT].copy()
+    sa["_pc"] = sa["property_company"].astype(str).str.strip()
+    sa["_cm"] = sa["community_name"].astype(str).str.strip()
+
+    def _chg(prev: int, curr: int):
+        """同比变化率（正=上升=红，负=下降=绿）。基数为 0 时返回 None。"""
+        if not prev:
+            return None
+        return round((curr - prev) / prev * 100, 1)
+
+    def _sa_rows(key_col, extra_fn):
+        rows = []
+        for key, g in sa.groupby(key_col):
+            if key in ("", "无", "nan", "None", "NoneType"):
+                continue
+            n26 = int(((g["year"] == YEAR_NOW) & (g["month"] <= MONTH_NOW)).sum())
+            n25 = int(((g["year"] == YEAR_PREV) & (g["month"] <= MONTH_NOW)).sum())
+            if n26 + n25 < SA_MIN:
+                continue
+            row = {"name": str(key), "n2026": n26, "n2025_same": n25, "total": n26 + n25}
+            # 2025 同期基数太小时百分比会被放大成 +700%，故不出同比
+            row["change"] = _chg(n25, n26) if n25 >= SA_BASE_PCT else None
+            row.update(extra_fn(g))
+            rows.append(row)
+        rows.sort(key=lambda r: (-r["n2026"], -r["n2025_same"], r["name"]))
+        return rows
+
+    sa_companies = _sa_rows("_pc", lambda g: {
+        "n_community": int(g["_cm"].nunique()),
+        "n_street": int(g["street"].nunique()),
+    })
+    sa_communities = _sa_rows("_cm", lambda g: {
+        "street": (str(g["street"].mode().iloc[0]).replace("街道", "").replace("镇", "").strip()
+                   if len(g["street"].mode()) else ""),
+        "company": (str(g["_pc"].mode().iloc[0]) if len(g["_pc"].mode()) else ""),
+    })
+
+    _sa26 = sa[(sa["year"] == YEAR_NOW) & (sa["month"] <= MONTH_NOW)]
+    _sa25 = sa[(sa["year"] == YEAR_PREV) & (sa["month"] <= MONTH_NOW)]
+    sa_totals = {
+        "n2024": int((sa["year"] == YEAR_BASE).sum()),
+        "n2025": int((sa["year"] == YEAR_PREV).sum()),
+        "n2025_same": int(len(_sa25)),
+        "n2026": int(len(_sa26)),
+        "change": _chg(int(len(_sa25)), int(len(_sa26))),
+        "company_missing": int(_sa26["_pc"].isin(["", "无", "nan", "None"]).sum()),
+        "community_missing": int(_sa26["_cm"].isin(["", "无", "nan", "None"]).sum()),
+        "n_company": len(sa_companies),
+        "n_community": len(sa_communities),
+        "communities_all": int(_sa26["_cm"].nunique()),
+        "companies_all": int(_sa26[~_sa26["_pc"].isin(["", "无", "nan", "None"])]["_pc"].nunique()),
+    }
+    print(f"  全量 {sa_totals['n2026']} 件（2025 同期 {sa_totals['n2025_same']} 件，"
+          f"同比 {sa_totals['change']:+.1f}%）")
+    print(f"  入榜公司 {sa_totals['n_company']} 家（两年合计≥{SA_MIN}）｜"
+          f"入榜小区 {sa_totals['n_community']} 个")
+    print("\n  物业公司 Top10:")
+    for i, r in enumerate(sa_companies[:10], 1):
+        ch = "基数不足" if r["change"] is None else f"{r['change']:+.1f}%"
+        print(f"   {i:2d}. {r['name'][:22]:22s} 2026={r['n2026']:3d} 2025同期={r['n2025_same']:3d} "
+              f"({ch}) 涉 {r['n_community']} 个小区")
+    print("\n  小区 Top10:")
+    for i, r in enumerate(sa_communities[:10], 1):
+        ch = "基数不足" if r["change"] is None else f"{r['change']:+.1f}%"
+        print(f"   {i:2d}. {r['name'][:16]:16s} {r['street']:6s} 2026={r['n2026']:3d} "
+              f"2025同期={r['n2025_same']:3d} ({ch})")
+
     # ─── 5. 输出 ───
     def pack(lst):
         return [{
@@ -218,8 +339,15 @@ def main():
 
     result = {
         "meta": {
-            "version": 2,
+            "version": 3,
             "source": "data/merged_cleaned.pkl（66,812 条，2024.01–2026.08）",
+            "scope": {
+                "unit": ("纳统小区（《纳统小区 (2026 更新版).xls》）" if ARGS.scope != "all"
+                         else "热线小区名（旧口径，未收窄）"),
+                "mode": ARGS.scope,
+                "exclude_outside_nato": ARGS.scope != "all",
+                "note": "仅统计纳统名单内小区；不在名单中的小区不做统计",
+            },
             "period_label": f"{YEAR_NOW}年1-{MONTH_NOW}月",
             "rule": "2025同比=2025全年vs2024全年；2026同比=2026年1-8月vs2025年1-8月",
             "status_rule": f"以2026年同期同比判定：恶化<{WORSE_TH:+.0f}%｜改善>{BETTER_TH:+.0f}%｜稳定±{BETTER_TH:.0f}%",
@@ -237,11 +365,25 @@ def main():
         "rebound_top10": pack(rebound[:10]),
         "category_effects": category_effects,
         "street_effects": street_effects,
+        "service_attitude": {
+            "category": SA_CAT,
+            "scope": "全量工单（含纳统名单外小区），与「三、十四类治理效果」同源；"
+                     "小区为热线上报名称，未与纳统档案归并",
+            "period": f"{YEAR_NOW}年1-{MONTH_NOW}月 vs {YEAR_PREV}年1-{MONTH_NOW}月",
+            "min_total": SA_MIN,
+            "min_base_for_pct": SA_BASE_PCT,
+            "totals": sa_totals,
+            "companies": sa_companies,
+            "communities": sa_communities,
+        },
     }
 
-    with open(OUT, "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
-    print(f"\n结果已保存: {OUT}")
+    if ARGS.dry_run:
+        print("\n[dry-run] 未写入 json")
+    else:
+        with open(OUT, "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
+        print(f"\n结果已保存: {OUT}")
 
 
 if __name__ == "__main__":

@@ -267,9 +267,9 @@
 <div class="header">
   <h1>多源数据清洗与关联分析报告</h1>
   <div class="subtitle">以纳统小区为基础 · 9类业务数据全关联 · 为根因分析提供数据底座</div>
-  <div class="meta">数据来源：9个科室业务系统 + 12345热线 · 994个小区 · 13个街道</div>
+  <div class="meta">数据来源：9个科室业务系统 + 12345热线 · 993个小区 · 13个街道</div>
   <div class="stats-row">
-    <div class="stat-card"><div class="num">994</div><div class="label">纳统小区</div></div>
+    <div class="stat-card"><div class="num">993</div><div class="label">纳统小区</div></div>
     <div class="stat-card"><div class="num">9</div><div class="label">数据源</div></div>
     <div class="stat-card"><div class="num">45</div><div class="label">小区级字段</div></div>
     <div class="stat-card"><div class="num">24</div><div class="label">街道级字段</div></div>
@@ -281,10 +281,10 @@
   <!-- ===== 一、数据关联模型 ===== -->
   <div class="section">
     <div class="section-title"><span class="icon">🔗</span>一、数据关联模型</div>
-    <p class="desc">以纳统小区数据库为主表（994个小区，57个字段），通过小区名称、小区ID、街道三个维度，将电梯、修缮、检查、底部抬升、热线投诉等业务数据进行关联，构建小区级和街道级两张宽表。</p>
+    <p class="desc">以纳统小区数据库为主表（《纳统小区 (2026 更新版)》993个小区，59个字段），通过小区名称、小区ID、街道三个维度，将电梯、修缮、检查、底部抬升、热线投诉等业务数据进行关联，构建小区级和街道级两张宽表。</p>
 
     <div class="model-diagram">
-      <div class="model-center">🏛️ 纳统小区（主表）<br><span style="font-size:11px;opacity:0.7;font-weight:400;">994小区 · 57字段 · 13街道</span></div>
+      <div class="model-center">🏛️ 纳统小区（主表）<br><span style="font-size:11px;opacity:0.7;font-weight:400;">993小区 · 59字段 · 13街道</span></div>
       <div class="model-arrow">↕ 小区ID / 小区名称 / 街道 关联 ↕</div>
       <div class="model-layers">
         <div class="model-item">
@@ -345,8 +345,8 @@
         <div class="src-icon">🏛️</div>
         <div class="src-name">纳统小区（主表）</div>
         <div class="src-meta">
-          记录数: <span class="val">994</span><br>
-          字段数: <span class="val">57</span><br>
+          记录数: <span class="val">993</span><br>
+          字段数: <span class="val">59</span><br>
           层级: <span class="val">小区级</span><br>
         </div>
         <span class="match-rate rate-high">主表 · 100%</span>
@@ -358,9 +358,9 @@
         <div class="src-meta">
           记录数: <span class="val">1,617</span><br>
           涉及小区: <span class="val">268</span><br>
-          匹配数: <span class="val">256</span><br>
+          匹配数: <span class="val">257</span><br>
         </div>
-        <span class="match-rate rate-high">匹配率 95.5%</span>
+        <span class="match-rate rate-high">匹配率 95.9%</span>
       </div>
 
       <div class="source-card level-community">
@@ -368,10 +368,10 @@
         <div class="src-name">修缮项目</div>
         <div class="src-meta">
           记录数: <span class="val">553</span><br>
-          涉及小区: <span class="val">339</span><br>
-          匹配数: <span class="val">284</span><br>
+          涉及小区: <span class="val">338</span><br>
+          匹配数: <span class="val">285</span><br>
         </div>
-        <span class="match-rate rate-mid">匹配率 83.8%</span>
+        <span class="match-rate rate-mid">匹配率 84.3%</span>
       </div>
 
       <div class="source-card level-community">
@@ -390,21 +390,21 @@
         <div class="src-name">底部抬升小区</div>
         <div class="src-meta">
           小区数: <span class="val">84</span><br>
-          匹配数: <span class="val">82</span><br>
+          匹配数: <span class="val">83</span><br>
           矛盾类型: <span class="val">3类</span><br>
         </div>
-        <span class="match-rate rate-high">匹配率 97.6%</span>
+        <span class="match-rate rate-high">匹配率 98.8%</span>
       </div>
 
       <div class="source-card level-community">
         <div class="src-icon">📞</div>
         <div class="src-name">12345热线投诉</div>
         <div class="src-meta">
-          记录数: <span class="val">64,570</span><br>
-          ID匹配: <span class="val">1,049</span><br>
-          名称匹配: <span class="val">967</span><br>
+          记录数: <span class="val">66,812</span><br>
+          纳统内工单: <span class="val">62,804</span><br>
+          匹配小区: <span class="val">968</span><br>
         </div>
-        <span class="match-rate rate-high">小区覆盖率 97.4%</span>
+        <span class="match-rate rate-high">小区覆盖率 97.5%</span>
       </div>
 
       <div class="source-card level-street">
@@ -564,28 +564,31 @@
 
     <h4 style="font-size:14px; color:#1a237e; margin:8px 0 10px;">数据匹配率</h4>
     <div class="quality-item">
-      <div class="quality-label"><span class="ql-name">电梯基本信息</span><span>95.5% (256/268)</span></div>
-      <div class="quality-bar"><div class="quality-fill qf-green" style="width:95.5%;"></div></div>
+      <div class="quality-label"><span class="ql-name">电梯基本信息</span><span>95.9% (257/268)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:95.9%;"></div></div>
     </div>
     <div class="quality-item">
-      <div class="quality-label"><span class="ql-name">底部抬升小区</span><span>97.6% (82/84)</span></div>
-      <div class="quality-bar"><div class="quality-fill qf-green" style="width:97.6%;"></div></div>
+      <div class="quality-label"><span class="ql-name">底部抬升小区</span><span>98.8% (83/84)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:98.8%;"></div></div>
     </div>
     <div class="quality-item">
       <div class="quality-label"><span class="ql-name">失信计分</span><span>100% (18/18)</span></div>
       <div class="quality-bar"><div class="quality-fill qf-green" style="width:100%;"></div></div>
     </div>
     <div class="quality-item">
-      <div class="quality-label"><span class="ql-name">修缮项目</span><span>83.8% (284/339)</span></div>
-      <div class="quality-bar"><div class="quality-fill qf-orange" style="width:83.8%;"></div></div>
+      <div class="quality-label"><span class="ql-name">修缮项目</span><span>84.3% (285/338)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-orange" style="width:84.3%;"></div></div>
     </div>
     <div class="quality-item">
-      <div class="quality-label"><span class="ql-name">热线投诉（覆盖率）</span><span>97.4% (968/994)</span></div>
-      <div class="quality-bar"><div class="quality-fill qf-green" style="width:97.4%;"></div></div>
+      <div class="quality-label"><span class="ql-name">热线投诉（覆盖率）</span><span>97.5% (968/993)</span></div>
+      <div class="quality-bar"><div class="quality-fill qf-green" style="width:97.5%;"></div></div>
     </div>
 
     <div class="highlight" style="margin-top:16px;">
-      <strong>质量总结：</strong>整体数据匹配率良好，5类数据中4类匹配率超过95%。修缮项目匹配率相对较低（83.8%），主要原因是修缮项目名称与小区标准名称存在差异（如"XX路XX弄"与小区正式名称不对应），以及部分修缮项目涉及非纳统小区。建议后续建立项目-小区映射表提升匹配精度。
+      <strong>质量总结：</strong>整体数据匹配率良好，5类数据中4类匹配率超过95%。修缮项目匹配率相对较低（84.3%），主要原因是修缮项目名称与小区标准名称存在差异（如"XX路XX弄"与小区正式名称不对应），以及部分修缮项目涉及非纳统小区。建议后续建立项目-小区映射表提升匹配精度。
+    </div>
+    <div class="highlight" style="margin-top:10px;">
+      <strong>统计范围：</strong>小区级主表采用《纳统小区 (2026 更新版)》993 个小区；不在名单中的小区不做统计。热线小区名经主名/别名/曾用名匹配后归并到纳统小区（同一小区的多种写法只计一次）。投诉数据按热线数据表口径统计，2026 年取 1-8 月。
     </div>
 
     <h4 style="font-size:14px; color:#1a237e; margin:16px 0 10px;">主要清洗工作</h4>
@@ -593,7 +596,7 @@
       <tr><th>清洗类别</th><th>处理内容</th><th>涉及数据源</th></tr>
       <tr><td>街道名称标准化</td><td>统一去除"街道""镇""住房保障和房屋管理所"等后缀，13个街道统一命名</td><td>全部9类数据</td></tr>
       <tr><td>小区名称标准化</td><td>全角转半角、去除空格、括号统一、去除冗余字符</td><td>电梯/修缮/失信/底部抬升/热线</td></tr>
-      <tr><td>双维度匹配</td><td>优先按小区ID精确匹配，再按小区名称模糊匹配补充</td><td>热线投诉数据</td></tr>
+      <tr><td>小区名归并</td><td>按小区主名／别名／2026版曾用名精确匹配，并把热线小区名归并到纳统小区（同一小区的多种写法只计一次）</td><td>热线投诉数据</td></tr>
       <tr><td>缺失值处理</td><td>数值型字段填充0，文本字段保留空值，布尔型填充False</td><td>全部关联数据</td></tr>
       <tr><td>数据类型统一</td><td>community_id统一为字符串类型，避免类型不匹配</td><td>纳统小区/热线</td></tr>
       <tr><td>别名匹配</td><td>利用纳统小区别名扩展名称索引，提升匹配率</td><td>纳统小区</td></tr>
@@ -641,7 +644,7 @@
 
     <table>
       <tr><th>产出物</th><th>格式</th><th>规模</th><th>用途</th></tr>
-      <tr><td>小区级关联数据</td><td>PKL + CSV</td><td>994条 × 45字段</td><td>小区维度根因分析</td></tr>
+      <tr><td>小区级关联数据</td><td>PKL + CSV</td><td>993条 × 45字段</td><td>小区维度根因分析</td></tr>
       <tr><td>街道级关联数据</td><td>PKL + CSV</td><td>13条 × 24字段</td><td>街道维度宏观分析</td></tr>
       <tr><td>数据质量报告</td><td>JSON</td><td>—</td><td>质量评估与审计</td></tr>
     </table>
