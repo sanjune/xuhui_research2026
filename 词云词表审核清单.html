@@ -253,5 +253,15 @@ document.getElementById('btnReset').addEventListener('click', function () {
 
 renderAll();
 </script>
+
+<!-- ── 云服务接入（Auth + Database）─────────────────────────────────────────
+     让「标记删除」保存到云端台账，刷新/换设备不丢，并记录审核人留痕。
+     三个文件由 scripts/build_publish_site.py 一并复制到发布目录；
+     云功能不可用时页面其余部分（浏览、搜索、复制清单）照常可用。
+     ─────────────────────────────────────────────────────────────────────── -->
+<link rel="stylesheet" href="cloud/review-cloud.css">
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="cloud/cloud-config.js"></script>
+<script src="cloud/review-cloud.js"></script>
 </body>
 </html>
