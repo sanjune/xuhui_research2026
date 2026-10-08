@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>徐汇区物业投诉数据分析 · 课题一期成果</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+         background:#f4f6fa; color:#1f2937; line-height:1.6; }
+  header { background:linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; padding:38px 24px 30px; }
+  .wrap { max-width:1180px; margin:0 auto; }
+  header h1 { margin:0 0 8px; font-size:26px; letter-spacing:.5px; }
+  header p { margin:0; opacity:.9; font-size:14px; }
+  .kpis { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .kpi { background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+          border-radius:8px; padding:8px 14px; font-size:13px; }
+  .kpi b { font-size:17px; margin-right:4px; }
+  main { padding:28px 24px 60px; }
+  .group { margin-bottom:34px; }
+  .g-head { display:flex; align-items:baseline; gap:12px; margin-bottom:14px;
+             border-left:4px solid #1976d2; padding-left:12px; }
+  .g-head h2 { margin:0; font-size:18px; }
+  .g-sub { font-size:13px; color:#6b7280; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+  .card { display:block; background:#fff; border:1px solid #e3e8ef; border-radius:10px;
+           padding:16px 18px; text-decoration:none; color:inherit;
+           transition:box-shadow .18s, transform .18s, border-color .18s; }
+  .card:hover { box-shadow:0 6px 20px rgba(25,118,210,.14); transform:translateY(-2px);
+                 border-color:#90caf9; }
+  .card-t { font-size:15px; font-weight:600; color:#0d47a1; margin-bottom:6px; }
+  .card-d { font-size:13px; color:#5b6572; }
+  footer { text-align:center; color:#8a94a6; font-size:12px; padding:0 24px 40px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>徐汇区物业投诉数据分析 · 课题一期成果</h1>
+    <p>数据周期 2024 年 1 月 — 2026 年 8 月 ｜ 密度单位：件/千户 ｜ 纳统口径：993 个小区</p>
+    <div class="kpis">
+      <div class="kpi"><b>13,726</b>件 · 2026年1-8月投诉量</div>
+      <div class="kpi"><b>-13.1%</b>同比（全区口径）</div>
+      <div class="kpi"><b>4,908</b>件 · 判定重复（去重率 35.8%）</div>
+      <div class="kpi"><b>772</b>个 · 参评高风险小区</div>
+      <div class="kpi"><b>18</b>份报告</div>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <section class="group">
+    <div class="g-head"><h2>核心成果</h2><span class="g-sub">全区与街镇的主线结论、目标测算</span></div>
+    <div class="grid">
+      <a class="card" href="课题成果总览.html">
+        <div class="card-t">课题成果总览</div>
+        <div class="card-d">全部交付物索引、核心数字与完成度一览</div>
+      </a>
+      <a class="card" href="徐汇区1-8月工单综合分析与目标测算.html">
+        <div class="card-t">1-8月综合分析与目标测算</div>
+        <div class="card-d">全区总量与同比、街镇/国资企业/月度拆解、目标测算与行动建议</div>
+      </a>
+      <a class="card" href="街镇专项分析报告.html">
+        <div class="card-t">街镇专项分析报告</div>
+        <div class="card-d">13 街镇密度（件/千户）、同比、占比与诉求主题词云</div>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <div class="g-head"><h2>专项分析</h2><span class="g-sub">按专题深入：预警、根因、治理、底抬、质量、月度</span></div>
+    <div class="grid">
+      <a class="card" href="高风险小区预警清单.html">
+        <div class="card-t">高风险小区预警清单</div>
+        <div class="card-d">纳统小区红/橙/黄/蓝/绿五级预警，可按等级下钻查看小区名单</div>
+      </a>
+      <a class="card" href="物业投诉根因分析报告.html">
+        <div class="card-t">物业投诉根因分析报告</div>
+        <div class="card-d">诉求根因分类、恶化与改善案例、根因 Top 榜</div>
+      </a>
+      <a class="card" href="治理效果追踪分析报告.html">
+        <div class="card-t">治理效果追踪分析报告</div>
+        <div class="card-d">十四类问题治理效果追踪 + 物业服务态度投诉专项排名（公司/小区双视图）</div>
+      </a>
+      <a class="card" href="底部抬升小区热线数据分析报告.html">
+        <div class="card-t">底部抬升小区热线数据分析报告</div>
+        <div class="card-d">重点小区热线量与同比，定位底部抬升街道与小区</div>
+      </a>
+      <a class="card" href="数据质量优化专项报告.html">
+        <div class="card-t">数据质量优化专项报告</div>
+        <div class="card-d">字段完整性、热线-纳统匹配率与口径问题清单</div>
+      </a>
+      <a class="card" href="12345投诉量下降数据报告.html">
+        <div class="card-t">12345 投诉量下降数据报告</div>
+        <div class="card-d">全区投诉量下降的构成拆解与来源归因</div>
+      </a>
+      <a class="card" href="重点问题专题分析报告（5份）.html">
+        <div class="card-t">重点问题专题分析报告（5 份）</div>
+        <div class="card-d">防汛防台、停车管理、垃圾清理等重点专题</div>
+      </a>
+      <a class="card" href="数据分析月报合集.html">
+        <div class="card-t">数据分析月报合集</div>
+        <div class="card-d">2026 年各月分析报告合集</div>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <div class="g-head"><h2>方法与流程</h2><span class="g-sub">口径说明、去重方法、数据清洗链路与词云</span></div>
+    <div class="grid">
+      <a class="card" href="投诉去重识别方法论说明.html">
+        <div class="card-t">投诉去重识别方法论说明</div>
+        <div class="card-d">判定重复的规则、阈值与口径边界</div>
+      </a>
+      <a class="card" href="2026年1-8月投诉去重建议清单.html">
+        <div class="card-t">1-8月投诉去重建议清单</div>
+        <div class="card-d">疑似重复工单明细与合并建议</div>
+      </a>
+      <a class="card" href="多源数据清洗与关联分析报告.html">
+        <div class="card-t">多源数据清洗与关联分析报告</div>
+        <div class="card-d">多源数据清洗链路与纳统小区关联结果</div>
+      </a>
+      <a class="card" href="词云图/词云总览.html">
+        <div class="card-t">13 街镇诉求主题词云</div>
+        <div class="card-d">各街镇高频诉求主题词云图（2026 年 1-8 月，案件级归并）</div>
+      </a>
+    </div>
+  </section>
+  <section class="group">
+    <div class="g-head"><h2>项目管理</h2><span class="g-sub">整改清单、版本记录与审核留痕</span></div>
+    <div class="grid">
+      <a class="card" href="网页版整改清单（技术方执行版）.html">
+        <div class="card-t">网页版整改清单（技术方执行版）</div>
+        <div class="card-d">13 项整改项的执行状态、口径决策与实测基准值</div>
+      </a>
+      <a class="card" href="版本更新记录.html">
+        <div class="card-t">版本更新记录</div>
+        <div class="card-d">版本迭代、修复项与回归验证记录</div>
+      </a>
+      <a class="card" href="词云词表审核清单.html">
+        <div class="card-t">词云词表审核清单</div>
+        <div class="card-d">停用词表与 Top60 候选池人工审核记录</div>
+      </a>
+    </div>
+  </section>
+</main>
+<footer>
+  由脚本 <code>scripts/build_publish_site.py</code> 生成 ｜ 报告口径以《网页版整改清单（技术方执行版）》与《版本更新记录》为准
+</footer>
+</body>
+</html>
