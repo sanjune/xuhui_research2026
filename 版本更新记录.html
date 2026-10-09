@@ -95,17 +95,47 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.2</span>
+    <span>当前版本：v2.17.3</span>
     <span>更新日期：2026-10-09</span>
-    <span>累计更新：22 次</span>
+    <span>累计更新：23 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">6</div><div class="stat-label">编制说明修正处</div></div>
-  <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">交付物归类类别</div></div>
-  <div class="stat-box"><div class="stat-num">523</div><div class="stat-label">汇编表格总数</div></div>
+  <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">计数修正处</div></div>
+  <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">已核分类数</div></div>
+  <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">页面附件链接</div></div>
   <div class="stat-box"><div class="stat-num">48</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.3 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.3</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🔢 成果总览分类计数重新统计（两处写反）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">核心硬成果</span>原写「3项已完成 · 含1项附件」，实际卡片「附 件」区挂了 <b>2</b> 个下载链接（街镇专项分析报告、投诉去重建议清单）→ 改为 <b>含2项附件</b></li>
+        <li><span class="tag tag-fix">深度分析成果</span>原写「4项已完成 · 含2项附件」，实际只有 <b>1</b> 个（底部抬升小区热线数据分析）→ 改为 <b>含1项附件</b></li>
+        <li><span class="tag tag-new">口径</span>已完成数 = 分类内非 pending 卡片数；附件数 = 分类内「附 件」区实际列出的下载链接数。另三类（工具 / 咨询 / 方法论）复核实为正确，未改动</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">🧰 计数改由脚本生成（消除手填）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">脚本</span>新增 <code>scripts/sync_overview_counts.py</code>：按卡片 DOM 结构重算各分类计数并回写，<code>--check</code> 支持只校验不改</li>
+        <li><span class="tag tag-new">发布门</span>接入 <code>build_publish_site.py</code> 断言 3.5 —— 计数与卡片结构不符时发布直接失败</li>
+        <li><span class="tag tag-data">同步</span>发布副本、渲染快照与成果汇编 Word 三处同步更新</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.2 ===== -->

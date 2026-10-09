@@ -17,7 +17,7 @@
 
   --check  只校验不写盘（比对 _publish/ 与期望是否一致，用于幂等复验）
 """
-import os, re, sys, shutil, hashlib
+import os, re, sys, shutil, hashlib, subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "_publish")
@@ -261,6 +261,16 @@ def main():
         if f not in index_html:
             problems.append(f"门户页缺少入口：{f}")
 
+    # 3.5 成果总览分类计数与卡片结构一致（「N项已完成 · 含M项附件」一律脚本生成，禁止手填）
+    sync = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sync_overview_counts.py")
+    if os.path.isfile(sync):
+        r = subprocess.run([sys.executable, sync, "--check"], capture_output=True, text=True)
+        if r.returncode != 0:
+            detail = "；".join(ln.strip() for ln in (r.stdout or "").splitlines()
+                               if "→" in ln or "❌" in ln)
+            problems.append("成果总览分类计数与卡片结构不符（跑 scripts/sync_overview_counts.py 校正）"
+                            + (f"：{detail}" if detail else ""))
+
     # 4) 汇总
     total = sum(os.path.getsize(os.path.join(OUT, r)) for r in actual) if os.path.isdir(OUT) else 0
     print(f"{'【校验】' if check_only else '【构建】'} {OUT}")
@@ -270,7 +280,7 @@ def main():
         print("\n".join("  ❌ " + p for p in problems))
         print(f"\n断言未通过：{len(problems)} 项")
         return 1
-    print("  ✅ 断言全通过（清单一致 / 无敏感文件 / 本地资源齐备 / 门户入口完整）")
+    print("  ✅ 断言全通过（清单一致 / 无敏感文件 / 本地资源齐备 / 门户入口完整 / 分类计数一致）")
     return 0
 
 
