@@ -95,17 +95,132 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.2</span>
+    <span>当前版本：v2.17.6</span>
     <span>更新日期：2026-10-09</span>
-    <span>累计更新：22 次</span>
+    <span>累计更新：26 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">6</div><div class="stat-label">编制说明修正处</div></div>
-  <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">交付物归类类别</div></div>
-  <div class="stat-box"><div class="stat-num">523</div><div class="stat-label">汇编表格总数</div></div>
-  <div class="stat-box"><div class="stat-num">48</div><div class="stat-label">交付物文件总数</div></div>
+  <div class="stat-box"><div class="stat-num">466</div><div class="stat-label">归并工单行数</div></div>
+  <div class="stat-box"><div class="stat-num">58</div><div class="stat-label">企业名归一数</div></div>
+  <div class="stat-box"><div class="stat-num">320</div><div class="stat-label">汇编 PDF 页数</div></div>
+  <div class="stat-box"><div class="stat-num">42</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.6 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.17.6</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">📄 成果汇编 PDF 版</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>由 Word 版直接导出 <b>汇编 PDF 版</b>（约 <b>320 页</b> · 18.8 MB），正文、图表与附录与 Word 版同源，供打印与分发</li>
+        <li><span class="tag tag-imp">目录</span>导出前先刷新文档目录域 —— Word 的目录域导入后为空，不刷新则 PDF 的目录页<b>只有页码、没有条目</b></li>
+        <li><span class="tag tag-imp">字体</span>转换引擎默认只扫描 Linux 字体路径，<b>macOS 系统字体一个都看不到</b> → 不干预则 PDF <b>中文全部丢失</b>（页面上只剩数字与字母，且不报错）。已用字体配置显式指向系统字体目录并做常用中文字体名映射，实测嵌入中文字体 36 种</li>
+        <li><span class="tag tag-new">脚本</span>新增 <code>scripts/export_pdf.py</code>（含体积 / 页数 / 中文字体嵌入三项体检，体检不过退出码非 0）</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.17.5 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.5</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🏢 区属国资物业企业更名归并</div>
+      <ul class="item-list">
+        <li><span class="tag tag-data">数据</span>该企业于 <b>2026 年 8 月</b>完成名称变更，由「上海中誉物业管理有限公司」<b>更名为</b>「上海中誉城市运营服务有限公司」（同一法人主体）。工单的「物业企业」字段自 8 月 1 日起改用新名，此前一律沿用旧名 → <b>企业级统计若不归并，同一家企业会被拆成两行、各项计数双双少算</b></li>
+        <li><span class="tag tag-data">归并</span>主数据归并 <b>466 行</b>；该主体 2026 年 1-8 月为 <b>222 件</b>（旧名 187 + 新名 35），2025 年同期 154 件</li>
+        <li><span class="tag tag-fix">修正</span>受影响数字：街镇报告物业企业榜 长桥 <b>124 → 141</b>、田林 <b>45 → 56</b>；治理追踪服务态度企业榜 <b>6 → 8</b>（2026年1-8月）</li>
+        <li><span class="tag tag-new">唯一口径源</span>新增 <code>scripts/company_alias.py</code>（更名映射 + 归并函数），数据清洗、风险评分等读原始表的脚本统一调用；主数据另立溯源列 <code>property_company_raw</code> 保留原始填报值</li>
+        <li><span class="tag tag-new">质量门</span>新增 <code>scripts/audit_company_names.py</code> —— 校验主数据、中游产物与全部交付面均以现用名指代该主体（更名说明语境豁免），并检查企业名内不得嵌空白字符</li>
+        <li><span class="tag tag-fix">顺带修正</span>底部抬升名单资产中 <b>58 家企业</b>的名字里嵌有换行符（如「上海龙湖⏎物业服务有限公司」），渲染时会多出一个空格甚至断行，已一并归一</li>
+        <li><span class="tag tag-fix">呈报稿</span>桌面版综合分析报告：五家表行名改为现用名并括注原名，表后补更名说明一句</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">✅ 验收</div>
+      <ul class="item-list">
+        <li><span class="tag tag-data">质量门</span>企业名一致性<b>全通过</b>（交付面以旧名指代 0 处）· 清单压平 0 处 · 文本叶子 0 类 0 处 · 隐私扫描零命中 · 13 份报告数值缺失 0 项 · 分类计数与卡片一致</li>
+        <li><span class="tag tag-data">对账</span>19 项口径基准全部不变；反例残留与关键词-数值冲突均未上涨</li>
+        <li><span class="tag tag-imp">幂等</span>数据清洗脚本重跑与既有数据<b>逐列一致</b>；汇编 <code>word/document.xml</code> 连跑两次 md5 一致</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.17.4 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.4</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🧹 装帧素材移出交付物清单</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">附件 4</span>交付物清单中<b>整类移除「装帧素材」</b>（7 条：封面候选底图 3 张 + 装订印刷素材 4 张）→ 清单由 48 个文件收敛为 <b>41 个文件</b>（主交付物 1 · 电子附件 4 · 过程成果报告 34 · 历史版本 2），序号连续</li>
+        <li><span class="tag tag-fix">附录 F</span>交付成果由四类改回<b>三类</b>，删除「二、装订印刷用封面素材」小节；随附小节顺延为「一、随附电子附件」「二、过程成果报告」</li>
+        <li><span class="tag tag-fix">编制说明</span>第五条随附交付物同步去掉封面素材表述，与附录 F 口径一致（卷首声明与正文同步）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">✅ 验收</div>
+      <ul class="item-list">
+        <li><span class="tag tag-data">质量门</span>汇编 <b>522 张表</b> · 105 图 · 段落 1702 · 10.1 MB；清单压平残留 0 处；文本叶子残留 0 类 0 处；13 份报告数值缺失 0 项</li>
+        <li><span class="tag tag-data">幂等</span>汇编 <code>word/document.xml</code> 连跑两次 md5 一致</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.17.3 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.3</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🔢 成果总览分类计数重新统计（两处写反）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">核心硬成果</span>原写「3项已完成 · 含1项附件」，实际卡片「附 件」区挂了 <b>2</b> 个下载链接（街镇专项分析报告、投诉去重建议清单）→ 改为 <b>含2项附件</b></li>
+        <li><span class="tag tag-fix">深度分析成果</span>原写「4项已完成 · 含2项附件」，实际只有 <b>1</b> 个（底部抬升小区热线数据分析）→ 改为 <b>含1项附件</b></li>
+        <li><span class="tag tag-new">口径</span>已完成数 = 分类内非 pending 卡片数；附件数 = 分类内「附 件」区实际列出的下载链接数。另三类（工具 / 咨询 / 方法论）复核实为正确，未改动</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">🧰 计数改由脚本生成（消除手填）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">脚本</span>新增 <code>scripts/sync_overview_counts.py</code>：按卡片 DOM 结构重算各分类计数并回写，<code>--check</code> 支持只校验不改</li>
+        <li><span class="tag tag-new">发布门</span>接入 <code>build_publish_site.py</code> 断言 3.5 —— 计数与卡片结构不符时发布直接失败</li>
+        <li><span class="tag tag-data">同步</span>发布副本、渲染快照与成果汇编 Word 三处同步更新</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.2 ===== -->
