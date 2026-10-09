@@ -20,12 +20,23 @@ data/*.xls
 热线数据/
 徐汇各科室业务数据/
 
+# 原始工单 / 外部输入工作簿（含公民个人信息或非公开数据）——仅本地留存，禁止入库
+# 注意：以下规则一律用根锚定 `/`，否则 `*去重建议清单*` 会误伤 交付物/附件2_2026年1-8月投诉去重建议清单.xlsx
+/9月复核工单下载.xlsx
+/2026年1-6月投诉去重建议清单.xlsx
+/全市各区十四类问题工单情况*.xlsx
+/*工单下载*.xlsx
+/*复核工单*.xlsx
+/去重建议清单*.xlsx
+
 # Temporary files
 *.tmp
 *.log
 logs/
 demo_cache/
 .DS_Store
+# Office / WPS 打开文档时生成的 owner-lock 文件（无行内注释：gitignore 不解析行尾 #）
+.~*
 .trae-html-share-packages/
 scripts/_wc_export.html
 
