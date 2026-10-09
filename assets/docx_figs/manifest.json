@@ -1,0 +1,769 @@
+{
+ "12345投诉量下降数据报告": [
+  {
+   "order": 0,
+   "id": "chart-monthly-trend",
+   "file": "assets/docx_figs/12345投诉量下降数据报告/00_chart-monthly-trend.png",
+   "bytes": 142776
+  },
+  {
+   "order": 1,
+   "id": "chart-monthly-yoy",
+   "file": "assets/docx_figs/12345投诉量下降数据报告/01_chart-monthly-yoy.png",
+   "bytes": 84928
+  },
+  {
+   "order": 2,
+   "id": "chart-category",
+   "file": "assets/docx_figs/12345投诉量下降数据报告/02_chart-category.png",
+   "bytes": 114790
+  },
+  {
+   "order": 3,
+   "id": "chart-street",
+   "file": "assets/docx_figs/12345投诉量下降数据报告/03_chart-street.png",
+   "bytes": 100397
+  },
+  {
+   "order": 4,
+   "id": "chart-company",
+   "file": "assets/docx_figs/12345投诉量下降数据报告/04_chart-company.png",
+   "bytes": 95292
+  }
+ ],
+ "治理效果追踪分析报告": [
+  {
+   "order": 0,
+   "id": "chart-loop",
+   "file": "assets/docx_figs/治理效果追踪分析报告/00_chart-loop.png",
+   "bytes": 109768
+  },
+  {
+   "order": 1,
+   "id": "chart-category",
+   "file": "assets/docx_figs/治理效果追踪分析报告/01_chart-category.png",
+   "bytes": 116028
+  },
+  {
+   "order": 2,
+   "id": "chart-street",
+   "file": "assets/docx_figs/治理效果追踪分析报告/02_chart-street.png",
+   "bytes": 105044
+  }
+ ],
+ "高风险小区预警清单": [
+  {
+   "order": 0,
+   "id": "chart-level",
+   "file": "assets/docx_figs/高风险小区预警清单/00_chart-level.png",
+   "bytes": 108718
+  },
+  {
+   "order": 1,
+   "id": "chart-factor",
+   "file": "assets/docx_figs/高风险小区预警清单/01_chart-factor.png",
+   "bytes": 135131
+  }
+ ],
+ "徐汇区1-8月工单综合分析与目标测算": [
+  {
+   "order": 0,
+   "id": "c-street1",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/00_c-street1.png",
+   "bytes": 158762
+  },
+  {
+   "order": 1,
+   "id": "c-street2",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/01_c-street2.png",
+   "bytes": 76665
+  },
+  {
+   "order": 2,
+   "id": "c-street3",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/02_c-street3.png",
+   "bytes": 72867
+  },
+  {
+   "order": 3,
+   "id": "c-city1",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/03_c-city1.png",
+   "bytes": 107804
+  },
+  {
+   "order": 4,
+   "id": "c-xh1",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/04_c-xh1.png",
+   "bytes": 67548
+  },
+  {
+   "order": 5,
+   "id": "c-xh2",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/05_c-xh2.png",
+   "bytes": 76284
+  },
+  {
+   "order": 6,
+   "id": "c-target1",
+   "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/06_c-target1.png",
+   "bytes": 101418
+  }
+ ],
+ "数据质量优化专项报告": [
+  {
+   "order": 0,
+   "id": "chart-missing",
+   "file": "assets/docx_figs/数据质量优化专项报告/00_chart-missing.png",
+   "bytes": 102726
+  },
+  {
+   "order": 1,
+   "id": "chart-trend",
+   "file": "assets/docx_figs/数据质量优化专项报告/01_chart-trend.png",
+   "bytes": 80309
+  }
+ ],
+ "重点问题专题分析报告（5份）": [
+  {
+   "order": 0,
+   "id": "chart1",
+   "file": "assets/docx_figs/重点问题专题分析报告（5份）/00_chart1.png",
+   "bytes": 130064
+  },
+  {
+   "order": 1,
+   "id": "chart2",
+   "file": "assets/docx_figs/重点问题专题分析报告（5份）/01_chart2.png",
+   "bytes": 133066
+  },
+  {
+   "order": 2,
+   "id": "chart3",
+   "file": "assets/docx_figs/重点问题专题分析报告（5份）/02_chart3.png",
+   "bytes": 135852
+  },
+  {
+   "order": 3,
+   "id": "chart4",
+   "file": "assets/docx_figs/重点问题专题分析报告（5份）/03_chart4.png",
+   "bytes": 128552
+  },
+  {
+   "order": 4,
+   "id": "chart5",
+   "file": "assets/docx_figs/重点问题专题分析报告（5份）/04_chart5.png",
+   "bytes": 124212
+  }
+ ],
+ "街镇专项分析报告": [
+  {
+   "order": 900,
+   "id": "ov-compare",
+   "label": "全区",
+   "file": "assets/docx_figs/街镇专项分析报告/900_全区__ov-compare.png",
+   "bytes": 179376,
+   "scope": "overview"
+  },
+  {
+   "order": 900,
+   "id": "ov-contribution",
+   "label": "全区",
+   "file": "assets/docx_figs/街镇专项分析报告/900_全区__ov-contribution.png",
+   "bytes": 96649,
+   "scope": "overview"
+  },
+  {
+   "order": 900,
+   "id": "ov-heatmap",
+   "label": "全区",
+   "file": "assets/docx_figs/街镇专项分析报告/900_全区__ov-heatmap.png",
+   "bytes": 196879,
+   "scope": "overview"
+  },
+  {
+   "order": 0,
+   "id": "c0-trend",
+   "label": "长桥",
+   "file": "assets/docx_figs/街镇专项分析报告/00_长桥__c0-trend.png",
+   "bytes": 134950,
+   "scope": "street",
+   "street": "长桥"
+  },
+  {
+   "order": 0,
+   "id": "c0-yoy",
+   "label": "长桥",
+   "file": "assets/docx_figs/街镇专项分析报告/00_长桥__c0-yoy.png",
+   "bytes": 124704,
+   "scope": "street",
+   "street": "长桥"
+  },
+  {
+   "order": 0,
+   "id": "c0-quarter",
+   "label": "长桥",
+   "file": "assets/docx_figs/街镇专项分析报告/00_长桥__c0-quarter.png",
+   "bytes": 51732,
+   "scope": "street",
+   "street": "长桥"
+  },
+  {
+   "order": 0,
+   "id": "c0-catdelta",
+   "label": "长桥",
+   "file": "assets/docx_figs/街镇专项分析报告/00_长桥__c0-catdelta.png",
+   "bytes": 104332,
+   "scope": "street",
+   "street": "长桥"
+  },
+  {
+   "order": 0,
+   "id": "c0-catdonut",
+   "label": "长桥",
+   "file": "assets/docx_figs/街镇专项分析报告/00_长桥__c0-catdonut.png",
+   "bytes": 147855,
+   "scope": "street",
+   "street": "长桥"
+  },
+  {
+   "order": 1,
+   "id": "c1-trend",
+   "label": "徐家汇",
+   "file": "assets/docx_figs/街镇专项分析报告/01_徐家汇__c1-trend.png",
+   "bytes": 126658,
+   "scope": "street",
+   "street": "徐家汇"
+  },
+  {
+   "order": 1,
+   "id": "c1-yoy",
+   "label": "徐家汇",
+   "file": "assets/docx_figs/街镇专项分析报告/01_徐家汇__c1-yoy.png",
+   "bytes": 122270,
+   "scope": "street",
+   "street": "徐家汇"
+  },
+  {
+   "order": 1,
+   "id": "c1-quarter",
+   "label": "徐家汇",
+   "file": "assets/docx_figs/街镇专项分析报告/01_徐家汇__c1-quarter.png",
+   "bytes": 54812,
+   "scope": "street",
+   "street": "徐家汇"
+  },
+  {
+   "order": 1,
+   "id": "c1-catdelta",
+   "label": "徐家汇",
+   "file": "assets/docx_figs/街镇专项分析报告/01_徐家汇__c1-catdelta.png",
+   "bytes": 101768,
+   "scope": "street",
+   "street": "徐家汇"
+  },
+  {
+   "order": 1,
+   "id": "c1-catdonut",
+   "label": "徐家汇",
+   "file": "assets/docx_figs/街镇专项分析报告/01_徐家汇__c1-catdonut.png",
+   "bytes": 147839,
+   "scope": "street",
+   "street": "徐家汇"
+  },
+  {
+   "order": 2,
+   "id": "c2-trend",
+   "label": "漕河泾",
+   "file": "assets/docx_figs/街镇专项分析报告/02_漕河泾__c2-trend.png",
+   "bytes": 131334,
+   "scope": "street",
+   "street": "漕河泾"
+  },
+  {
+   "order": 2,
+   "id": "c2-yoy",
+   "label": "漕河泾",
+   "file": "assets/docx_figs/街镇专项分析报告/02_漕河泾__c2-yoy.png",
+   "bytes": 113243,
+   "scope": "street",
+   "street": "漕河泾"
+  },
+  {
+   "order": 2,
+   "id": "c2-quarter",
+   "label": "漕河泾",
+   "file": "assets/docx_figs/街镇专项分析报告/02_漕河泾__c2-quarter.png",
+   "bytes": 54811,
+   "scope": "street",
+   "street": "漕河泾"
+  },
+  {
+   "order": 2,
+   "id": "c2-catdelta",
+   "label": "漕河泾",
+   "file": "assets/docx_figs/街镇专项分析报告/02_漕河泾__c2-catdelta.png",
+   "bytes": 99608,
+   "scope": "street",
+   "street": "漕河泾"
+  },
+  {
+   "order": 2,
+   "id": "c2-catdonut",
+   "label": "漕河泾",
+   "file": "assets/docx_figs/街镇专项分析报告/02_漕河泾__c2-catdonut.png",
+   "bytes": 146921,
+   "scope": "street",
+   "street": "漕河泾"
+  },
+  {
+   "order": 3,
+   "id": "c3-trend",
+   "label": "田林",
+   "file": "assets/docx_figs/街镇专项分析报告/03_田林__c3-trend.png",
+   "bytes": 129370,
+   "scope": "street",
+   "street": "田林"
+  },
+  {
+   "order": 3,
+   "id": "c3-yoy",
+   "label": "田林",
+   "file": "assets/docx_figs/街镇专项分析报告/03_田林__c3-yoy.png",
+   "bytes": 122806,
+   "scope": "street",
+   "street": "田林"
+  },
+  {
+   "order": 3,
+   "id": "c3-quarter",
+   "label": "田林",
+   "file": "assets/docx_figs/街镇专项分析报告/03_田林__c3-quarter.png",
+   "bytes": 53049,
+   "scope": "street",
+   "street": "田林"
+  },
+  {
+   "order": 3,
+   "id": "c3-catdelta",
+   "label": "田林",
+   "file": "assets/docx_figs/街镇专项分析报告/03_田林__c3-catdelta.png",
+   "bytes": 103036,
+   "scope": "street",
+   "street": "田林"
+  },
+  {
+   "order": 3,
+   "id": "c3-catdonut",
+   "label": "田林",
+   "file": "assets/docx_figs/街镇专项分析报告/03_田林__c3-catdonut.png",
+   "bytes": 148720,
+   "scope": "street",
+   "street": "田林"
+  },
+  {
+   "order": 4,
+   "id": "c4-trend",
+   "label": "天平路",
+   "file": "assets/docx_figs/街镇专项分析报告/04_天平路__c4-trend.png",
+   "bytes": 132372,
+   "scope": "street",
+   "street": "天平路"
+  },
+  {
+   "order": 4,
+   "id": "c4-yoy",
+   "label": "天平路",
+   "file": "assets/docx_figs/街镇专项分析报告/04_天平路__c4-yoy.png",
+   "bytes": 124992,
+   "scope": "street",
+   "street": "天平路"
+  },
+  {
+   "order": 4,
+   "id": "c4-quarter",
+   "label": "天平路",
+   "file": "assets/docx_figs/街镇专项分析报告/04_天平路__c4-quarter.png",
+   "bytes": 54794,
+   "scope": "street",
+   "street": "天平路"
+  },
+  {
+   "order": 4,
+   "id": "c4-catdelta",
+   "label": "天平路",
+   "file": "assets/docx_figs/街镇专项分析报告/04_天平路__c4-catdelta.png",
+   "bytes": 102987,
+   "scope": "street",
+   "street": "天平路"
+  },
+  {
+   "order": 4,
+   "id": "c4-catdonut",
+   "label": "天平路",
+   "file": "assets/docx_figs/街镇专项分析报告/04_天平路__c4-catdonut.png",
+   "bytes": 146688,
+   "scope": "street",
+   "street": "天平路"
+  },
+  {
+   "order": 5,
+   "id": "c5-trend",
+   "label": "斜土路",
+   "file": "assets/docx_figs/街镇专项分析报告/05_斜土路__c5-trend.png",
+   "bytes": 126867,
+   "scope": "street",
+   "street": "斜土路"
+  },
+  {
+   "order": 5,
+   "id": "c5-yoy",
+   "label": "斜土路",
+   "file": "assets/docx_figs/街镇专项分析报告/05_斜土路__c5-yoy.png",
+   "bytes": 128722,
+   "scope": "street",
+   "street": "斜土路"
+  },
+  {
+   "order": 5,
+   "id": "c5-quarter",
+   "label": "斜土路",
+   "file": "assets/docx_figs/街镇专项分析报告/05_斜土路__c5-quarter.png",
+   "bytes": 51037,
+   "scope": "street",
+   "street": "斜土路"
+  },
+  {
+   "order": 5,
+   "id": "c5-catdelta",
+   "label": "斜土路",
+   "file": "assets/docx_figs/街镇专项分析报告/05_斜土路__c5-catdelta.png",
+   "bytes": 103453,
+   "scope": "street",
+   "street": "斜土路"
+  },
+  {
+   "order": 5,
+   "id": "c5-catdonut",
+   "label": "斜土路",
+   "file": "assets/docx_figs/街镇专项分析报告/05_斜土路__c5-catdonut.png",
+   "bytes": 146522,
+   "scope": "street",
+   "street": "斜土路"
+  },
+  {
+   "order": 6,
+   "id": "c6-trend",
+   "label": "枫林路",
+   "file": "assets/docx_figs/街镇专项分析报告/06_枫林路__c6-trend.png",
+   "bytes": 133502,
+   "scope": "street",
+   "street": "枫林路"
+  },
+  {
+   "order": 6,
+   "id": "c6-yoy",
+   "label": "枫林路",
+   "file": "assets/docx_figs/街镇专项分析报告/06_枫林路__c6-yoy.png",
+   "bytes": 125168,
+   "scope": "street",
+   "street": "枫林路"
+  },
+  {
+   "order": 6,
+   "id": "c6-quarter",
+   "label": "枫林路",
+   "file": "assets/docx_figs/街镇专项分析报告/06_枫林路__c6-quarter.png",
+   "bytes": 54802,
+   "scope": "street",
+   "street": "枫林路"
+  },
+  {
+   "order": 6,
+   "id": "c6-catdelta",
+   "label": "枫林路",
+   "file": "assets/docx_figs/街镇专项分析报告/06_枫林路__c6-catdelta.png",
+   "bytes": 103220,
+   "scope": "street",
+   "street": "枫林路"
+  },
+  {
+   "order": 6,
+   "id": "c6-catdonut",
+   "label": "枫林路",
+   "file": "assets/docx_figs/街镇专项分析报告/06_枫林路__c6-catdonut.png",
+   "bytes": 147493,
+   "scope": "street",
+   "street": "枫林路"
+  },
+  {
+   "order": 7,
+   "id": "c7-trend",
+   "label": "龙华",
+   "file": "assets/docx_figs/街镇专项分析报告/07_龙华__c7-trend.png",
+   "bytes": 127453,
+   "scope": "street",
+   "street": "龙华"
+  },
+  {
+   "order": 7,
+   "id": "c7-yoy",
+   "label": "龙华",
+   "file": "assets/docx_figs/街镇专项分析报告/07_龙华__c7-yoy.png",
+   "bytes": 118646,
+   "scope": "street",
+   "street": "龙华"
+  },
+  {
+   "order": 7,
+   "id": "c7-quarter",
+   "label": "龙华",
+   "file": "assets/docx_figs/街镇专项分析报告/07_龙华__c7-quarter.png",
+   "bytes": 50935,
+   "scope": "street",
+   "street": "龙华"
+  },
+  {
+   "order": 7,
+   "id": "c7-catdelta",
+   "label": "龙华",
+   "file": "assets/docx_figs/街镇专项分析报告/07_龙华__c7-catdelta.png",
+   "bytes": 101174,
+   "scope": "street",
+   "street": "龙华"
+  },
+  {
+   "order": 7,
+   "id": "c7-catdonut",
+   "label": "龙华",
+   "file": "assets/docx_figs/街镇专项分析报告/07_龙华__c7-catdonut.png",
+   "bytes": 147874,
+   "scope": "street",
+   "street": "龙华"
+  },
+  {
+   "order": 8,
+   "id": "c8-trend",
+   "label": "凌云路",
+   "file": "assets/docx_figs/街镇专项分析报告/08_凌云路__c8-trend.png",
+   "bytes": 130953,
+   "scope": "street",
+   "street": "凌云路"
+  },
+  {
+   "order": 8,
+   "id": "c8-yoy",
+   "label": "凌云路",
+   "file": "assets/docx_figs/街镇专项分析报告/08_凌云路__c8-yoy.png",
+   "bytes": 119502,
+   "scope": "street",
+   "street": "凌云路"
+  },
+  {
+   "order": 8,
+   "id": "c8-quarter",
+   "label": "凌云路",
+   "file": "assets/docx_figs/街镇专项分析报告/08_凌云路__c8-quarter.png",
+   "bytes": 56607,
+   "scope": "street",
+   "street": "凌云路"
+  },
+  {
+   "order": 8,
+   "id": "c8-catdelta",
+   "label": "凌云路",
+   "file": "assets/docx_figs/街镇专项分析报告/08_凌云路__c8-catdelta.png",
+   "bytes": 100372,
+   "scope": "street",
+   "street": "凌云路"
+  },
+  {
+   "order": 8,
+   "id": "c8-catdonut",
+   "label": "凌云路",
+   "file": "assets/docx_figs/街镇专项分析报告/08_凌云路__c8-catdonut.png",
+   "bytes": 149600,
+   "scope": "street",
+   "street": "凌云路"
+  },
+  {
+   "order": 9,
+   "id": "c9-trend",
+   "label": "湖南路",
+   "file": "assets/docx_figs/街镇专项分析报告/09_湖南路__c9-trend.png",
+   "bytes": 131099,
+   "scope": "street",
+   "street": "湖南路"
+  },
+  {
+   "order": 9,
+   "id": "c9-yoy",
+   "label": "湖南路",
+   "file": "assets/docx_figs/街镇专项分析报告/09_湖南路__c9-yoy.png",
+   "bytes": 124063,
+   "scope": "street",
+   "street": "湖南路"
+  },
+  {
+   "order": 9,
+   "id": "c9-quarter",
+   "label": "湖南路",
+   "file": "assets/docx_figs/街镇专项分析报告/09_湖南路__c9-quarter.png",
+   "bytes": 50810,
+   "scope": "street",
+   "street": "湖南路"
+  },
+  {
+   "order": 9,
+   "id": "c9-catdelta",
+   "label": "湖南路",
+   "file": "assets/docx_figs/街镇专项分析报告/09_湖南路__c9-catdelta.png",
+   "bytes": 99587,
+   "scope": "street",
+   "street": "湖南路"
+  },
+  {
+   "order": 9,
+   "id": "c9-catdonut",
+   "label": "湖南路",
+   "file": "assets/docx_figs/街镇专项分析报告/09_湖南路__c9-catdonut.png",
+   "bytes": 148047,
+   "scope": "street",
+   "street": "湖南路"
+  },
+  {
+   "order": 10,
+   "id": "c10-trend",
+   "label": "华泾镇",
+   "file": "assets/docx_figs/街镇专项分析报告/10_华泾镇__c10-trend.png",
+   "bytes": 133709,
+   "scope": "street",
+   "street": "华泾镇"
+  },
+  {
+   "order": 10,
+   "id": "c10-yoy",
+   "label": "华泾镇",
+   "file": "assets/docx_figs/街镇专项分析报告/10_华泾镇__c10-yoy.png",
+   "bytes": 133275,
+   "scope": "street",
+   "street": "华泾镇"
+  },
+  {
+   "order": 10,
+   "id": "c10-quarter",
+   "label": "华泾镇",
+   "file": "assets/docx_figs/街镇专项分析报告/10_华泾镇__c10-quarter.png",
+   "bytes": 50901,
+   "scope": "street",
+   "street": "华泾镇"
+  },
+  {
+   "order": 10,
+   "id": "c10-catdelta",
+   "label": "华泾镇",
+   "file": "assets/docx_figs/街镇专项分析报告/10_华泾镇__c10-catdelta.png",
+   "bytes": 101517,
+   "scope": "street",
+   "street": "华泾镇"
+  },
+  {
+   "order": 10,
+   "id": "c10-catdonut",
+   "label": "华泾镇",
+   "file": "assets/docx_figs/街镇专项分析报告/10_华泾镇__c10-catdonut.png",
+   "bytes": 143732,
+   "scope": "street",
+   "street": "华泾镇"
+  },
+  {
+   "order": 11,
+   "id": "c11-trend",
+   "label": "康健新村",
+   "file": "assets/docx_figs/街镇专项分析报告/11_康健新村__c11-trend.png",
+   "bytes": 131540,
+   "scope": "street",
+   "street": "康健新村"
+  },
+  {
+   "order": 11,
+   "id": "c11-yoy",
+   "label": "康健新村",
+   "file": "assets/docx_figs/街镇专项分析报告/11_康健新村__c11-yoy.png",
+   "bytes": 127474,
+   "scope": "street",
+   "street": "康健新村"
+  },
+  {
+   "order": 11,
+   "id": "c11-quarter",
+   "label": "康健新村",
+   "file": "assets/docx_figs/街镇专项分析报告/11_康健新村__c11-quarter.png",
+   "bytes": 52890,
+   "scope": "street",
+   "street": "康健新村"
+  },
+  {
+   "order": 11,
+   "id": "c11-catdelta",
+   "label": "康健新村",
+   "file": "assets/docx_figs/街镇专项分析报告/11_康健新村__c11-catdelta.png",
+   "bytes": 101247,
+   "scope": "street",
+   "street": "康健新村"
+  },
+  {
+   "order": 11,
+   "id": "c11-catdonut",
+   "label": "康健新村",
+   "file": "assets/docx_figs/街镇专项分析报告/11_康健新村__c11-catdonut.png",
+   "bytes": 145775,
+   "scope": "street",
+   "street": "康健新村"
+  },
+  {
+   "order": 12,
+   "id": "c12-trend",
+   "label": "虹梅路",
+   "file": "assets/docx_figs/街镇专项分析报告/12_虹梅路__c12-trend.png",
+   "bytes": 141145,
+   "scope": "street",
+   "street": "虹梅路"
+  },
+  {
+   "order": 12,
+   "id": "c12-yoy",
+   "label": "虹梅路",
+   "file": "assets/docx_figs/街镇专项分析报告/12_虹梅路__c12-yoy.png",
+   "bytes": 130551,
+   "scope": "street",
+   "street": "虹梅路"
+  },
+  {
+   "order": 12,
+   "id": "c12-quarter",
+   "label": "虹梅路",
+   "file": "assets/docx_figs/街镇专项分析报告/12_虹梅路__c12-quarter.png",
+   "bytes": 50058,
+   "scope": "street",
+   "street": "虹梅路"
+  },
+  {
+   "order": 12,
+   "id": "c12-catdelta",
+   "label": "虹梅路",
+   "file": "assets/docx_figs/街镇专项分析报告/12_虹梅路__c12-catdelta.png",
+   "bytes": 100895,
+   "scope": "street",
+   "street": "虹梅路"
+  },
+  {
+   "order": 12,
+   "id": "c12-catdonut",
+   "label": "虹梅路",
+   "file": "assets/docx_figs/街镇专项分析报告/12_虹梅路__c12-catdonut.png",
+   "bytes": 142616,
+   "scope": "street",
+   "street": "虹梅路"
+  }
+ ]
+}

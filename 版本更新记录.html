@@ -95,17 +95,143 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.15.0</span>
-    <span>更新日期：2026-09-29</span>
-    <span>累计更新：18 次</span>
+    <span>当前版本：v2.17.0</span>
+    <span>更新日期：2026-10-09</span>
+    <span>累计更新：20 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">报告清除编辑器注入</div></div>
-  <div class="stat-box"><div class="stat-num">4,508</div><div class="stat-label">删除的注入属性（处）</div></div>
-  <div class="stat-box"><div class="stat-num">189 KB</div><div class="stat-label">全站瘦身</div></div>
-  <div class="stat-box"><div class="stat-num">0</div><div class="stat-label">正文/结构改动</div></div>
+  <div class="stat-box"><div class="stat-num">32</div><div class="stat-label">月报榜单重算（月）</div></div>
+  <div class="stat-box"><div class="stat-num">32</div><div class="stat-label">逐月明细新增表</div></div>
+  <div class="stat-box"><div class="stat-num">522</div><div class="stat-label">汇编表格总数</div></div>
+  <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">随附 Excel 附件</div></div>
+</div>
+
+<!-- ===== v2.17.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.0</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🔢 数据分析月报合集：月度榜单数据全面重建</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">问题</span>页面内 <code>monthlyData</code> 的「街道投诉排名 Top5 / 小区投诉排名 Top10 / 投诉类别分布 Top5」为早期手填示例值，与热线工单主数据<b>逐月核对 32/32 个月全部不符</b>（如 2024-01 页面写「长桥 275 件」实际 307 件；2026-07 写「长桥 275 件」实际 214 件）；「热点问题 Top5」在数据里根本没有对应字段</li>
+        <li><span class="tag tag-data">重算</span>新增 <code>scripts/gen_monthly_collection.py</code>，从 <code>data/merged_cleaned.pkl</code> 重算全部 32 个月：街道榜（<code>street</code> 字段，剔除归属为空的 <code>无</code>）、小区榜（<code>community_name</code> + 当月所属街道）、类别榜（<code>level2</code> 市级归口）、热点榜（<code>level4</code> 市局细分）；<code>total</code> / <code>comm</code> 同步复核，与月份卡完全一致</li>
+        <li><span class="tag tag-fix">修</span>JS 里 <code>data.streets</code> 同时被当「覆盖街道数」和「街道榜单数组」用（对象字面量后键覆盖前键），「覆盖街道数」实际渲染成了数组字符串 → 改为独立字段 <code>nstreet</code></li>
+        <li><span class="tag tag-fix">修</span>「一、投诉量月度趋势总览」折线图几何与标注值不符（「谷值 888」的 y 坐标超出 <code>viewBox</code> 被裁掉）→ 按真实月度值重建 32 个数据点与峰谷标注</li>
+        <li><span class="tag tag-fix">修</span>同页两处与数据矛盾的叙述：「较2025同期-15.7%」与首页「-13.1%」自相矛盾；「2025 年各月同比均实现下降」不成立（2025-02 为 +5.9%）→ 均已按主数据改准</li>
+        <li><span class="tag tag-opt">顺带修</span>页脚「2024.01 — 2026.07 · 共31期」→「2024.01 — 2026.08 · 共32期」</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">🗂️ Word 汇编：月报四张榜表此前为空 → 新增「2026 年逐月明细」静态区</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">问题</span>网页的月份详情面板（街道排名 / 小区 Top10 / 类别分布 / 热点问题）由页面 JS 运行时填充，<code>&lt;ul&gt;</code> 初始为空 —— 导出 Word 后四条小标题下面<b>没有任何内容</b></li>
+        <li><span class="tag tag-data">新增</span>脚本生成「三、2026 年逐月明细（1-8 月）」静态区：<b>8 个月 × 4 张表 = 32 张表</b>，每月一节，含投诉总量 / 涉及小区 / 覆盖街道 / 环比 / 同比概览行与四张榜单</li>
+        <li><span class="tag tag-opt">保留交互</span>原点击式详情面板标记 <code>no-print</code>（网页保留交互体验，Word 用静态明细替代）</li>
+        <li><span class="tag tag-imp">回收</span>页码／年份切换用 <code>display:none</code> 收起的 2025、2026 月份卡此前被整块丢弃 → 现按「有效内容例外」规则纳入 Word，月份卡由 12 张补全为 32 张</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">📅 物业投诉根因分析：新增 2026 年 8 月单月快照</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>「7.4 2026年8月单月街道快照」与「7.5 2026年8月分类投诉快照」，列结构与 7 月快照完全对称（当月投诉量 / 去年同月 / 当月同比 / 2026年1-8月 / 1-8月同比 / 态势），原「近期趋势预警」顺延为 7.6</li>
+        <li><span class="tag tag-data">数据</span>8 月全区 2,242 件，同比 2025 年 8 月（2,180 件）<b>+2.8%</b>，为 2026 年单月同比首次转正；环比 7 月（2,097 件）+6.9%</li>
+        <li><span class="tag tag-imp">同步</span>7.6 预警条目由引用「7 月单月同比」改为引用最新的「8 月单月同比」</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">📎 附录与随附附件调整</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">取消</span>删除「附录 F　热线与纳统小区匹配清单（摘录前 80 行）」及其对附件 3 的引用</li>
+        <li><span class="tag tag-new">新增</span>「附录 F　交付物与过程成果清单」：① 随附电子附件 4 份的内容说明；② 过程成果报告 <b>34 份</b>文件名清单（月度分析报告 19 份、年度分析报告 · 街镇 13 份 + 集团 2 份），逐份列文件名与文件大小</li>
+        <li><span class="tag tag-data">并入交付</span><code>月度分析报告</code>、<code>年度分析报告</code>两个文件夹移入交付物目录，作为给客户的交付成果一并交付</li>
+        <li><span class="tag tag-opt">取消</span>Excel 随附附件取消「热线与纳统小区全量匹配表」「纳统匹配候选与未匹配清单」两份，保留高风险小区评分清单与投诉去重建议清单</li>
+        <li><span class="tag tag-new">新增</span>「附件 3　词云清单.xlsx」（13 街镇 × 60 词，含 Top24 展示与补位候选、口径说明页）、「附件 4　交付物清单.xlsx」（交付物目录全量文件目录，含类别、相对路径、大小与说明）；4 份附件重新编号为附件 1—4</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 顺带修掉的脚本幂等缺陷</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">修</span><code>update_rootcause_report_2026.py</code> 回填 5.2 底部抬升表时，正则未连同紧随其后的「口径」注一起替换 —— 每跑一次就多追加一条注，累计已重复 <b>3 份</b>；已改为连注一并替换，连跑三次结果一致</li>
+        <li><span class="tag tag-fix">修</span>同脚本匹配 5.2「发现」段的正则仍停留在旧文案（<code>投诉总量是普通小区的</code>），实际文案早已改为 <code>三年累计平均投诉量是普通小区的</code>，导致脚本报错无法执行</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">✅ 验收</div>
+      <ul class="item-list">
+        <li><span class="tag tag-data">四绿</span>清单式残留 <b>0 类 / 0 处</b>；13 份报告 HTML↔Word 数值缺失 <b>0 项</b>；成稿质检 19/19 口径数字命中，黄标 / emoji / 批注 / 内部路径 / 旧项目名 / 个人信息全 0</li>
+        <li><span class="tag tag-data">规模</span>表格 483 → <b>522 张</b>；表标题行 104 张；内嵌图 105 张；一级标题 26 个</li>
+        <li><span class="tag tag-data">对账</span>全站反例残留 201 → <b>199 处</b>（全部属于已挂账的「同比删 2024」遗留项），关键词-数值冲突 <b>0 处</b></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.16.0 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-minor">MINOR</span>
+    <span class="version-num">v2.16.0</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">🃏 成果汇编 Word 版：网页卡片式排版全量改造</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">问题</span>网页报告里「标题 + 数字」是卡片（嵌套 <code>div</code>），Word 无对应容器，此前被递归拉平成一行行段落 —— 到 Word 后变成<b>清单</b>，可读性差</li>
+        <li><span class="tag tag-new">改造</span><code>scripts/html2docx.py</code> 新增卡片识别层：<b>指标卡 → 表格式卡片</b>（同类连续卡片合并为一张表，表头取字段中文名，隔行浅底）、<b>内容卡 → 两列表</b>（标题 | 正文）、<b>策略卡 → 判定条件表</b>、<b>成果卡 → 三列表</b>（成果 | 内容 | 标签·附件）</li>
+        <li><span class="tag tag-data">覆盖</span>共改造 <b>402 处</b>清单式段落 → <b>0 处</b>残留。涉及 <code>kpi / stat-card / month-card / year-card / ext-card / source-card / model-dim / factor-row / ds-item / flow-strategy / contra-card / cat-item / bar-row / progress-bar-wrap</code> 等 26 类指标卡，以及 <code>finding-card / issue-card / advice-card / action-card / case-card / root-cause / insight-box / field-cat / suggestion-block</code> 等内容卡</li>
+        <li><span class="tag tag-imp">补齐</span>另有一批<b>纯内联样式、无 class 名</b>的卡片（各报告头部统计块、左右分栏的「预警 / 成效」板块、双栏要点卡）此前完全识别不到 —— 新增按 <code>style</code> 判定（<code>display:grid</code> + 底色 / 左边框 + 字号排序）识别为卡片并按「项目 | 数值 | 说明」成表</li>
+        <li><span class="tag tag-imp">提示块</span>网页里的「核心判断 / 口径说明 / 趋势解读」等浅底强调块 → 渲染为<b>单格浅底表</b>，保留视觉强调；<code>ASCII</code> 代码块 → 等宽灰底块，保留换行与对齐</li>
+        <li><span class="tag tag-opt">顺带修</span>行内元素（<code>span / a / strong</code> 等）此前被逐条拆成独立段落，导致句子被切碎、编号与文字分离 —— 现按「行内 run」合并成段；纯加粗短句提升为小标题</li>
+        <li><span class="tag tag-opt">顺带修</span>此前被整块丢弃的内容现已全部回收：CSS 柱状图（数据在 <code>title</code> 属性里）→ 数据表、<code>bar-row</code> 单价段图表 → 数据表、流程图 → 「环节 | 内容」表、关键词云 → 关键词段、字段类别 → 「类别 | 字段清单」表</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">📐 表格结构：首行标题、次行表头（104 张全改）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">修复</span>源报告大量表格的<b>首行是表标题</b>（只有首格有字、其余合并留空），此前 Word 里标题与表头混在一起、跨页后表头丢失</li>
+        <li><span class="tag tag-fix">改法</span>首行 → <b>整行合并的表标题</b>（<code>gridSpan=3</code> 起、居中加粗、底色 <code>DCE6F2</code>）；次行 → <b>真表头</b>（加粗白字、底色 <code>1A3A5F</code>、开启 <code>tblHeader</code> 跨页重复）；数据行隔行浅底从第二行起算</li>
+        <li><span class="tag tag-data">实测</span>识别并改造 <b>104 张</b>表标题行（13 个街镇 × 8 张表为代表），<b>表头整行丢失 0 张</b></li>
+        <li><span class="tag tag-fix">另修</span>额外发现 <b>27 张内容缺失表</b>并一并修复：<b>22 张丢表头</b>（<code>&lt;th&gt;</code> 裸挂在 <code>&lt;tbody&gt;</code> 下、父节点非 <code>&lt;tr&gt;</code>，需归并成表头行，集中在《物业投诉根因分析报告》）、<b>5 张丢数据行</b>（数据由页面 JS 运行时填充，<code>tbody</code> 源文件为空）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">🧾 汇编成稿：命名、标注与清洗</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">命名</span>交付文件名与封面统一为《<b>徐汇区数据赋能下的住宅小区治理与物业服务质量提升探索项目课题成果汇编</b>》，封面署名「博彦泓智科技（上海）有限公司 · 编制时间：2026 年 10 月」</li>
+        <li><span class="tag tag-imp">标注</span>人工修改版中的 <b>15 处黄色标注</b>（含 11 处「以下表格首行为标题」抽样标注）已按确认意见全部处理并清除；用户手输的批注文字一并清除</li>
+        <li><span class="tag tag-opt">emoji</span>正文 emoji（严重度圆点、装饰符）统一替换为<b>文字分级 / 文字颜色</b>（红橙黄绿蓝 → 对应文字色）；治理难度评级符号 <code>★☆</code> 属评级信息，保留</li>
+        <li><span class="tag tag-opt">脱敏</span>逐段 / 逐单元格扫描确认：真实手机号 <b>0</b>、身份证号 <b>0</b>；内部脚本路径与本地文件链接（<code>computer:///</code>）<b>0</b></li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">✅ 验收（4 项自测全绿）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-imp">脚本</span><code>scripts/_audit_leaves.py</code> 残留清单式段落 <b>0 类 / 0 处</b>（改造前 65 类 / 402 处）</li>
+        <li><span class="tag tag-imp">脚本</span><code>scripts/_selftest_coverage.py</code> 13 份报告逐一比对「渲染 HTML ↔ 转换后 Word」数值 token，<b>缺失 0 项</b>；正文字数 <b>137,394</b>（改造前 131,242，<b>净增 6,152</b>，因回收了此前丢弃的字段与表格）</li>
+        <li><span class="tag tag-imp">脚本</span><code>scripts/_selftest_assemble.py</code> 成稿质检 <b>全部通过</b>：黄标 0、emoji 0、批注 0、内部路径 0、旧项目名 0、19 项口径数字全命中、禁用词 0、个人信息 0</li>
+        <li><span class="tag tag-opt">规模</span>汇编最终 <b>483 张表 / 105 张图 / 26 个一级标题 / 10.1 MB</b></li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.15.0 ===== -->

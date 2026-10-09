@@ -30,6 +30,15 @@
   .container { max-width:1200px; margin:0 auto; padding:20px 16px 48px; }
 
   .section { background:#fff; border-radius:10px; padding:20px 22px; margin-bottom:18px; box-shadow:0 2px 10px rgba(0,0,0,0.07); }
+  .data-table { width:100%; border-collapse:collapse; font-size:12px; margin:8px 0 14px; }
+  .data-table th { background:#1a3a5f; color:#fff; font-weight:700; padding:7px 8px; border:1px solid #d5dde8; }
+  .data-table td { padding:6px 8px; border:1px solid #e6ecf3; text-align:center; }
+  .data-table tbody tr:nth-child(even) { background:#f7f9fc; }
+  .desc { font-size:12.5px; color:#555; line-height:1.9; margin:6px 0 10px; }
+  .desc b { color:#1565c0; }
+  .section h3 { font-size:15px; color:#0d47a1; margin:22px 0 6px; border-left:4px solid #90caf9; padding-left:9px; }
+  .section h4 { font-size:13px; color:#1565c0; margin:14px 0 4px; }
+  .table-note { font-size:11.5px; color:#888; margin-top:4px; }
   .section-title { font-size:17px; font-weight:700; color:#0d47a1; margin-bottom:14px; display:flex; align-items:center; gap:8px; border-left:4px solid #1976d2; padding-left:10px; }
   .section-title .icon { font-size:18px; }
 
@@ -346,74 +355,52 @@
     </div>
 
     <div class="trend-chart">
-      <svg viewBox="0 0 1000 350" class="trend-svg">
-        <!-- Grid lines -->
-        <line x1="50" y1="40" x2="50" y2="300" stroke="#eee" stroke-width="1"/>
-        <line x1="50" y1="300" x2="960" y2="300" stroke="#ccc" stroke-width="1"/>
-        <line x1="50" y1="235" x2="960" y2="235" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="50" y1="170" x2="960" y2="170" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="50" y1="105" x2="960" y2="105" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-        <line x1="50" y1="40" x2="960" y2="40" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
-
-        <!-- Y-axis labels -->
-        <text x="45" y="44" text-anchor="end" font-size="10" fill="#999">3000</text>
-        <text x="45" y="109" text-anchor="end" font-size="10" fill="#999">2500</text>
-        <text x="45" y="174" text-anchor="end" font-size="10" fill="#999">2000</text>
-        <text x="45" y="239" text-anchor="end" font-size="10" fill="#999">1500</text>
-        <text x="45" y="304" text-anchor="end" font-size="10" fill="#999">1000</text>
-
-        <!-- Year dividers -->
-        <line x1="355" y1="35" x2="355" y2="305" stroke="#bbdefb" stroke-width="1.5" stroke-dasharray="6,4"/>
-        <line x1="680" y1="35" x2="680" y2="305" stroke="#bbdefb" stroke-width="1.5" stroke-dasharray="6,4"/>
-        <text x="200" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">2024年</text>
-        <text x="517" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">2025年</text>
-        <text x="820" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">2026年</text>
-
-        <!-- Data line - actual values scaled: max=3200, min=800, range=2400 over 260px height -->
-        <!-- y = 300 - (val-800)/2400*260 -->
-        <!-- 31 months from x=65 to x=950, step=29.5 -->
-        <defs>
-          <linearGradient id="areaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#1976d2;stop-opacity:0.3"/>
-            <stop offset="100%" style="stop-color:#1976d2;stop-opacity:0.02"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Area fill -->
-        <path d="M 65,262 L 94.5,313 L 124,268 L 153.5,267 L 183,266 L 212.5,256 L 242,240 L 271.5,262 L 301,199 L 330.5,256 L 360,215 L 389.5,255 L 419,282 L 448.5,321 L 478,277 L 507.5,282 L 537,289 L 566.5,282 L 596,280 L 625.5,272 L 655,272 L 684.5,299 L 714,289 L 743.5,303 L 773,338 L 802.5,367 L 832,325 L 861.5,324 L 891,318 L 920.5,314 L 950,292 L 950,300 L 65,300 Z" 
-              fill="url(#areaGrad)"/>
-
-        <!-- Line -->
-        <path d="M 65,262 L 94.5,313 L 124,268 L 153.5,267 L 183,266 L 212.5,256 L 242,240 L 271.5,262 L 301,199 L 330.5,256 L 360,215 L 389.5,255 L 419,282 L 448.5,321 L 478,277 L 507.5,282 L 537,289 L 566.5,282 L 596,280 L 625.5,272 L 655,272 L 684.5,299 L 714,289 L 743.5,303 L 773,338 L 802.5,367 L 832,325 L 861.5,324 L 891,318 L 920.5,314 L 950,292" 
-              fill="none" stroke="#1976d2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-
-        <!-- Data points - highlight peaks and valleys -->
-        <!-- Peak 2024-09: 3070 -->
-        <circle cx="301" cy="199" r="6" fill="#fff" stroke="#c62828" stroke-width="2.5"/>
-        <text x="301" y="188" text-anchor="middle" font-size="10" font-weight="700" fill="#c62828">峰值 3070</text>
-        <!-- Valley 2026-02: 888 -->
-        <circle cx="802.5" cy="367" r="6" fill="#fff" stroke="#2e7d32" stroke-width="2.5"/>
-        <text x="802.5" y="383" text-anchor="middle" font-size="10" font-weight="700" fill="#2e7d32">谷值 888</text>
-        <!-- 2024-11: 2926 -->
-        <circle cx="360" cy="215" r="4" fill="#1976d2"/>
-
-        <!-- X-axis labels (every 3 months) -->
-        <text x="65" y="318" text-anchor="middle" font-size="10" fill="#888">1月</text>
-        <text x="153.5" y="318" text-anchor="middle" font-size="10" fill="#888">4月</text>
-        <text x="242" y="318" text-anchor="middle" font-size="10" fill="#888">7月</text>
-        <text x="330.5" y="318" text-anchor="middle" font-size="10" fill="#888">10月</text>
-        <text x="419" y="318" text-anchor="middle" font-size="10" fill="#888">1月</text>
-        <text x="507.5" y="318" text-anchor="middle" font-size="10" fill="#888">4月</text>
-        <text x="596" y="318" text-anchor="middle" font-size="10" fill="#888">7月</text>
-        <text x="684.5" y="318" text-anchor="middle" font-size="10" fill="#888">10月</text>
-        <text x="773" y="318" text-anchor="middle" font-size="10" fill="#888">1月</text>
-        <text x="861.5" y="318" text-anchor="middle" font-size="10" fill="#888">4月</text>
-        <text x="950" y="318" text-anchor="middle" font-size="10" fill="#888">7月</text>
-
-        <!-- Trend line annotation -->
+            <!-- MD-SVG-BEGIN -->
+      <svg viewBox="0 0 1000 396" class="trend-svg" role="img" aria-label="2024-01—2026-08 月度投诉量折线图">
+        <!-- 网格与坐标轴 -->
+        <line x1="50" y1="40" x2="50" y2="330" stroke="#eee" stroke-width="1"/>
+        <line x1="50" y1="330" x2="960" y2="330" stroke="#ccc" stroke-width="1"/>
+        <line x1="50" y1="44.0" x2="960" y2="44.0" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="45" y="48.0" text-anchor="end" font-size="10" fill="#999">3000</text>
+        <line x1="50" y1="109.0" x2="960" y2="109.0" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="45" y="113.0" text-anchor="end" font-size="10" fill="#999">2500</text>
+        <line x1="50" y1="174.0" x2="960" y2="174.0" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="45" y="178.0" text-anchor="end" font-size="10" fill="#999">2000</text>
+        <line x1="50" y1="239.0" x2="960" y2="239.0" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="45" y="243.0" text-anchor="end" font-size="10" fill="#999">1500</text>
+        <line x1="50" y1="304.0" x2="960" y2="304.0" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4,4"/>
+        <text x="45" y="308.0" text-anchor="end" font-size="10" fill="#999">1000</text>
+        <line x1="393.3" y1="35" x2="393.3" y2="335" stroke="#bbdefb" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <line x1="735.9" y1="35" x2="735.9" y2="335" stroke="#bbdefb" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <text x="222.0" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">2024年</text>
+        <text x="564.6" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">2025年</text>
+        <text x="850.1" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">2026年</text>
+        <defs><linearGradient id="areaGrad" x1="0%%" y1="0%%" x2="0%%" y2="100%%">
+          <stop offset="0%%" style="stop-color:#1976d2;stop-opacity:0.3"/>
+          <stop offset="100%%" style="stop-color:#1976d2;stop-opacity:0.02"/>
+        </linearGradient></defs>
+        <!-- 面积与折线（32 个月真实值） -->
+        <path d="M 65.0,164.4 L 93.5,259.8 L 122.1,118.9 L 150.6,117.4 L 179.2,116.7 L 207.7,104.8 L 236.3,85.2 L 264.8,112.4 L 293.4,34.9 L 321.9,104.8 L 350.5,53.6 L 379.0,104.2 L 407.6,203.0 L 436.1,249.5 L 464.7,153.6 L 493.2,161.8 L 521.8,174.8 L 550.3,164.2 L 578.9,160.7 L 607.4,150.6 L 636.0,151.1 L 664.5,192.8 L 693.1,177.2 L 721.6,198.2 L 750.2,240.9 L 778.7,318.6 L 807.3,215.3 L 835.8,212.5 L 864.4,203.6 L 892.9,192.7 L 921.5,161.4 L 950.0,142.5 L 950.0,300 L 65.0,300 Z" fill="url(#areaGrad)"/>
+        <path d="M 65.0,164.4 L 93.5,259.8 L 122.1,118.9 L 150.6,117.4 L 179.2,116.7 L 207.7,104.8 L 236.3,85.2 L 264.8,112.4 L 293.4,34.9 L 321.9,104.8 L 350.5,53.6 L 379.0,104.2 L 407.6,203.0 L 436.1,249.5 L 464.7,153.6 L 493.2,161.8 L 521.8,174.8 L 550.3,164.2 L 578.9,160.7 L 607.4,150.6 L 636.0,151.1 L 664.5,192.8 L 693.1,177.2 L 721.6,198.2 L 750.2,240.9 L 778.7,318.6 L 807.3,215.3 L 835.8,212.5 L 864.4,203.6 L 892.9,192.7 L 921.5,161.4 L 950.0,142.5" fill="none" stroke="#1976d2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="293.4" cy="34.9" r="6" fill="#fff" stroke="#c62828" stroke-width="2.5"/>
+        <text x="293.4" y="22.9" text-anchor="middle" font-size="10" font-weight="700" fill="#c62828">峰值 3,070（2024-09）</text>
+        <circle cx="778.7" cy="318.6" r="6" fill="#fff" stroke="#2e7d32" stroke-width="2.5"/>
+        <text x="778.7" y="336.6" text-anchor="middle" font-size="10" font-weight="700" fill="#2e7d32">谷值 888（2026-02）</text>
+        <text x="65.0" y="348" text-anchor="middle" font-size="10" fill="#888">1月</text>
+        <text x="150.6" y="348" text-anchor="middle" font-size="10" fill="#888">4月</text>
+        <text x="236.3" y="348" text-anchor="middle" font-size="10" fill="#888">7月</text>
+        <text x="321.9" y="348" text-anchor="middle" font-size="10" fill="#888">10月</text>
+        <text x="407.6" y="348" text-anchor="middle" font-size="10" fill="#888">1月</text>
+        <text x="493.2" y="348" text-anchor="middle" font-size="10" fill="#888">4月</text>
+        <text x="578.9" y="348" text-anchor="middle" font-size="10" fill="#888">7月</text>
+        <text x="664.5" y="348" text-anchor="middle" font-size="10" fill="#888">10月</text>
+        <text x="750.2" y="348" text-anchor="middle" font-size="10" fill="#888">1月</text>
+        <text x="835.8" y="348" text-anchor="middle" font-size="10" fill="#888">4月</text>
+        <text x="921.5" y="348" text-anchor="middle" font-size="10" fill="#888">7月</text>
         <path d="M 80,255 Q 400,285 750,310" fill="none" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.7"/>
-        <text x="500" y="338" text-anchor="middle" font-size="11" fill="#ff9800" font-weight="600">→ 整体呈下降趋势 →</text>
+        <text x="500" y="378" text-anchor="middle" font-size="11" fill="#ff9800" font-weight="600">→ 整体呈下降趋势 →</text>
       </svg>
+<!-- MD-SVG-END -->
     </div>
 
     <div class="trend-legend">
@@ -724,7 +711,7 @@
     </div>
 
     <!-- Detail panel -->
-    <div class="detail-panel" id="detailPanel">
+    <div class="detail-panel no-print" id="detailPanel">
       <div class="detail-header">
         <div class="detail-title" id="detailTitle">2024年1月 数据分析月报</div>
         <div class="detail-close" onclick="closeDetail()">✕</div>
@@ -756,15 +743,399 @@
     </div>
   </div>
 
+<!-- MD-DETAIL-BEGIN -->
+  <!-- ===== 逐月明细（静态，供 Word 导出） ===== -->
+  <div class="section" id="sec-year-detail">
+    <div class="section-title"><span class="icon">🗂️</span>三、2026 年逐月明细（1-8 月）</div>
+    <p class="desc">下表按月列出 2026 年 1-8 月各月的街道投诉排名 Top5、小区投诉排名 Top10、投诉类别分布 Top5、热点问题 Top5。口径：热线工单主数据全量口径，当月独立统计；占比＝该单位当月投诉量 ÷ 当月全区投诉总量。2026 年 1-8 月合计 13,726 件。</p>
+    <h3>2026 年 1 月</h3>
+    <p class="desc">投诉总量 <b>1,485</b> 件 ｜ 涉及小区 <b>482</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>—</b> ｜ 同比 <b>-16.4%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>长桥</td><td>179</td><td>12.1%</td></tr>
+        <tr><td>2</td><td>枫林路</td><td>154</td><td>10.4%</td></tr>
+        <tr><td>3</td><td>漕河泾</td><td>142</td><td>9.6%</td></tr>
+        <tr><td>4</td><td>徐家汇</td><td>141</td><td>9.5%</td></tr>
+        <tr><td>5</td><td>田林</td><td>132</td><td>8.9%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>日晖六村</td><td>斜土路</td><td>18</td><td>1.2%</td></tr>
+        <tr><td>2</td><td>龙山新村</td><td>枫林路</td><td>18</td><td>1.2%</td></tr>
+        <tr><td>3</td><td>周家湾</td><td>龙华</td><td>17</td><td>1.1%</td></tr>
+        <tr><td>4</td><td>宛龙小区</td><td>枫林路</td><td>17</td><td>1.1%</td></tr>
+        <tr><td>5</td><td>罗秀新二村</td><td>长桥</td><td>17</td><td>1.1%</td></tr>
+        <tr><td>6</td><td>紫阳花苑</td><td>华泾镇</td><td>15</td><td>1.0%</td></tr>
+        <tr><td>7</td><td>华泾绿苑</td><td>华泾镇</td><td>14</td><td>0.9%</td></tr>
+        <tr><td>8</td><td>滨江小区</td><td>龙华</td><td>14</td><td>0.9%</td></tr>
+        <tr><td>9</td><td>田林三四村</td><td>田林</td><td>14</td><td>0.9%</td></tr>
+        <tr><td>10</td><td>东湾小区</td><td>华泾镇</td><td>13</td><td>0.9%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,145</td><td>77.1%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>228</td><td>15.4%</td></tr>
+        <tr><td>3</td><td>其他</td><td>60</td><td>4.0%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>28</td><td>1.9%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>13</td><td>0.9%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>不文明行为</td><td>227</td><td>15.3%</td></tr>
+        <tr><td>2</td><td>停车管理</td><td>227</td><td>15.3%</td></tr>
+        <tr><td>3</td><td>物业维修保养</td><td>224</td><td>15.1%</td></tr>
+        <tr><td>4</td><td>业委会和业主大会</td><td>148</td><td>10.0%</td></tr>
+        <tr><td>5</td><td>物业安保</td><td>97</td><td>6.5%</td></tr>
+      </tbody></table>
+    <h3>2026 年 2 月</h3>
+    <p class="desc">投诉总量 <b>888</b> 件 ｜ 涉及小区 <b>373</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>-40.2%</b> ｜ 同比 <b>-37.4%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>田林</td><td>109</td><td>12.3%</td></tr>
+        <tr><td>2</td><td>长桥</td><td>109</td><td>12.3%</td></tr>
+        <tr><td>3</td><td>龙华</td><td>97</td><td>10.9%</td></tr>
+        <tr><td>4</td><td>徐家汇</td><td>78</td><td>8.8%</td></tr>
+        <tr><td>5</td><td>天平路</td><td>72</td><td>8.1%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>盛大花园</td><td>龙华</td><td>28</td><td>3.2%</td></tr>
+        <tr><td>2</td><td>上海新村直管公房</td><td>天平路</td><td>10</td><td>1.1%</td></tr>
+        <tr><td>3</td><td>华沁家园</td><td>长桥</td><td>9</td><td>1.0%</td></tr>
+        <tr><td>4</td><td>吴东小区</td><td>田林</td><td>9</td><td>1.0%</td></tr>
+        <tr><td>5</td><td>日晖六村</td><td>斜土路</td><td>9</td><td>1.0%</td></tr>
+        <tr><td>6</td><td>馨宁公寓</td><td>华泾镇</td><td>9</td><td>1.0%</td></tr>
+        <tr><td>7</td><td>凌云新村</td><td>凌云路</td><td>8</td><td>0.9%</td></tr>
+        <tr><td>8</td><td>华泾绿苑</td><td>华泾镇</td><td>8</td><td>0.9%</td></tr>
+        <tr><td>9</td><td>南丹小区</td><td>徐家汇</td><td>8</td><td>0.9%</td></tr>
+        <tr><td>10</td><td>汇成五村</td><td>长桥</td><td>8</td><td>0.9%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>679</td><td>76.5%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>136</td><td>15.3%</td></tr>
+        <tr><td>3</td><td>其他</td><td>39</td><td>4.4%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>23</td><td>2.6%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>8</td><td>0.9%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>物业维修保养</td><td>138</td><td>15.5%</td></tr>
+        <tr><td>2</td><td>不文明行为</td><td>136</td><td>15.3%</td></tr>
+        <tr><td>3</td><td>停车管理</td><td>117</td><td>13.2%</td></tr>
+        <tr><td>4</td><td>业委会和业主大会</td><td>83</td><td>9.3%</td></tr>
+        <tr><td>5</td><td>物业安保</td><td>53</td><td>6.0%</td></tr>
+      </tbody></table>
+    <h3>2026 年 3 月</h3>
+    <p class="desc">投诉总量 <b>1,682</b> 件 ｜ 涉及小区 <b>507</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>+89.4%</b> ｜ 同比 <b>-22.0%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>徐家汇</td><td>195</td><td>11.6%</td></tr>
+        <tr><td>2</td><td>长桥</td><td>185</td><td>11.0%</td></tr>
+        <tr><td>3</td><td>田林</td><td>147</td><td>8.7%</td></tr>
+        <tr><td>4</td><td>斜土路</td><td>136</td><td>8.1%</td></tr>
+        <tr><td>5</td><td>天平路</td><td>135</td><td>8.0%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>家乐苑</td><td>凌云路</td><td>31</td><td>1.8%</td></tr>
+        <tr><td>2</td><td>罗秀新二村</td><td>长桥</td><td>26</td><td>1.5%</td></tr>
+        <tr><td>3</td><td>华悦家园</td><td>虹梅路</td><td>25</td><td>1.5%</td></tr>
+        <tr><td>4</td><td>华泾绿苑</td><td>华泾镇</td><td>20</td><td>1.2%</td></tr>
+        <tr><td>5</td><td>吴东小区</td><td>田林</td><td>20</td><td>1.2%</td></tr>
+        <tr><td>6</td><td>御江瑞庭、徐汇复星中心</td><td>斜土路</td><td>20</td><td>1.2%</td></tr>
+        <tr><td>7</td><td>创世纪花园</td><td>徐家汇</td><td>18</td><td>1.1%</td></tr>
+        <tr><td>8</td><td>日晖六村</td><td>斜土路</td><td>18</td><td>1.1%</td></tr>
+        <tr><td>9</td><td>梅陇五村(多层)</td><td>凌云路</td><td>15</td><td>0.9%</td></tr>
+        <tr><td>10</td><td>紫阳花苑</td><td>华泾镇</td><td>14</td><td>0.8%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,252</td><td>74.4%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>307</td><td>18.3%</td></tr>
+        <tr><td>3</td><td>其他</td><td>73</td><td>4.3%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>38</td><td>2.3%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>11</td><td>0.7%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>停车管理</td><td>274</td><td>16.3%</td></tr>
+        <tr><td>2</td><td>不文明行为</td><td>246</td><td>14.6%</td></tr>
+        <tr><td>3</td><td>物业维修保养</td><td>231</td><td>13.7%</td></tr>
+        <tr><td>4</td><td>房屋违法租赁（群租）</td><td>135</td><td>8.0%</td></tr>
+        <tr><td>5</td><td>业委会和业主大会</td><td>131</td><td>7.8%</td></tr>
+      </tbody></table>
+    <h3>2026 年 4 月</h3>
+    <p class="desc">投诉总量 <b>1,704</b> 件 ｜ 涉及小区 <b>518</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>+1.3%</b> ｜ 同比 <b>-18.6%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>徐家汇</td><td>197</td><td>11.6%</td></tr>
+        <tr><td>2</td><td>漕河泾</td><td>184</td><td>10.8%</td></tr>
+        <tr><td>3</td><td>田林</td><td>171</td><td>10.0%</td></tr>
+        <tr><td>4</td><td>斜土路</td><td>160</td><td>9.4%</td></tr>
+        <tr><td>5</td><td>天平路</td><td>153</td><td>9.0%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>尚海湾二期</td><td>斜土路</td><td>32</td><td>1.9%</td></tr>
+        <tr><td>2</td><td>华滨家园</td><td>长桥</td><td>16</td><td>0.9%</td></tr>
+        <tr><td>3</td><td>吴东小区</td><td>田林</td><td>16</td><td>0.9%</td></tr>
+        <tr><td>4</td><td>日晖六村</td><td>斜土路</td><td>16</td><td>0.9%</td></tr>
+        <tr><td>5</td><td>紫阳花苑</td><td>华泾镇</td><td>16</td><td>0.9%</td></tr>
+        <tr><td>6</td><td>陕西直管公房</td><td>天平路</td><td>16</td><td>0.9%</td></tr>
+        <tr><td>7</td><td>华欣家园</td><td>华泾镇</td><td>15</td><td>0.9%</td></tr>
+        <tr><td>8</td><td>东安四村</td><td>枫林路</td><td>14</td><td>0.8%</td></tr>
+        <tr><td>9</td><td>冶金小区</td><td>田林</td><td>14</td><td>0.8%</td></tr>
+        <tr><td>10</td><td>凌云新村</td><td>凌云路</td><td>14</td><td>0.8%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,240</td><td>72.8%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>315</td><td>18.5%</td></tr>
+        <tr><td>3</td><td>其他</td><td>103</td><td>6.0%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>28</td><td>1.6%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>8</td><td>0.5%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>物业维修保养</td><td>231</td><td>13.6%</td></tr>
+        <tr><td>2</td><td>不文明行为</td><td>222</td><td>13.0%</td></tr>
+        <tr><td>3</td><td>停车管理</td><td>217</td><td>12.7%</td></tr>
+        <tr><td>4</td><td>业委会和业主大会</td><td>167</td><td>9.8%</td></tr>
+        <tr><td>5</td><td>房屋违法租赁（群租）</td><td>116</td><td>6.8%</td></tr>
+      </tbody></table>
+    <h3>2026 年 5 月</h3>
+    <p class="desc">投诉总量 <b>1,772</b> 件 ｜ 涉及小区 <b>506</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>+4.0%</b> ｜ 同比 <b>-11.1%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>长桥</td><td>195</td><td>11.0%</td></tr>
+        <tr><td>2</td><td>漕河泾</td><td>169</td><td>9.5%</td></tr>
+        <tr><td>3</td><td>田林</td><td>160</td><td>9.0%</td></tr>
+        <tr><td>4</td><td>枫林路</td><td>157</td><td>8.9%</td></tr>
+        <tr><td>5</td><td>徐家汇</td><td>150</td><td>8.5%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>凌云新村</td><td>凌云路</td><td>25</td><td>1.4%</td></tr>
+        <tr><td>2</td><td>华悦家园</td><td>虹梅路</td><td>20</td><td>1.1%</td></tr>
+        <tr><td>3</td><td>安福直管公房</td><td>湖南路</td><td>20</td><td>1.1%</td></tr>
+        <tr><td>4</td><td>延庆直管公房</td><td>湖南路</td><td>18</td><td>1.0%</td></tr>
+        <tr><td>5</td><td>华沁家园</td><td>长桥</td><td>17</td><td>1.0%</td></tr>
+        <tr><td>6</td><td>罗秀新二村</td><td>长桥</td><td>16</td><td>0.9%</td></tr>
+        <tr><td>7</td><td>华欣家园</td><td>华泾镇</td><td>15</td><td>0.8%</td></tr>
+        <tr><td>8</td><td>欣嘉苑1-3期</td><td>虹梅路</td><td>15</td><td>0.8%</td></tr>
+        <tr><td>9</td><td>珺汇名邸</td><td>龙华</td><td>15</td><td>0.8%</td></tr>
+        <tr><td>10</td><td>康兴花园</td><td>康健新村</td><td>14</td><td>0.8%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,295</td><td>73.1%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>352</td><td>19.9%</td></tr>
+        <tr><td>3</td><td>其他</td><td>73</td><td>4.1%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>33</td><td>1.9%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>8</td><td>0.5%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>不文明行为</td><td>275</td><td>15.5%</td></tr>
+        <tr><td>2</td><td>物业维修保养</td><td>260</td><td>14.7%</td></tr>
+        <tr><td>3</td><td>停车管理</td><td>235</td><td>13.3%</td></tr>
+        <tr><td>4</td><td>房屋违法租赁（群租）</td><td>136</td><td>7.7%</td></tr>
+        <tr><td>5</td><td>业委会和业主大会</td><td>124</td><td>7.0%</td></tr>
+      </tbody></table>
+    <h3>2026 年 6 月</h3>
+    <p class="desc">投诉总量 <b>1,856</b> 件 ｜ 涉及小区 <b>503</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>+4.7%</b> ｜ 同比 <b>-10.6%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>长桥</td><td>191</td><td>10.3%</td></tr>
+        <tr><td>2</td><td>田林</td><td>186</td><td>10.0%</td></tr>
+        <tr><td>3</td><td>徐家汇</td><td>180</td><td>9.7%</td></tr>
+        <tr><td>4</td><td>斜土路</td><td>180</td><td>9.7%</td></tr>
+        <tr><td>5</td><td>漕河泾</td><td>177</td><td>9.5%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>华欣家园</td><td>华泾镇</td><td>22</td><td>1.2%</td></tr>
+        <tr><td>2</td><td>明丰新纪苑</td><td>华泾镇</td><td>22</td><td>1.2%</td></tr>
+        <tr><td>3</td><td>宝能华庭</td><td>龙华</td><td>20</td><td>1.1%</td></tr>
+        <tr><td>4</td><td>华悦家园</td><td>虹梅路</td><td>19</td><td>1.0%</td></tr>
+        <tr><td>5</td><td>海珀旭晖</td><td>斜土路</td><td>19</td><td>1.0%</td></tr>
+        <tr><td>6</td><td>长桥四村</td><td>长桥</td><td>19</td><td>1.0%</td></tr>
+        <tr><td>7</td><td>尚海湾一期</td><td>斜土路</td><td>18</td><td>1.0%</td></tr>
+        <tr><td>8</td><td>欣嘉苑1-3期</td><td>虹梅路</td><td>18</td><td>1.0%</td></tr>
+        <tr><td>9</td><td>实业公寓</td><td>徐家汇</td><td>17</td><td>0.9%</td></tr>
+        <tr><td>10</td><td>新湖云庭</td><td>枫林路</td><td>17</td><td>0.9%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,417</td><td>76.3%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>305</td><td>16.4%</td></tr>
+        <tr><td>3</td><td>其他</td><td>74</td><td>4.0%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>46</td><td>2.5%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>8</td><td>0.4%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>物业维修保养</td><td>301</td><td>16.2%</td></tr>
+        <tr><td>2</td><td>停车管理</td><td>255</td><td>13.7%</td></tr>
+        <tr><td>3</td><td>不文明行为</td><td>252</td><td>13.6%</td></tr>
+        <tr><td>4</td><td>业委会和业主大会</td><td>179</td><td>9.6%</td></tr>
+        <tr><td>5</td><td>房屋违法租赁（群租）</td><td>108</td><td>5.8%</td></tr>
+      </tbody></table>
+    <h3>2026 年 7 月</h3>
+    <p class="desc">投诉总量 <b>2,097</b> 件 ｜ 涉及小区 <b>550</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>+13.0%</b> ｜ 同比 <b>-0.2%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>漕河泾</td><td>226</td><td>10.8%</td></tr>
+        <tr><td>2</td><td>长桥</td><td>214</td><td>10.2%</td></tr>
+        <tr><td>3</td><td>徐家汇</td><td>204</td><td>9.7%</td></tr>
+        <tr><td>4</td><td>斜土路</td><td>197</td><td>9.4%</td></tr>
+        <tr><td>5</td><td>枫林路</td><td>172</td><td>8.2%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>俞一小区</td><td>龙华</td><td>32</td><td>1.5%</td></tr>
+        <tr><td>2</td><td>罗秀新二村</td><td>长桥</td><td>28</td><td>1.3%</td></tr>
+        <tr><td>3</td><td>海珀旭晖</td><td>斜土路</td><td>24</td><td>1.1%</td></tr>
+        <tr><td>4</td><td>钦州公寓</td><td>田林</td><td>24</td><td>1.1%</td></tr>
+        <tr><td>5</td><td>新湖云庭</td><td>枫林路</td><td>20</td><td>1.0%</td></tr>
+        <tr><td>6</td><td>日晖二村</td><td>斜土路</td><td>20</td><td>1.0%</td></tr>
+        <tr><td>7</td><td>化工一、四村</td><td>凌云路</td><td>18</td><td>0.9%</td></tr>
+        <tr><td>8</td><td>华悦家园</td><td>虹梅路</td><td>16</td><td>0.8%</td></tr>
+        <tr><td>9</td><td>嘉俊庭</td><td>华泾镇</td><td>16</td><td>0.8%</td></tr>
+        <tr><td>10</td><td>番禺路801弄</td><td>徐家汇</td><td>16</td><td>0.8%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,603</td><td>76.4%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>296</td><td>14.1%</td></tr>
+        <tr><td>3</td><td>其他</td><td>126</td><td>6.0%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>44</td><td>2.1%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>15</td><td>0.7%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>物业维修保养</td><td>414</td><td>19.7%</td></tr>
+        <tr><td>2</td><td>不文明行为</td><td>309</td><td>14.7%</td></tr>
+        <tr><td>3</td><td>停车管理</td><td>263</td><td>12.5%</td></tr>
+        <tr><td>4</td><td>业委会和业主大会</td><td>182</td><td>8.7%</td></tr>
+        <tr><td>5</td><td>其他（其他）</td><td>112</td><td>5.3%</td></tr>
+      </tbody></table>
+    <h3>2026 年 8 月</h3>
+    <p class="desc">投诉总量 <b>2,242</b> 件 ｜ 涉及小区 <b>576</b> 个 ｜ 覆盖街道 <b>13</b> 个 ｜ 环比 <b>+6.9%</b> ｜ 同比 <b>+2.8%</b></p>
+    <h4>街道投诉排名 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>长桥</td><td>250</td><td>11.2%</td></tr>
+        <tr><td>2</td><td>天平路</td><td>246</td><td>11.0%</td></tr>
+        <tr><td>3</td><td>漕河泾</td><td>218</td><td>9.7%</td></tr>
+        <tr><td>4</td><td>徐家汇</td><td>192</td><td>8.6%</td></tr>
+        <tr><td>5</td><td>田林</td><td>191</td><td>8.5%</td></tr>
+      </tbody></table>
+    <h4>小区投诉排名 Top10</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>小区</th><th>所属街道</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>日晖六村</td><td>斜土路</td><td>25</td><td>1.1%</td></tr>
+        <tr><td>2</td><td>中海瀛台</td><td>长桥</td><td>24</td><td>1.1%</td></tr>
+        <tr><td>3</td><td>安福直管公房</td><td>湖南路</td><td>24</td><td>1.1%</td></tr>
+        <tr><td>4</td><td>石龙路33弄</td><td>漕河泾</td><td>24</td><td>1.1%</td></tr>
+        <tr><td>5</td><td>罗秀新二村</td><td>长桥</td><td>23</td><td>1.0%</td></tr>
+        <tr><td>6</td><td>龙山新村</td><td>枫林路</td><td>20</td><td>0.9%</td></tr>
+        <tr><td>7</td><td>天钥新村</td><td>枫林路</td><td>18</td><td>0.8%</td></tr>
+        <tr><td>8</td><td>新湖云庭</td><td>枫林路</td><td>18</td><td>0.8%</td></tr>
+        <tr><td>9</td><td>虹桥大仕馆</td><td>田林</td><td>18</td><td>0.8%</td></tr>
+        <tr><td>10</td><td>华滨家园</td><td>长桥</td><td>17</td><td>0.8%</td></tr>
+      </tbody></table>
+    <h4>投诉类别分布 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>类别（市级归口）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>住房保障</td><td>1,792</td><td>79.9%</td></tr>
+        <tr><td>2</td><td>城管执法</td><td>284</td><td>12.7%</td></tr>
+        <tr><td>3</td><td>其他</td><td>121</td><td>5.4%</td></tr>
+        <tr><td>4</td><td>公安（消防）局</td><td>29</td><td>1.3%</td></tr>
+        <tr><td>5</td><td>生态环境局</td><td>11</td><td>0.5%</td></tr>
+      </tbody></table>
+    <h4>热点问题 Top5</h4>
+    <table class="data-table">
+      <thead><tr><th>排名</th><th>热点问题（市局细分）</th><th>投诉量（件）</th><th>占当月比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>物业维修保养</td><td>584</td><td>26.0%</td></tr>
+        <tr><td>2</td><td>不文明行为</td><td>312</td><td>13.9%</td></tr>
+        <tr><td>3</td><td>停车管理</td><td>231</td><td>10.3%</td></tr>
+        <tr><td>4</td><td>业委会和业主大会</td><td>211</td><td>9.4%</td></tr>
+        <tr><td>5</td><td>物业安保</td><td>108</td><td>4.8%</td></tr>
+      </tbody></table>
+  </div>
+<!-- MD-DETAIL-END -->
+
   <!-- ===== 三、关键发现 ===== -->
   <div class="section">
-    <div class="section-title"><span class="icon">💡</span>三、月度数据关键发现</div>
+    <div class="section-title"><span class="icon">💡</span>四、月度数据关键发现</div>
 
     <div class="two-col" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
       <div style="background:#e3f2fd; border-radius:8px; padding:14px; border-left:4px solid #1976d2;">
         <strong style="color:#0d47a1; font-size:14px;">📉 持续下降趋势</strong><br>
         <span style="font-size:12px; color:#444; line-height:1.9;">
-        投诉量连续三年下降：2024年月均2,456件 → 2025年月均1,968件（-19.9%）→ 2026年1-8月月均1,716件（较2025同期-15.7%）。治理成效显著。
+        投诉量连续三年下降：2024年月均2,456件 → 2025年月均1,968件（-19.9%）→ 2026年1-8月月均1,716件（较2025同期-13.1%）。治理成效显著。
         </span>
       </div>
       <div style="background:#fff3e0; border-radius:8px; padding:14px; border-left:4px solid #ff9800;">
@@ -776,7 +1147,7 @@
       <div style="background:#e8f5e9; border-radius:8px; padding:14px; border-left:4px solid #2e7d32;">
         <strong style="color:#1b5e20; font-size:14px;">🎯 2025年同比全面下降</strong><br>
         <span style="font-size:12px; color:#444; line-height:1.9;">
-        2025年各月同比2024年均实现下降，降幅从-5.9%（2月）扩大至-32.5%（11月）。下半年降幅普遍超过20%，治理效果下半年更显著。
+        2025年除 2 月小幅上升（+5.9%，春节基数偏低）外，其余 11 个月同比上一年均实现下降，降幅从 -11.0%（3 月）扩大至 -32.5%（11 月）。下半年降幅普遍超过 20%，治理效果下半年更显著。
         </span>
       </div>
       <div style="background:#fce4ec; border-radius:8px; padding:14px; border-left:4px solid #c62828;">
@@ -790,7 +1161,7 @@
     <div style="background:#f3e5f5; border-radius:8px; padding:14px 16px; margin-top:14px; border-left:4px solid #7b1fa2;">
       <strong style="color:#4a148c; font-size:14px;">📌 核心结论</strong><br>
       <span style="font-size:12px; color:#444; line-height:2;">
-      ① 三年累计降幅达33%，物业投诉治理取得显著成效；② 季节性特征明显，需在每年Q3提前部署应对高峰；③ 2026年降幅收窄，建议加大底部抬升小区治理、老旧小区修缮、业委会组建等治本措施，巩固治理成果；④ 重点关注华泾、长桥等高投诉强度街道的攻坚治理。
+      ① 2026年1-8月月均投诉量较基期下降30.1%，物业投诉治理取得显著成效；② 季节性特征明显，需在每年Q3提前部署应对高峰；③ 2026年降幅收窄，建议加大底部抬升小区治理、老旧小区修缮、业委会组建等治本措施，巩固治理成果；④ 重点关注华泾、长桥等高投诉强度街道的攻坚治理。
       </span>
     </div>
   </div>
@@ -798,205 +1169,175 @@
 </div>
 
 <div class="footer">
-  徐汇区物业课题一期 · 数据分析月报合集 · 2024.01 — 2026.07 · 共31期
+  徐汇区物业课题一期 · 数据分析月报合集 · 2024.01 — 2026.08 · 共32期
 </div>
 
 <script>
 // Monthly data
+<!-- MD-DATA-BEGIN -->
 const monthlyData = {
-  '2024-01': { total:2074, comm:497, streets:14, yoy:null,
-    streets:[['长桥',275],['漕河泾',248],['枫林路',223],['凌云路',200],['康健新村',187]],
-    comms:[['中海瀛台',61],['尚海湾二期',45],['中海馨园',34],['华悦家园',31],['徐家汇花园',28],['鑫国家园',27],['东湾小区',26],['田林十二村',25],['长桥三村',24],['梅陇九村',23]],
-    cats:[['住房保障',1456],['城管执法',398],['其他',119],['公安（消防）局',58],['绿化市容局',30]],
-    issues:[['物业服务',412],['小区管理',389],['群租',287],['违章搭建',234],['房屋维修',201]]
-  },
-  '2024-02': { total:1340, comm:412, streets:14, yoy:null,
-    streets:[['漕河泾',165],['长桥',156],['枫林路',143],['凌云路',128],['徐家汇',118]],
-    comms:[['中海瀛台',74],['尚海湾二期',32],['华悦家园',28],['东湾小区',26],['中海馨园',24],['徐家汇花园',22],['田林十二村',21],['梅陇九村',20],['长桥八村',19],['鑫国家园',18]],
-    cats:[['住房保障',952],['城管执法',258],['其他',75],['公安（消防）局',38],['绿化市容局',17]],
-    issues:[['物业服务',278],['小区管理',256],['群租',185],['违章搭建',152],['房屋维修',132]]
-  },
-  '2024-03': { total:2424, comm:524, streets:14, yoy:null,
-    streets:[['长桥',312],['漕河泾',285],['枫林路',268],['凌云路',245],['康健新村',220]],
-    comms:[['中海瀛台',45],['尚海湾二期',38],['华悦家园',35],['东湾小区',32],['中海馨园',30],['徐家汇花园',28],['田林十二村',27],['梅陇九村',25],['长桥八村',24],['鑫国家园',23]],
-    cats:[['住房保障',1735],['城管执法',442],['其他',142],['公安（消防）局',68],['绿化市容局',37]],
-    issues:[['物业服务',498],['小区管理',465],['群租',325],['违章搭建',278],['房屋维修',245]]
-  },
-  '2024-04': { total:2435, comm:565, streets:14, yoy:null,
-    streets:[['长桥',315],['漕河泾',288],['枫林路',265],['凌云路',248],['徐家汇',225]],
-    comms:[['中海瀛台',49],['尚海湾二期',36],['华悦家园',33],['东湾小区',31],['中海馨园',29],['徐家汇花园',27],['田林十二村',26],['梅陇九村',24],['长桥八村',23],['鑫国家园',22]],
-    cats:[['住房保障',1750],['城管执法',438],['其他',148],['公安（消防）局',62],['绿化市容局',37]],
-    issues:[['物业服务',502],['小区管理',472],['群租',332],['违章搭建',282],['房屋维修',250]]
-  },
-  '2024-05': { total:2441, comm:552, streets:14, yoy:null,
-    streets:[['长桥',318],['漕河泾',290],['枫林路',268],['凌云路',246],['康健新村',225]],
-    comms:[['中海瀛台',91],['尚海湾二期',35],['华悦家园',32],['东湾小区',30],['中海馨园',28],['徐家汇花园',26],['田林十二村',25],['梅陇九村',24],['长桥八村',23],['鑫国家园',22]],
-    cats:[['住房保障',1756],['城管执法',440],['其他',145],['公安（消防）局',65],['绿化市容局',35]],
-    issues:[['物业服务',508],['小区管理',478],['群租',335],['违章搭建',285],['房屋维修',252]]
-  },
-  '2024-06': { total:2532, comm:589, streets:14, yoy:null,
-    streets:[['长桥',335],['漕河泾',298],['枫林路',278],['凌云路',258],['康健新村',235]],
-    comms:[['尚海湾二期',47],['中海瀛台',42],['华悦家园',38],['东湾小区',35],['中海馨园',32],['徐家汇花园',30],['田林十二村',28],['梅陇九村',26],['长桥八村',25],['鑫国家园',24]],
-    cats:[['住房保障',1820],['城管执法',455],['其他',155],['公安（消防）局',68],['绿化市容局',34]],
-    issues:[['物业服务',528],['小区管理',495],['群租',345],['违章搭建',295],['房屋维修',268]]
-  },
-  '2024-07': { total:2683, comm:619, streets:14, yoy:null,
-    streets:[['长桥',355],['漕河泾',315],['枫林路',292],['凌云路',275],['康健新村',252]],
-    comms:[['梅陇三村',43],['中海瀛台',40],['尚海湾二期',38],['华悦家园',36],['东湾小区',34],['中海馨园',32],['徐家汇花园',30],['田林十二村',28],['长桥八村',26],['鑫国家园',25]],
-    cats:[['住房保障',1925],['城管执法',485],['其他',168],['公安（消防）局',72],['绿化市容局',33]],
-    issues:[['物业服务',558],['小区管理',525],['群租',365],['违章搭建',315],['房屋维修',288]]
-  },
-  '2024-08': { total:2474, comm:582, streets:14, yoy:null,
-    streets:[['长桥',328],['漕河泾',290],['枫林路',270],['凌云路',252],['康健新村',230]],
-    comms:[['杜鹃园',83],['中海瀛台',38],['尚海湾二期',35],['华悦家园',33],['东湾小区',31],['中海馨园',29],['徐家汇花园',27],['田林十二村',25],['梅陇九村',23],['长桥八村',22]],
-    cats:[['住房保障',1780],['城管执法',448],['其他',152],['公安（消防）局',65],['绿化市容局',29]],
-    issues:[['物业服务',512],['小区管理',482],['群租',335],['违章搭建',288],['房屋维修',260]]
-  },
-  '2024-09': { total:3070, comm:638, streets:14, yoy:null,
-    streets:[['长桥',410],['漕河泾',360],['枫林路',335],['凌云路',315],['康健新村',290]],
-    comms:[['中海瀛台',57],['尚海湾二期',45],['华悦家园',42],['东湾小区',38],['中海馨园',36],['徐家汇花园',34],['田林十二村',32],['梅陇九村',30],['长桥八村',28],['鑫国家园',27]],
-    cats:[['住房保障',2200],['城管执法',550],['其他',190],['公安（消防）局',85],['绿化市容局',45]],
-    issues:[['物业服务',635],['小区管理',598],['群租',415],['违章搭建',358],['房屋维修',320]]
-  },
-  '2024-10': { total:2532, comm:578, streets:14, yoy:null,
-    streets:[['长桥',335],['漕河泾',295],['枫林路',275],['凌云路',258],['康健新村',235]],
-    comms:[['中海瀛台',80],['尚海湾二期',38],['华悦家园',35],['东湾小区',32],['中海馨园',30],['徐家汇花园',28],['田林十二村',26],['梅陇九村',24],['长桥八村',23],['鑫国家园',22]],
-    cats:[['住房保障',1820],['城管执法',458],['其他',155],['公安（消防）局',68],['绿化市容局',31]],
-    issues:[['物业服务',528],['小区管理',495],['群租',345],['违章搭建',295],['房屋维修',268]]
-  },
-  '2024-11': { total:2926, comm:593, streets:14, yoy:null,
-    streets:[['长桥',385],['漕河泾',340],['枫林路',320],['凌云路',298],['康健新村',272]],
-    comms:[['尚海湾二期',194],['中海瀛台',48],['华悦家园',40],['东湾小区',36],['中海馨园',34],['徐家汇花园',32],['田林十二村',30],['梅陇九村',28],['长桥八村',26],['鑫国家园',25]],
-    cats:[['住房保障',2100],['城管执法',525],['其他',180],['公安（消防）局',78],['绿化市容局',43]],
-    issues:[['物业服务',605],['小区管理',572],['群租',395],['违章搭建',342],['房屋维修',305]]
-  },
-  '2024-12': { total:2537, comm:568, streets:14, yoy:null,
-    streets:[['长桥',338],['漕河泾',296],['枫林路',276],['凌云路',260],['康健新村',238]],
-    comms:[['中海瀛台',52],['尚海湾二期',40],['华悦家园',36],['东湾小区',33],['中海馨园',31],['徐家汇花园',29],['田林十二村',27],['梅陇九村',25],['长桥八村',24],['鑫国家园',23]],
-    cats:[['住房保障',1825],['城管执法',460],['其他',158],['公安（消防）局',70],['绿化市容局',24]],
-    issues:[['物业服务',532],['小区管理',498],['群租',348],['违章搭建',298],['房屋维修',272]]
-  },
-  '2025-01': { total:1777, comm:501, streets:14, yoy:-14.3,
-    streets:[['长桥',225],['漕河泾',208],['枫林路',195],['凌云路',180],['康健新村',168]],
-    comms:[['中海瀛台',57],['悦汇长庭',42],['尚海湾二期',35],['华悦家园',32],['东湾小区',30],['中海馨园',28],['长汇景苑',26],['鑫桂苑·侨高中心',25],['田林十二村',23],['徐家汇花园',22]],
-    cats:[['住房保障',1280],['城管执法',325],['其他',108],['公安（消防）局',48],['绿化市容局',16]],
-    issues:[['物业服务',368],['小区管理',345],['群租',242],['违章搭建',208],['房屋维修',185]]
-  },
-  '2025-02': { total:1419, comm:454, streets:14, yoy:5.9,
-    streets:[['漕河泾',172],['长桥',168],['枫林路',155],['凌云路',142],['徐家汇',128]],
-    comms:[['中海瀛台',35],['悦汇长庭',32],['尚海湾二期',28],['华悦家园',26],['东湾小区',24],['长汇景苑',22],['中海馨园',21],['鑫桂苑·侨高中心',20],['田林十二村',19],['徐家汇花园',18]],
-    cats:[['住房保障',1025],['城管执法',258],['其他',82],['公安（消防）局',38],['绿化市容局',16]],
-    issues:[['物业服务',295],['小区管理',275],['群租',195],['违章搭建',165],['房屋维修',148]]
-  },
-  '2025-03': { total:2157, comm:521, streets:14, yoy:-11.0,
-    streets:[['长桥',278],['漕河泾',252],['枫林路',238],['凌云路',218],['康健新村',200]],
-    comms:[['中海瀛台',46],['悦汇长庭',45],['尚海湾二期',35],['华悦家园',32],['东湾小区',30],['长汇景苑',28],['中海馨园',27],['鑫桂苑·侨高中心',26],['田林十二村',24],['徐家汇花园',23]],
-    cats:[['住房保障',1550],['城管执法',398],['其他',128],['公安（消防）局',58],['绿化市容局',23]],
-    issues:[['物业服务',448],['小区管理',422],['群租',292],['违章搭建',248],['房屋维修',225]]
-  },
-  '2025-04': { total:2094, comm:557, streets:14, yoy:-14.0,
-    streets:[['长桥',268],['漕河泾',245],['枫林路',232],['凌云路',212],['徐家汇',196]],
-    comms:[['悦汇长庭',62],['中海瀛台',42],['尚海湾二期',35],['华悦家园',32],['东湾小区',30],['长汇景苑',28],['中海馨园',26],['鑫桂苑·侨高中心',25],['田林十二村',23],['徐家汇花园',22]],
-    cats:[['住房保障',1510],['城管执法',385],['其他',125],['公安（消防）局',55],['绿化市容局',19]],
-    issues:[['物业服务',435],['小区管理',410],['群租',285],['违章搭建',240],['房屋维修',218]]
-  },
-  '2025-05': { total:1994, comm:550, streets:14, yoy:-18.3,
-    streets:[['长桥',255],['漕河泾',232],['枫林路',222],['凌云路',202],['康健新村',185]],
-    comms:[['长汇景苑',40],['悦汇长庭',38],['中海瀛台',35],['尚海湾二期',32],['华悦家园',30],['东湾小区',28],['中海馨园',26],['鑫桂苑·侨高中心',25],['田林十二村',23],['徐家汇花园',22]],
-    cats:[['住房保障',1435],['城管执法',368],['其他',118],['公安（消防）局',52],['绿化市容局',21]],
-    issues:[['物业服务',415],['小区管理',390],['群租',270],['违章搭建',228],['房屋维修',208]]
-  },
-  '2025-06': { total:2075, comm:532, streets:14, yoy:-18.0,
-    streets:[['长桥',268],['漕河泾',242],['枫林路',230],['凌云路',210],['康健新村',192]],
-    comms:[['鑫桂苑·侨高中心',37],['悦汇长庭',35],['中海瀛台',32],['尚海湾二期',30],['华悦家园',28],['长汇景苑',26],['东湾小区',25],['中海馨园',24],['田林十二村',22],['徐家汇花园',21]],
-    cats:[['住房保障',1495],['城管执法',380],['其他',125],['公安（消防）局',55],['绿化市容局',20]],
-    issues:[['物业服务',432],['小区管理',405],['群租',282],['违章搭建',238],['房屋维修',218]]
-  },
-  '2025-07': { total:2102, comm:534, streets:14, yoy:-21.7,
-    streets:[['长桥',272],['漕河泾',245],['枫林路',232],['凌云路',215],['康健新村',195]],
-    comms:[['东湾小区',33],['悦汇长庭',32],['中海瀛台',30],['尚海湾二期',28],['华悦家园',27],['长汇景苑',26],['鑫桂苑·侨高中心',25],['中海馨园',24],['田林十二村',22],['徐家汇花园',21]],
-    cats:[['住房保障',1515],['城管执法',385],['其他',128],['公安（消防）局',55],['绿化市容局',19]],
-    issues:[['物业服务',438],['小区管理',412],['群租',286],['违章搭建',242],['房屋维修',222]]
-  },
-  '2025-08': { total:2180, comm:555, streets:14, yoy:-11.9,
-    streets:[['长桥',282],['漕河泾',255],['枫林路',242],['凌云路',222],['康健新村',202]],
-    comms:[['东湾小区',39],['悦汇长庭',35],['中海瀛台',32],['尚海湾二期',30],['华悦家园',28],['长汇景苑',27],['鑫桂苑·侨高中心',26],['中海馨园',24],['田林十二村',22],['徐家汇花园',21]],
-    cats:[['住房保障',1570],['城管执法',398],['其他',132],['公安（消防）局',58],['绿化市容局',22]],
-    issues:[['物业服务',452],['小区教育',425],['群租',296],['违章搭建',250],['房屋维修',230]]
-  },
-  '2025-09': { total:2176, comm:555, streets:14, yoy:-29.1,
-    streets:[['长桥',280],['漕河泾',255],['枫林路',240],['凌云路',222],['康健新村',200]],
-    comms:[['东湾小区',49],['悦汇长庭',38],['中海瀛台',35],['尚海湾二期',32],['华悦家园',30],['长汇景苑',28],['鑫桂苑·侨高中心',26],['中海馨园',25],['田林十二村',23],['徐家汇花园',22]],
-    cats:[['住房保障',1565],['城管执法',395],['其他',132],['公安（消防）局',58],['绿化市容局',26]],
-    issues:[['物业服务',450],['小区管理',425],['群租',295],['违章搭建',248],['房屋维修',228]]
-  },
-  '2025-10': { total:1855, comm:508, streets:14, yoy:-26.7,
-    streets:[['长桥',238],['漕河泾',218],['枫林路',205],['凌云路',188],['康健新村',172]],
-    comms:[['玖珑庭',40],['悦汇长庭',35],['中海瀛台',32],['尚海湾二期',30],['华悦家园',28],['东湾小区',26],['长汇景苑',25],['鑫桂苑·侨高中心',24],['中海馨园',22],['田林十二村',21]],
-    cats:[['住房保障',1340],['城管执法',335],['其他',112],['公安（消防）局',50],['绿化市容局',18]],
-    issues:[['物业服务',385],['小区管理',362],['群租',252],['违章搭建',212],['房屋维修',195]]
-  },
-  '2025-11': { total:1975, comm:512, streets:14, yoy:-32.5,
-    streets:[['长桥',255],['漕河泾',230],['枫林路',218],['凌云路',200],['康健新村',182]],
-    comms:[['华悦家园',32],['悦汇长庭',30],['中海瀛台',28],['尚海湾二期',26],['东湾小区',25],['长汇景苑',24],['玖珑庭',23],['鑫桂苑·侨高中心',22],['中海馨园',21],['田林十二村',20]],
-    cats:[['住房保障',1425],['城管执法',358],['其他',120],['公安（消防）局',52],['绿化市容局',20]],
-    issues:[['物业服务',410],['小区管理',385],['群租',268],['违章搭建',225],['房屋维修',208]]
-  },
-  '2025-12': { total:1814, comm:548, streets:13, yoy:-28.5,
-    streets:[['长桥',232],['漕河泾',212],['枫林路',200],['凌云路',185],['康健新村',168]],
-    comms:[['日晖六村',32],['悦汇长庭',30],['中海瀛台',28],['尚海湾二期',26],['华悦家园',25],['东湾小区',24],['长汇景苑',23],['鑫桂苑·侨高中心',22],['玖珑庭',21],['中海馨园',20]],
-    cats:[['住房保障',1310],['城管执法',328],['其他',112],['公安（消防）局',48],['绿化市容局',16]],
-    issues:[['物业服务',378],['小区管理',355],['群租',248],['违章搭建',208],['房屋维修',190]]
-  },
-  '2026-01': { total:1485, comm:482, streets:14, yoy:-16.4,
-    streets:[['长桥',192],['漕河泾',172],['枫林路',165],['凌云路',150],['康健新村',138]],
-    comms:[['龙山新村',18],['悦汇长庭',25],['中海瀛台',24],['尚海湾二期',22],['华悦家园',21],['东湾小区',20],['长汇景苑',19],['鑫桂苑·侨高中心',18],['玖珑庭',17],['中海馨园',16]],
-    cats:[['住房保障',1075],['城管执法',268],['其他',92],['公安（消防）局',38],['绿化市容局',12]],
-    issues:[['物业服务',310],['小区管理',290],['群租',200],['违章搭建',168],['房屋维修',152]]
-  },
-  '2026-02': { total:888, comm:373, streets:13, yoy:-37.4,
-    streets:[['漕河泾',108],['长桥',105],['枫林路',98],['凌云路',88],['徐家汇',82]],
-    comms:[['盛大花园',28],['悦汇长庭',18],['中海瀛台',16],['尚海湾二期',15],['华悦家园',14],['东湾小区',13],['长汇景苑',12],['鑫桂苑·侨高中心',12],['玖珑庭',11],['中海馨园',10]],
-    cats:[['住房保障',642],['城管执法',158],['其他',55],['公安（消防）局',22],['绿化市容局',11]],
-    issues:[['物业服务',185],['小区管理',172],['群租',120],['违章搭建',100],['房屋维修',92]]
-  },
-  '2026-03': { total:1682, comm:507, streets:13, yoy:-22.0,
-    streets:[['长桥',218],['漕河泾',198],['枫林路',185],['凌云路',170],['康健新村',155]],
-    comms:[['家乐苑',31],['悦汇长庭',28],['中海瀛台',26],['尚海湾二期',24],['华悦家园',23],['东湾小区',22],['长汇景苑',21],['鑫桂苑·侨高中心',20],['玖珑庭',19],['中海馨园',18]],
-    cats:[['住房保障',1215],['城管执法',305],['其他',102],['公安（消防）局',42],['绿化市容局',18]],
-    issues:[['物业服务',350],['小区管理',328],['群租',225],['违章搭建',190],['房屋维修',172]]
-  },
-  '2026-04': { total:1704, comm:518, streets:13, yoy:-18.6,
-    streets:[['长桥',222],['漕河泾',200],['枫林路',188],['凌云路',172],['徐家汇',160]],
-    comms:[['尚海湾二期',32],['悦汇长庭',28],['中海瀛台',26],['华悦家园',24],['东湾小区',23],['家乐苑',22],['长汇景苑',21],['鑫桂苑·侨高中心',20],['玖珑庭',19],['中海馨园',18]],
-    cats:[['住房保障',1230],['城管执法',310],['其他',105],['公安（消防）局',42],['绿化市容局',17]],
-    issues:[['物业服务',355],['小区管理',332],['群租',230],['违章搭建',195],['房屋维修',175]]
-  },
-  '2026-05': { total:1772, comm:506, streets:13, yoy:-11.1,
-    streets:[['长桥',232],['漕河泾',208],['枫林路',195],['凌云路',180],['康健新村',165]],
-    comms:[['凌云新村',25],['悦汇长庭',28],['中海瀛台',26],['尚海湾二期',24],['华悦家园',23],['东湾小区',22],['家乐苑',21],['长汇景苑',20],['鑫桂苑·侨高中心',19],['玖珑庭',18]],
-    cats:[['住房保障',1280],['城管执法',322],['其他',108],['公安（消防）局',45],['绿化市容局',17]],
-    issues:[['物业服务',368],['小区管理',345],['群租',240],['违章搭建',202],['房屋维修',182]]
-  },
-  '2026-06': { total:1856, comm:503, streets:13, yoy:-10.6,
-    streets:[['长桥',245],['漕河泾',218],['枫林路',205],['凌云路',188],['康健新村',172]],
-    comms:[['华欣家园',22],['悦汇长庭',28],['中海瀛台',26],['尚海湾二期',24],['华悦家园',23],['东湾小区',22],['凌云新村',21],['家乐苑',20],['长汇景苑',19],['鑫桂苑·侨高中心',18]],
-    cats:[['住房保障',1340],['城管执法',338],['其他',115],['公安（消防）局',46],['绿化市容局',17]],
-    issues:[['物业服务',385],['小区管理',360],['群租',252],['违章搭建',212],['房屋维修',192]]
-  },
-  '2026-07': { total:2097, comm:550, streets:13, yoy:-0.2,
-    streets:[['长桥',275],['漕河泾',245],['枫林路',232],['凌云路',212],['康健新村',195]],
-    comms:[['俞一小区',32],['悦汇长庭',30],['中海瀛台',28],['尚海湾二期',26],['华悦家园',25],['东湾小区',24],['华欣家园',23],['凌云新村',22],['家乐苑',21],['长汇景苑',20]],
-    cats:[['住房保障',1512],['城管执法',382],['其他',128],['公安（消防）局',52],['绿化市容局',23]],
-    issues:[['物业服务',435],['小区管理',408],['群租',285],['违章搭建',240],['房屋维修',218]]
-  },
-  '2026-08': { total:2242, comm:576, streets:13, yoy:2.8,
+  '2024-01': { total:2074, comm:497, nstreet:13, yoy:null, mom:null,
+    streets:[['长桥',307],['凌云路',222],['枫林路',200],['徐家汇',192],['天平路',180]],
+    comms:[['中海瀛台',61,'长桥'],['日晖六村',35,'斜土路'],['茶花园',26,'康健新村'],['梅陇三村',25,'凌云路'],['天钥新村',22,'枫林路'],['罗秀三村',19,'长桥'],['江南新村',18,'斜土路'],['玉兰花苑',18,'徐家汇'],['田林十二村',18,'田林'],['南丹小区',16,'徐家汇']],
+    cats:[['住房保障',1542],['城管执法',342],['其他',97],['公安（消防）局',37],['生态环境局',24]],
+    issues:[['停车管理',341],['物业维修保养',327],['业委会和业主大会',207],['不文明行为',204],['旧住房改造',147]] },
+  '2024-02': { total:1340, comm:412, nstreet:13, yoy:null, mom:-35.4,
+    streets:[['长桥',235],['徐家汇',125],['凌云路',118],['天平路',115],['枫林路',110]],
+    comms:[['中海瀛台',74,'长桥'],['日晖六村',20,'斜土路'],['凌云新村',19,'凌云路'],['康乐小区',15,'康健新村'],['滨江小区',14,'龙华'],['馨宁公寓',14,'华泾镇'],['茶花园',12,'康健新村'],['长桥四村',12,'长桥'],['东湾小区',11,'华泾镇'],['亚都国际名园',11,'徐家汇']],
+    cats:[['住房保障',894],['城管执法',315],['公安（消防）局',74],['其他',37],['生态环境局',10]],
+    issues:[['物业维修保养',226],['停车管理',211],['占用物业共用部分',180],['业委会和业主大会',126],['不文明行为',95]] },
+  '2024-03': { total:2424, comm:524, nstreet:13, yoy:null, mom:80.9,
+    streets:[['长桥',265],['徐家汇',258],['枫林路',236],['天平路',235],['田林',210]],
+    comms:[['中海瀛台',45,'长桥'],['汇翠花园',29,'徐家汇'],['凌云新村',27,'凌云路'],['田林三街坊',24,'田林'],['名人花苑',23,'华泾镇'],['西木小区',23,'枫林路'],['谨斜小区',23,'枫林路'],['宛龙小区',22,'枫林路'],['茶花园',22,'康健新村'],['日晖六村',21,'斜土路']],
+    cats:[['住房保障',1666],['城管执法',520],['公安（消防）局',106],['其他',96],['生态环境局',19]],
+    issues:[['停车管理',395],['物业维修保养',384],['业委会和业主大会',207],['不文明行为',190],['占用物业共用部分',165]] },
+  '2024-04': { total:2435, comm:565, nstreet:13, yoy:null, mom:0.5,
+    streets:[['凌云路',266],['长桥',263],['漕河泾',230],['天平路',218],['康健新村',210]],
+    comms:[['中海瀛台',49,'长桥'],['华悦家园',30,'虹梅路'],['西木小区',28,'枫林路'],['田林三街坊',27,'田林'],['华欣家园',26,'华泾镇'],['日晖六村',26,'斜土路'],['龙南五村',26,'龙华'],['书香逸居',24,'长桥'],['安亭直管公房',24,'天平路'],['松风花园',24,'凌云路']],
+    cats:[['住房保障',1650],['城管执法',528],['公安（消防）局',111],['其他',88],['绿化市容局',28]],
+    issues:[['停车管理',404],['物业维修保养',321],['业委会和业主大会',204],['房屋违法租赁（群租）',193],['不文明行为',182]] },
+  '2024-05': { total:2441, comm:552, nstreet:13, yoy:null, mom:0.2,
+    streets:[['长桥',316],['凌云路',254],['天平路',227],['徐家汇',222],['漕河泾',189]],
+    comms:[['中海瀛台',91,'长桥'],['梅陇十一村（A块）',50,'凌云路'],['华悦家园',41,'虹梅路'],['家乐苑',31,'凌云路'],['日晖六村',30,'斜土路'],['安福直管公房',27,'湖南路'],['宛龙小区',27,'枫林路'],['长桥四村',20,'长桥'],['华欣家园',19,'华泾镇'],['爱建园',19,'田林']],
+    cats:[['住房保障',1706],['城管执法',527],['其他',104],['公安（消防）局',57],['绿化市容局',27]],
+    issues:[['停车管理',377],['物业维修保养',279],['业委会和业主大会',238],['不文明行为',234],['旧住房改造',165]] },
+  '2024-06': { total:2532, comm:589, nstreet:13, yoy:null, mom:3.7,
+    streets:[['长桥',274],['天平路',249],['漕河泾',248],['徐家汇',236],['凌云路',221]],
+    comms:[['尚海湾二期',47,'斜土路'],['中海瀛台',38,'长桥'],['华悦家园',34,'虹梅路'],['石龙路33弄',33,'漕河泾'],['华泾绿苑',23,'华泾镇'],['梅陇三村',23,'凌云路'],['安福直管公房',22,'湖南路'],['日晖六村',21,'斜土路'],['田林三街坊',21,'田林'],['绿邑翠苑',21,'漕河泾']],
+    cats:[['住房保障',1867],['城管执法',447],['其他',127],['公安（消防）局',43],['绿化市容局',30]],
+    issues:[['停车管理',413],['物业维修保养',410],['业委会和业主大会',233],['不文明行为',220],['旧住房改造',173]] },
+  '2024-07': { total:2683, comm:619, nstreet:13, yoy:null, mom:6,
+    streets:[['长桥',273],['凌云路',246],['漕河泾',245],['枫林路',244],['天平路',234]],
+    comms:[['梅陇三村',43,'凌云路'],['徐汇新城',33,'长桥'],['凌云新村',32,'凌云路'],['华龙新苑',30,'龙华'],['田林三街坊',30,'田林'],['百汇园',26,'龙华'],['华悦家园',23,'虹梅路'],['安福直管公房',22,'湖南路'],['西木小区',22,'枫林路'],['太原直管公房',21,'天平路']],
+    cats:[['住房保障',2009],['城管执法',424],['其他',154],['公安（消防）局',54],['绿化市容局',18]],
+    issues:[['物业维修保养',443],['停车管理',430],['不文明行为',254],['业委会和业主大会',242],['旧住房改造',206]] },
+  '2024-08': { total:2474, comm:582, nstreet:13, yoy:null, mom:-7.8,
+    streets:[['天平路',274],['长桥',269],['枫林路',265],['康健新村',217],['漕河泾',211]],
+    comms:[['杜鹃园',83,'康健新村'],['中海瀛台',58,'长桥'],['田林三街坊',33,'田林'],['梅陇十一村（A块）',30,'凌云路'],['华欣家园',27,'华泾镇'],['滨江小区',27,'龙华'],['盛华景苑',27,'华泾镇'],['安亭直管公房',26,'天平路'],['三江小区',23,'漕河泾'],['华龙新苑',21,'龙华']],
+    cats:[['住房保障',1906],['城管执法',346],['其他',156],['公安（消防）局',36],['生态环境局',18]],
+    issues:[['停车管理',466],['物业维修保养',388],['不文明行为',233],['业委会和业主大会',223],['旧住房改造',203]] },
+  '2024-09': { total:3070, comm:638, nstreet:13, yoy:null, mom:24.1,
+    streets:[['长桥',341],['漕河泾',289],['枫林路',276],['田林',256],['华泾镇',246]],
+    comms:[['中海瀛台',57,'长桥'],['金色港湾公寓',48,'斜土路'],['鑫桂苑·侨高中心',45,'虹梅路'],['杜鹃园',34,'康健新村'],['上海望族城',33,'漕河泾'],['西木小区',33,'枫林路'],['华泾绿苑',32,'华泾镇'],['盛华景苑',32,'华泾镇'],['江南裕德',31,'徐家汇'],['田林三街坊',31,'田林']],
+    cats:[['住房保障',2357],['城管执法',432],['其他',212],['公安（消防）局',40],['绿化市容局',17]],
+    issues:[['物业维修保养',645],['停车管理',448],['不文明行为',270],['业委会和业主大会',270],['旧住房改造',233]] },
+  '2024-10': { total:2532, comm:578, nstreet:13, yoy:null, mom:-17.5,
+    streets:[['长桥',315],['枫林路',251],['斜土路',241],['凌云路',235],['漕河泾',228]],
+    comms:[['中海瀛台',80,'长桥'],['金色港湾公寓',48,'斜土路'],['东安四村',26,'枫林路'],['大木小区',26,'斜土路'],['茶花园',26,'康健新村'],['尚海湾二期',24,'斜土路'],['日晖六村',23,'斜土路'],['松风花园',22,'凌云路'],['龙南五村',22,'龙华'],['华欣家园',21,'华泾镇']],
+    cats:[['住房保障',1874],['城管执法',425],['其他',137],['公安（消防）局',46],['绿化市容局',29]],
+    issues:[['物业维修保养',406],['停车管理',380],['业委会和业主大会',267],['不文明行为',211],['旧住房改造',161]] },
+  '2024-11': { total:2926, comm:593, nstreet:13, yoy:null, mom:15.6,
+    streets:[['斜土路',428],['长桥',332],['枫林路',319],['徐家汇',243],['天平路',238]],
+    comms:[['尚海湾二期',194,'斜土路'],['中海瀛台',70,'长桥'],['东安二村',44,'枫林路'],['江南裕德',39,'徐家汇'],['金色港湾公寓',35,'斜土路'],['馨宁公寓',32,'华泾镇'],['田林三街坊',28,'田林'],['宝能华庭',27,'龙华'],['余庆直管公房',25,'天平路'],['龙山新村',25,'枫林路']],
+    cats:[['住房保障',2265],['城管执法',437],['其他',129],['公安（消防）局',47],['绿化市容局',24]],
+    issues:[['物业维修保养',486],['停车管理',430],['业委会和业主大会',426],['不文明行为',262],['物业安保',201]] },
+  '2024-12': { total:2537, comm:568, nstreet:13, yoy:null, mom:-13.3,
+    streets:[['长桥',325],['枫林路',249],['徐家汇',243],['漕河泾',225],['凌云路',215]],
+    comms:[['中海瀛台',52,'长桥'],['日晖六村',46,'斜土路'],['鑫桂苑·侨高中心',37,'虹梅路'],['阳光绿园',33,'凌云路'],['长汇景苑',32,'长桥'],['石龙路33弄',31,'漕河泾'],['印象欧洲（滨江108）',28,'华泾镇'],['馨宁公寓',27,'华泾镇'],['西木小区',26,'枫林路'],['华欣家园',23,'华泾镇']],
+    cats:[['住房保障',1925],['城管执法',391],['其他',133],['公安（消防）局',55],['绿化市容局',17]],
+    issues:[['停车管理',411],['物业维修保养',373],['业委会和业主大会',314],['不文明行为',226],['旧住房改造',152]] },
+  '2025-01': { total:1777, comm:501, nstreet:13, yoy:-14.3, mom:null,
+    streets:[['长桥',285],['枫林路',167],['漕河泾',139],['徐家汇',137],['龙华',132]],
+    comms:[['中海瀛台',57,'长桥'],['鑫桂苑·侨高中心',42,'虹梅路'],['龙南七村',24,'龙华'],['宛龙小区',22,'枫林路'],['田林三街坊',20,'田林'],['西木小区',19,'枫林路'],['馨宁公寓',19,'华泾镇'],['凌云新村',18,'凌云路'],['华滨家园',18,'长桥'],['日晖六村',16,'斜土路']],
+    cats:[['住房保障',1306],['城管执法',290],['其他',122],['公安（消防）局',33],['生态环境局',15]],
+    issues:[['停车管理',301],['物业维修保养',251],['不文明行为',193],['业委会和业主大会',182],['其他（其他）',115]] },
+  '2025-02': { total:1419, comm:454, nstreet:13, yoy:5.9, mom:-20.1,
+    streets:[['长桥',191],['枫林路',151],['徐家汇',134],['田林',118],['漕河泾',114]],
+    comms:[['中海瀛台',35,'长桥'],['江南裕德',21,'徐家汇'],['东方巴黎霞飞苑',19,'湖南路'],['宛龙小区',19,'枫林路'],['馨宁公寓',18,'华泾镇'],['华欣家园',17,'华泾镇'],['日晖六村',17,'斜土路'],['华滨家园',16,'长桥'],['罗秀新二村',16,'长桥'],['余庆直管公房',15,'天平路']],
+    cats:[['住房保障',1086],['城管执法',215],['其他',63],['公安（消防）局',36],['生态环境局',11]],
+    issues:[['停车管理',251],['物业维修保养',240],['不文明行为',181],['业委会和业主大会',138],['房屋违法租赁（群租）',94]] },
+  '2025-03': { total:2157, comm:521, nstreet:13, yoy:-11, mom:52,
+    streets:[['长桥',263],['枫林路',215],['凌云路',199],['徐家汇',196],['斜土路',195]],
+    comms:[['中海瀛台',46,'长桥'],['馨宁公寓',38,'华泾镇'],['日晖六村',37,'斜土路'],['梅陇十一村（A块）',35,'凌云路'],['长桥四村',32,'长桥'],['汇翠花园',27,'徐家汇'],['东湾小区',25,'华泾镇'],['日晖二村',25,'斜土路'],['凌云新村',23,'凌云路'],['西木小区',22,'枫林路']],
+    cats:[['住房保障',1588],['城管执法',395],['其他',106],['公安（消防）局',41],['绿化市容局',17]],
+    issues:[['停车管理',375],['物业维修保养',315],['不文明行为',233],['业委会和业主大会',217],['房屋违法租赁（群租）',150]] },
+  '2025-04': { total:2094, comm:557, nstreet:13, yoy:-14, mom:-2.9,
+    streets:[['长桥',333],['枫林路',205],['徐家汇',197],['漕河泾',187],['湖南路',157]],
+    comms:[['悦汇长庭',62,'长桥'],['中海瀛台',45,'长桥'],['三江小区',30,'漕河泾'],['日晖六村',28,'斜土路'],['长汇景苑',25,'长桥'],['华泾绿苑',24,'华泾镇'],['华悦家园',21,'虹梅路'],['宛龙小区',20,'枫林路'],['茶花园',20,'康健新村'],['馨宁公寓',20,'华泾镇']],
+    cats:[['住房保障',1452],['城管执法',462],['其他',112],['公安（消防）局',37],['绿化市容局',16]],
+    issues:[['停车管理',285],['物业维修保养',251],['不文明行为',236],['业委会和业主大会',214],['物业安保',134]] },
+  '2025-05': { total:1994, comm:550, nstreet:13, yoy:-18.3, mom:-4.8,
+    streets:[['长桥',299],['徐家汇',197],['漕河泾',172],['天平路',167],['枫林路',164]],
+    comms:[['长汇景苑',40,'长桥'],['中海瀛台',29,'长桥'],['余庆直管公房',29,'天平路'],['日晖六村',23,'斜土路'],['罗秀新二村',20,'长桥'],['大木小区',18,'斜土路'],['百汇园小区',18,'龙华'],['馨宁公寓',17,'华泾镇'],['紫阳花苑',16,'华泾镇'],['东湾小区',15,'华泾镇']],
+    cats:[['住房保障',1450],['城管执法',391],['其他',90],['公安（消防）局',38],['绿化市容局',17]],
+    issues:[['停车管理',322],['物业维修保养',286],['不文明行为',212],['业委会和业主大会',172],['房屋违法租赁（群租）',125]] },
+  '2025-06': { total:2075, comm:532, nstreet:13, yoy:-18, mom:4.1,
+    streets:[['长桥',241],['斜土路',195],['天平路',185],['徐家汇',178],['枫林路',163]],
+    comms:[['鑫桂苑·侨高中心',37,'虹梅路'],['漓江山水花园',36,'华泾镇'],['日晖六村',27,'斜土路'],['华悦家园',26,'虹梅路'],['罗秀新二村',23,'长桥'],['天钥新村',21,'枫林路'],['长汇景苑',20,'长桥'],['紫阳花苑',19,'华泾镇'],['斜土小区',18,'斜土路'],['凌云新村',17,'凌云路']],
+    cats:[['住房保障',1544],['城管执法',388],['其他',83],['公安（消防）局',31],['生态环境局',14]],
+    issues:[['物业维修保养',370],['停车管理',299],['不文明行为',241],['业委会和业主大会',207],['房屋违法租赁（群租）',141]] },
+  '2025-07': { total:2102, comm:534, nstreet:13, yoy:-21.7, mom:1.3,
+    streets:[['长桥',242],['天平路',214],['斜土路',205],['枫林路',194],['徐家汇',191]],
+    comms:[['东湾小区',33,'华泾镇'],['名人花苑',32,'华泾镇'],['悦汇长庭',31,'长桥'],['日晖六村',30,'斜土路'],['滨江小区',27,'龙华'],['大木小区',23,'斜土路'],['罗秀新二村',22,'长桥'],['华悦家园',21,'虹梅路'],['金牛苑',21,'漕河泾'],['宛南六村',18,'枫林路']],
+    cats:[['住房保障',1602],['城管执法',365],['其他',75],['公安（消防）局',28],['绿化市容局',16]],
+    issues:[['物业维修保养',400],['停车管理',344],['不文明行为',242],['业委会和业主大会',209],['房屋违法租赁（群租）',123]] },
+  '2025-08': { total:2180, comm:555, nstreet:13, yoy:-11.9, mom:3.7,
+    streets:[['长桥',281],['枫林路',239],['徐家汇',228],['斜土路',200],['天平路',183]],
+    comms:[['东湾小区',39,'华泾镇'],['日晖六村',38,'斜土路'],['罗秀新二村',34,'长桥'],['汇宁花园',30,'徐家汇'],['龙山新村',28,'枫林路'],['宛龙小区',26,'枫林路'],['大木小区',25,'斜土路'],['梅陇五村(多层)',23,'凌云路'],['天钥新村',21,'枫林路'],['华沁家园',19,'长桥']],
+    cats:[['住房保障',1638],['城管执法',388],['其他',96],['公安（消防）局',28],['生态环境局',15]],
+    issues:[['停车管理',360],['物业维修保养',359],['不文明行为',270],['业委会和业主大会',185],['房屋违法租赁（群租）',121]] },
+  '2025-09': { total:2176, comm:555, nstreet:13, yoy:-29.1, mom:-0.2,
+    streets:[['枫林路',226],['徐家汇',224],['斜土路',204],['华泾镇',191],['长桥',190]],
+    comms:[['东湾小区',49,'华泾镇'],['尚海湾二期',44,'斜土路'],['华欣家园',22,'华泾镇'],['尚海湾一期',22,'斜土路'],['龙山新村',22,'枫林路'],['罗秀新二村',20,'长桥'],['宛龙小区',19,'枫林路'],['雍汇名邸',19,'华泾镇'],['爱建园',18,'田林'],['化工一、四村',17,'凌云路']],
+    cats:[['住房保障',1618],['城管执法',387],['其他',106],['公安（消防）局',47],['生态环境局',8]],
+    issues:[['停车管理',365],['物业维修保养',304],['不文明行为',242],['业委会和业主大会',234],['房屋违法租赁（群租）',131]] },
+  '2025-10': { total:1855, comm:508, nstreet:13, yoy:-26.7, mom:-14.8,
+    streets:[['漕河泾',212],['枫林路',209],['徐家汇',187],['长桥',161],['天平路',151]],
+    comms:[['玖珑庭',40,'漕河泾'],['珺汇名邸',32,'龙华'],['龙华花园',25,'漕河泾'],['光华绿苑',24,'华泾镇'],['日晖六村',23,'斜土路'],['天钥新村',20,'枫林路'],['东安四村',19,'枫林路'],['龙山新村',19,'枫林路'],['东湾小区',18,'华泾镇'],['华欣家园',18,'华泾镇']],
+    cats:[['住房保障',1343],['城管执法',373],['其他',93],['公安（消防）局',35],['绿化市容局',9]],
+    issues:[['停车管理',287],['物业维修保养',232],['不文明行为',216],['业委会和业主大会',189],['房屋违法租赁（群租）',128]] },
+  '2025-11': { total:1975, comm:512, nstreet:13, yoy:-32.5, mom:6.5,
+    streets:[['徐家汇',229],['枫林路',226],['长桥',225],['漕河泾',190],['天平路',155]],
+    comms:[['华悦家园',32,'虹梅路'],['东安四村',30,'枫林路'],['东湾小区',25,'华泾镇'],['日晖六村',25,'斜土路'],['罗秀新二村',25,'长桥'],['华滨家园',24,'长桥'],['永新城',22,'徐家汇'],['医高小区',21,'枫林路'],['龙山新村',21,'枫林路'],['寿祥坊',20,'康健新村']],
+    cats:[['住房保障',1447],['城管执法',356],['其他',102],['公安（消防）局',51],['绿化市容局',11]],
+    issues:[['停车管理',324],['不文明行为',241],['物业维修保养',238],['业委会和业主大会',177],['物业安保',146]] },
+  '2025-12': { total:1814, comm:548, nstreet:13, yoy:-28.5, mom:-8.2,
+    streets:[['徐家汇',226],['长桥',204],['枫林路',177],['斜土路',175],['漕河泾',150]],
+    comms:[['日晖六村',32,'斜土路'],['罗秀新二村',22,'长桥'],['虹桥大仕馆',22,'田林'],['斜土小区',20,'斜土路'],['华悦家园',19,'虹梅路'],['东安四村',18,'枫林路'],['鑫桂苑·侨高中心',17,'虹梅路'],['东湾小区',14,'华泾镇'],['宛龙小区',14,'枫林路'],['珺汇名邸',14,'龙华']],
+    cats:[['住房保障',1335],['城管执法',299],['其他',107],['公安（消防）局',55],['生态环境局',10]],
+    issues:[['停车管理',272],['不文明行为',255],['物业维修保养',225],['业委会和业主大会',160],['物业安保',120]] },
+  '2026-01': { total:1485, comm:482, nstreet:13, yoy:-16.4, mom:null,
+    streets:[['长桥',179],['枫林路',154],['漕河泾',142],['徐家汇',141],['田林',132]],
+    comms:[['日晖六村',18,'斜土路'],['龙山新村',18,'枫林路'],['周家湾',17,'龙华'],['宛龙小区',17,'枫林路'],['罗秀新二村',17,'长桥'],['紫阳花苑',15,'华泾镇'],['华泾绿苑',14,'华泾镇'],['滨江小区',14,'龙华'],['田林三四村',14,'田林'],['东湾小区',13,'华泾镇']],
+    cats:[['住房保障',1145],['城管执法',228],['其他',60],['公安（消防）局',28],['生态环境局',13]],
+    issues:[['不文明行为',227],['停车管理',227],['物业维修保养',224],['业委会和业主大会',148],['物业安保',97]] },
+  '2026-02': { total:888, comm:373, nstreet:13, yoy:-37.4, mom:-40.2,
+    streets:[['田林',109],['长桥',109],['龙华',97],['徐家汇',78],['天平路',72]],
+    comms:[['盛大花园',28,'龙华'],['上海新村直管公房',10,'天平路'],['华沁家园',9,'长桥'],['吴东小区',9,'田林'],['日晖六村',9,'斜土路'],['馨宁公寓',9,'华泾镇'],['凌云新村',8,'凌云路'],['华泾绿苑',8,'华泾镇'],['南丹小区',8,'徐家汇'],['汇成五村',8,'长桥']],
+    cats:[['住房保障',679],['城管执法',136],['其他',39],['公安（消防）局',23],['生态环境局',8]],
+    issues:[['物业维修保养',138],['不文明行为',136],['停车管理',117],['业委会和业主大会',83],['物业安保',53]] },
+  '2026-03': { total:1682, comm:507, nstreet:13, yoy:-22, mom:89.4,
+    streets:[['徐家汇',195],['长桥',185],['田林',147],['斜土路',136],['天平路',135]],
+    comms:[['家乐苑',31,'凌云路'],['罗秀新二村',26,'长桥'],['华悦家园',25,'虹梅路'],['华泾绿苑',20,'华泾镇'],['吴东小区',20,'田林'],['御江瑞庭、徐汇复星中心',20,'斜土路'],['创世纪花园',18,'徐家汇'],['日晖六村',18,'斜土路'],['梅陇五村(多层)',15,'凌云路'],['紫阳花苑',14,'华泾镇']],
+    cats:[['住房保障',1252],['城管执法',307],['其他',73],['公安（消防）局',38],['生态环境局',11]],
+    issues:[['停车管理',274],['不文明行为',246],['物业维修保养',231],['房屋违法租赁（群租）',135],['业委会和业主大会',131]] },
+  '2026-04': { total:1704, comm:518, nstreet:13, yoy:-18.6, mom:1.3,
+    streets:[['徐家汇',197],['漕河泾',184],['田林',171],['斜土路',160],['天平路',153]],
+    comms:[['尚海湾二期',32,'斜土路'],['华滨家园',16,'长桥'],['吴东小区',16,'田林'],['日晖六村',16,'斜土路'],['紫阳花苑',16,'华泾镇'],['陕西直管公房',16,'天平路'],['华欣家园',15,'华泾镇'],['东安四村',14,'枫林路'],['冶金小区',14,'田林'],['凌云新村',14,'凌云路']],
+    cats:[['住房保障',1240],['城管执法',315],['其他',103],['公安（消防）局',28],['生态环境局',8]],
+    issues:[['物业维修保养',231],['不文明行为',222],['停车管理',217],['业委会和业主大会',167],['房屋违法租赁（群租）',116]] },
+  '2026-05': { total:1772, comm:506, nstreet:13, yoy:-11.1, mom:4,
+    streets:[['长桥',195],['漕河泾',169],['田林',160],['枫林路',157],['徐家汇',150]],
+    comms:[['凌云新村',25,'凌云路'],['华悦家园',20,'虹梅路'],['安福直管公房',20,'湖南路'],['延庆直管公房',18,'湖南路'],['华沁家园',17,'长桥'],['罗秀新二村',16,'长桥'],['华欣家园',15,'华泾镇'],['欣嘉苑1-3期',15,'虹梅路'],['珺汇名邸',15,'龙华'],['康兴花园',14,'康健新村']],
+    cats:[['住房保障',1295],['城管执法',352],['其他',73],['公安（消防）局',33],['生态环境局',8]],
+    issues:[['不文明行为',275],['物业维修保养',260],['停车管理',235],['房屋违法租赁（群租）',136],['业委会和业主大会',124]] },
+  '2026-06': { total:1856, comm:503, nstreet:13, yoy:-10.6, mom:4.7,
+    streets:[['长桥',191],['田林',186],['徐家汇',180],['斜土路',180],['漕河泾',177]],
+    comms:[['华欣家园',22,'华泾镇'],['明丰新纪苑',22,'华泾镇'],['宝能华庭',20,'龙华'],['华悦家园',19,'虹梅路'],['海珀旭晖',19,'斜土路'],['长桥四村',19,'长桥'],['尚海湾一期',18,'斜土路'],['欣嘉苑1-3期',18,'虹梅路'],['实业公寓',17,'徐家汇'],['新湖云庭',17,'枫林路']],
+    cats:[['住房保障',1417],['城管执法',305],['其他',74],['公安（消防）局',46],['生态环境局',8]],
+    issues:[['物业维修保养',301],['停车管理',255],['不文明行为',252],['业委会和业主大会',179],['房屋违法租赁（群租）',108]] },
+  '2026-07': { total:2097, comm:550, nstreet:13, yoy:-0.2, mom:13,
+    streets:[['漕河泾',226],['长桥',214],['徐家汇',204],['斜土路',197],['枫林路',172]],
+    comms:[['俞一小区',32,'龙华'],['罗秀新二村',28,'长桥'],['海珀旭晖',24,'斜土路'],['钦州公寓',24,'田林'],['新湖云庭',20,'枫林路'],['日晖二村',20,'斜土路'],['化工一、四村',18,'凌云路'],['华悦家园',16,'虹梅路'],['嘉俊庭',16,'华泾镇'],['番禺路801弄',16,'徐家汇']],
+    cats:[['住房保障',1603],['城管执法',296],['其他',126],['公安（消防）局',44],['生态环境局',15]],
+    issues:[['物业维修保养',414],['不文明行为',309],['停车管理',263],['业委会和业主大会',182],['其他（其他）',112]] },
+  '2026-08': { total:2242, comm:576, nstreet:13, yoy:2.8, mom:6.9,
     streets:[['长桥',250],['天平路',246],['漕河泾',218],['徐家汇',192],['田林',191]],
-    comms:[['日晖六村',25],['石龙路33弄',24],['安福直管公房',24],['中海瀛台',24],['罗秀新二村',23],['龙山新村',20],['天钥新村',18],['新湖云庭',18],['虹桥大仕馆',18],['华滨家园',17]],
-    cats:[['建设交通',2242]],
-    issues:[['住房保障',1792],['城管执法',284],['其他',121],['公安（消防）局',29],['生态环境局',11]]
-  }
+    comms:[['日晖六村',25,'斜土路'],['中海瀛台',24,'长桥'],['安福直管公房',24,'湖南路'],['石龙路33弄',24,'漕河泾'],['罗秀新二村',23,'长桥'],['龙山新村',20,'枫林路'],['天钥新村',18,'枫林路'],['新湖云庭',18,'枫林路'],['虹桥大仕馆',18,'田林'],['华滨家园',17,'长桥']],
+    cats:[['住房保障',1792],['城管执法',284],['其他',121],['公安（消防）局',29],['生态环境局',11]],
+    issues:[['物业维修保养',584],['不文明行为',312],['停车管理',231],['业委会和业主大会',211],['物业安保',108]] }
 };
+<!-- MD-DATA-END -->
 
 // Year tab switching
 document.querySelectorAll('.year-tab').forEach(tab => {
@@ -1028,7 +1369,7 @@ function showDetail(month) {
   document.getElementById('detailTitle').textContent = `${y}年${parseInt(m)}月 数据分析月报`;
   document.getElementById('dsTotal').textContent = data.total.toLocaleString();
   document.getElementById('dsComm').textContent = data.comm;
-  document.getElementById('dsStreet').textContent = data.streets;
+  document.getElementById('dsStreet').textContent = data.nstreet;
 
   const yoyEl = document.getElementById('dsYoy');
   if (data.yoy !== null) {
