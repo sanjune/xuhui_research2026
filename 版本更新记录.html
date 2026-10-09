@@ -95,17 +95,46 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.3</span>
+    <span>当前版本：v2.17.4</span>
     <span>更新日期：2026-10-09</span>
-    <span>累计更新：23 次</span>
+    <span>累计更新：24 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">计数修正处</div></div>
-  <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">已核分类数</div></div>
-  <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">页面附件链接</div></div>
-  <div class="stat-box"><div class="stat-num">48</div><div class="stat-label">交付物文件总数</div></div>
+  <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">移出条目</div></div>
+  <div class="stat-box"><div class="stat-num">41</div><div class="stat-label">清单文件总数</div></div>
+  <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">交付物类别</div></div>
+  <div class="stat-box"><div class="stat-num">522</div><div class="stat-label">汇编表格总数</div></div>
+</div>
+
+<!-- ===== v2.17.4 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.4</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🧹 装帧素材移出交付物清单</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">附件 4</span>交付物清单中<b>整类移除「装帧素材」</b>（7 条：封面候选底图 3 张 + 装订印刷素材 4 张）→ 清单由 48 个文件收敛为 <b>41 个文件</b>（主交付物 1 · 电子附件 4 · 过程成果报告 34 · 历史版本 2），序号连续</li>
+        <li><span class="tag tag-fix">附录 F</span>交付成果由四类改回<b>三类</b>，删除「二、装订印刷用封面素材」小节；随附小节顺延为「一、随附电子附件」「二、过程成果报告」</li>
+        <li><span class="tag tag-fix">编制说明</span>第五条随附交付物同步去掉封面素材表述，与附录 F 口径一致（卷首声明与正文同步）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">✅ 验收</div>
+      <ul class="item-list">
+        <li><span class="tag tag-data">质量门</span>汇编 <b>522 张表</b> · 105 图 · 段落 1702 · 10.1 MB；清单压平残留 0 处；文本叶子残留 0 类 0 处；13 份报告数值缺失 0 项</li>
+        <li><span class="tag tag-data">幂等</span>汇编 <code>word/document.xml</code> 连跑两次 md5 一致</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.3 ===== -->

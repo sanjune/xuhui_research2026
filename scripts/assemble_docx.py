@@ -161,8 +161,7 @@ def add_editorial(doc):
         '（分别取评分前 100 名与各月前 10 条），全量数据以随附的 Excel 附件为准。',
         '五、随附交付物。本汇编配套 4 份 Excel 全量清单附件：附件 1 高风险小区评分全量清单、'
         '附件 2 投诉去重建议清单、附件 3 词云清单、附件 4 交付物清单；另有 34 份过程成果报告'
-        '（月度 19 份、年度 15 份）与装订印刷用封面素材（封面、书脊、封底、全封展开图）一并交付。'
-        '全部文件目录见附录 F 与附件 4。',
+        '（月度 19 份、年度 15 份）一并交付。全部文件目录见附录 F 与附件 4。',
     ]:
         add_body(doc, t)
 
@@ -335,11 +334,10 @@ def appx_d_e_f(doc):
 
     doc.add_page_break()
     doc.add_heading('附录 F　交付物与过程成果清单', level=1)
-    add_body(doc, '本项目交付成果分为四类：', indent=False)
+    add_body(doc, '本项目交付成果分为三类：', indent=False)
     add_body(doc, '① 本成果汇编（正文，17 章 + 附录 A—G）；', indent=False)
     add_body(doc, '② 随附电子附件 4 份；', indent=False)
-    add_body(doc, '③ 过程成果报告 34 份（月度 19 份、年度 15 份）；', indent=False)
-    add_body(doc, '④ 装订印刷用封面素材（4 张）。', indent=False)
+    add_body(doc, '③ 过程成果报告 34 份（月度 19 份、年度 15 份）。', indent=False)
     add_body(doc, '全部文件存放于交付物目录，以下逐项列出。'
                   '另有 2 份早期版本汇编作为历史版本留档于 _archive/ 子目录，不作为交付版本。',
              indent=False)
@@ -352,24 +350,7 @@ def appx_d_e_f(doc):
     ], columns=['编号', '文件名称', '内容说明'])
     table_from_df(doc, df, widths=[1.6, 5.6, 7.4])
 
-    doc.add_heading('二、装订印刷用封面素材（4 张）', level=2)
-    add_body(doc, '供成书装订印刷使用，源文件位于交付物目录的「装订打印封面」子目录。', indent=False)
-    bind_dir = os.path.join(OUT_DIR, '装订打印封面')
-    bind_files = sorted(f for f in os.listdir(bind_dir)
-                        if f.lower().endswith('.png') and not f.startswith('.')) \
-        if os.path.isdir(bind_dir) else []
-    if bind_files:
-        df = pd.DataFrame([['封面', '课题成果汇编-书籍封面.png', 'A4 成品封面，含课题标题与编制单位'],
-                           ['书脊', '课题成果汇编-书脊.png', '与封面同色系，竖排标题'],
-                           ['封底', '课题成果汇编-封底.png', '底图 + 层级文字排版'],
-                           ['全封展开图', '课题成果汇编-全封展开图.png',
-                            '封面 | 书脊 | 封底 三联展开，用于整体预览与印刷校对']],
-                          columns=['部位', '文件名称', '说明'])
-        table_from_df(doc, df, widths=[1.8, 5.8, 7.0])
-    else:
-        add_body(doc, '［未找到目录：装订打印封面］', indent=False)
-
-    doc.add_heading('三、过程成果报告（34 份）', level=2)
+    doc.add_heading('二、过程成果报告（34 份）', level=2)
     rep = []
     for sub, label in [('月度分析报告', '月度分析报告'), ('年度分析报告/街道', '年度分析报告 · 街镇'),
                        ('年度分析报告/集团', '年度分析报告 · 集团')]:
