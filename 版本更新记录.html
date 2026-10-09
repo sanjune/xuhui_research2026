@@ -95,17 +95,50 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.0</span>
+    <span>当前版本：v2.17.1</span>
     <span>更新日期：2026-10-09</span>
-    <span>累计更新：20 次</span>
+    <span>累计更新：21 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">32</div><div class="stat-label">月报榜单重算（月）</div></div>
-  <div class="stat-box"><div class="stat-num">32</div><div class="stat-label">逐月明细新增表</div></div>
+  <div class="stat-box"><div class="stat-num">13</div><div class="stat-label">报告全文重排</div></div>
+  <div class="stat-box"><div class="stat-num">34</div><div class="stat-label">清单单元格分行</div></div>
+  <div class="stat-box"><div class="stat-num">0</div><div class="stat-label">清单压平残留</div></div>
   <div class="stat-box"><div class="stat-num">522</div><div class="stat-label">汇编表格总数</div></div>
-  <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">随附 Excel 附件</div></div>
+</div>
+
+<!-- ===== v2.17.1 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.1</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">📐 Word 汇编：清单换行全面还原（口径说明 / 行动建议 / 双维发现）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">问题</span>「口径说明」「行动建议」「双维发现」这类「小标题 + <code>① ② ③</code> / <code>1. 2. 3.</code>」的清单，在 Word 里<b>全部糊成一整段</b> —— 一行项挤在一起，读起来是一堵字墙</li>
+        <li><span class="tag tag-fix">根因</span>转换脚本对 <code>&lt;br&gt;</code> 一律丢弃：取文本时用 <code>get_text(' ')</code> 把整块压成一行，<b>换行信息在解析阶段就丢了</b>。三类结构各走不同分支（<code>div.highlight</code> 提示框 / <code>div.callout</code> 强调块 / <code>p.note</code> 说明段），但都没保留换行</li>
+        <li><span class="tag tag-new">修复</span>新增「按视觉行切分」解析：<code>&lt;br&gt;</code> 与块级元素边界都算换行，行内 <code>&lt;strong&gt;/&lt;span&gt;</code> 合并为同一行；提示框、正文段、列表项、卡片正文的单元格一律改为<b>逐行成段</b>，短标签行（如「双维发现：」）自动加粗作小标题</li>
+        <li><span class="tag tag-data">覆盖</span>13 份报告全部重新转换 —— 汇编中 <b>34 个清单单元格按行分段</b>（单元格内共 171 段）；「街镇观察」「判定条件」「技术方案」「核心结论」「趋势解读」等同类清单同步还原</li>
+        <li><span class="tag tag-opt">顺带</span>源报告里把「① … ② … ③ …」直接<b>连写在一行</b>的段落，也按圈码自动断行（只拆圈码 —— 数字序号不自动拆，避免误伤小数与年份这类正常数字）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">🔧 解析缺陷修正与验收</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">修</span>自定义换行解析最初会把 <b>HTML 注释</b>（<code>&lt;!-- … --&gt;</code>）当成正文吞进去，导致月报合集的 SVG 标记块被当作文本输出 → 已按节点类型排除注释 / CDATA / 声明</li>
+        <li><span class="tag tag-new">新增质量门</span><code>scripts/_audit_multiline.py</code> —— 扫描 Word 中「一段内连挂多个列表项」的压平残留（序号须连续递增，避免误报）</li>
+        <li><span class="tag tag-data">验收</span>清单压平残留 <b>0 处</b>；文本叶子残留 0 类 0 处；13 份报告数值缺失 0 项；汇编自测全部通过（段落 1048 · 表格 522 · 图 105）；<code>word/document.xml</code> 连跑两次 md5 一致（幂等）</li>
+        <li><span class="tag tag-opt">对账</span>全站反例 <b>199 处</b>（全部属已挂账的第 11 项「同比删 2024」）；关键词-数值冲突 <b>0 处</b></li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.0 ===== -->

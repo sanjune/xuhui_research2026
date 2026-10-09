@@ -20,6 +20,10 @@ import os
 import re
 
 from bs4 import BeautifulSoup
+from bs4.element import Comment, CData, Declaration, Doctype, ProcessingInstruction
+
+# 非内容的「字符串型」节点：注释 / CDATA / 声明 —— 绝不能被当成正文
+NON_CONTENT_STR = (Comment, CData, Declaration, Doctype, ProcessingInstruction)
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
@@ -216,11 +220,12 @@ def vmerge_none(cell):
         tcPr.remove(vm)
 
 
-def _run(cell, text, bold=False, size=9, color=None, align='left'):
-    cell.text = ''
-    p = cell.paragraphs[0]
-    p.alignment = {'left': WD_ALIGN_PARAGRAPH.LEFT, 'center': WD_ALIGN_PARAGRAPH.CENTER,
-                   'right': WD_ALIGN_PARAGRAPH.RIGHT}[align]
+_ALIGN = {'left': WD_ALIGN_PARAGRAPH.LEFT, 'center': WD_ALIGN_PARAGRAPH.CENTER,
+          'right': WD_ALIGN_PARAGRAPH.RIGHT}
+
+
+def _fill(p, text, bold=False, size=9, color=None, align='left'):
+    p.alignment = _ALIGN[align]
     p.paragraph_format.space_before = Pt(1)
     p.paragraph_format.space_after = Pt(1)
     r = p.add_run(str(text))
@@ -230,10 +235,31 @@ def _run(cell, text, bold=False, size=9, color=None, align='left'):
     r.element.rPr.rFonts.set(qn('w:eastAsia'), CN_FONT)
     if color:
         r.font.color.rgb = RGBColor(*color)
+    return r
+
+
+def _run(cell, text, bold=False, size=9, color=None, align='left'):
+    cell.text = ''
+    _fill(cell.paragraphs[0], text, bold, size, color, align)
 
 
 def set_cell(cell, text, bold=False, color=None, align='left', size=9):
     _run(cell, text, bold, size, color, align)
+
+
+def set_cell_lines(cell, lines, bold=False, color=None, align='left', size=9):
+    """单元格内多行内容 —— 逐行成段。
+
+    清单（判定条件 / 技术方案 / 街镇观察…）在 HTML 里靠 <br> 分行，
+    压成一段后在 Word 里就是一大坨，这里还原成一行一项。
+    """
+    if isinstance(lines, str):
+        lines = [lines]
+    lines = [str(x) for x in (lines or []) if str(x).strip()]
+    cell.text = ''
+    for i, ln in enumerate(lines):
+        _fill(cell.paragraphs[0] if i == 0 else cell.add_paragraph(),
+              ln, bold, size, color, align)
 
 
 def repeat_header(row):
@@ -561,28 +587,28 @@ def add_pair_table(doc, cards, kind, walker=None):
     for ri, card in enumerate(cards):
         t_el = card.select_one('.' + tsel)
         title = _clean_text(t_el.get_text(' ')) if t_el else ''
-        body_parts = []
+        body_lines = []
         consumed = {id(t_el)} if t_el is not None else set()
         for b in bsels:
             el = card.select_one('.' + b)
             if el is None:
                 continue
             consumed.add(id(el))
-            txt = _clean_text(el.get_text(' '))
-            if txt:
-                body_parts.append(txt)
+            body_lines.extend(_lines_of(el))
         # field-cat：正文是 <li> 清单
-        if not body_parts:
-            items = [_clean_text(li.get_text(' ')) for li in card.select('li')]
-            body_parts = ['、'.join(x for x in items if x)] if items else []
-        if not title and not body_parts:
+        if not body_lines:
+            items = []
+            for li in card.select('li'):
+                items.extend(_lines_of(li))
+            body_lines = ['、'.join(x for x in items if x)] if items else []
+        if not title and not body_lines:
             continue
         if not title:
-            title = body_parts.pop(0)
+            title = body_lines.pop(0)
         row = t.add_row()
         set_cell(row.cells[0], title, bold=True, align='left', size=9)
         shade(row.cells[0], CARD_TITLE_FILL)
-        set_cell(row.cells[1], '　'.join(body_parts), align='left', size=9)
+        set_cell_lines(row.cells[1], body_lines, align='left', size=9)
         if ri % 2 == 1:
             shade(row.cells[1], ZEBRA_FILL)
         for ch in card.find_all(recursive=False):
@@ -614,9 +640,8 @@ def add_single_card(doc, card, kind, walker=None):
         if el is None:
             continue
         consumed.add(id(el))
-        txt = _clean_text(el.get_text(' '))
-        if txt:
-            add_body(doc, txt, indent=False, size=10.5)
+        for ln in _lines_of(el):
+            add_body(doc, ln, indent=False, size=10.5)
     for ch in card.find_all(recursive=False):
         if id(ch) in consumed:
             continue
@@ -631,14 +656,31 @@ def el_empty(el):
 
 
 def add_callout(doc, text, fill=CALLOUT_FILL):
-    """提示框 → 单格浅底表（保留视觉上的“强调块”）。"""
-    if not text:
+    """提示框 → 单格浅底表（保留视觉上的“强调块”）。
+
+    text 可以是字符串，也可以是「视觉行」列表 —— 后者逐行成段，
+    让「行动建议 / 双维发现」这类清单保持一行一项。
+    """
+    lines = list(text) if isinstance(text, (list, tuple)) else [text]
+    lines = [s for s in (_clean_text(x) for x in lines) if s]
+    if not lines:
         return
     t = doc.add_table(rows=1, cols=1)
     t.style = 'Table Grid'
     t.alignment = WD_TABLE_ALIGNMENT.CENTER
     cell = t.rows[0].cells[0]
-    set_cell(cell, text, align='left', size=10)
+    for i, ln in enumerate(lines):
+        p = cell.paragraphs[0] if i == 0 else cell.add_paragraph()
+        r = p.add_run(ln)
+        r.font.size = Pt(10)
+        r.font.name = CN_FONT
+        r.element.rPr.rFonts.set(qn('w:eastAsia'), CN_FONT)
+        # 短标签行（「双维发现：」这类，源报告用 <strong>）→ 加粗，起小标题作用
+        if len(ln) <= 20 and ln.endswith('：'):
+            r.font.bold = True
+        p.paragraph_format.space_before = Pt(1)
+        p.paragraph_format.space_after = Pt(1)
+        p.paragraph_format.line_spacing = 1.2
     shade(cell, fill)
     p = doc.add_paragraph()
     p.paragraph_format.space_after = Pt(6)
@@ -728,7 +770,7 @@ def add_result_card_table(doc, cards):
                                      _clean_text(title.get_text(' ')) if title else ''] if x)
         desc = c.select_one('.card-desc')
         tags = c.select('.card-tag')
-        body = _clean_text(desc.get_text(' ')) if desc else ''
+        body = '　'.join(_lines_of(desc)) if desc else ''
         if tags:
             body = (body + '　［' + '、'.join(_clean_text(x.get_text(' ')) for x in tags) + '］').strip()
         att = c.select_one('.card-attach')
@@ -846,7 +888,8 @@ def _card_parts(card):
     for k in card.children:
         if getattr(k, 'name', None) is None or k.name == 'br' or _skip(k):
             continue
-        txt = _clean_text(k.get_text(' '))
+        lines = _lines_of(k)
+        txt = '；'.join(lines)          # 卡内多行用分号分隔，不糊成一片
         if not txt:
             continue
         m = FS_RE.search(_style(k))
@@ -970,7 +1013,7 @@ def add_strategy_card(doc, card):
         vl = box.select_one('.criteria-value')
         if vl is None:
             continue
-        pairs.append((_clean_text(lb.get_text(' ')) if lb else '', _clean_text(vl.get_text(' '))))
+        pairs.append((_clean_text(lb.get_text(' ')) if lb else '', _lines_of(vl)))
     if pairs:
         t = doc.add_table(rows=0, cols=2)
         t.style = 'Table Grid'
@@ -978,7 +1021,7 @@ def add_strategy_card(doc, card):
             row = t.add_row()
             set_cell(row.cells[0], lb, bold=True, align='center', size=9)
             shade(row.cells[0], CARD_TITLE_FILL)
-            set_cell(row.cells[1], vl, align='left', size=9)
+            set_cell_lines(row.cells[1], vl, align='left', size=9)
             if i % 2 == 1:
                 shade(row.cells[1], ZEBRA_FILL)
         p = doc.add_paragraph()
@@ -1037,6 +1080,61 @@ def _clean_text(s):
     s = re.sub(r'\s+([，。、；：）】》%‰])', r'\1', s)
     s = re.sub(r'([（【《])\s+', r'\1', s)
     return s.strip()
+
+
+CIRCLED_RE = re.compile(r'[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]')
+CIRCLED_SPLIT_RE = re.compile(r'(?=[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮])')
+
+
+def _split_items(text):
+    """一行里连挂多个圈码项时按圈码断行（高置信度）。
+
+    源报告有些块把「① … ② … ③ …」直接连写在一行，Word 里读起来是一整坨。
+    只拆圈码，不拆数字序号 —— 「1.」会误伤「17.0%」「2024年」这类正常数字。
+    """
+    if len(CIRCLED_RE.findall(text)) < 2:
+        return [text]
+    return [p.strip() for p in CIRCLED_SPLIT_RE.split(text) if p.strip()]
+
+
+def _lines_of(el):
+    """把块的文本按「视觉行」切分 —— 列表项换行的唯一依据。
+
+    HTML 里同一视觉行常被标签边界切开（<strong>/<span>/<b>…），
+    真正的换行只有两个来源：显式 <br>，以及块级子元素之间的边界。
+    早先一律 get_text(' ') 会把整块压成一行，「口径说明 / 行动建议 / 双维发现」
+    这类「小标题 + ① ② ③ / 1. 2. 3.」的清单因此糊成一整段。
+    """
+    lines, buf = [], []
+
+    def flush():
+        s = _clean_text(''.join(buf))
+        if s:
+            lines.extend(_split_items(s))
+        del buf[:]
+
+    def rec(node):
+        for k in node.children:
+            if getattr(k, 'name', None) is None:      # 字符串型节点
+                if isinstance(k, NON_CONTENT_STR):    # 注释/CDATA 不是正文
+                    continue
+                buf.append(str(k))
+                continue
+            if k.name == 'br':                        # 显式换行
+                flush()
+                continue
+            if _skip(k):
+                continue
+            if k.name in BLOCK_TAG:                   # 块级边界 = 换行
+                flush()
+                rec(k)
+                flush()
+            else:                                     # 行内元素：并入当前行
+                buf.append(k.get_text(''))
+
+    rec(el)
+    flush()
+    return lines
 
 
 def _heading_level(el, base):
@@ -1161,7 +1259,7 @@ def convert_report(doc, html_path, figmap, base=1, chapter_title=None,
             return
         # 提示框（浅底强调块）
         if (cls & CALLOUT_CLASS) and child.name == 'div':
-            add_callout(doc, _clean_text(child.get_text(' ')))
+            add_callout(doc, _lines_of(child))
             return
         # 关键词云 → 归并成一段
         if cls & KEYWORD_CLASS:
@@ -1242,29 +1340,30 @@ def convert_report(doc, html_path, figmap, base=1, chapter_title=None,
             return
         # 孤立的数据问题 / 解决方案块 → 提示框
         if cls & {'issue-solution', 'issue-desc', 'solution'}:
-            add_callout(doc, first_txt)
+            add_callout(doc, _lines_of(child))
             return
         # 无 class、仅靠内联样式着色的提示块 → 提示框
         if (child.name == 'div' and not cls and not child.get('id')
                 and not _has_block_kid(child)
                 and ('border-left' in _style(child) or 'background' in _style(child))
                 and first_txt):
-            add_callout(doc, first_txt)
+            add_callout(doc, _lines_of(child))
             return
         if child.name == 'li':
-            txt = _clean_text(child.get_text(' '))
-            if txt:
-                add_bullet(doc, txt)
+            lines = _lines_of(child)
+            if lines:
+                add_bullet(doc, lines[0])
+                for ln in lines[1:]:
+                    p = add_body(doc, ln, indent=False)
+                    p.paragraph_format.left_indent = Pt(14)
             return
         if child.name == 'p':
-            txt = _clean_text(child.get_text(' '))
-            if txt:
-                add_body(doc, txt)
+            for ln in _lines_of(child):
+                add_body(doc, ln)
             return
         if cls & ATOMIC_CLASS:
-            txt = _clean_text(child.get_text(' '))
-            if txt:
-                add_body(doc, txt, indent=False, size=10.5)
+            for ln in _lines_of(child):
+                add_body(doc, ln, indent=False, size=10.5)
             return
         # 块级容器：有块级子元素则递归，否则作为文本叶子
         kids = [k for k in child.children if getattr(k, 'name', None)]
@@ -1272,8 +1371,9 @@ def convert_report(doc, html_path, figmap, base=1, chapter_title=None,
         if has_block:
             walk(child, 0)
         else:
-            txt = _clean_text(child.get_text(' '))
-            if txt:
+            lines = _lines_of(child)
+            if lines:
+                txt = ' '.join(lines)
                 key = ','.join(sorted(cls)) or child.name
                 lv = stats.setdefault('leaves', {})
                 lv[key] = lv.get(key, 0) + 1
@@ -1284,7 +1384,8 @@ def convert_report(doc, html_path, figmap, base=1, chapter_title=None,
                     d[ch][0] += 1
                 elif len(d) < 60:
                     d[ch] = [1, txt[:70]]
-                add_body(doc, txt)
+                for ln in lines:
+                    add_body(doc, ln)
 
     def walk_list(kids, owner):
         """按卡片规则遍历一组兄弟元素（owner 仅用于定位行内 run 的归属）。"""
@@ -1322,7 +1423,8 @@ def convert_report(doc, html_path, figmap, base=1, chapter_title=None,
             # 行内元素：与相邻行内兄弟合并为一段，避免句子被拆碎
             if (child.name != 'table' and not _has_block_kid(child)
                     and (child.name in INLINE_TAG or not _is_block(child))):
-                if child.name == 'br':
+                if child.name == 'br':      # 显式换行：结束当前行
+                    flush_inline()
                     i += 1
                     continue
                 inline_buf.append(child)
