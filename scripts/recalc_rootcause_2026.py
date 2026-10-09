@@ -173,7 +173,7 @@ def main():
         f"本表按档案内 82 个计，投诉量统计口径为 2026年1-8月 vs 2025年1-8月"
     )
 
-    # ── 7.2 / 7.3 单月快照（7月）+ 1-8月累计 ────────────────
+    # ── 7.2 / 7.3 单月快照（7月、8月）+ 1-8月累计 ─────────────
     raw = pd.read_pickle(os.path.join(ROOT, "data", "merged_cleaned.pkl"))
     r26, r25 = raw[raw["year"] == 2026], raw[raw["year"] == 2025]
 
@@ -182,6 +182,7 @@ def main():
         for k in keys:
             a, b = r26[r26[col] == k], r25[r25[col] == k]
             m7, p7 = int((a["month"] == 7).sum()), int((b["month"] == 7).sum())
+            m8, p8m = int((a["month"] == 8).sum()), int((b["month"] == 8).sum())
             t8, p8 = int((a["month"] <= M8).sum()), int((b["month"] <= M8).sum())
             t7 = int((a["month"] <= 7).sum())
             ncom = a[a["month"] <= M8]["community_name"].nunique()
@@ -191,6 +192,9 @@ def main():
                 "t7": t7, "avg7": round(t7 / ncom, 1) if ncom else 0.0,
                 "t8": t8, "avg8": round(t8 / ncom, 1) if ncom else 0.0,
                 "m8_yoy": round((t8 - p8) / p8 * 100, 1) if p8 else None,
+                # 8 月单月（7.4 / 7.5 快照用）
+                "aug": m8, "aug_prev": p8m,
+                "aug_yoy": round((m8 - p8m) / p8m * 100, 1) if p8m else None,
             })
         rows.sort(key=lambda r: -(r["m8_yoy"] if r["m8_yoy"] is not None else -999))
         return rows
@@ -202,6 +206,9 @@ def main():
     res["july_total"] = {"m7": int((r26["month"] == 7).sum()),
                          "m7_prev": int((r25["month"] == 7).sum()),
                          "m6": int((r26["month"] == 6).sum())}
+    res["august_total"] = {"m8": int((r26["month"] == 8).sum()),
+                           "m8_prev": int((r25["month"] == 8).sum()),
+                           "m7": int((r26["month"] == 7).sum())}
 
     json.dump(res, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
@@ -232,6 +239,17 @@ def main():
     print("\n【7.3 类别快照】")
     for r in res["category_snapshot"]:
         print(f"  {r['name']:<12} 7月={r['m7']:>4} 去年7月={r['m7_prev']:>4} {r['m7_yoy']:>+6.1f}%"
+              f" | 1-8月={r['t8']:>5} 同比={r['m8_yoy']:>+6.1f}%")
+
+    at = res["august_total"]
+    print(f"\n【7.4 8月街道快照】全区 8月 {at['m8']:,}（{at['m8_prev']:,}）"
+          f"环比7月 {at['m7']:,}")
+    for r in res["street_snapshot"]:
+        print(f"  {r['name']:<6} 8月={r['aug']:>4} 去年8月={r['aug_prev']:>4} {r['aug_yoy']:>+6.1f}%"
+              f" | 1-8月={r['t8']:>5} 同比={r['m8_yoy']:>+6.1f}%")
+    print("\n【7.5 8月类别快照】")
+    for r in res["category_snapshot"]:
+        print(f"  {r['name']:<12} 8月={r['aug']:>4} 去年8月={r['aug_prev']:>4} {r['aug_yoy']:>+6.1f}%"
               f" | 1-8月={r['t8']:>5} 同比={r['m8_yoy']:>+6.1f}%")
 
     print(f"\n已写入 {os.path.relpath(OUT, ROOT)}")

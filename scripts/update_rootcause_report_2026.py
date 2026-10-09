@@ -8,8 +8,9 @@
   1. 一、分析概述 → 「数据时间范围说明」块（2026年7月 → 2026年8月；64,570 → 66,812 件）
   2. 5.2 底部抬升小区 → 整表 + 发现叙述（旧表 912/82 为旧口径遗留，且
      「每千户反而更低」的结论在 993 口径下方向相反）
-  3. 七、2026年近期数据专项分析 → 7.1 六维表（6 张）、7.2 街道快照、7.3 类别快照、
-     7.4 趋势预警要点列表
+  3. 七、2026年近期数据专项分析 → 7.1 六维表（6 张）、7.2 街道快照（7月）、
+     7.3 类别快照（7月）、7.4 街道快照（8月）、7.5 类别快照（8月）、
+     7.6 趋势预警要点列表（引用 8 月单月同比）
 
 用法
 ----
@@ -164,7 +165,50 @@ def build_section7(D):
                  f'{cell(r["m8_yoy"])}<td>{txt}</td></tr>\n')
     L.append('    </tbody></table>\n\n')
 
-    # 7.4 预警
+    # 7.4 8 月街道快照（列结构与 7.2 一致）
+    a8 = D["august_total"]
+    ay = (a8["m8"] - a8["m8_prev"]) / a8["m8_prev"] * 100
+    ah = (a8["m8"] - a8["m7"]) / a8["m7"] * 100
+    L.append('<!-- 7.4 单月街道快照（8月） -->\n')
+    L.append('<h3 style="color:#1565c0; margin:20px 0 10px;">7.4 2026年8月单月街道快照</h3>\n')
+    L.append(f'<p class="desc">2026年8月全区投诉{a8["m8"]:,}件，同比2025年8月（{a8["m8_prev"]:,}件）'
+             f'{"下降" if ay < 0 else "上升"}{abs(ay):.1f}%，'
+             f'环比7月（{a8["m7"]:,}件）{"增长" if ah > 0 else "下降"}{abs(ah):.1f}%，'
+             f'为 2026 年单月同比首次转正。各街道表现：</p>\n')
+    L.append('    <table class="data-table">\n')
+    L.append('      <tbody><tr><th>街道</th><th>8月投诉量</th><th>2025年8月</th><th>8月同比</th>'
+             '<th>2026年1-8月</th><th>1-8月同比</th><th>态势</th></tr>\n')
+    for r in D["street_snapshot"]:
+        if r["name"] in ("无", "", "nan"):
+            continue
+        txt, direction = trend(r["m8_yoy"])
+        bg = BG[direction]
+        style = f' style="background:{bg};"' if bg else ""
+        mc = "num-down" if (r["aug_yoy"] or 0) < 0 else "num-up"
+        L.append(f'      <tr{style}><td>{r["name"]}</td><td>{r["aug"]}件</td><td>{r["aug_prev"]}件</td>'
+                 f'<td class="{mc}">{r["aug_yoy"]:+.1f}%</td><td>{r["t8"]:,}件</td>'
+                 f'{cell(r["m8_yoy"])}<td>{txt}</td></tr>\n')
+    L.append('    </tbody></table>\n\n')
+
+    # 7.5 8 月分类快照（列结构与 7.3 一致）
+    L.append('<!-- 7.5 单月类别快照（8月） -->\n')
+    L.append('<h3 style="color:#1565c0; margin:20px 0 10px;">7.5 2026年8月分类投诉快照</h3>\n')
+    L.append('    <table class="data-table">\n')
+    L.append('      <tbody><tr><th>类别</th><th>8月投诉</th><th>2025年8月</th><th>8月同比</th>'
+             '<th>2026年1-8月</th><th>1-8月同比</th><th>态势</th></tr>\n')
+    for r in D["category_snapshot"]:
+        if r["name"] in ("无", "", "nan"):
+            continue
+        txt, direction = trend(r["m8_yoy"])
+        bg = BG[direction]
+        style = f' style="background:{bg};"' if bg else ""
+        mc = "num-down" if (r["aug_yoy"] or 0) < 0 else "num-up"
+        L.append(f'      <tr{style}><td>{r["name"]}</td><td>{r["aug"]}件</td><td>{r["aug_prev"]}件</td>'
+                 f'<td class="{mc}">{r["aug_yoy"]:+.1f}%</td><td>{r["t8"]:,}件</td>'
+                 f'{cell(r["m8_yoy"])}<td>{txt}</td></tr>\n')
+    L.append('    </tbody></table>\n\n')
+
+    # 7.6 预警
     st = {r["name"]: r for r in D["street_snapshot"]}
     ct = {r["name"]: r for r in D["category_snapshot"]}
     worse = sorted([r for r in D["street_snapshot"]
@@ -178,18 +222,18 @@ def build_section7(D):
     cb = sorted([r for r in D["category_snapshot"] if r["name"] not in ("无", "", "nan")],
                 key=lambda r: (r["m8_yoy"] if r["m8_yoy"] is not None else 999))[:2]
 
-    L.append('<!-- 7.4 近期预警 -->\n')
-    L.append('<h3 style="color:#1565c0; margin:20px 0 10px;">7.4 近期趋势预警</h3>\n')
+    L.append('<!-- 7.6 近期预警 -->\n')
+    L.append('<h3 style="color:#1565c0; margin:20px 0 10px;">7.6 近期趋势预警</h3>\n')
     L.append('<div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:10px;">\n')
     L.append('  <div style="background:#ffebee; border-left:4px solid #c62828; padding:12px; border-radius:6px;">\n')
     L.append('    <div style="font-weight:700; color:#c62828; font-size:13px;">🔴 趋势恶化预警（需立即关注）</div>\n')
     L.append('    <ul style="font-size:12px; color:#333; margin:6px 0 0 16px; padding:0;">\n')
     for r in worse:
         L.append(f'      <li><strong>{r["name"]}街道：</strong>2026年1-8月 {r["t8"]:,} 件，'
-                 f'同比 {r["m8_yoy"]:+.1f}%（7月单月 {r["m7_yoy"]:+.1f}%），全区恶化最严重</li>\n')
+                 f'同比 {r["m8_yoy"]:+.1f}%（8月单月 {r["aug_yoy"]:+.1f}%），全区恶化最严重</li>\n')
     for r in cw:
         L.append(f'      <li><strong>{r["name"]}：</strong>1-8月 {r["t8"]:,} 件，同比 {r["m8_yoy"]:+.1f}%'
-                 f'（7月单月 {r["m7_yoy"]:+.1f}%），需重点督导</li>\n')
+                 f'（8月单月 {r["aug_yoy"]:+.1f}%），需重点督导</li>\n')
     for k in ("直管公房", "商品房"):
         v = D["nature"].get(k)
         if v and v["yoy"] and v["yoy"] > 0:
@@ -281,14 +325,15 @@ def main():
         f'「2025同比」＝2025年全年 vs 2024年全年。'
         f'底部抬升＝名单 84 个重点小区中在纳统档案内的 {bl["count"]} 个。</div>'
     )
-    m = re.search(r"<table>\s*<tbody><th>类别</th><th>小区数</th><th>平均投诉量</th>.*?</tbody></table>",
-                  html, re.S)
+    # 连同紧随其后的「口径」注一并替换，否则每跑一次就会多追加一条注（曾累积 3 份）
+    m = re.search(r"<table>\s*<tbody><th>类别</th><th>小区数</th><th>平均投诉量</th>.*?</tbody></table>"
+                  r"(?:\s*<div class=\"table-note\">.*?</div>)*", html, re.S)
     if not m:
         raise SystemExit("✗ 未找到 5.2 底部抬升表")
     html = html[:m.start()] + t52 + html[m.end():]
 
     # 5.2 的「发现」段
-    m = re.search(r"<strong>发现：</strong>底部抬升小区投诉总量是普通小区的.*?</div>", html, re.S)
+    m = re.search(r"<strong>发现：</strong>底部抬升小区.*?</div>", html, re.S)
     if not m:
         raise SystemExit("✗ 未找到 5.2 发现段")
     finding = (

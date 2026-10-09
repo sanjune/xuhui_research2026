@@ -37,9 +37,14 @@ _archive/
 scripts/audit_reports/
 scripts/_selftest*.py
 scripts/_tmp_*.html
+scripts/_peek*.py
 
 # 发布用静态目录（由 scripts/build_publish_site.py 生成，不入库）
 _publish/
+
+# Word 汇编构建中间产物（可重跑 render_reports.py / export_echarts_figs.py 再生）
+_rendered/
+assets/docx_figs/
 
 # IDE
 .idea/
