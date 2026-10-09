@@ -176,7 +176,7 @@ def deliver_wordcloud():
 
 # ---------- 附件4：交付物清单 ----------
 MANIFEST_SHEET = '交付物清单'
-CATE_ORDER = ['主交付物', '电子附件', '过程成果报告', '历史版本']
+CATE_ORDER = ['主交付物', '电子附件', '装帧素材', '过程成果报告', '历史版本']
 
 
 def _manifest_rows():
@@ -210,6 +210,8 @@ def _manifest_rows():
         if os.path.isdir(p):
             if name == '_archive':       # 历史版本留档目录（不计入过程成果报告）
                 walk(p, '', '历史版本', '过程版本留档，非最终交付版本')
+            elif name == '装订打印封面':  # 成书装帧素材，非报告
+                walk(p, '装订打印封面/', '装帧素材', '书籍装订印刷素材')
             else:
                 cate = '过程成果报告'
                 note = {'月度分析报告': '月度滚动分析成果（19 份）',
@@ -228,6 +230,8 @@ def _manifest_rows():
                     '附件3': '13 街镇词云词表（Top24 展示 + 补位候选）',
                     '附件4': '交付物清单（本表）'}.get(name[:3], '')
             rows.append(['电子附件', name, rel, size_of(p), note])
+        elif name.endswith(('.png', '.jpg', '.jpeg')):
+            rows.append(['装帧素材', name, rel, size_of(p), '封面候选底图（非最终交付版本）'])
         else:
             rows.append(['电子附件', name, rel, size_of(p), ''])
     order = {c: i for i, c in enumerate(CATE_ORDER)}
