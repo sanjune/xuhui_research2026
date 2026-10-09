@@ -33,6 +33,7 @@ from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import nato_match as NM  # noqa: E402
+from company_alias import canon_series  # noqa: E402
 
 DATA_DIR = "/Users/macbookpro/Desktop/8-24 徐汇课题一期/热线数据"
 
@@ -86,6 +87,9 @@ def clean_df(df):
         elif c == '年': rename_map[c] = 'year'
         elif c == '月份': rename_map[c] = 'month'
     df = df.rename(columns=rename_map)
+    # 企业名归并（全站唯一口径源）：更名前后的两个名称合并为同一主体
+    if 'property_company' in df.columns:
+        df['property_company'] = canon_series(df['property_company'].astype(str))
     df['street'] = df['street'].apply(lambda x: str(x).replace('街道','').replace('镇','').strip() if pd.notna(x) else '未知')
     df['category_14'] = df['category_14'].replace({'群租问题':'群租管理','业委会':'业主大会/业委会','服务态度':'物业服务态度'})
     exclude = ['剔除三大类','剔除-商办楼宇','剔除-非物业管理区域','剔除-无效工单','无','房屋交易纠纷','其他']

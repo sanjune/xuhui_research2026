@@ -41,7 +41,7 @@
   {
     "name": "汇翠花园",
     "street": "徐家汇",
-    "company": "上海龙湖\n物业服务有限公司",
+    "company": "上海龙湖物业服务有限公司",
     "count_2025": 41,
     "category_hotline": true,
     "category_low_fee": false,
@@ -93,7 +93,7 @@
   {
     "name": "伊泰利大厦",
     "street": "天平路",
-    "company": "上海虹桥经济技术开发区\n物业经营管理有限公司",
+    "company": "上海虹桥经济技术开发区物业经营管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -106,7 +106,7 @@
   {
     "name": "裕华大厦",
     "street": "天平路",
-    "company": "上海东郊皇庭\n物业管理有限公司",
+    "company": "上海东郊皇庭物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -132,7 +132,7 @@
   {
     "name": "紫苑大厦",
     "street": "天平路",
-    "company": "上海紫缘\n物业管理有限公司",
+    "company": "上海紫缘物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -145,7 +145,7 @@
   {
     "name": "东方巴黎霞飞苑",
     "street": "湖南路",
-    "company": "上海东湖\n物业管理有限公司",
+    "company": "上海东湖物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -171,7 +171,7 @@
   {
     "name": "上海天玺",
     "street": "湖南路",
-    "company": "上海启胜\n物业管理服务有限公司",
+    "company": "上海启胜物业管理服务有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -210,7 +210,7 @@
   {
     "name": "天龙公寓",
     "street": "枫林路",
-    "company": "上海高建\n物业有限公司",
+    "company": "上海高建物业有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -223,7 +223,7 @@
   {
     "name": "新湖云庭",
     "street": "枫林路",
-    "company": "上海益镇物业\n管理有限公司",
+    "company": "上海益镇物业管理有限公司",
     "count_2025": 38,
     "category_hotline": true,
     "category_low_fee": false,
@@ -236,7 +236,7 @@
   {
     "name": "徐汇御苑",
     "street": "枫林路",
-    "company": "上海沪平投资\n管理有限公司",
+    "company": "上海沪平投资管理有限公司",
     "count_2025": 4,
     "category_hotline": false,
     "category_low_fee": false,
@@ -249,7 +249,7 @@
   {
     "name": "宛龙小区",
     "street": "枫林路",
-    "company": "上海高建\n物业有限公司",
+    "company": "上海高建物业有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": true,
@@ -262,7 +262,7 @@
   {
     "name": "美晶佳园",
     "street": "枫林路",
-    "company": "上海凤梧物业\n管理有限公司",
+    "company": "上海凤梧物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -275,7 +275,7 @@
   {
     "name": "龙山新村",
     "street": "枫林路",
-    "company": "上海高建\n物业有限公司",
+    "company": "上海高建物业有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -288,7 +288,7 @@
   {
     "name": "大木小区",
     "street": "斜土路",
-    "company": "上海南希\n物业管理有限公司",
+    "company": "上海南希物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": true,
@@ -301,7 +301,7 @@
   {
     "name": "金兰花苑",
     "street": "斜土路",
-    "company": "上海外经贸\n物业管理有限公司",
+    "company": "上海外经贸物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -314,7 +314,7 @@
   {
     "name": "景泰大厦",
     "street": "斜土路",
-    "company": "上海同康\n物业管理有限公司",
+    "company": "上海同康物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -327,7 +327,7 @@
   {
     "name": "平江大楼",
     "street": "斜土路",
-    "company": "上海郏宇\n物业管理有限公司",
+    "company": "上海郏宇物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -340,7 +340,7 @@
   {
     "name": "兴南花园",
     "street": "斜土路",
-    "company": "上海笠程\n物业管理有限公司",
+    "company": "上海笠程物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -353,7 +353,7 @@
   {
     "name": "云福大厦",
     "street": "斜土路",
-    "company": "上海谷天\n物业管理有限公司",
+    "company": "上海谷天物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -366,7 +366,7 @@
   {
     "name": "尚海湾二期",
     "street": "斜土路",
-    "company": "上海阳光投资（集团）\n物业管理有限公司",
+    "company": "上海阳光投资（集团）物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -379,7 +379,7 @@
   {
     "name": "银亿茗悦公寓",
     "street": "斜土路",
-    "company": "上海银亿\n物业服务有限公司",
+    "company": "上海银亿物业服务有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -470,7 +470,7 @@
   {
     "name": "田林东路414弄1、2、3号",
     "street": "田林",
-    "company": "上海中誉物业管理有限公司",
+    "company": "上海中誉城市运营服务有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -548,7 +548,7 @@
   {
     "name": "华东花苑",
     "street": "长桥",
-    "company": "上海轻工\n物业管理有限公司",
+    "company": "上海轻工物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": true,
@@ -561,7 +561,7 @@
   {
     "name": "汇成四村",
     "street": "长桥",
-    "company": "上海汇成\n物业有限公司",
+    "company": "上海汇成物业有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -574,7 +574,7 @@
   {
     "name": "罗秀新二村",
     "street": "长桥",
-    "company": "上海中誉\n物业管理有限公司",
+    "company": "上海中誉城市运营服务有限公司",
     "count_2025": 109,
     "category_hotline": true,
     "category_low_fee": false,
@@ -587,7 +587,7 @@
   {
     "name": "长桥八村",
     "street": "长桥",
-    "company": "上海中鹊\n物业服务有限公司",
+    "company": "上海中鹊物业服务有限公司",
     "count_2025": 48,
     "category_hotline": true,
     "category_low_fee": false,
@@ -600,7 +600,7 @@
   {
     "name": "华滨家园",
     "street": "长桥",
-    "company": "上海复欣\n物业管理发展有限公司",
+    "company": "上海复欣物业管理发展有限公司",
     "count_2025": 78,
     "category_hotline": true,
     "category_low_fee": false,
@@ -613,7 +613,7 @@
   {
     "name": "楼园",
     "street": "长桥",
-    "company": "上海通翼\n物业有限公司",
+    "company": "上海通翼物业有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,
@@ -626,7 +626,7 @@
   {
     "name": "长桥一村",
     "street": "长桥",
-    "company": "上海辰开\n物业管理有限公司",
+    "company": "上海辰开物业管理有限公司",
     "count_2025": 46,
     "category_hotline": false,
     "category_low_fee": false,
@@ -639,7 +639,7 @@
   {
     "name": "鑫隆花园",
     "street": "长桥",
-    "company": "上海洲梁\n物业服务有限公司",
+    "company": "上海洲梁物业服务有限公司",
     "count_2025": 11,
     "category_hotline": false,
     "category_low_fee": false,
@@ -652,7 +652,7 @@
   {
     "name": "长桥四村",
     "street": "长桥",
-    "company": "上海安得\n物业管理有限公司",
+    "company": "上海安得物业管理有限公司",
     "count_2025": 67,
     "category_hotline": true,
     "category_low_fee": false,
@@ -665,7 +665,7 @@
   {
     "name": "欣嘉苑1-3期",
     "street": "虹梅路",
-    "company": "上海锦龙\n物业管理有限公司",
+    "company": "上海锦龙物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": true,
@@ -678,7 +678,7 @@
   {
     "name": "怡桂苑",
     "street": "虹梅路",
-    "company": "上海中誉\n物业管理有限公司",
+    "company": "上海中誉城市运营服务有限公司",
     "count_2025": 10,
     "category_hotline": false,
     "category_low_fee": false,
@@ -691,7 +691,7 @@
   {
     "name": "欣嘉苑4期",
     "street": "虹梅路",
-    "company": "上海锦龙\n物业管理有限公司",
+    "company": "上海锦龙物业管理有限公司",
     "count_2025": 23,
     "category_hotline": true,
     "category_low_fee": true,
@@ -704,7 +704,7 @@
   {
     "name": "茶花园",
     "street": "康健新村",
-    "company": "上海安得\n物业管理有限公司",
+    "company": "上海安得物业管理有限公司",
     "count_2025": 84,
     "category_hotline": true,
     "category_low_fee": true,
@@ -717,7 +717,7 @@
   {
     "name": "桂平小区",
     "street": "康健新村",
-    "company": "沃棠（上海）\n物业管理有限公司",
+    "company": "沃棠（上海）物业管理有限公司",
     "count_2025": 90,
     "category_hotline": true,
     "category_low_fee": true,
@@ -743,7 +743,7 @@
   {
     "name": "上师大新村",
     "street": "康健新村",
-    "company": "上海复乐\n物业管理有限公司",
+    "company": "上海复乐物业管理有限公司",
     "count_2025": 54,
     "category_hotline": false,
     "category_low_fee": false,
@@ -756,7 +756,7 @@
   {
     "name": "上投迎春园",
     "street": "康健新村",
-    "company": "上海通翼\n物业有限公司",
+    "company": "上海通翼物业有限公司",
     "count_2025": 11,
     "category_hotline": false,
     "category_low_fee": false,
@@ -769,7 +769,7 @@
   {
     "name": "寿益坊（北）",
     "street": "康健新村",
-    "company": "上海安得\n物业管理有限公司",
+    "company": "上海安得物业管理有限公司",
     "count_2025": 6,
     "category_hotline": false,
     "category_low_fee": false,
@@ -782,7 +782,7 @@
   {
     "name": "中星虹漕公寓",
     "street": "康健新村",
-    "company": "上海伯谦\n物业管理有限公司",
+    "company": "上海伯谦物业管理有限公司",
     "count_2025": 16,
     "category_hotline": false,
     "category_low_fee": false,
@@ -795,7 +795,7 @@
   {
     "name": "叠加苑",
     "street": "龙华",
-    "company": "上海殷阳\n物业管理有限公司",
+    "company": "上海殷阳物业管理有限公司",
     "count_2025": 9,
     "category_hotline": false,
     "category_low_fee": false,
@@ -808,7 +808,7 @@
   {
     "name": "龙兆苑",
     "street": "龙华",
-    "company": "上海振新\n物业管理有限公司",
+    "company": "上海振新物业管理有限公司",
     "count_2025": 20,
     "category_hotline": false,
     "category_low_fee": false,
@@ -821,7 +821,7 @@
   {
     "name": "盛大花园",
     "street": "龙华",
-    "company": "上海永升\n物业管理有限公司",
+    "company": "上海永升物业管理有限公司",
     "count_2025": 49,
     "category_hotline": false,
     "category_low_fee": false,
@@ -847,7 +847,7 @@
   {
     "name": "悦兴苑",
     "street": "龙华",
-    "company": "上海亿绵\n物业管理有限公司",
+    "company": "上海亿绵物业管理有限公司",
     "count_2025": 2,
     "category_hotline": true,
     "category_low_fee": false,
@@ -860,7 +860,7 @@
   {
     "name": "华容苑",
     "street": "龙华",
-    "company": "上海高建\n物业管理有限公司",
+    "company": "上海高建物业管理有限公司",
     "count_2025": 1,
     "category_hotline": false,
     "category_low_fee": true,
@@ -873,7 +873,7 @@
   {
     "name": "凌云新村",
     "street": "凌云路",
-    "company": "上海徐房\n物业有限公司",
+    "company": "上海徐房物业有限公司",
     "count_2025": 256,
     "category_hotline": true,
     "category_low_fee": true,
@@ -886,7 +886,7 @@
   {
     "name": "梅陇十一村（A块）",
     "street": "凌云路",
-    "company": "上海市工联\n物业公司",
+    "company": "上海市工联物业公司",
     "count_2025": 90,
     "category_hotline": true,
     "category_low_fee": true,
@@ -899,7 +899,7 @@
   {
     "name": "高雅新村",
     "street": "凌云路",
-    "company": "上海丽都苑\n物业管理有限公司",
+    "company": "上海丽都苑物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": true,
@@ -912,7 +912,7 @@
   {
     "name": "老沪闵路709弄",
     "street": "凌云路",
-    "company": "上海徐房\n物业有限公司",
+    "company": "上海徐房物业有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": true,
@@ -925,7 +925,7 @@
   {
     "name": "梅陇路3-5号",
     "street": "凌云路",
-    "company": "上海徐房\n物业有限公司",
+    "company": "上海徐房物业有限公司",
     "count_2025": 1,
     "category_hotline": false,
     "category_low_fee": true,
@@ -938,7 +938,7 @@
   {
     "name": "翡翠别墅",
     "street": "凌云路",
-    "company": "上海徐房\n物业有限公司",
+    "company": "上海徐房物业有限公司",
     "count_2025": 1,
     "category_hotline": false,
     "category_low_fee": false,
@@ -964,7 +964,7 @@
   {
     "name": "漕溪二村第一",
     "street": "漕河泾",
-    "company": "上海旭程\n物业管理有限公司",
+    "company": "上海旭程物业管理有限公司",
     "count_2025": 43,
     "category_hotline": true,
     "category_low_fee": true,
@@ -977,7 +977,7 @@
   {
     "name": "宜仕怡家",
     "street": "漕河泾",
-    "company": "上海联源\n物业发展有限公司",
+    "company": "上海联源物业发展有限公司",
     "count_2025": 55,
     "category_hotline": true,
     "category_low_fee": false,
@@ -990,7 +990,7 @@
   {
     "name": "上海望族城",
     "street": "漕河泾",
-    "company": "上海益镇\n物业管理有限公司",
+    "company": "上海益镇物业管理有限公司",
     "count_2025": 55,
     "category_hotline": true,
     "category_low_fee": false,
@@ -1003,7 +1003,7 @@
   {
     "name": "石龙路33弄",
     "street": "漕河泾",
-    "company": "上海华东房产\n物业有限公司",
+    "company": "上海华东房产物业有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": true,
@@ -1016,7 +1016,7 @@
   {
     "name": "钦州路111弄小区",
     "street": "漕河泾",
-    "company": "上海润美\n物业管理有限公司",
+    "company": "上海润美物业管理有限公司",
     "count_2025": 0,
     "category_hotline": false,
     "category_low_fee": false,
@@ -1029,7 +1029,7 @@
   {
     "name": "梓树园",
     "street": "漕河泾",
-    "company": "上海益镇\n物业管理有限公司",
+    "company": "上海益镇物业管理有限公司",
     "count_2025": 17,
     "category_hotline": false,
     "category_low_fee": false,
@@ -1042,7 +1042,7 @@
   {
     "name": "华欣家园",
     "street": "华泾",
-    "company": "上海华泾泾鸿\n物业管理有限公司",
+    "company": "上海华泾泾鸿物业管理有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": true,
@@ -1055,7 +1055,7 @@
   {
     "name": "名人花苑",
     "street": "华泾",
-    "company": "上海复欣\n物业管理发展有限公司",
+    "company": "上海复欣物业管理发展有限公司",
     "count_2025": 0,
     "category_hotline": true,
     "category_low_fee": false,

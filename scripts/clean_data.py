@@ -27,6 +27,12 @@ STANDARD_CATEGORIES = [
 
 VALID_ORDER_TYPES = ["投诉举报类", "求助类"]
 
+# ─── 企业更名归并（全站唯一口径源：scripts/company_alias.py）────────
+# 上海中誉物业管理有限公司 → 上海中誉城市运营服务有限公司（2026 年 8 月完成名称变更，
+# 同一法人主体）。企业级统计若不归并，同一家企业会被拆成两行、各项计数双双少算。
+# 原始填报值完整保留在 property_company_raw 列，供溯源核对使用。
+from company_alias import COMPANY_RENAME, canon_company  # noqa: E402
+
 FIELD_MAPPING = {
     "2024": {
         "12345工单编号": "order_id",
@@ -101,6 +107,7 @@ COMMON_COLS = [
     "order_id", "accept_time", "source", "address", "order_type",
     "content", "handler", "reply", "year", "month", "community_id",
     "community_name", "community_addr", "property_company",
+    "property_company_raw",
     "street", "category_14", "level1", "level2", "level3", "level4", "level5"
 ]
 
@@ -230,7 +237,10 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df["order_id"] = df["order_id"].apply(clean_order_id)
     df["street"] = df["street"].apply(clean_street)
     df["category_14"] = df["category_14"].apply(clean_category)
+    # 企业名：先清洗，再把更名前后的两个名称归并到现用名（原始填报值另存一列）
     df["property_company"] = df["property_company"].apply(clean_company)
+    df["property_company_raw"] = df["property_company"]
+    df["property_company"] = df["property_company"].apply(canon_company)
     df["month"] = df["month"].apply(clean_month)
 
     for col in ["source", "address", "order_type", "content", "handler", "reply",

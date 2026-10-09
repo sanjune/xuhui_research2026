@@ -335,10 +335,11 @@ def appx_d_e_f(doc):
     doc.add_page_break()
     doc.add_heading('附录 F　交付物与过程成果清单', level=1)
     add_body(doc, '本项目交付成果分为三类：', indent=False)
-    add_body(doc, '① 本成果汇编（正文，17 章 + 附录 A—G）；', indent=False)
+    add_body(doc, '① 本成果汇编（正文，17 章 + 附录 A—G）：Word 版与 PDF 版各 1 份；', indent=False)
     add_body(doc, '② 随附电子附件 4 份；', indent=False)
     add_body(doc, '③ 过程成果报告 34 份（月度 19 份、年度 15 份）。', indent=False)
-    add_body(doc, '全部文件存放于交付物目录，以下逐项列出。'
+    add_body(doc, '全部文件存放于交付物目录，以下逐项列出。汇编 PDF 版由 Word 版直接导出，'
+                  '正文、图表与附录内容一致，目录条目及页码已生成，供打印与分发使用。'
                   '另有 2 份早期版本汇编作为历史版本留档于 _archive/ 子目录，不作为交付版本。',
              indent=False)
     doc.add_heading('一、随附电子附件（4 份）', level=2)

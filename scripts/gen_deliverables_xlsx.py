@@ -232,6 +232,10 @@ def _manifest_rows():
                     '附件3': '13 街镇词云词表（Top24 展示 + 补位候选）',
                     '附件4': '交付物清单（本表）'}.get(name[:3], '')
             rows.append(['电子附件', name, rel, size_of(p), note])
+        elif name.endswith('.pdf'):
+            # v2.17.5：PDF 版成果汇编（由 scripts/export_pdf.py 从 docx 导出）
+            rows.append(['主交付物', name, rel, size_of(p),
+                         '课题成果汇编 PDF 版（打印与分发用，与 Word 版同源）'])
         elif name.endswith(('.png', '.jpg', '.jpeg')):
             # v2.17.4：封面候选底图等图片素材不纳入交付物清单
             continue

@@ -70,3 +70,6 @@ node_modules/
 # WorkBuddy workspace
 .workbuddy/
 .wbapp_*.genie
+
+# PDF 导出工作区（临时中间产物，由 scripts/export_pdf.py 自动创建/清理）
+_pdf_export/

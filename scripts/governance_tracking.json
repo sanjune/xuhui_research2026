@@ -786,7 +786,7 @@
       "n_company": 69,
       "n_community": 101,
       "communities_all": 268,
-      "companies_all": 125
+      "companies_all": 124
     },
     "companies": [
       {
@@ -860,6 +860,15 @@
         "change": 33.3,
         "n_community": 5,
         "n_street": 3
+      },
+      {
+        "name": "上海中誉城市运营服务有限公司",
+        "n2026": 8,
+        "n2025_same": 6,
+        "total": 14,
+        "change": 33.3,
+        "n_community": 3,
+        "n_street": 2
       },
       {
         "name": "上海轻工物业管理有限公司",
@@ -941,15 +950,6 @@
         "change": -14.3,
         "n_community": 4,
         "n_street": 3
-      },
-      {
-        "name": "上海中誉物业管理有限公司",
-        "n2026": 6,
-        "n2025_same": 6,
-        "total": 12,
-        "change": 0.0,
-        "n_community": 3,
-        "n_street": 2
       },
       {
         "name": "上海诚锦物业管理有限公司",
@@ -1419,7 +1419,7 @@
         "total": 14,
         "change": 33.3,
         "street": "长桥",
-        "company": "上海中誉物业管理有限公司"
+        "company": "上海中誉城市运营服务有限公司"
       },
       {
         "name": "田林三街坊",
