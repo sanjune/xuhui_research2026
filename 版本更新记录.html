@@ -95,17 +95,66 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.1</span>
+    <span>当前版本：v2.17.2</span>
     <span>更新日期：2026-10-09</span>
-    <span>累计更新：21 次</span>
+    <span>累计更新：22 次</span>
   </div>
 </div>
 
 <div class="stat-row">
-  <div class="stat-box"><div class="stat-num">13</div><div class="stat-label">报告全文重排</div></div>
-  <div class="stat-box"><div class="stat-num">34</div><div class="stat-label">清单单元格分行</div></div>
-  <div class="stat-box"><div class="stat-num">0</div><div class="stat-label">清单压平残留</div></div>
-  <div class="stat-box"><div class="stat-num">522</div><div class="stat-label">汇编表格总数</div></div>
+  <div class="stat-box"><div class="stat-num">6</div><div class="stat-label">编制说明修正处</div></div>
+  <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">交付物归类类别</div></div>
+  <div class="stat-box"><div class="stat-num">523</div><div class="stat-label">汇编表格总数</div></div>
+  <div class="stat-box"><div class="stat-num">48</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.2 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.2</span>
+    <span class="version-date">2026-10-09</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">📖 编制说明按全文现状重新核对（6 处不符已修正）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">收录范围</span>原写「核心成果十七项」，与第 3 章「成果体系总览」的 <b>7 项成果（#1—#7）</b>口径不符。改为「六篇、共 17 章」，并补全附录 A—G 七项的逐项名称</li>
+        <li><span class="tag tag-fix">数据来源</span>原写「纳统小区、电梯、修缮、失信、底部抬升、征收、拆房、测绘等九类」——只列举 8 项却称九类。按源报告「共整合 9 类数据源」口径补入 12345 热线投诉，并补「小区级 45 字段、街道级 24 字段」数据底座描述</li>
+        <li><span class="tag tag-fix">统计口径</span>原表述把全年同比的<b>基期年份</b>写进了括号，与附录 A 的「全年同比独立标注」不一致。改为与附录 A 同源表述，并补入两套统计单元（全量 / 纳统）的适用边界说明</li>
+        <li><span class="tag tag-fix">随附交付物</span>原写 4 份附件中含「热线与纳统小区全量匹配表、纳统匹配候选与未匹配清单」——这两份已在上一版取消，实为<b>词云清单、交付物清单</b>。已按现行 4 份附件改写，并补过程成果报告与装帧素材说明</li>
+        <li><span class="tag tag-new">图表说明</span>补明附录 D、E 的摘录范围（分别取评分前 100 名、各月前 10 条）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">🗂️ 附录 F 与附件 4 的结构对齐</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">口径冲突</span>交付物目录中的装帧素材此前被清单脚本归入「电子附件」，导致附录 F 的「4 份」与清单的「11 份」互不一致 → 新增「<b>装帧素材</b>」类别独立归类，两处口径统一</li>
+        <li><span class="tag tag-new">附录 F</span>交付成果由三类扩为<b>四类</b>（汇编 / 电子附件 4 份 / 过程成果报告 34 份 / 装帧素材 4 张），新增「二、装订印刷用封面素材」小节</li>
+        <li><span class="tag tag-data">附件 4</span>清单随目录实况刷新：<b>48 个文件</b>（主交付物 1 · 电子附件 4 · 装帧素材 7 · 过程成果报告 34 · 历史版本 2）；此前误列的 4 个已删除封面文件名同步清除</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">📐 正文口径同步（消除卷首与正文的自相矛盾）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">第 2 章</span>「全年同比（含基期年份对比）作为独立标签保留」→ 改为「全年同比作为独立标签单独标注」，与编制说明、附录 A 三处口径一致</li>
+        <li><span class="tag tag-fix">第 16 章</span>降幅叙述中带有基期年份字面 → 改为「同比下降 19.9%」，保留降幅数字、去除基期年份字面，与全站口径方向一致</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title feat">✅ 验收</div>
+      <ul class="item-list">
+        <li><span class="tag tag-data">质量门</span>成稿质检全部通过（<b>523 张表</b> · 105 图 · 26 个一级标题 · 10.1 MB）；清单压平残留 0 处；文本叶子残留 0 类 0 处；13 份报告数值缺失 0 项</li>
+        <li><span class="tag tag-data">幂等</span>汇编 <code>word/document.xml</code> 连跑两次 md5 一致</li>
+        <li><span class="tag tag-opt">对账</span>全站反例 199 处（仍全属已挂账的第 11 项）；关键词-数值冲突 <b>0 处</b></li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.1 ===== -->
