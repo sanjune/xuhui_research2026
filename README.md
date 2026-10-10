@@ -34,7 +34,8 @@
 ├── 课题成果总览.html          # 总目录入口
 ├── index.html                 # GitHub Pages 首页
 ├── *.html                     # 各成果报告HTML
-├── scripts/                   # 数据分析脚本
+├── daily/                     # 12345物业工单日报（日历索引+各日详情）
+├── scripts/                   # 数据分析脚本（含日报生成 gen_daily_report）
 ├── src/                       # AI智能体后端代码
 ├── frontend/                  # 前端demo
 ├── tests/                     # 测试用例
@@ -42,6 +43,16 @@
 ├── 月度分析报告/              # Word格式月度报告
 └── 年度分析报告/              # 街道/集团年度分析报告
 ```
+
+## 📅 12345物业工单日报
+
+按日历查阅每日 12345 热线物业工单日报，支持月历/列表双视图切换、月份翻页、点击日期查看当日详情。
+
+- 生成脚本：`scripts/gen_daily_report_1009.py`（按街镇分类，市局12345原生四级口径）
+- 日历索引：`daily/index.html`（月历视图 + 列表视图）
+- 日报详情：`daily/YYYY-MM-DD.html`
+
+本地预览：`python3 -m http.server 8765 --directory _publish`，访问 http://localhost:8765/
 
 ## 🔧 技术栈
 
