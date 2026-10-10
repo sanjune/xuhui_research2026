@@ -95,9 +95,9 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.7</span>
+    <span>当前版本：v2.17.9</span>
     <span>更新日期：2026-10-10</span>
-    <span>累计更新：27 次</span>
+    <span>累计更新：29 次</span>
   </div>
 </div>
 
@@ -106,6 +106,53 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <div class="stat-box"><div class="stat-num">58</div><div class="stat-label">企业名归一数</div></div>
   <div class="stat-box"><div class="stat-num">321</div><div class="stat-label">汇编 PDF 页数</div></div>
   <div class="stat-box"><div class="stat-num">42</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.9 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.9</span>
+    <span class="version-date">2026-10-10</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">📐 街镇密度分母统一 + 第 9 章街镇口径修正</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">口径</span>街镇投诉密度分母由「仅本期有投诉小区」改为街道<b>全部纳统小区</b>的总户数，不再随「哪些小区恰好有投诉」浮动；993 个纳统小区全区合计 <b>518,389 户</b></li>
+        <li><span class="tag tag-fix">修正</span>湖南路投诉密度随之由 <b>50.7</b> 修正为 <b>49.0 件/千户</b>（897 ÷ 18,299 × 1000），仍居全区首位；密度排名其余位次不变</li>
+        <li><span class="tag tag-fix">修正</span>第 9 章《徐汇区1-8月工单综合分析与目标测算》街镇统计口径与第 8 章《街镇专项分析》对齐：13 个街镇明细合计 <b>13,719 件</b>（原时间筛选边界写法漏计 8 月 31 日带时点工单 92 件，误得 13,627 件）；全区口径仍为 13,726 件（含归属街道为空的工单）</li>
+        <li><span class="tag tag-imp">同步</span>桌面版《徐汇区物业治理工单1-8月综合分析报告》街镇明细表、底部抬升按街镇汇总表一并重算（底部抬升可匹配小区 <b>78 个</b>、2026年1-8月 <b>2,354 件</b>、同比 <b>-16.9%</b>）</li>
+        <li><span class="tag tag-data">口径说明</span>《编制说明》《第 2 章 数据范围与统计口径》《附录 A 统计口径说明》三处同步更新密度分母与两组同期总量的表述</li>
+        <li><span class="tag tag-opt">质量门</span>全站数字对账新增「密度分母（全区户数）」基准项，以及「湖南路密度旧值」「旧密度分母」「第 9 章旧街镇口径」三条反例，街镇报告与第 9 章同口径参与对账</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== v2.17.8 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-new">NEW</span>
+    <span class="version-num">v2.17.8</span>
+    <span class="version-date">2026-10-10</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">📚 街镇专项分析报告（13 镇分册）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>在原《街镇专项分析报告》之外，另建独立文件夹 <code>街镇专项分析报告（13镇分册）/</code>，按 13 个街镇各出一份 Word，共 <b>13 份</b></li>
+        <li><span class="tag tag-imp">内容</span>每份＝该街镇完整画像（趋势与同比、下降归因、结构画像、热点对象、诉求主题词云、重复投诉与数据质量、风险预警与治理成效、外部数据关联、底部抬升小区、结论要点），并保留全区口径说明</li>
+        <li><span class="tag tag-imp">附录</span>文末加「附　全区位次参照」：该镇在全区总量排名表与投诉密度排名表中的对应行，另附街镇对比图与下降贡献度排行两图，使单册脱离母报告亦可自洽阅读</li>
+        <li><span class="tag tag-new">脚本</span>新增 <code>scripts/gen_street_docx.py</code>，从渲染版母报告按面板拆分生成，图表与词云按镇自动配齐（各镇 5 张统计图 + 词云 + 2 张全区图）</li>
+        <li><span class="tag tag-opt">质量门</span>13 份分册逐份通过清单压平审计与隐私扫描；构建中间产物 <code>_build/</code> 已纳入忽略规则</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.7 ===== -->
