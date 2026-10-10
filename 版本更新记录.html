@@ -95,17 +95,65 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.6</span>
-    <span>更新日期：2026-10-09</span>
-    <span>累计更新：26 次</span>
+    <span>当前版本：v2.17.7</span>
+    <span>更新日期：2026-10-10</span>
+    <span>累计更新：27 次</span>
   </div>
 </div>
 
 <div class="stat-row">
   <div class="stat-box"><div class="stat-num">466</div><div class="stat-label">归并工单行数</div></div>
   <div class="stat-box"><div class="stat-num">58</div><div class="stat-label">企业名归一数</div></div>
-  <div class="stat-box"><div class="stat-num">320</div><div class="stat-label">汇编 PDF 页数</div></div>
+  <div class="stat-box"><div class="stat-num">321</div><div class="stat-label">汇编 PDF 页数</div></div>
   <div class="stat-box"><div class="stat-num">42</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.7 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-fix">FIX</span>
+    <span class="version-num">v2.17.7</span>
+    <span class="version-date">2026-10-10</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title fix">🔎 依据《成果汇编不合理之处审查报告》逐项复核</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">逐项复核</span>对审查报告列出的 17 项问题逐条回溯数据源与口径，判定为 <b>必须修改 8 项</b>、属统计口径差异需补说明 <b>4 项</b>、经核实不成立 <b>3 项</b>（未作改动）</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 《物业投诉根因分析报告》第二至第五节整章脚本重算</div>
+      <ul class="item-list">
+        <li><span class="tag tag-imp">重算</span>上述章节原由一份早期分组数据驱动，与同报告后续章节采用的统计范围不一致，形成同页两套数。现新增 <code>scripts/recalc_rootcause_groups.py</code>（产分组数据）与 <code>scripts/update_rootcause_groups.py</code>（回填页面），统一到与后续章节一致的「纳统小区 993 个名单内 · 2026 年 1-8 月 vs 2025 年同期」口径</li>
+        <li><span class="tag tag-imp">幂等</span>回填脚本可重复执行，连续运行三次产物逐字节一致（md5 校验），避免反复回填造成缩进与换行漂移</li>
+        <li><span class="tag tag-fix">变化</span>硬件分组：无电梯小区由 738 个改为 <b>737</b> 个，每千户投诉由 176 件改为 <b>24.6</b> 件，同比由 +41.9% 改为 <b>-5.9%</b>；有电梯小区同比 <b>-10.7%</b></li>
+        <li><span class="tag tag-fix">变化</span>治理分组：有业委会 <b>871</b> 个 / 无业主大会 <b>122</b> 个，两类投诉量差异由「低 13.9%」修正为「低 <b>23.3%</b>」；修缮分组由同页两个互斥值统一为 <b>19.0</b> 件</li>
+        <li><span class="tag tag-fix">变化</span>物业费分组：酬金制小区投诉总量比包干制低 <b>20.3%</b>；车位分组与物业企业榜单按新口径整体重排（企业名沿用更名归并后的单一主体口径）</li>
+        <li><span class="tag tag-opt">说明</span>「物业费分段」沿用纳统档案「收费标准」原始口径（小区级关联底座未导出该字段），已在表前加注，与本章其余分组的重算口径区分说明</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title fix">🔧 跨章节数字一致性</div>
+      <ul class="item-list">
+        <li><span class="tag tag-fix">12345 报告</span>月均投诉量与累计降幅按主数据重算：月均由 2,456 件降至 <b>1,716</b> 件，累计降幅 <b>-30.1%</b>，月均减少 <b>740</b> 件；首页指标卡同比标注为 <b>-13.1%</b>，与全区口径一致</li>
+        <li><span class="tag tag-fix">预警清单</span>正文点名的三个同比与明细表逐一对齐：海珀旭晖 <b>+562.5%</b>、欣嘉苑1-3期 <b>+212.0%</b>、永福一区 <b>+640.0%</b></li>
+        <li><span class="tag tag-fix">治理追踪</span>田林街道 2026 年同期同比修正为 <b>+15.2%</b>（与街道明细表一致）；改善小区由 218 个更正为 <b>217</b> 个；建议段的整体降幅 <b>-15.7%</b> 补注分母为 390 个治理追踪小区</li>
+      </ul>
+    </div>
+
+    <div class="section-group">
+      <div class="section-title opt">📖 汇编卷首口径声明同步</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">同步</span>「编制说明」第三条、第 2 章「数据范围与统计口径」与附录 A 三处同步补入三组易混数字（工单与原始记录总量、两个同期总量、底部抬升名单分级计数），并统一为「一是／二是／三是」句式</li>
+        <li><span class="tag tag-opt">同步</span>第 2 章数据集字段数由 21 个更正为 <b>22</b> 个，与主数据实际列数（含企业名填报原值溯源列）一致</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.6 ===== -->
