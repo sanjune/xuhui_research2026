@@ -72,7 +72,7 @@ PAGES = [
 # 报告引用的本地资源（目录级复制）
 #   cloud/ —— 云服务接入资产（publicConfig + Auth/Database 客户端 + 样式），
 #             由 gen_wordcloud_review.py 注入到审核页；属应用源码，必须随站点发布
-ASSET_DIRS = ["assets", "词云图", "cloud"]
+ASSET_DIRS = ["assets", "词云图", "cloud", "daily"]
 # 发布目录内**禁止**出现的东西（敏感输入兜底断言）
 FORBIDDEN_EXT = {".pkl", ".db", ".xlsx", ".xls", ".csv", ".docx", ".doc", ".py", ".bak", ".off"}
 
@@ -102,6 +102,14 @@ def build_index_html(meta):
             f'        <div class="card-d">{desc}</div>\n'
             f'      </a>' for f, title, desc in items
         )
+        # 专项分析组末尾追加日报入口
+        if cat == "专项分析":
+            lis += (
+                '\n      <a class="card" href="daily/index.html">\n'
+                '        <div class="card-t">12345 物业工单日报</div>\n'
+                '        <div class="card-d">按日历查阅每日 12345 热线物业工单日报（按街镇分类）</div>\n'
+                '      </a>'
+            )
         cards.append(
             f'  <section class="group">\n'
             f'    <div class="g-head"><h2>{cat}</h2><span class="g-sub">{CAT_DESC[cat]}</span></div>\n'

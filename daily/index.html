@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12345物业工单日报 · 日历索引</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+         background:#f4f6fa; color:#1f2937; line-height:1.6; }
+  header { background:linear-gradient(135deg,#0d47a1,#1976d2); color:#fff; padding:30px 24px 24px; }
+  .wrap { max-width:1080px; margin:0 auto; }
+  .back { display:inline-block; font-size:13px; color:rgba(255,255,255,.9); text-decoration:none;
+          margin-bottom:14px; }
+  .back:hover { color:#fff; text-decoration:underline; }
+  header h1 { margin:0 0 6px; font-size:24px; letter-spacing:.5px; }
+  header p { margin:0; opacity:.9; font-size:13px; }
+  main { padding:24px 24px 60px; }
+  .toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+             gap:12px; margin-bottom:20px; }
+  .month-nav { display:flex; align-items:center; gap:14px; background:#fff;
+               border:1px solid #e3e8ef; border-radius:8px; padding:6px 10px; }
+  .month-nav button { border:none; background:#eef2f7; color:#0d47a1; font-size:15px;
+                      width:30px; height:30px; border-radius:6px; cursor:pointer; font-weight:600; }
+  .month-nav button:hover { background:#dbeafe; }
+  .month-nav .m-label { font-size:15px; font-weight:600; min-width:120px; text-align:center; }
+  .view-toggle { display:flex; background:#fff; border:1px solid #e3e8ef; border-radius:8px; overflow:hidden; }
+  .view-toggle button { border:none; background:#fff; color:#5b6572; font-size:13px;
+                        padding:8px 16px; cursor:pointer; }
+  .view-toggle button.active { background:#0d47a1; color:#fff; }
+  .cal-wrap { background:#fff; border:1px solid #e3e8ef; border-radius:10px; padding:14px; }
+  .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .cal-grid .dow { text-align:center; font-size:12px; color:#6b7280; font-weight:600;
+                   padding:6px 0; border-bottom:1px solid #e3e8ef; }
+  .cal-cell { aspect-ratio:1.15; border:1px solid #eef1f5; border-radius:8px; padding:6px 8px;
+              display:flex; flex-direction:column; justify-content:space-between;
+              background:#fff; position:relative; }
+  .cal-cell.empty { background:#f8fafc; border-color:#f1f4f8; }
+  .cal-cell .d-num { font-size:14px; font-weight:600; color:#374151; }
+  .cal-cell.empty .d-num { color:#c7ccd6; }
+  .cal-cell.has-report { border-color:#1976d2; background:#f0f7ff; cursor:pointer; }
+  .cal-cell.has-report:hover { box-shadow:0 4px 12px rgba(25,118,210,.18); border-color:#0d47a1; }
+  .cal-cell.has-report .d-num { color:#0d47a1; }
+  .cal-cell .d-meta { font-size:11px; color:#1976d2; font-weight:600; }
+  .cal-cell .d-rep { font-size:10px; color:#b91c1c; }
+  .cal-cell.has-report::after { content:"查看"; position:absolute; right:6px; bottom:5px;
+              font-size:10px; color:#1976d2; opacity:0; transition:opacity .15s; }
+  .cal-cell.has-report:hover::after { opacity:1; }
+  .cal-legend { display:flex; gap:18px; margin-top:14px; font-size:12px; color:#6b7280; }
+  .cal-legend .sw { display:inline-block; width:14px; height:14px; border-radius:3px;
+                    vertical-align:middle; margin-right:4px; }
+  .empty-tip { text-align:center; color:#9ca3af; font-size:14px; padding:40px 0; }
+  .list-wrap { display:flex; flex-direction:column; gap:12px; }
+  .rpt-card { display:block; background:#fff; border:1px solid #e3e8ef; border-radius:10px;
+              padding:16px 18px; text-decoration:none; color:inherit; transition:box-shadow .18s,transform .18s; }
+  .rpt-card:hover { box-shadow:0 6px 20px rgba(25,118,210,.14); transform:translateY(-2px); }
+  .rpt-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+  .rpt-date { font-size:17px; font-weight:600; color:#0d47a1; }
+  .rpt-wk { font-size:13px; color:#6b7280; margin-left:8px; }
+  .rpt-n { font-size:13px; color:#1976d2; font-weight:600; }
+  .rpt-stats { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+  .rpt-tag { background:#eef4fb; color:#0d47a1; font-size:12px; padding:3px 8px; border-radius:5px; }
+  .rpt-tag.rep { background:#fee2e2; color:#b91c1c; }
+  .rpt-main { font-size:13px; color:#374151; }
+  .rpt-main b { color:#0d47a1; }
+  footer { text-align:center; color:#8a94a6; font-size:12px; padding:0 24px 40px; }
+  @media (max-width:640px) {
+    .cal-cell { aspect-ratio:1; }
+    .cal-cell .d-meta, .cal-cell .d-rep { font-size:10px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html" onclick="location.href='../index.html';return false;">← 返回课题成果门户</a>
+    <h1>12345 物业工单日报 · 日历索引</h1>
+    <p>按日期查阅每日 12345 热线物业工单日报 ｜ 数据源：市局同步 xlsx ｜ 口径：原生四级分类</p>
+  </div>
+</header>
+<main class="wrap">
+  <div class="toolbar">
+    <div class="month-nav">
+      <button id="prevMonth" title="上个月">‹</button>
+      <span class="m-label" id="monthLabel">2026年10月</span>
+      <button id="nextMonth" title="下个月">›</button>
+    </div>
+    <div class="view-toggle">
+      <button id="calBtn" class="active">月历视图</button>
+      <button id="listBtn">列表视图</button>
+    </div>
+  </div>
+
+  <div id="calView" class="cal-wrap">
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-legend">
+      <span><span class="sw" style="background:#f0f7ff;border:1px solid #1976d2;"></span>有日报（可点击查看）</span>
+      <span><span class="sw" style="background:#f8fafc;border:1px solid #f1f4f8;"></span>无日报</span>
+    </div>
+  </div>
+
+  <div id="listView" class="list-wrap" style="display:none;"></div>
+</main>
+<footer>
+  日报由 <code>scripts/gen_daily_report_1009.py</code> 生成 ｜ 索引页数据维护：见下方 REPORTS 数组
+</footer>
+
+<script>
+const REPORTS = [
+  { date:'2026-10-09', weekday:'周五', total:104, matched:76, unmatched:28,
+    rep:32, repRate:30.8, streets:13,
+    mainCat:['物业安保 28','物业维修添置 16','纠纷协调 12'],
+    file:'2026-10-09.html' }
+];
+
+const WEEKDAYS = ['一','二','三','四','五','六','日'];
+let curYear = 2026, curMonth = 9;
+
+const calGrid = document.getElementById('calGrid');
+const monthLabel = document.getElementById('monthLabel');
+const listView = document.getElementById('listView');
+const calView = document.getElementById('calView');
+
+function reportMap() {
+  const m = {};
+  REPORTS.forEach(r => { m[r.date] = r; });
+  return m;
+}
+
+function renderCalendar() {
+  monthLabel.textContent = `${curYear}年${curMonth}月`;
+  const first = new Date(curYear, curMonth - 1, 1);
+  let startDow = first.getDay();
+  startDow = startDow === 0 ? 7 : startDow;
+  const daysInMonth = new Date(curYear, curMonth, 0).getDate();
+  const rmap = reportMap();
+  let html = '';
+  WEEKDAYS.forEach(d => { html += `<div class="dow">${d}</div>`; });
+  for (let i = 1; i < startDow; i++) html += '<div class="cal-cell empty"></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const mm = String(curMonth).padStart(2,'0');
+    const dd = String(d).padStart(2,'0');
+    const key = `${curYear}-${mm}-${dd}`;
+    const r = rmap[key];
+    if (r) {
+      html += `<a class="cal-cell has-report" href="${r.file}">
+        <div class="d-num">${d}</div>
+        <div>
+          <div class="d-meta">${r.total} 件</div>
+          <div class="d-rep">重复 ${r.rep}</div>
+        </div>
+      </a>`;
+    } else {
+      html += `<div class="cal-cell"><div class="d-num">${d}</div></div>`;
+    }
+  }
+  const totalCells = startDow - 1 + daysInMonth;
+  const tail = (7 - (totalCells % 7)) % 7;
+  for (let i = 0; i < tail; i++) html += '<div class="cal-cell empty"></div>';
+  calGrid.innerHTML = html;
+}
+
+function renderList() {
+  const sorted = [...REPORTS].sort((a,b) => b.date.localeCompare(a.date));
+  const monthReports = sorted.filter(r => {
+    const [y,m] = r.date.split('-');
+    return parseInt(y) === curYear && parseInt(m) === curMonth;
+  });
+  if (monthReports.length === 0) {
+    listView.innerHTML = `<div class="empty-tip">${curYear}年${curMonth}月暂无日报数据</div>`;
+    return;
+  }
+  listView.innerHTML = monthReports.map(r => `
+    <a class="rpt-card" href="${r.file}">
+      <div class="rpt-head">
+        <span><span class="rpt-date">${r.date}</span><span class="rpt-wk">${r.weekday}</span></span>
+        <span class="rpt-n">${r.total} 件工单</span>
+      </div>
+      <div class="rpt-stats">
+        <span class="rpt-tag">已关联 ${r.matched}</span>
+        <span class="rpt-tag">待关联 ${r.unmatched}</span>
+        <span class="rpt-tag">涉及 ${r.streets} 街镇</span>
+        <span class="rpt-tag rep">重复案件 ${r.rep} · ${r.repRate}%</span>
+      </div>
+      <div class="rpt-main">主要类别：<b>${r.mainCat.join('、')}</b></div>
+    </a>
+  `).join('');
+}
+
+document.getElementById('prevMonth').onclick = () => {
+  curMonth--; if (curMonth < 1) { curMonth = 12; curYear--; }
+  renderCalendar(); renderList();
+};
+document.getElementById('nextMonth').onclick = () => {
+  curMonth++; if (curMonth > 12) { curMonth = 1; curYear++; }
+  renderCalendar(); renderList();
+};
+document.getElementById('calBtn').onclick = () => {
+  document.getElementById('calBtn').classList.add('active');
+  document.getElementById('listBtn').classList.remove('active');
+  calView.style.display = ''; listView.style.display = 'none';
+};
+document.getElementById('listBtn').onclick = () => {
+  document.getElementById('listBtn').classList.add('active');
+  document.getElementById('calBtn').classList.remove('active');
+  calView.style.display = 'none'; listView.style.display = '';
+};
+
+renderCalendar();
+renderList();
+</script>
+</body>
+</html>
