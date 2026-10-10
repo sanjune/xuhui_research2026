@@ -133,6 +133,27 @@ def load_households() -> dict:
     return m
 
 
+def load_street_households() -> tuple:
+    """按街镇汇总**全部纳统小区**户数（密度分母的唯一口径源）。
+
+    2026-10-10 口径统一：密度分母＝该街镇全部纳统小区户数（不区分本期有无投诉），
+    与《徐汇区1-8月工单综合分析与目标测算》完全一致，全区合计 518,389 户。
+    旧口径「只计 2026年1-8月有投诉小区」会把分母压小、密度虚高（全区 507,982 户，
+    湖南路 50.7 vs 全量口径 49.0），且使密度取决于「哪些小区恰好有投诉」，已废弃。
+
+    返回 (街镇 → 户数合计, 街镇 → 纳统小区数)。
+    """
+    try:
+        df = pd.read_pickle(NATO)
+    except FileNotFoundError:
+        print("  ⚠ 未找到 community_linked_data.pkl，密度分母将为空")
+        return {}, {}
+    df = df[df["total_households"] > 0]
+    hh = df.groupby("street")["total_households"].sum().to_dict()
+    cnt = df.groupby("street")["community_name"].nunique().to_dict()
+    return {k: int(v) for k, v in hh.items()}, {k: int(v) for k, v in cnt.items()}
+
+
 def period(df, year, m1=1, m2=12) -> pd.DataFrame:
     return df[(df["year"] == year) & (df["month"] >= m1) & (df["month"] <= m2)]
 
@@ -437,6 +458,8 @@ def keywords_of(d: pd.DataFrame, topn=KEYWORD_TOPN, street=None, rep_ids=None):
 def build(do_dedup=True) -> dict:
     df = load_data()
     households_map = load_households()
+    # 密度分母：该街镇**全部纳统小区**户数（2026-10-10 口径统一，全区 518,389 户）
+    hh_all_st, nato_cnt_st = load_street_households()
     main = df[df["street"] != "无"].copy()
     streets = sorted(main["street"].unique())
 
@@ -529,8 +552,9 @@ def build(do_dedup=True) -> dict:
         comm_valid = communities[~communities.isin(["", "无", "nan"])]
         comm_list = list(comm_valid.unique())
         active_communities = int(comm_valid.nunique())
-        # 户数：把热线小区名归并到纳统小区后累加（同一小区的多种写法只算一次），
-        # 再取档案户数。分母与《纳统小区 (2026 更新版)》口径一致
+        # 户数（密度分母）：该街镇**全部纳统小区**户数 —— 与《徐汇区1-8月工单综合分析
+        # 与目标测算》同口径（全区合计 518,389 户）。旧口径「只计本期有投诉小区」会
+        # 使分母随「哪些小区恰好有投诉」浮动、密度虚高，已于 2026-10-10 废弃。
         units: dict = {}
         for c in comm_list:
             u = NATO_OF.get(c)
@@ -539,8 +563,10 @@ def build(do_dedup=True) -> dict:
             hh = households_map.get(NM.norm(u))
             if hh:
                 units[u] = hh
-        households = int(sum(units.values()))
-        hh_matched = len(units)
+        hh_active = int(sum(units.values()))          # 旧口径（本期有投诉小区），仅留档
+        # 密度分母：该街镇**全部纳统小区**户数（与第 9 章《综合分析》一致）
+        households = int(hh_all_st.get(st, 0))
+        hh_matched = int(nato_cnt_st.get(st, 0))
         core = {
             "n2026": a26, "n2025_same": a25, "n2024_same": a24,
             "n2025_full": int(len(n25f[n25f["street"] == st])),
@@ -552,6 +578,7 @@ def build(do_dedup=True) -> dict:
             "decline": int(dec),
             "active_communities": active_communities,
             "households": households,
+            "households_active": hh_active,        # 旧口径分母，仅留档
             "households_matched": hh_matched,
             # 案件级：连带工单合并后的案件数（同一诉求多次来电只算 1 件）
             "cases2026": len({case_key.get(o, o) for o in s26["order_id"].astype(str)}),
@@ -827,7 +854,7 @@ def build(do_dedup=True) -> dict:
     for i, r in enumerate(risk_sorted, 1):
         r["rank_risk"] = i
     # 投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（件/千户）
-    # 户数为该街镇「2026年1-8月有投诉小区」的总户数，与有投诉小区数口径一致
+    # 户数为该街镇全部纳统小区户数（2026-10-10 口径统一，与第 9 章一致；全区 518,389 户）
     for r in overview:
         r["density"] = round(r["n2026"] / r["households"] * 1000, 1) if r["households"] else None
         r["density_per_community"] = round(r["n2026"] / r["communities"], 1) if r["communities"] else None
@@ -848,7 +875,7 @@ def build(do_dedup=True) -> dict:
         sb["insights"] = make_insights(sb, r, district, dist_cat, d26)
 
     meta = {
-        "generated": "2026-09-20",
+        "generated": "2026-10-10",
         "period_label": f"{YEAR_NOW}年1-{MONTH_NOW}月",
         "compare_label": f"{YEAR_PREV}年1-{MONTH_NOW}月",
         "street_count": len(streets),
@@ -861,9 +888,9 @@ def build(do_dedup=True) -> dict:
             f"<b>13 个街镇合计</b> = {d26:,} vs {d25s:,} → {district['yoy_streets']}%。"
             f"正文中的「全区同比」一律取前者；贡献度分母取后者（见第四节）",
             "投诉密度 = 2026年1-8月投诉量 ÷ 户数 × 1000（件/千户）；"
-            "户数为该街镇「2026年1-8月有投诉小区」按<b>纳统小区归并后</b>的总户数，"
-            "取自《纳统小区 (2026 更新版)》档案 total_households 字段（993 个纳统小区；"
-            "同一小区的别名/曾用名只计一次；工单主数据与 SQLite 库均无户数字段）",
+            "户数为该街镇<b>全部纳统小区</b>的总户数（不区分本期有无投诉），"
+            "取自《纳统小区 (2026 更新版)》档案 total_households 字段（993 个纳统小区，"
+            "全区合计 518,389 户；工单主数据与 SQLite 库均无户数字段）",
             f"{YEAR_NOW}年 9-12 月数据未产生，图表以空值呈现",
             "重复投诉率：同小区内容完全重复 ∪ 催办关键词 ∪ 同小区同类≥3次 ∪ 文本相似≥0.6，按街镇 1-8 月累计计算",
             "治理成效为 2026年1-8月 vs 2025年同期 口径（已排除「其他」「房屋交易纠纷」等非物业类）；"

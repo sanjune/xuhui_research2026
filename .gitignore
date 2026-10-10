@@ -76,3 +76,6 @@ node_modules/
 
 # PDF 导出工作区（临时中间产物，由 scripts/export_pdf.py 自动创建/清理）
 _pdf_export/
+
+# 仓库历史重写前的完整备份（约 35MB，严禁入库；仅本地留存）
+*.bundle

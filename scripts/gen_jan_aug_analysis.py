@@ -30,8 +30,8 @@ df = pd.read_pickle('data/merged_cleaned.pkl')
 df['accept_time']=pd.to_datetime(df['accept_time'])
 df['y']=df['accept_time'].dt.year
 df['m']=df['accept_time'].dt.month
-cur = df[(df.street!='无') & (df.y==2026) & (df['accept_time']<='2026-08-31')]
-prev = df[(df.street!='无') & (df.y==2025) & (df['accept_time']<='2025-08-31')]
+cur = df[(df.street!='无') & (df.y==2026) & (df['accept_time']<'2026-09-01')]
+prev = df[(df.street!='无') & (df.y==2025) & (df['accept_time']<'2025-09-01')]
 ct = cur.groupby('street').size().rename('c2026')
 pt = prev.groupby('street').size().rename('c2025')
 cd = pd.read_pickle('data/community_linked_data.pkl')
@@ -191,7 +191,7 @@ border-radius:8px;padding:14px 18px;margin:12px 0;font-size:14px}
 </style></head><body><div class="wrap">
 
 <h1>徐汇区物业投诉 1–8 月综合分析与目标测算</h1>
-<div class="sub">数据周期 2024.01–2026.08 ｜ 街镇对比用项目主数据口径（__ST26__件）｜ 全市对比用市局十四类口径（13,726件）｜ 生成于 2026-09-29</div>
+<div class="sub">数据周期 2024.01–2026.08 ｜ 街镇对比用项目主数据口径（__ST26__件）｜ 全市对比用市局十四类口径（13,726件）｜ 生成于 2026-10-10</div>
 
 <div class="callout danger"><b>核心判断：</b>徐汇 1–8 月累计同比 <b>-13.1%</b>（全市第 13/17，低于全市平均 -15.4%），但月度环比已连续 4 个月上涨，<b>8 月单月同比转正 +2.84%</b>、日均已达 <b>72 件</b>。若 9–12 月维持 8 月高位，全年降幅将收窄至约 <b>-5.6%</b>、排名跌至第 16/17。<b>要保持全年下降态势，9–12 月日均工单需控制在 51–56 件</b>，较 8 月回落约 16–21 件/日。</div>
 
@@ -214,7 +214,7 @@ border-radius:8px;padding:14px 18px;margin:12px 0;font-size:14px}
 <div class="card"><h3>同比降幅排序</h3><div class="chart s" id="c-street2"></div></div>
 <div class="card"><h3>诉求密度对比</h3><div class="chart s" id="c-street3"></div></div>
 </div>
-<div class="callout warn"><b>街镇观察：</b>① <b>田林（+14.3%）、漕河泾（+3.4%）</b>是仅有的两个同比上升街镇，田林尤甚，需重点介入；② <b>长桥（-32.1%）、枫林路（-25.6%）、康健（-24.4%）</b>降幅领先，治理成效突出；③ 密度上 <b>湖南路（48.9）、天平路（37.6）</b>远高于均值，老城区压力集中；康健（18.4）、龙华（21.2）密度最低。</div>
+<div class="callout warn"><b>街镇观察：</b>① <b>田林（+15.2%）、漕河泾（+4.0%）</b>是仅有的两个同比上升街镇，田林尤甚，需重点介入；② <b>长桥（-31.1%）、枫林路（-25.2%）、康健新村（-23.6%）</b>降幅领先，治理成效突出；③ 密度上 <b>湖南路（49.0）、天平路（37.7）</b>远高于均值，老城区压力集中；康健新村（18.6）、龙华（21.4）密度最低。</div>
 
 <h2><span class="n">二、</span>徐汇在全市的水平与月度走势</h2>
 <div class="card">
@@ -256,9 +256,9 @@ border-radius:8px;padding:14px 18px;margin:12px 0;font-size:14px}
 <div class="callout"><b>行动建议：</b>
 <div style="margin-top:8px;font-size:13.5px;line-height:1.8">
 1. <b>立即设日均红线 56 件</b>（维持位次线），争取 51 件（进前 9 线）；8 月已达 72 件，须回落 ≥16 件/日。<br>
-2. <b>重点压降反弹街镇</b>：田林（+14.3%）、漕河泾（+3.4%）为同比上升区，是拖累全局的主因，建议单列专项。<br>
+2. <b>重点压降反弹街镇</b>：田林（+15.2%）、漕河泾（+4.0%）为同比上升区，是拖累全局的主因，建议单列专项。<br>
 3. <b>夏季高峰前置干预</b>：7–8 月为历史高峰且 2026 反弹强，9 月起对停车管理、群租、物业安保等高频类目开展集中整治。<br>
-4. <b>密度治理聚焦湖南路、天平路</b>（老城区密度超均值 1.5 倍），结合加装电梯、老旧小区改造推进根源治理。<br>
+4. <b>密度治理聚焦湖南路、天平路</b>（两镇密度显著高于全区均值），结合加装电梯、老旧小区改造推进根源治理。<br>
 5. <b>9 月数据入库后</b>可一键更新本测算；若 9 月仍 >2,200 件，建议将全年目标从"维持-13.1%"下调为"保-10%底线"。
 </div></div>
 
