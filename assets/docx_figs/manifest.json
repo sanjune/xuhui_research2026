@@ -3,30 +3,35 @@
   {
    "order": 0,
    "id": "chart-monthly-trend",
+   "label": "",
    "file": "assets/docx_figs/12345投诉量下降数据报告/00_chart-monthly-trend.png",
    "bytes": 142776
   },
   {
    "order": 1,
    "id": "chart-monthly-yoy",
+   "label": "",
    "file": "assets/docx_figs/12345投诉量下降数据报告/01_chart-monthly-yoy.png",
    "bytes": 84928
   },
   {
    "order": 2,
    "id": "chart-category",
+   "label": "",
    "file": "assets/docx_figs/12345投诉量下降数据报告/02_chart-category.png",
    "bytes": 114790
   },
   {
    "order": 3,
    "id": "chart-street",
+   "label": "",
    "file": "assets/docx_figs/12345投诉量下降数据报告/03_chart-street.png",
    "bytes": 100397
   },
   {
    "order": 4,
    "id": "chart-company",
+   "label": "",
    "file": "assets/docx_figs/12345投诉量下降数据报告/04_chart-company.png",
    "bytes": 95292
   }
@@ -35,18 +40,21 @@
   {
    "order": 0,
    "id": "chart-loop",
+   "label": "",
    "file": "assets/docx_figs/治理效果追踪分析报告/00_chart-loop.png",
    "bytes": 109768
   },
   {
    "order": 1,
    "id": "chart-category",
+   "label": "",
    "file": "assets/docx_figs/治理效果追踪分析报告/01_chart-category.png",
    "bytes": 116028
   },
   {
    "order": 2,
    "id": "chart-street",
+   "label": "",
    "file": "assets/docx_figs/治理效果追踪分析报告/02_chart-street.png",
    "bytes": 105044
   }
@@ -55,12 +63,14 @@
   {
    "order": 0,
    "id": "chart-level",
+   "label": "",
    "file": "assets/docx_figs/高风险小区预警清单/00_chart-level.png",
    "bytes": 108718
   },
   {
    "order": 1,
    "id": "chart-factor",
+   "label": "",
    "file": "assets/docx_figs/高风险小区预警清单/01_chart-factor.png",
    "bytes": 135131
   }
@@ -69,42 +79,49 @@
   {
    "order": 0,
    "id": "c-street1",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/00_c-street1.png",
    "bytes": 158762
   },
   {
    "order": 1,
    "id": "c-street2",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/01_c-street2.png",
    "bytes": 76665
   },
   {
    "order": 2,
    "id": "c-street3",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/02_c-street3.png",
    "bytes": 72867
   },
   {
    "order": 3,
    "id": "c-city1",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/03_c-city1.png",
    "bytes": 107804
   },
   {
    "order": 4,
    "id": "c-xh1",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/04_c-xh1.png",
    "bytes": 67548
   },
   {
    "order": 5,
    "id": "c-xh2",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/05_c-xh2.png",
    "bytes": 76284
   },
   {
    "order": 6,
    "id": "c-target1",
+   "label": "",
    "file": "assets/docx_figs/徐汇区1-8月工单综合分析与目标测算/06_c-target1.png",
    "bytes": 101418
   }
@@ -113,12 +130,14 @@
   {
    "order": 0,
    "id": "chart-missing",
+   "label": "",
    "file": "assets/docx_figs/数据质量优化专项报告/00_chart-missing.png",
    "bytes": 102726
   },
   {
    "order": 1,
    "id": "chart-trend",
+   "label": "",
    "file": "assets/docx_figs/数据质量优化专项报告/01_chart-trend.png",
    "bytes": 80309
   }
@@ -127,30 +146,35 @@
   {
    "order": 0,
    "id": "chart1",
+   "label": "",
    "file": "assets/docx_figs/重点问题专题分析报告（5份）/00_chart1.png",
    "bytes": 130064
   },
   {
    "order": 1,
    "id": "chart2",
+   "label": "",
    "file": "assets/docx_figs/重点问题专题分析报告（5份）/01_chart2.png",
    "bytes": 133066
   },
   {
    "order": 2,
    "id": "chart3",
+   "label": "",
    "file": "assets/docx_figs/重点问题专题分析报告（5份）/02_chart3.png",
    "bytes": 135852
   },
   {
    "order": 3,
    "id": "chart4",
+   "label": "",
    "file": "assets/docx_figs/重点问题专题分析报告（5份）/03_chart4.png",
    "bytes": 128552
   },
   {
    "order": 4,
    "id": "chart5",
+   "label": "",
    "file": "assets/docx_figs/重点问题专题分析报告（5份）/04_chart5.png",
    "bytes": 124212
   }
