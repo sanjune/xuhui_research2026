@@ -57,6 +57,9 @@ _publish/
 _rendered/
 assets/docx_figs/
 
+# 街镇分册构建中间产物（可重跑 scripts/gen_street_docx.py 再生）
+_build/
+
 # IDE
 .idea/
 .vscode/

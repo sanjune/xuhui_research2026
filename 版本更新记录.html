@@ -95,9 +95,9 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.7</span>
+    <span>当前版本：v2.17.8</span>
     <span>更新日期：2026-10-10</span>
-    <span>累计更新：27 次</span>
+    <span>累计更新：28 次</span>
   </div>
 </div>
 
@@ -106,6 +106,29 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <div class="stat-box"><div class="stat-num">58</div><div class="stat-label">企业名归一数</div></div>
   <div class="stat-box"><div class="stat-num">321</div><div class="stat-label">汇编 PDF 页数</div></div>
   <div class="stat-box"><div class="stat-num">42</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.8 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-new">NEW</span>
+    <span class="version-num">v2.17.8</span>
+    <span class="version-date">2026-10-10</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title feat">📚 街镇专项分析报告（13 镇分册）</div>
+      <ul class="item-list">
+        <li><span class="tag tag-new">新增</span>在原《街镇专项分析报告》之外，另建独立文件夹 <code>街镇专项分析报告（13镇分册）/</code>，按 13 个街镇各出一份 Word，共 <b>13 份</b></li>
+        <li><span class="tag tag-imp">内容</span>每份＝该街镇完整画像（趋势与同比、下降归因、结构画像、热点对象、诉求主题词云、重复投诉与数据质量、风险预警与治理成效、外部数据关联、底部抬升小区、结论要点），并保留全区口径说明</li>
+        <li><span class="tag tag-imp">附录</span>文末加「附　全区位次参照」：该镇在全区总量排名表与投诉密度排名表中的对应行，另附街镇对比图与下降贡献度排行两图，使单册脱离母报告亦可自洽阅读</li>
+        <li><span class="tag tag-new">脚本</span>新增 <code>scripts/gen_street_docx.py</code>，从渲染版母报告按面板拆分生成，图表与词云按镇自动配齐（各镇 5 张统计图 + 词云 + 2 张全区图）</li>
+        <li><span class="tag tag-opt">质量门</span>13 份分册逐份通过清单压平审计与隐私扫描；构建中间产物 <code>_build/</code> 已纳入忽略规则</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.7 ===== -->
