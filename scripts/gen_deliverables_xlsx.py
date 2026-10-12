@@ -8,7 +8,8 @@
   附件4_交付物清单.xlsx                    交付物目录全量文件目录（含过程成果报告）
 
 （v2.17.0 起取消原「附件3 热线与纳统小区全量匹配表」「附件4 纳统匹配候选与未匹配清单」；
-  v2.17.4 起装帧素材（封面 / 书脊 / 封底 / 全封展开图与封面候选底图）不纳入交付物清单）
+  v2.17.4 起装帧素材（封面 / 书脊 / 封底 / 全封展开图与封面候选底图）不纳入交付物清单；
+  v2.17.10 起取消「历史版本」类别——原 `_archive/` 留档件已清出交付物目录）
 
 用法：
   PYTHONPATH=~/.workbuddy/binaries/python/vendor /usr/bin/python3 scripts/gen_deliverables_xlsx.py
@@ -177,7 +178,7 @@ def deliver_wordcloud():
 
 # ---------- 附件4：交付物清单 ----------
 MANIFEST_SHEET = '交付物清单'
-CATE_ORDER = ['主交付物', '电子附件', '过程成果报告', '历史版本']
+CATE_ORDER = ['主交付物', '电子附件', '过程成果报告']
 
 
 def _manifest_rows():
@@ -209,9 +210,7 @@ def _manifest_rows():
         p = os.path.join(OUT, name)
         rel = os.path.relpath(p, OUT)
         if os.path.isdir(p):
-            if name == '_archive':       # 历史版本留档目录（不计入过程成果报告）
-                walk(p, '', '历史版本', '过程版本留档，非最终交付版本')
-            elif name == '装订打印封面':
+            if name == '装订打印封面':
                 # v2.17.4：成书装帧素材不纳入交付物清单
                 continue
             else:
@@ -221,11 +220,12 @@ def _manifest_rows():
                 walk(p, '', cate, note)
             continue
         if name.endswith('.docx'):
-            if '人工修改版' in name or '（一期）' in name:
-                rows.append(['历史版本', name, rel, size_of(p), '过程版本留档，非最终交付版本'])
-            else:
-                rows.append(['主交付物', name, rel, size_of(p),
-                             '课题成果汇编（正文，含图表与附录）'])
+            # v2.17.10：历史版本（人工修改版 / 备份件）已清出交付物目录，
+            # 即使再出现也不列为交付项（原「历史版本」类别已取消）
+            if '人工修改版' in name or '备份' in name:
+                continue
+            rows.append(['主交付物', name, rel, size_of(p),
+                         '课题成果汇编（正文，含图表与附录）'])
         elif name.endswith('.xlsx'):
             note = {'附件1': '高风险小区评分全量清单（772 个参评小区）',
                     '附件2': '2026 年 1-8 月投诉去重建议清单（逐月明细）',

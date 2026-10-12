@@ -95,17 +95,38 @@ body { font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f0f2f
   <h1>📋 版本更新记录</h1>
   <div class="subtitle">徐汇区物业投诉治理数字化分析项目 · 迭代更新日志</div>
   <div class="meta">
-    <span>当前版本：v2.17.9</span>
-    <span>更新日期：2026-10-10</span>
-    <span>累计更新：29 次</span>
+    <span>当前版本：v2.17.10</span>
+    <span>更新日期：2026-10-12</span>
+    <span>累计更新：30 次</span>
   </div>
 </div>
 
 <div class="stat-row">
   <div class="stat-box"><div class="stat-num">466</div><div class="stat-label">归并工单行数</div></div>
   <div class="stat-box"><div class="stat-num">58</div><div class="stat-label">企业名归一数</div></div>
-  <div class="stat-box"><div class="stat-num">321</div><div class="stat-label">汇编 PDF 页数</div></div>
-  <div class="stat-box"><div class="stat-num">42</div><div class="stat-label">交付物文件总数</div></div>
+  <div class="stat-box"><div class="stat-num">322</div><div class="stat-label">汇编 PDF 页数</div></div>
+  <div class="stat-box"><div class="stat-num">40</div><div class="stat-label">交付物文件总数</div></div>
+</div>
+
+<!-- ===== v2.17.10 ===== -->
+<div class="version-card">
+  <div class="version-header">
+    <span class="version-tag tag-patch">PATCH</span>
+    <span class="version-num">v2.17.10</span>
+    <span class="version-date">2026-10-12</span>
+  </div>
+  <div class="version-body">
+
+    <div class="section-group">
+      <div class="section-title opt">📦 交付物清单收敛为 40 份</div>
+      <ul class="item-list">
+        <li><span class="tag tag-opt">归档</span>两份早期《成果汇编》（含人工修改版）留档件已移出交付物目录，交付物清单同步<b>取消「历史版本」类别</b>；清单由 42 份收敛为 <b>40 份</b>（主交付物 2 · 电子附件 4 · 过程成果报告 34）</li>
+        <li><span class="tag tag-imp">同步</span>《成果汇编》附录 F 删除历史版本留档说明；README 的交付物章节、仓库结构与日报说明一并更新</li>
+        <li><span class="tag tag-data">脚本</span><code>gen_deliverables_xlsx.py</code> 去掉 <code>_archive</code> 扫描分支与「历史版本」排序项，并追加「人工修改版 / 备份件不列入交付项」的兜底判断</li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
 <!-- ===== v2.17.9 ===== -->
