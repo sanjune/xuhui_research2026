@@ -116,8 +116,9 @@ UPLOAD_PAGE = f'''<!DOCTYPE html>
   <div id="resultBox"></div>
 
   <div class="note">
-    <b>说明</b>：上传的 Excel <b>仅用于跑数据</b>——保存为临时文件，生成日报 + 更新索引后<b>自动删除</b>，
-    不留存、不覆盖 <code>热线日报数据/</code> 里的源数据。数据不离开本机（本地 <code>127.0.0.1:{PORT}</code>）。
+    <b>说明</b>：上传的 Excel 保存到本地 <code>热线日报数据/</code> 目录（已 .gitignore，
+    <b>不入 git</b>，在线预览版本不存在该文件夹）；生成的日报输出到 <code>daily/</code> 并自动更新日历索引。
+    本服务运行在本地 <code>127.0.0.1:{PORT}</code>，数据不离开本机。
   </div>
 </div>
 <script>
@@ -351,14 +352,12 @@ class UploadHandler(BaseHTTPRequestHandler):
         if not filename.lower().endswith(('.xlsx', '.xls')):
             self._send(400, '仅支持 .xlsx / .xls 格式')
             return
-        # 保存为临时文件（不覆盖 热线日报数据/ 里的源数据，跑完自动删除）
+        # 保存到 热线日报数据/（本地留存，已 .gitignore 不入库；同名文件覆盖即更新该日数据）
         os.makedirs(DATA_DIR, exist_ok=True)
-        _ts = datetime.now().strftime('%Y%m%d%H%M%S')
-        _safe_ext = '.xlsx' if filename.lower().endswith('.xlsx') else '.xls'
-        save_path = os.path.join(DATA_DIR, f'_upload_tmp_{_ts}{_safe_ext}')
+        save_path = os.path.join(DATA_DIR, filename)
         with open(save_path, 'wb') as f:
             f.write(content)
-        self.log_message(f"已保存临时文件: {save_path} ({len(content)} bytes) — 跑完将自动删除")
+        self.log_message(f"已保存上传文件: {save_path} ({len(content)} bytes)")
 
         # 调用 gen_daily_report_1009.py 生成日报
         env = os.environ.copy()
@@ -370,7 +369,6 @@ class UploadHandler(BaseHTTPRequestHandler):
             )
             log = proc.stdout + '\n' + proc.stderr
             if proc.returncode != 0:
-                _safe_remove(save_path)
                 page = UPLOAD_PAGE.replace(
                     '<div id="resultBox"></div>',
                     build_result_page(False, None, log, '日报脚本执行失败（返回码 %d）' % proc.returncode)
@@ -378,7 +376,6 @@ class UploadHandler(BaseHTTPRequestHandler):
                 self._send(200, page)
                 return
         except subprocess.TimeoutExpired:
-            _safe_remove(save_path)
             page = UPLOAD_PAGE.replace(
                 '<div id="resultBox"></div>',
                 build_result_page(False, None, '', '脚本执行超时（120s）')
@@ -386,7 +383,6 @@ class UploadHandler(BaseHTTPRequestHandler):
             self._send(200, page)
             return
         except Exception as e:
-            _safe_remove(save_path)
             page = UPLOAD_PAGE.replace(
                 '<div id="resultBox"></div>',
                 build_result_page(False, None, '', str(e))
@@ -425,9 +421,6 @@ class UploadHandler(BaseHTTPRequestHandler):
                 build_result_page(False, None, log + '\n' + tb, '摘要提取/索引更新失败: ' + str(e))
             )
             self._send(200, page)
-        finally:
-            # 无论成功失败，都删除临时 xlsx 文件（仅用于跑数据，跑完即清理）
-            _safe_remove(save_path)
 
 
 def main():
