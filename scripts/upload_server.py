@@ -116,9 +116,8 @@ UPLOAD_PAGE = f'''<!DOCTYPE html>
   <div id="resultBox"></div>
 
   <div class="note">
-    <b>说明</b>：上传的文件将保存到 <code>热线日报数据/</code> 目录（已加入 .gitignore 不入库）；
-    生成的日报输出到 <code>daily/</code> 目录并自动更新日历索引。
-    本服务运行在本地 <code>127.0.0.1:{PORT}</code>，数据不离开本机。
+    <b>说明</b>：上传的 Excel <b>仅用于跑数据</b>——保存为临时文件，生成日报 + 更新索引后<b>自动删除</b>，
+    不留存、不覆盖 <code>热线日报数据/</code> 里的源数据。数据不离开本机（本地 <code>127.0.0.1:{PORT}</code>）。
   </div>
 </div>
 <script>
@@ -148,6 +147,16 @@ document.getElementById('upForm').addEventListener('submit', function() {{
 }});
 </script>
 </body></html>'''
+
+
+# ---------- 临时文件清理 ----------
+def _safe_remove(path):
+    """安全删除临时文件（不存在或删除失败都静默处理）"""
+    try:
+        if path and os.path.exists(path):
+            os.remove(path)
+    except Exception:
+        pass
 
 
 # ---------- multipart 解析 ----------
@@ -225,27 +234,32 @@ def update_reports_array(summary):
     date = summary['date']
     # 单条记录：{ date:'YYYY-MM-DD', ... }。记录内部只出现方括号（mainCat:[...]），
     # 不会嵌套花括号，故 [^{}]* 可安全匹配整条记录。
-    rec_pat = re.compile(r"\{\s*date:\s*'" + re.escape(date) + r"'[^{}]*\}")
-    existed = bool(rec_pat.search(body))
+    REC = r"\{\s*date:\s*'(\d{4}-\d{2}-\d{2})'[^{}]*\}"
+    # 解析现有记录：按日期归并（同日多条时后出现的覆盖先出现的，可修复历史脏数据）
+    kept = {}
+    for mm in re.finditer(REC, body):
+        kept[mm.group(1)] = mm.group(0)
+    existed = date in kept
     # 构造新记录的 JS 对象
     mc = ', '.join(f"'{x}'" for x in summary['mainCat'])
-    new_entry = (
-        f"\n  {{ date:'{date}', weekday:'{summary['weekday']}', "
+    kept[date] = (
+        f"{{ date:'{date}', weekday:'{summary['weekday']}', "
         f"total:{summary['total']}, matched:{summary['matched']}, unmatched:{summary['unmatched']}, "
         f"rep:{summary['rep']}, repRate:{summary['repRate']}, streets:{summary['streets']}, "
         f"mainCat:[{mc}], file:'{summary['file']}' }}"
     )
-    # 去重策略：先剔除该日期的**全部**旧记录（历史上可能已累积重复项），再统一追加一条规范记录。
-    # ⚠️ 旧实现是「替换第一条」+ 结尾 lookahead (?=\s*(?:\{|\];))，但 body 是 group(2)，
-    #    其中**不含 '];'** → 数组最后一条永远匹配不上 → 走兜底追加 → 每次重复上传同一天，
-    #    索引里就多一条重复卡片（2026-10-12 实测 daily/index.html 出现 3 条 10-10）。
-    body_new = rec_pat.sub('', body)
-    body_new = re.sub(r',(\s*,)+', ',', body_new)   # 删除记录后残留的连续逗号
-    body_new = body_new.rstrip().rstrip(',')
-    body_new = (body_new + ',' if body_new.strip() else '') + new_entry
-    # 自检：同一天必须恰好一条记录，否则宁可报错也不写出坏索引
-    if len(rec_pat.findall(body_new)) != 1:
-        raise RuntimeError(f'REPORTS 去重自检失败：{date} 记录数 != 1')
+    # ⚠️ 必须「解析后整体重建」，不要在原文上做删除/替换：
+    #    旧实现（替换第一条）用 lookahead (?=\s*(?:\{|\];)) 定界，但 body 是 group(2)、
+    #    **不含 '];'** → 数组最后一条永远匹配不上 → 走兜底追加 → 反复上传同一天就多一条重复卡片。
+    #    中间版本改成「先删记录再追加」，又把被删记录**后面的分隔逗号**留了下来
+    #    （`[\n  ,\n  {...}` → 数组空洞 → [...REPORTS] 出现 undefined → renderList 抛 TypeError、
+    #     列表视图整块崩掉）。整体重建两个坑都不会有。
+    body_new = '\n  ' + ',\n  '.join(kept[d] for d in sorted(kept)) + '\n'
+    # 自检：同一天恰好一条，且记录总数与解析结果一致，否则宁可报错也不写出坏索引
+    if len(re.findall(REC, body_new)) != len(kept) or body_new.count("date:'" + date + "'") != 1:
+        raise RuntimeError(f'REPORTS 去重自检失败：{date} 记录数异常')
+    if re.search(r'\[\s*,|,\s*,', body_new):
+        raise RuntimeError('REPORTS 自检失败：存在游离逗号（会产生数组空洞）')
     # 写回
     new_array = prefix + body_new + suffix
     new_content = content[:m.start()] + new_array + content[m.end():]
@@ -337,12 +351,14 @@ class UploadHandler(BaseHTTPRequestHandler):
         if not filename.lower().endswith(('.xlsx', '.xls')):
             self._send(400, '仅支持 .xlsx / .xls 格式')
             return
-        # 保存到 热线日报数据/
+        # 保存为临时文件（不覆盖 热线日报数据/ 里的源数据，跑完自动删除）
         os.makedirs(DATA_DIR, exist_ok=True)
-        save_path = os.path.join(DATA_DIR, filename)
+        _ts = datetime.now().strftime('%Y%m%d%H%M%S')
+        _safe_ext = '.xlsx' if filename.lower().endswith('.xlsx') else '.xls'
+        save_path = os.path.join(DATA_DIR, f'_upload_tmp_{_ts}{_safe_ext}')
         with open(save_path, 'wb') as f:
             f.write(content)
-        self.log_message(f"已保存上传文件: {save_path} ({len(content)} bytes)")
+        self.log_message(f"已保存临时文件: {save_path} ({len(content)} bytes) — 跑完将自动删除")
 
         # 调用 gen_daily_report_1009.py 生成日报
         env = os.environ.copy()
@@ -354,6 +370,7 @@ class UploadHandler(BaseHTTPRequestHandler):
             )
             log = proc.stdout + '\n' + proc.stderr
             if proc.returncode != 0:
+                _safe_remove(save_path)
                 page = UPLOAD_PAGE.replace(
                     '<div id="resultBox"></div>',
                     build_result_page(False, None, log, '日报脚本执行失败（返回码 %d）' % proc.returncode)
@@ -361,6 +378,7 @@ class UploadHandler(BaseHTTPRequestHandler):
                 self._send(200, page)
                 return
         except subprocess.TimeoutExpired:
+            _safe_remove(save_path)
             page = UPLOAD_PAGE.replace(
                 '<div id="resultBox"></div>',
                 build_result_page(False, None, '', '脚本执行超时（120s）')
@@ -368,6 +386,7 @@ class UploadHandler(BaseHTTPRequestHandler):
             self._send(200, page)
             return
         except Exception as e:
+            _safe_remove(save_path)
             page = UPLOAD_PAGE.replace(
                 '<div id="resultBox"></div>',
                 build_result_page(False, None, '', str(e))
@@ -406,6 +425,9 @@ class UploadHandler(BaseHTTPRequestHandler):
                 build_result_page(False, None, log + '\n' + tb, '摘要提取/索引更新失败: ' + str(e))
             )
             self._send(200, page)
+        finally:
+            # 无论成功失败，都删除临时 xlsx 文件（仅用于跑数据，跑完即清理）
+            _safe_remove(save_path)
 
 
 def main():
