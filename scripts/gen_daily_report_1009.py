@@ -2,16 +2,29 @@
 # -*- coding: utf-8 -*-
 """
 生成徐汇区12345物业工单日报（按街镇分类）
-数据源：/Users/macbookpro/Desktop/20261010.xlsx（2026-10-09 热线数据）
+数据源：热线日报数据/ 目录下的 xlsx（市局原始同步格式）
+用法：python gen_daily_report_1009.py [文件路径]
+      不传参数默认读 热线日报数据/20261010.xlsx
 """
 import pandas as pd
+import sys, os
 from datetime import datetime
 
-SRC = '/Users/macbookpro/Desktop/20261010.xlsx'
-OUT = '/Users/macbookpro/Desktop/8-24 徐汇课题一期/徐汇区12345物业工单日报_2026年10月9日.html'
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, '热线日报数据', '20261010.xlsx')
 
 df = pd.read_excel(SRC)
 total = len(df)
+
+# 从数据 processtime 推断日期（取众数）
+_data_dates = pd.to_datetime(df['processtime']).dt.date
+data_date = _data_dates.mode().iloc[0]
+WEEKDAYS = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+date_cn = f"{data_date.year}年{data_date.month}月{data_date.day}日"
+date_weekday = WEEKDAYS[data_date.weekday()]
+date_slug = data_date.isoformat()  # 2026-10-09
+src_name = os.path.basename(SRC)
+OUT = os.path.join(ROOT, f'徐汇区12345物业工单日报_{date_cn}.html')
 
 # ---------- 街镇汇总 ----------
 df['street'] = df['s30_str_name'].fillna('__未匹配__')
@@ -161,13 +174,11 @@ for r in focus:
     rep_df = df[(df['street'] == st_name) & (df['is_repeat'] == '是')].copy()
     rep_items = ''
     for _, row in rep_df.iterrows():
-        reporter = str(row.get('reporter', '') or '').strip() or '—'
         addr = str(row.get('appealaddr', '') or '').strip() or '—'
         typed = str(row.get('problemtyped', '') or '').strip() or '—'
         prob = _clean_prob(row.get('problem', ''))
         rep_items += (
             f'<div class="rep-row">'
-            f'<span class="rep-who">{reporter}</span>'
             f'<span class="rep-addr">{addr}</span>'
             f'<span class="rep-type">{typed}</span>'
             f'<span class="rep-prob">{prob}</span>'
@@ -176,7 +187,7 @@ for r in focus:
     rep_block = ''
     if rep_items:
         rep_block = (f'<div class="rep-list"><div class="rep-head">'
-                     f'重复案件明细（{len(rep_df)} 件 · 联系人 / 地址 / 问题细类 / 问题摘要）'
+                     f'重复案件明细（{len(rep_df)} 件 · 地址 / 问题细类 / 问题摘要）'
                      f'</div>{rep_items}</div>')
     focus_html += (
         f'<div class="focus-item"><div class="focus-head">'
@@ -277,8 +288,8 @@ html = f'''<!DOCTYPE html>
   <header>
     <a href="{back_href}" onclick="location.href='{back_href}';return false;" style="display:inline-block;font-size:13px;color:#9bb8e0;text-decoration:none;margin-bottom:10px;cursor:pointer;">← 返回日报日历索引</a>
     <h1>徐汇区12345物业工单日报</h1>
-    <div class="sub">数据日期：2026年10月9日（星期五）</div>
-    <div class="meta">数据源：20261010.xlsx 同步工单 · 报告生成：{now}</div>
+    <div class="sub">数据日期：{date_cn}（{date_weekday}）</div>
+    <div class="meta">数据源：{src_name} 同步工单 · 报告生成：{now}</div>
   </header>
 
   <div class="cards">{cards}</div>
@@ -334,7 +345,6 @@ html = f'''<!DOCTYPE html>
 </html>'''
 
 import os
-ROOT_DIR = os.path.dirname(OUT)
 # 根目录中文名版（用户直接查看，回链指向 daily/index.html 源）
 html_root = html.replace('__BACK_HREF__', 'daily/index.html')
 with open(OUT, 'w', encoding='utf-8') as f:
@@ -342,11 +352,11 @@ with open(OUT, 'w', encoding='utf-8') as f:
 print('已生成日报(根目录):', OUT)
 
 # 源 daily/ 版（供 build_publish_site.py 复制到 _publish/daily/，回链同目录 index.html）
-DAILY_SRC = os.path.join(ROOT_DIR, 'daily')
+DAILY_SRC = os.path.join(ROOT, 'daily')
 os.makedirs(DAILY_SRC, exist_ok=True)
-out_daily = os.path.join(DAILY_SRC, '2026-10-09.html')
+out_daily = os.path.join(DAILY_SRC, f'{date_slug}.html')
 html_daily = html.replace('__BACK_HREF__', 'index.html')
 with open(out_daily, 'w', encoding='utf-8') as f:
     f.write(html_daily)
 print('已生成日报(daily源):', out_daily)
-print('工单总数:', total, '| 重复:', rep_total, f'({rep_rate_total:.1f}%)', '| 已关联街镇:', matched, '| 待关联:', unmatched)
+print(f'日期:{date_cn}({date_weekday}) | 工单总数:{total} | 重复:{rep_total}({rep_rate_total:.1f}%) | 已关联街镇:{matched} | 待关联:{unmatched}')
