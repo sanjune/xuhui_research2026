@@ -288,7 +288,7 @@ def generate_report(xlsx_path):
   .empty {{ color:var(--muted); }}
   .rep-list {{ margin-top:10px; border-top:1px dashed var(--border); padding-top:8px; }}
   .rep-head {{ font-size:13px; font-weight:600; color:#374151; margin-bottom:6px; }}
-  .rep-row {{ display:grid; grid-template-columns:78px 1fr 86px 2fr; gap:8px; font-size:12px; padding:5px 0; border-bottom:1px solid #f0f2f5; align-items:start; }}
+  .rep-row {{ display:grid; grid-template-columns:110px 92px 1fr; gap:8px; font-size:12px; padding:5px 0; border-bottom:1px solid #f0f2f5; align-items:start; }}
   .rep-addr {{ color:#374151; word-break:break-all; }}
   .rep-type {{ color:#92400e; background:#fef3c7; padding:0 4px; border-radius:3px; text-align:center; height:fit-content; white-space:nowrap; }}
   .rep-prob {{ color:var(--muted); word-break:break-all; }}
@@ -432,7 +432,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
   border-radius: 14px; box-shadow: 0 6px 24px rgba(0,0,0,.08); padding: 36px 40px; }
 h1 { font-size: 22px; color: #1a3a5c; margin-bottom: 4px; }
 .sub { font-size: 13px; color: #6b7c8e; margin-bottom: 24px; }
-.upload-zone { border: 2px dashed #b8c8d8; border-radius: 10px; padding: 32px 20px;
+.upload-zone { display:block; border: 2px dashed #b8c8d8; border-radius: 10px; padding: 32px 20px;
   text-align: center; transition: all .2s; cursor: pointer; background: #fafcfe; }
 .upload-zone:hover { border-color: #4a7ab8; background: #f0f6fc; }
 .upload-zone.drag { border-color: #2a6ab8; background: #e8f0fc; }

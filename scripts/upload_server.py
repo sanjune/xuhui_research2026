@@ -43,6 +43,7 @@ body {
 h1 { font-size: 22px; color: #1a3a5c; margin-bottom: 4px; }
 .sub { font-size: 13px; color: #6b7c8e; margin-bottom: 24px; }
 .upload-zone {
+  display: block;
   border: 2px dashed #b8c8d8; border-radius: 10px; padding: 32px 20px;
   text-align: center; transition: all .2s; cursor: pointer; background: #fafcfe;
 }

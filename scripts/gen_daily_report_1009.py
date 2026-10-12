@@ -304,9 +304,8 @@ html = f'''<!DOCTYPE html>
   .empty {{ color:var(--muted); }}
   .rep-list {{ margin-top:10px; border-top:1px dashed var(--border); padding-top:8px; }}
   .rep-head {{ font-size:13px; font-weight:600; color:#374151; margin-bottom:6px; }}
-  .rep-row {{ display:grid; grid-template-columns:78px 1fr 86px 2fr; gap:8px; font-size:12px;
+  .rep-row {{ display:grid; grid-template-columns:110px 92px 1fr; gap:8px; font-size:12px;
     padding:5px 0; border-bottom:1px solid #f0f2f5; align-items:start; }}
-  .rep-who {{ color:#1e40af; font-weight:500; word-break:break-all; }}
   .rep-addr {{ color:#374151; word-break:break-all; }}
   .rep-type {{ color:#92400e; background:#fef3c7; padding:0 4px; border-radius:3px;
     text-align:center; height:fit-content; white-space:nowrap; }}
