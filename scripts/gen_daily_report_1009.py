@@ -5,9 +5,14 @@
 数据源：热线日报数据/ 目录下的 xlsx（市局原始同步格式）
 用法：python gen_daily_report_1009.py [文件路径]
       不传参数默认读 热线日报数据/20261010.xlsx
+
+说明：本脚本与日期无关——报告日期一律由数据 processtime 众数推断（date_cn / date_slug），
+      脚本名中的 1009 为历史遗留命名，换任何日期的源文件都直接复用同一脚本。
+      ⚠️ 模板内**禁止**出现任何写死的年月日字面量（曾因 `<title>` 与正文首句写死
+      「2026年10月9日」，导致 10-10 那份日报页头与正文日期错误）。
 """
 import pandas as pd
-import sys, os
+import sys, os, re
 from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +27,7 @@ data_date = _data_dates.mode().iloc[0]
 WEEKDAYS = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
 date_cn = f"{data_date.year}年{data_date.month}月{data_date.day}日"
 date_weekday = WEEKDAYS[data_date.weekday()]
-date_slug = data_date.isoformat()  # 2026-10-09
+date_slug = data_date.isoformat()  # 例：2026-10-10（由数据本身推断，勿写死）
 src_name = os.path.basename(SRC)
 OUT = os.path.join(ROOT, f'徐汇区12345物业工单日报_{date_cn}.html')
 
@@ -155,14 +160,41 @@ typed_items = ''.join(
     for k, v in top_typed
 )
 
+# ---------- 个人信息脱敏 ----------
+# ⚠️ 日报含街镇「重复案件明细」，会把源表 problem 字段的诉求正文原样渲染进页面，
+#    而该字段由来电人自行口述，可能带手机号/身份证/邮箱 → 日报会公开发布（GitHub Pages
+#    与预览站），故渲染前必须脱敏。凡新增「把源表自由文本渲染进页面」的代码，
+#    都要先把文本过一遍 mask_pii()。
+# 三条规则均**等长替换**，保证下方 60 字截断的落点不因脱敏而漂移。
+_PII_RULES = [
+    # 手机号 → 保留前 3 后 4：158****5213
+    (re.compile(r'(?<!\d)1[3-9]\d{9}(?!\d)'),
+     lambda m: m.group()[:3] + '****' + m.group()[-4:]),
+    # 身份证号 → 保留前 6 后 4：110101********4512
+    (re.compile(r'(?<!\d)\d{17}[\dXx](?!\d)'),
+     lambda m: m.group()[:6] + '*' * 8 + m.group()[-4:]),
+    # 邮箱 → 仅留首字符与域名：t***@example.com
+    (re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'),
+     lambda m: m.group()[0] + '*' * (len(m.group().split('@')[0]) - 1) + '@' + m.group().split('@')[1]),
+]
+
+
+def mask_pii(s):
+    """脱敏手机号 / 身份证号 / 邮箱（等长替换，不改动其他字符）。"""
+    s = str(s or '')
+    for rx, rep in _PII_RULES:
+        s = rx.sub(rep, s)
+    return s
+
+
 # 重点街镇
 def _clean_prob(s):
-    """简化问题正文：去换行/多空格/系统引用块，截断到 60 字。"""
+    """简化问题正文：脱敏 → 去换行/多空格/系统引用块，截断到 60 字。"""
     s = str(s or '')
-    import re
     # 剥离系统引用块（【最近派发的工单编号…】等）
     s = re.sub(r'【.*?】', '', s)
     s = re.sub(r'\s+', '', s)
+    s = mask_pii(s)
     if len(s) > 60:
         s = s[:60] + '…'
     return s or '—'
@@ -220,7 +252,7 @@ html = f'''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>徐汇区12345物业工单日报 · 2026年10月9日</title>
+<title>徐汇区12345物业工单日报 · {date_cn}</title>
 <style>
   :root {{
     --bg:#f5f7fa; --card:#fff; --border:#e5e9f0; --txt:#1f2937; --muted:#6b7280;
@@ -296,7 +328,7 @@ html = f'''<!DOCTYPE html>
 
   <section>
     <h2>一、当日总体情况</h2>
-    <p style="font-size:14px;margin-bottom:14px;">2026年10月9日，徐汇区12345热线共接入物业相关工单 <b>{total}</b> 件，
+    <p style="font-size:14px;margin-bottom:14px;">{date_cn}，徐汇区12345热线共接入物业相关工单 <b>{total}</b> 件，
     其中已关联到所属街镇的 <b>{matched}</b> 件，待关联（地址未匹配标准街镇）<b>{unmatched}</b> 件。
     重复案件（即工单补充来电，含补充信息、催办、查进度等，每件通常指向一条不同原始工单，非同一工单的重复登记）<b>{rep_total}</b> 件，重复率 <b>{rep_rate_total:.1f}%</b>。
     问题集中在 <b>住房保障·物业服务管理</b>（{pb_vc.get("住房保障",0)} 件）与 <b>城管执法·物业相关执法</b>（{pb_vc.get("城管执法",0)} 件）。</p>
@@ -344,9 +376,26 @@ html = f'''<!DOCTYPE html>
 </body>
 </html>'''
 
-import os
+# 兜底：整页再过一次脱敏。_clean_prob() 已是主通道，此处防止将来新增的自由文本渲染口遗漏。
+# 若兜底真拦到了东西，说明有渲染口没走 mask_pii()，需回去补齐。
+_before = mask_pii(html)
+if _before != html:
+    print('  ⚠ 整页兜底脱敏命中：有渲染口未走 mask_pii()，请检查模板')
+html = _before
+
+
+def _assert_no_pii(text, label):
+    """交付前自检：页面上不得残留手机号 / 身份证号 / 邮箱。"""
+    for rx, name in ((_PII_RULES[0][0], '手机号'), (_PII_RULES[1][0], '身份证号'), (_PII_RULES[2][0], '邮箱')):
+        hits = sorted(set(rx.findall(text)))
+        if hits:
+            raise SystemExit(f'❌ {label} 仍残留{name}：{hits}（脱敏未生效，拒绝出稿）')
+    print(f'  ✅ {label} 隐私自检通过（手机号/身份证/邮箱 均 0 处）')
+
+
 # 根目录中文名版（用户直接查看，回链指向 daily/index.html 源）
 html_root = html.replace('__BACK_HREF__', 'daily/index.html')
+_assert_no_pii(html_root, '根目录日报')
 with open(OUT, 'w', encoding='utf-8') as f:
     f.write(html_root)
 print('已生成日报(根目录):', OUT)
@@ -356,7 +405,8 @@ DAILY_SRC = os.path.join(ROOT, 'daily')
 os.makedirs(DAILY_SRC, exist_ok=True)
 out_daily = os.path.join(DAILY_SRC, f'{date_slug}.html')
 html_daily = html.replace('__BACK_HREF__', 'index.html')
+_assert_no_pii(html_daily, 'daily 源日报')
 with open(out_daily, 'w', encoding='utf-8') as f:
     f.write(html_daily)
 print('已生成日报(daily源):', out_daily)
-print(f'日期:{date_cn}({date_weekday}) | 工单总数:{total} | 重复:{rep_total}({rep_rate_total:.1f}%) | 已关联街镇:{matched} | 待关联:{unmatched}')
+print(f'日期: {date_cn}({date_weekday}) | 工单总数: {total} | 重复: {rep_total}({rep_rate_total:.1f}%) | 已关联街镇: {matched} | 待关联: {unmatched}')
