@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>徐汇区12345物业工单日报 · 2026年10月11日</title>
+<style>
+  :root {
+    --bg:#f5f7fa; --card:#fff; --border:#e5e9f0; --txt:#1f2937; --muted:#6b7280;
+    --accent:#3b82f6; --danger:#ef4444; --warn:#f59e0b; --info:#0ea5e9; --ok:#10b981;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+    background:var(--bg); color:var(--txt); line-height:1.6; padding:24px; }
+  .wrap { max-width:1100px; margin:0 auto; }
+  header { text-align:center; margin-bottom:24px; }
+  header h1 { font-size:24px; color:#111827; margin-bottom:6px; }
+  header .sub { color:var(--muted); font-size:14px; }
+  header .meta { color:var(--muted); font-size:12px; margin-top:4px; }
+  .cards { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:24px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:16px 8px; text-align:center; }
+  .c-val { font-size:26px; font-weight:700; color:var(--accent); }
+  .c-lab { font-size:12px; color:var(--muted); margin-top:4px; }
+  section { background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:18px 20px; margin-bottom:20px; }
+  section h2 { font-size:17px; color:#111827; border-left:4px solid var(--accent);
+    padding-left:10px; margin-bottom:14px; }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .dist-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:13px; }
+  .dist-lab { width:96px; text-align:right; color:var(--muted); flex-shrink:0; }
+  .dist-bar { flex:1; }
+  .dist-num { width:34px; text-align:right; font-weight:600; flex-shrink:0; }
+  .bar-track { background:#eef1f6; border-radius:4px; height:14px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:4px; transition:width .4s; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { padding:8px 6px; text-align:center; border-bottom:1px solid var(--border); }
+  th { background:#f0f4f9; color:#374151; font-weight:600; white-space:nowrap; }
+  td.num { font-variant-numeric:tabular-nums; }
+  td.left { text-align:left; }
+  td.danger { color:var(--danger); font-weight:600; }
+  tr.alt { background:#fafbfc; }
+  .tag { display:inline-block; font-size:11px; padding:1px 6px; border-radius:4px; margin-left:4px; }
+  .tag.danger { background:#fee2e2; color:#b91c1c; }
+  .tag.warn { background:#fef3c7; color:#92400e; }
+  .tag.info { background:#dbeafe; color:#1e40af; }
+  .focus-item { border-left:3px solid var(--accent); padding:10px 14px; background:#f8fafc;
+    border-radius:0 8px 8px 0; margin-bottom:10px; }
+  .focus-head { display:flex; justify-content:space-between; align-items:center; }
+  .focus-name { font-weight:600; font-size:15px; }
+  .focus-n { color:var(--accent); font-weight:700; }
+  .focus-meta { font-size:13px; color:var(--muted); margin-top:2px; }
+  .focus-meta .em { color:var(--danger); font-weight:600; }
+  .empty { color:var(--muted); }
+  .rep-list { margin-top:10px; border-top:1px dashed var(--border); padding-top:8px; }
+  .rep-head { font-size:13px; font-weight:600; color:#374151; margin-bottom:6px; }
+  .rep-row { display:grid; grid-template-columns:110px 92px 1fr; gap:8px; font-size:12px;
+    padding:5px 0; border-bottom:1px solid #f0f2f5; align-items:start; }
+  .rep-addr { color:#374151; word-break:break-all; }
+  .rep-type { color:#92400e; background:#fef3c7; padding:0 4px; border-radius:3px;
+    text-align:center; height:fit-content; white-space:nowrap; }
+  .rep-prob { color:var(--muted); word-break:break-all; }
+  .note { font-size:12px; color:var(--muted); margin-top:10px; }
+  footer { text-align:center; color:var(--muted); font-size:12px; padding:16px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a href="daily/index.html" onclick="location.href='daily/index.html';return false;" style="display:inline-block;font-size:13px;color:#9bb8e0;text-decoration:none;margin-bottom:10px;cursor:pointer;">← 返回日报日历索引</a>
+    <h1>徐汇区12345物业工单日报</h1>
+    <div class="sub">数据日期：2026年10月11日（星期日）</div>
+    <div class="meta">数据源：20261012.xlsx 同步工单 · 报告生成：2026-10-12 15:27</div>
+  </header>
+
+  <div class="cards">
+  <div class="card"><div class="c-val">72</div><div class="c-lab">当日工单总量</div></div>
+  <div class="card"><div class="c-val">17</div><div class="c-lab">重复案件 · 23.6%</div></div>
+  <div class="card"><div class="c-val">55</div><div class="c-lab">已关联街镇工单</div></div>
+  <div class="card"><div class="c-val">17</div><div class="c-lab">待关联街道工单</div></div>
+  <div class="card"><div class="c-val">13</div><div class="c-lab">涉及街镇数</div></div>
+</div>
+
+  <section>
+    <h2>一、当日总体情况</h2>
+    <p style="font-size:14px;margin-bottom:14px;">2026年10月11日，徐汇区12345热线共接入物业相关工单 <b>72</b> 件，
+    其中已关联到所属街镇的 <b>55</b> 件，待关联（地址未匹配标准街镇）<b>17</b> 件。
+    重复案件（即工单补充来电，含补充信息、催办、查进度等，每件通常指向一条不同原始工单，非同一工单的重复登记）<b>17</b> 件，重复率 <b>23.6%</b>。
+    问题集中在 <b>住房保障·物业服务管理</b>（56 件）与 <b>城管执法·物业相关执法</b>（15 件）。</p>
+    <div class="grid3">
+      <div><h3 style="font-size:14px;margin-bottom:10px;">受理来源</h3><div class="dist-row"><span class="dist-lab">电话</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#6366f1"></div></div></span><span class="dist-num">55</span></div><div class="dist-row"><span class="dist-lab">微信小程序</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:27.3%;background:#6366f1"></div></div></span><span class="dist-num">15</span></div><div class="dist-row"><span class="dist-lab">支付宝</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:1.8%;background:#6366f1"></div></div></span><span class="dist-num">1</span></div><div class="dist-row"><span class="dist-lab">随申办</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:1.8%;background:#6366f1"></div></div></span><span class="dist-num">1</span></div></div>
+      <div><h3 style="font-size:14px;margin-bottom:10px;">热线类型</h3><div class="dist-row"><span class="dist-lab">投诉举报类</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#0ea5e9"></div></div></span><span class="dist-num">38</span></div><div class="dist-row"><span class="dist-lab">求助类</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:71.1%;background:#0ea5e9"></div></div></span><span class="dist-num">27</span></div><div class="dist-row"><span class="dist-lab">咨询类</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:13.2%;background:#0ea5e9"></div></div></span><span class="dist-num">5</span></div><div class="dist-row"><span class="dist-lab">意见建议类</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:#0ea5e9"></div></div></span><span class="dist-num">2</span></div></div>
+      <div><h3 style="font-size:14px;margin-bottom:10px;">问题中类</h3><div class="dist-row"><span class="dist-lab">住房保障</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#f59e0b"></div></div></span><span class="dist-num">56</span></div><div class="dist-row"><span class="dist-lab">城管执法</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:26.8%;background:#f59e0b"></div></div></span><span class="dist-num">15</span></div><div class="dist-row"><span class="dist-lab">发展改革</span><span class="dist-bar"><div class="bar-track"><div class="bar-fill" style="width:1.8%;background:#f59e0b"></div></div></span><span class="dist-num">1</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>二、街镇分类明细</h2>
+    <table>
+      <thead><tr>
+        <th>#</th><th class="left">街镇</th><th>工单</th><th>占比</th>
+        <th class="left">主要类别</th>
+        <th>重复案件</th><th>重复率</th>
+      </tr></thead>
+      <tbody><tr>
+      <td>1</td>
+      <td class="left">待关联街道 <span class="tag warn">待关联</span></td>
+      <td class="num"><b>17</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#3b82f6"></div></div></td>
+      <td class="left">物业维修添置 6、物业安保 4、物业管理不善 2</td>
+      <td class="num">2</td>
+      <td class="num ">12%</td>
+    </tr><tr class="alt">
+      <td>2</td>
+      <td class="left">枫林路街道</td>
+      <td class="num"><b>8</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:47.1%;background:#3b82f6"></div></div></td>
+      <td class="left">物业安保 2、物业维修添置 2、纠纷协调 2</td>
+      <td class="num">3</td>
+      <td class="num ">38%</td>
+    </tr><tr>
+      <td>3</td>
+      <td class="left">田林街道</td>
+      <td class="num"><b>7</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:41.2%;background:#3b82f6"></div></div></td>
+      <td class="left">物业安保 4、房屋结构破坏 1、物业维修添置 1</td>
+      <td class="num">2</td>
+      <td class="num ">29%</td>
+    </tr><tr class="alt">
+      <td>4</td>
+      <td class="left">斜土路街道 <span class="tag danger">重复高</span></td>
+      <td class="num"><b>6</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:35.3%;background:#3b82f6"></div></div></td>
+      <td class="left">物业维修添置 2、物业安保 1、物业管理不善 1</td>
+      <td class="num">3</td>
+      <td class="num danger">50%</td>
+    </tr><tr>
+      <td>5</td>
+      <td class="left">漕河泾街道</td>
+      <td class="num"><b>5</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:29.4%;background:#3b82f6"></div></div></td>
+      <td class="left">物业安保 1、垃圾清理 1、群租现象 1</td>
+      <td class="num">1</td>
+      <td class="num ">20%</td>
+    </tr><tr class="alt">
+      <td>6</td>
+      <td class="left">康健新村街道</td>
+      <td class="num"><b>5</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:29.4%;background:#3b82f6"></div></div></td>
+      <td class="left">物业维修添置 2、业委会 1、损坏侵占公用设施 1</td>
+      <td class="num">0</td>
+      <td class="num ">0%</td>
+    </tr><tr>
+      <td>7</td>
+      <td class="left">徐家汇街道 <span class="tag danger">重复高</span></td>
+      <td class="num"><b>4</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:23.5%;background:#3b82f6"></div></div></td>
+      <td class="left">业委会 1、群租现象 1、物业管理不善 1</td>
+      <td class="num">2</td>
+      <td class="num danger">50%</td>
+    </tr><tr class="alt">
+      <td>8</td>
+      <td class="left">龙华街道</td>
+      <td class="num"><b>4</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:23.5%;background:#3b82f6"></div></div></td>
+      <td class="left">业委会 1、物业管理不善 1、物业安保 1</td>
+      <td class="num">1</td>
+      <td class="num ">25%</td>
+    </tr><tr>
+      <td>9</td>
+      <td class="left">华泾镇</td>
+      <td class="num"><b>4</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:23.5%;background:#3b82f6"></div></div></td>
+      <td class="left">物业安保 2、物业管理不善 1、物业维修添置 1</td>
+      <td class="num">1</td>
+      <td class="num ">25%</td>
+    </tr><tr class="alt">
+      <td>10</td>
+      <td class="left">天平路街道</td>
+      <td class="num"><b>3</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:17.6%;background:#3b82f6"></div></div></td>
+      <td class="left">居改非 1、纠纷协调 1、物业维修添置 1</td>
+      <td class="num">0</td>
+      <td class="num ">0%</td>
+    </tr><tr>
+      <td>11</td>
+      <td class="left">长桥街道 <span class="tag danger">重复高</span></td>
+      <td class="num"><b>3</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:17.6%;background:#3b82f6"></div></div></td>
+      <td class="left">物业维修添置 2、物业安保 1</td>
+      <td class="num">2</td>
+      <td class="num danger">67%</td>
+    </tr><tr class="alt">
+      <td>12</td>
+      <td class="left">湖南路街道</td>
+      <td class="num"><b>3</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:17.6%;background:#3b82f6"></div></div></td>
+      <td class="left">损坏侵占公用设施 1、物业管理不善 1、垃圾清理 1</td>
+      <td class="num">0</td>
+      <td class="num ">0%</td>
+    </tr><tr>
+      <td>13</td>
+      <td class="left">凌云路街道</td>
+      <td class="num"><b>2</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:11.8%;background:#3b82f6"></div></div></td>
+      <td class="left">物业安保 2</td>
+      <td class="num">0</td>
+      <td class="num ">0%</td>
+    </tr><tr class="alt">
+      <td>14</td>
+      <td class="left">虹梅路街道</td>
+      <td class="num"><b>1</b></td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:5.9%;background:#3b82f6"></div></div></td>
+      <td class="left">物业安保 1</td>
+      <td class="num">0</td>
+      <td class="num ">0%</td>
+    </tr></tbody>
+    </table>
+    <p class="note">注："主要类别"= 当街镇内按市局12345原生最细一级(problemtyped)统计的前3个细类，格式"类别 件数"；
+    "待关联街道"指工单地址未匹配到徐汇区13个标准街镇的记录，需人工补录街道归属；
+    "重复案件"指市民就已有工单再次来电（补充信息、催办、查进度等，即工单补充），每件通常指向一条不同原始工单，非同一工单的重复登记；
+    "重复率"= 当街镇内 is_repeat=是 工单数 ÷ 当街镇工单总量。</p>
+  </section>
+
+  <section>
+    <h2>三、12345平台原生分类</h2>
+    <p style="font-size:13px;margin-bottom:14px;color:var(--muted);">按市局12345原生分类最细一级（problemtyped）统计，共 14 类 72 件。</p>
+    <table>
+      <thead><tr><th>#</th><th class="left">最细一级分类</th><th>工单</th><th>占比</th><th>分布</th><th>涉及街镇</th></tr></thead>
+      <tbody><tr>
+      <td>1</td>
+      <td class="left">物业安保</td>
+      <td class="num"><b>19</b></td>
+      <td class="num">26.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#ef4444"></div></div></td>
+      <td class="num">9</td>
+    </tr><tr class="alt">
+      <td>2</td>
+      <td class="left">物业维修添置</td>
+      <td class="num"><b>19</b></td>
+      <td class="num">26.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:100.0%;background:#ef4444"></div></div></td>
+      <td class="num">9</td>
+    </tr><tr>
+      <td>3</td>
+      <td class="left">物业管理不善</td>
+      <td class="num"><b>9</b></td>
+      <td class="num">12.5%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:47.4%;background:#ef4444"></div></div></td>
+      <td class="num">7</td>
+    </tr><tr class="alt">
+      <td>4</td>
+      <td class="left">群租现象</td>
+      <td class="num"><b>5</b></td>
+      <td class="num">6.9%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:26.3%;background:#ef4444"></div></div></td>
+      <td class="num">4</td>
+    </tr><tr>
+      <td>5</td>
+      <td class="left">纠纷协调</td>
+      <td class="num"><b>5</b></td>
+      <td class="num">6.9%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:26.3%;background:#ef4444"></div></div></td>
+      <td class="num">3</td>
+    </tr><tr class="alt">
+      <td>6</td>
+      <td class="left">业委会</td>
+      <td class="num"><b>3</b></td>
+      <td class="num">4.2%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:15.8%;background:#ef4444"></div></div></td>
+      <td class="num">3</td>
+    </tr><tr>
+      <td>7</td>
+      <td class="left">损坏侵占公用设施</td>
+      <td class="num"><b>3</b></td>
+      <td class="num">4.2%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:15.8%;background:#ef4444"></div></div></td>
+      <td class="num">3</td>
+    </tr><tr class="alt">
+      <td>8</td>
+      <td class="left">绿化维护</td>
+      <td class="num"><b>2</b></td>
+      <td class="num">2.8%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:10.5%;background:#ef4444"></div></div></td>
+      <td class="num">0</td>
+    </tr><tr>
+      <td>9</td>
+      <td class="left">垃圾清理</td>
+      <td class="num"><b>2</b></td>
+      <td class="num">2.8%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:10.5%;background:#ef4444"></div></div></td>
+      <td class="num">2</td>
+    </tr><tr class="alt">
+      <td>10</td>
+      <td class="left">居改非</td>
+      <td class="num"><b>1</b></td>
+      <td class="num">1.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:#ef4444"></div></div></td>
+      <td class="num">1</td>
+    </tr><tr>
+      <td>11</td>
+      <td class="left">结构改建</td>
+      <td class="num"><b>1</b></td>
+      <td class="num">1.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:#ef4444"></div></div></td>
+      <td class="num">1</td>
+    </tr><tr class="alt">
+      <td>12</td>
+      <td class="left">房屋结构破坏</td>
+      <td class="num"><b>1</b></td>
+      <td class="num">1.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:#ef4444"></div></div></td>
+      <td class="num">1</td>
+    </tr><tr>
+      <td>13</td>
+      <td class="left">商业楼宇</td>
+      <td class="num"><b>1</b></td>
+      <td class="num">1.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:#ef4444"></div></div></td>
+      <td class="num">0</td>
+    </tr><tr class="alt">
+      <td>14</td>
+      <td class="left">物业管理收费</td>
+      <td class="num"><b>1</b></td>
+      <td class="num">1.4%</td>
+      <td><div class="bar-track"><div class="bar-fill" style="width:5.3%;background:#ef4444"></div></div></td>
+      <td class="num">1</td>
+    </tr></tbody>
+    </table>
+    <p class="note">注：占比 = 该细类工单数 ÷ 当日总量 72；"涉及街镇"=该细类出现的已关联街镇数（不含待关联）。</p>
+  </section>
+
+  <section>
+    <h2>四、重点街镇关注</h2>
+    <p style="font-size:13px;margin-bottom:12px;color:var(--muted);">筛选标准：当日工单 ≥ 6 件 或 重复率 ≥ 40%。</p>
+    <div class="focus-item"><div class="focus-head"><span class="focus-name">枫林路街道</span><span class="focus-n">8 件</span></div><div class="focus-meta">主要类别：物业安保 2、物业维修添置 2、纠纷协调 2 · 重复案件 3（38%）</div><div class="rep-list"><div class="rep-head">重复案件明细（3 件 · 地址 / 问题细类 / 问题摘要）</div><div class="rep-row"><span class="rep-addr">徐汇区宛南四村22号401</span><span class="rep-type">群租现象</span><span class="rep-prob">重复来电，市民来电查询处理进度。</span></div><div class="rep-row"><span class="rep-addr">徐汇区徐汇区东安四村35号503室</span><span class="rep-type">纠纷协调</span><span class="rep-prob">市民来电反复催单。催单原因：市民称管理部门至今未给予任何回复，请管理部门尽快处理。（市民要求信息保密，需要回复）</span></div><div class="rep-row"><span class="rep-addr">徐汇区徐汇区东安四村35号503室</span><span class="rep-type">纠纷协调</span><span class="rep-prob">市民来电补充信息。市民补充信息内容为，之前投诉过徐汇区东安四村35号503室不关门的问题，现在对方骂人并威胁要打市民，要…</span></div></div></div><div class="focus-item"><div class="focus-head"><span class="focus-name">田林街道</span><span class="focus-n">7 件</span></div><div class="focus-meta">主要类别：物业安保 4、房屋结构破坏 1、物业维修添置 1 · 重复案件 2（29%）</div><div class="rep-list"><div class="rep-head">重复案件明细（2 件 · 地址 / 问题细类 / 问题摘要）</div><div class="rep-row"><span class="rep-addr">徐汇区钦州路780号</span><span class="rep-type">物业安保</span><span class="rep-prob">重新交办。办理结果不满。诉求：请管理部门尽快处理问题。】</span></div><div class="rep-row"><span class="rep-addr">徐汇区钦州公寓</span><span class="rep-type">物业管理不善</span><span class="rep-prob">重新交办。办理结果不满。诉求请管理部门尽快解决问题。</span></div></div></div><div class="focus-item"><div class="focus-head"><span class="focus-name">斜土路街道</span><span class="focus-n">6 件</span></div><div class="focus-meta">主要类别：物业维修添置 2、物业安保 1、物业管理不善 1 · 重复案件 3（50%）</div><div class="rep-list"><div class="rep-head">重复案件明细（3 件 · 地址 / 问题细类 / 问题摘要）</div><div class="rep-row"><span class="rep-addr">徐汇区日晖六村44号36室</span><span class="rep-type">物业管理不善</span><span class="rep-prob">市民来电补充信息。市民补充信息内容为：物业当天强行要扣留房产证，并做拍照留存，咨询了律师物业做法不合规不合法；物业在市民…</span></div><div class="rep-row"><span class="rep-addr">徐汇区日晖六村35号甲602室</span><span class="rep-type">物业维修添置</span><span class="rep-prob">重复来电，咨询处理进度。</span></div><div class="rep-row"><span class="rep-addr">徐汇区日晖六村35号甲602室</span><span class="rep-type">物业维修添置</span><span class="rep-prob">重复来电，反映相同问题。】</span></div></div></div><div class="focus-item"><div class="focus-head"><span class="focus-name">徐家汇街道</span><span class="focus-n">4 件</span></div><div class="focus-meta">主要类别：业委会 1、群租现象 1、物业管理不善 1 · 重复案件 2（50%）</div><div class="rep-list"><div class="rep-head">重复案件明细（2 件 · 地址 / 问题细类 / 问题摘要）</div><div class="rep-row"><span class="rep-addr">徐汇区南丹路333弄3号606室</span><span class="rep-type">群租现象</span><span class="rep-prob">市民来电补充信息。市民补充信息内容为市民确认该房子存在群租，把房子做员工宿舍，请管理部门执法】</span></div><div class="rep-row"><span class="rep-addr">徐汇区番禺路650弄</span><span class="rep-type">纠纷协调</span><span class="rep-prob">市民补充信息：建筑垃圾堆了一个月都不清理，物业不作为，之前堆在花坛上，现在放在车棚里，那么多电瓶车停着，都是安全隐患。要…</span></div></div></div><div class="focus-item"><div class="focus-head"><span class="focus-name">长桥街道</span><span class="focus-n">3 件</span></div><div class="focus-meta">主要类别：物业维修添置 2、物业安保 1 · 重复案件 2（67%）</div><div class="rep-list"><div class="rep-head">重复案件明细（2 件 · 地址 / 问题细类 / 问题摘要）</div><div class="rep-row"><span class="rep-addr">徐汇区长桥八村30号</span><span class="rep-type">物业维修添置</span><span class="rep-prob">长桥八村30号电梯加装未遵守约定及民意（全部十三户交费居民多次联名签字），也未同排29号28号一致施工双门，不考虑多户老…</span></div><div class="rep-row"><span class="rep-addr">徐汇区长桥八村30号</span><span class="rep-type">物业维修添置</span><span class="rep-prob">市民反映相同事项。</span></div></div></div>
+  </section>
+
+  <footer>徐汇区物业投诉治理数字化分析项目 · 日报自动生成</footer>
+</div>
+</body>
+</html>
