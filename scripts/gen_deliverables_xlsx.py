@@ -9,7 +9,8 @@
 
 （v2.17.0 起取消原「附件3 热线与纳统小区全量匹配表」「附件4 纳统匹配候选与未匹配清单」；
   v2.17.4 起装帧素材（封面 / 书脊 / 封底 / 全封展开图与封面候选底图）不纳入交付物清单；
-  v2.17.10 起取消「历史版本」类别——原 `_archive/` 留档件已清出交付物目录）
+  v2.17.10 起取消「历史版本」类别——原 `_archive/` 留档件已清出交付物目录；
+  说明性文本（README.txt 等）不纳入清单）
 
 用法：
   PYTHONPATH=~/.workbuddy/binaries/python/vendor /usr/bin/python3 scripts/gen_deliverables_xlsx.py
@@ -238,6 +239,10 @@ def _manifest_rows():
                          '课题成果汇编 PDF 版（打印与分发用，与 Word 版同源）'])
         elif name.endswith(('.png', '.jpg', '.jpeg')):
             # v2.17.4：封面候选底图等图片素材不纳入交付物清单
+            continue
+        elif name.endswith('.txt'):
+            # README.txt 等说明性文本随交付物同目录分发，但不是交付项本身，
+            # 不纳入清单（否则清单行数会从 40 漂到 41，与 README / 附录 F 的措辞不符）。
             continue
         else:
             rows.append(['电子附件', name, rel, size_of(p), ''])
