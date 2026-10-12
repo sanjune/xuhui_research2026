@@ -80,3 +80,4 @@ _pdf_export/
 
 # 仓库历史重写前的完整备份（约 35MB，严禁入库；仅本地留存）
 *.bundle
+online_upload_app/data/

@@ -94,7 +94,7 @@
     <div class="view-toggle">
       <button id="calBtn" class="active">月历视图</button>
       <button id="listBtn">列表视图</button>
-      <button id="uploadBtn" class="upload-btn" style="display:none;" onclick="location.href='http://localhost:8766/upload'" title="上传当日热线 Excel，自动生成日报">📤 上传数据</button>
+      <button id="uploadBtn" class="upload-btn" onclick="window.open('https://xuhui-property-reports.app.workbuddy.host/upload','_blank')" title="上传当日热线 Excel，自动生成日报">📤 上传数据</button>
     </div>
   </div>
 
@@ -122,13 +122,6 @@ const REPORTS = [
 // 空洞经 [...REPORTS] 展开成 undefined → renderList 的 filter 抛 TypeError、列表视图整块崩掉。
 // 下面所有消费 REPORTS 的地方一律走 VALID_REPORTS。
 const VALID_REPORTS = REPORTS.filter(r => r && typeof r.date === 'string' && r.date);
-
-// 「上传数据」按钮只在本地显示（需先启动 scripts/upload_server.py，监听 8766）。
-// 线上站点无该服务，按钮暴露出去就是死链，故按 hostname 隐藏。
-if (['localhost', '127.0.0.1', ''].indexOf(location.hostname) !== -1) {
-  var _ub = document.getElementById('uploadBtn');
-  if (_ub) _ub.style.display = '';
-}
 
 const WEEKDAYS = ['一','二','三','四','五','六','日'];
 // 默认展示「最新一份日报所在月份」——勿写死月份，否则页面会落在无数据的月份、
