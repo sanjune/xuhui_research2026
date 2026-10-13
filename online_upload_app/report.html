@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日报加载中 · 12345物业工单日报</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f4f8;
+    padding: 24px; color: #1a2a3a; display: flex; justify-content: center; }
+  .box { max-width: 640px; margin-top: 60px; background: #fff; border-radius: 12px; padding: 40px 36px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.06); text-align: center; }
+  .box h2 { font-size: 18px; color: #1a3a5c; margin-bottom: 10px; }
+  .box p { font-size: 14px; color: #6b7c8e; line-height: 1.8; }
+  .spinner { font-size: 34px; margin-bottom: 14px; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+  .err { color: #c43a3a; }
+  .actions { margin-top: 22px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn { display: inline-block; background: #2a6ab8; color: #fff; border: none; padding: 10px 26px;
+    border-radius: 8px; font-size: 14px; cursor: pointer; text-decoration: none; }
+  .btn:hover { background: #1a5a98; }
+  .btn.ghost { background: #fff; color: #2a6ab8; border: 1px solid #b8c8d8; }
+</style>
+</head>
+<body>
+<div class="box" id="box">
+  <div class="spinner">📋</div>
+  <h2>正在加载日报…</h2>
+  <p id="msg">从云端数据库读取数据</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="app.js"></script>
+<script>
+const box = document.getElementById('box');
+const msg = document.getElementById('msg');
+
+function failPage(title, detail) {
+  box.innerHTML = '<h2 class="err">❌ ' + title + '</h2>' +
+    '<p>' + detail + '</p>' +
+    '<div class="actions">' +
+    '<a class="btn" href="index.html" onclick="location.href=\'index.html\';return false;">返回日历索引</a>' +
+    '<a class="btn ghost" href="upload.html" onclick="location.href=\'upload.html\';return false;">前往上传</a>' +
+    '</div>';
+}
+
+async function main() {
+  // 1. 解析 URL 参数 ?date=YYYY-MM-DD
+  const params = new URLSearchParams(location.search);
+  const date = (params.get('date') || '').slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    failPage('日期参数无效', '链接格式应为 report.html?date=YYYY-MM-DD');
+    return;
+  }
+
+  // 2. 读云端数据
+  try {
+    const { data, error } = await DailyReportApp.fetchReport(date);
+    if (error) throw new Error(error.message || JSON.stringify(error));
+    if (!data) {
+      failPage('未找到该日报', '云端数据库中没有 ' + date + ' 的日报记录。<br>' +
+        '可能尚未上传该日数据，或日期参数有误。');
+      return;
+    }
+
+    // 3. 用共享模板渲染完整日报并替换当前文档
+    data.report_date = (data.report_date || '').slice(0, 10);
+    const html = DailyReportApp.renderReportHTML(data, 'index.html');
+    document.open();
+    document.write(html);
+    document.close();
+  } catch (e) {
+    failPage('加载失败', (e.message || e) + '<br>请检查网络后重试。');
+  }
+}
+
+main();
+</script>
+</body>
+</html>

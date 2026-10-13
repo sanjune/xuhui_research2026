@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>12345物业工单日报 · 日历索引</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f4f8; padding: 24px; color: #1a2a3a; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .toplink { font-size: 13px; color: #2a6ab8; text-decoration: none; display: inline-block; margin-bottom: 14px; cursor: pointer; }
+  .toplink:hover { text-decoration: underline; }
+  h1 { font-size: 22px; color: #1a3a5c; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #6b7c8e; margin-bottom: 20px; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+  .month-nav { display: flex; align-items: center; gap: 12px; }
+  .month-nav button { background: #fff; border: 1px solid #c8d4e0; border-radius: 8px; width: 34px; height: 34px;
+    font-size: 16px; cursor: pointer; color: #2a4a6a; }
+  .month-nav button:hover { background: #f0f6fc; }
+  .month-nav .m-label { font-size: 17px; font-weight: 700; color: #1a3a5c; min-width: 110px; text-align: center; }
+  .view-toggle { display: flex; gap: 0; border: 1px solid #c8d4e0; border-radius: 8px; overflow: hidden; }
+  .view-toggle button { border: none; background: #fff; padding: 8px 18px; font-size: 13px; cursor: pointer; color: #4a6a8a; }
+  .view-toggle button.active { background: #2a6ab8; color: #fff; }
+  .upload-btn { background: #2a8a4a; color: #fff; border: none; padding: 9px 20px; border-radius: 8px;
+    font-size: 13px; cursor: pointer; }
+  .upload-btn:hover { background: #1e6a38; }
+  .panel { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,.06); }
+  /* 日历视图 */
+  .cal-head { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 8px; }
+  .cal-head .wd { text-align: center; font-size: 12px; color: #6b7c8e; padding: 6px 0; font-weight: 600; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-cell { min-height: 84px; background: #f8fafc; border: 1px solid #eef2f6; border-radius: 8px; padding: 6px 8px; }
+  .cal-cell.blank { background: transparent; border: none; }
+  .cal-cell .d { font-size: 13px; color: #8a9aae; font-weight: 600; }
+  .cal-cell.has-report { background: #f0f7ff; border-color: #b8d4f0; cursor: pointer; transition: all .15s; }
+  .cal-cell.has-report:hover { background: #dceafc; border-color: #2a6ab8; transform: translateY(-1px); }
+  .cal-cell.has-report .d { color: #2a6ab8; }
+  .cal-cell .badge { margin-top: 4px; font-size: 11px; line-height: 1.5; }
+  .cal-cell .badge .t { color: #1a3a5c; font-weight: 700; font-size: 15px; }
+  .cal-cell .badge .r { color: #c46a1a; }
+  .cal-cell.today { border-color: #2a8a4a; }
+  /* 列表视图 */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #eef2f6; }
+  th { background: #f4f8fc; color: #2a4a6a; font-weight: 600; white-space: nowrap; }
+  td.left { text-align: left; }
+  td.num { font-variant-numeric: tabular-nums; }
+  tr:hover td { background: #f8fafd; }
+  a.rlink { color: #2a6ab8; text-decoration: none; font-weight: 600; cursor: pointer; }
+  a.rlink:hover { text-decoration: underline; }
+  .empty { text-align: center; color: #8a9aae; padding: 40px 0; font-size: 14px; }
+  .status { text-align: center; padding: 40px 0; color: #6b7c8e; font-size: 14px; }
+  .status .err { color: #c43a3a; }
+  .retry { display: inline-block; margin-top: 12px; background: #2a6ab8; color: #fff; border: none;
+    padding: 8px 22px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+  .legend { margin-top: 14px; font-size: 12px; color: #8a9aae; line-height: 1.8; }
+  footer { text-align: center; color: #9aa8b8; font-size: 12px; padding: 20px 0 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="toplink" href="https://sanjune.github.io/xuhui_research2026/" target="_blank">← 返回课题成果门户</a>
+  <h1>徐汇区12345物业工单日报 · 日历索引</h1>
+  <div class="sub">数据实时读取自云端数据库 · 点击有数据的日期查看当日日报详情</div>
+
+  <div class="toolbar">
+    <div class="month-nav">
+      <button id="prevBtn" onclick="shiftMonth(-1)" title="上一月">‹</button>
+      <div class="m-label" id="mLabel">—</div>
+      <button id="nextBtn" onclick="shiftMonth(1)" title="下一月">›</button>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <div class="view-toggle">
+        <button id="calBtn" class="active" onclick="setView('cal')">日历</button>
+        <button id="listBtn" onclick="setView('list')">列表</button>
+      </div>
+      <button class="upload-btn" onclick="location.href='upload.html'">📤 上传数据</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div id="statusBox" class="status">加载云端数据…</div>
+    <div id="calView" style="display:none;">
+      <div class="cal-head">
+        <div class="wd">一</div><div class="wd">二</div><div class="wd">三</div><div class="wd">四</div>
+        <div class="wd">五</div><div class="wd">六</div><div class="wd">日</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div id="listView" style="display:none;">
+      <table>
+        <thead><tr>
+          <th>日期</th><th>工单总量</th><th>重复案件</th><th>重复率</th>
+          <th>已关联 / 待关联</th><th>涉及街镇</th><th class="left">主要类别 Top3</th><th>日报</th>
+        </tr></thead>
+        <tbody id="listBody"></tbody>
+      </table>
+      <div id="listEmpty" class="empty" style="display:none;">该月暂无日报数据</div>
+    </div>
+    <div class="legend">
+      说明：「重复案件」= 市民就已有工单再次来电（补充信息、催办、查进度等），每件通常指向一条不同原始工单；
+      「待关联」= 地址未匹配到 13 个标准街镇的工单。同一日期重新上传 Excel 会覆盖该日报。
+    </div>
+  </div>
+
+  <footer>徐汇区物业投诉治理数字化分析项目 · 日报日历索引</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="app.js"></script>
+<script>
+let REPORTS = [];          // 全部日报（report_date 升序）
+let curYear = 0, curMonth = 0;  // 当前显示月份（1-12）
+let curView = 'cal';
+
+const statusBox = document.getElementById('statusBox');
+const calView = document.getElementById('calView');
+const listView = document.getElementById('listView');
+const calGrid = document.getElementById('calGrid');
+const listBody = document.getElementById('listBody');
+const listEmpty = document.getElementById('listEmpty');
+const mLabel = document.getElementById('mLabel');
+
+const dateKey = (d) => (d || '').slice(0, 10);  // DB 日期字段统一取前 10 位
+
+async function load() {
+  statusBox.innerHTML = '加载云端数据…';
+  statusBox.style.display = 'block';
+  calView.style.display = 'none';
+  listView.style.display = 'none';
+  try {
+    const { data, error } = await DailyReportApp.fetchAllReports();
+    if (error) throw new Error(error.message || JSON.stringify(error));
+    REPORTS = (data || []).map((r) => Object.assign({}, r, { report_date: dateKey(r.report_date) }));
+    if (REPORTS.length === 0) {
+      statusBox.innerHTML = '云端暂无日报数据。' +
+        '<br><button class="retry" onclick="location.href=\'upload.html\'">前往上传</button>';
+      return;
+    }
+    // 默认月份 = 最新日报所在月份
+    const latest = REPORTS[REPORTS.length - 1].report_date;
+    const p = latest.split('-').map(Number);
+    curYear = p[0]; curMonth = p[1];
+    statusBox.style.display = 'none';
+    render();
+  } catch (e) {
+    statusBox.innerHTML = '<span class="err">❌ 加载失败：' + (e.message || e) + '</span>' +
+      '<br><button class="retry" onclick="load()">重试</button>';
+  }
+}
+
+function reportsInMonth(y, m) {
+  const prefix = y + '-' + String(m).padStart(2, '0');
+  return REPORTS.filter((r) => r.report_date.startsWith(prefix));
+}
+
+function shiftMonth(delta) {
+  let m = curMonth + delta, y = curYear;
+  if (m < 1) { m = 12; y--; }
+  if (m > 12) { m = 1; y++; }
+  curMonth = m; curYear = y;
+  render();
+}
+
+function setView(v) {
+  curView = v;
+  document.getElementById('calBtn').className = v === 'cal' ? 'active' : '';
+  document.getElementById('listBtn').className = v === 'list' ? 'active' : '';
+  render();
+}
+
+function render() {
+  mLabel.textContent = curYear + '年' + curMonth + '月';
+  const monthReports = reportsInMonth(curYear, curMonth);
+  const byDate = {};
+  monthReports.forEach((r) => { byDate[r.report_date] = r; });
+
+  if (curView === 'cal') {
+    listView.style.display = 'none';
+    calView.style.display = 'block';
+    renderCalendar(byDate);
+  } else {
+    calView.style.display = 'none';
+    listView.style.display = 'block';
+    renderList(monthReports);
+  }
+}
+
+function renderCalendar(byDate) {
+  calGrid.innerHTML = '';
+  const firstDow = (new Date(curYear, curMonth - 1, 1).getDay() + 6) % 7;  // 周一=0
+  const daysInMonth = new Date(curYear, curMonth, 0).getDate();
+  const todaySlug = (() => {
+    const t = new Date();
+    return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+  })();
+
+  for (let i = 0; i < firstDow; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell blank';
+    calGrid.appendChild(cell);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const slug = curYear + '-' + String(curMonth).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+    const cell = document.createElement('div');
+    cell.className = 'cal-cell';
+    if (slug === todaySlug) cell.classList.add('today');
+    const r = byDate[slug];
+    if (r) {
+      cell.classList.add('has-report');
+      cell.title = '点击查看 ' + slug + ' 日报（' + r.total + ' 件）';
+      cell.onclick = () => { location.href = 'report.html?date=' + slug; };
+      cell.innerHTML = '<div class="d">' + d + '日</div>' +
+        '<div class="badge"><span class="t">' + r.total + '</span> 件' +
+        (r.rep > 0 ? '<br><span class="r">重复 ' + r.rep + ' · ' + r.rep_rate + '%</span>' : '') + '</div>';
+    } else {
+      cell.innerHTML = '<div class="d">' + d + '日</div>';
+    }
+    calGrid.appendChild(cell);
+  }
+}
+
+function renderList(monthReports) {
+  if (monthReports.length === 0) {
+    listBody.innerHTML = '';
+    listEmpty.style.display = 'block';
+    return;
+  }
+  listEmpty.style.display = 'none';
+  listBody.innerHTML = monthReports.map((r) => {
+    return '<tr>' +
+      '<td><a class="rlink" onclick="location.href=\'report.html?date=' + r.report_date + '\'">' +
+        r.report_date.slice(5).replace('-', '月') + '日 ' + (r.weekday || '') + '</a></td>' +
+      '<td class="num"><b>' + r.total + '</b></td>' +
+      '<td class="num">' + r.rep + '</td>' +
+      '<td class="num">' + r.rep_rate + '%</td>' +
+      '<td class="num">' + r.matched + ' / ' + r.unmatched + '</td>' +
+      '<td class="num">' + r.streets + '</td>' +
+      '<td class="left">' + (r.main_cat || []).join('、') + '</td>' +
+      '<td><a class="rlink" onclick="location.href=\'report.html?date=' + r.report_date + '\'">查看 ›</a></td>' +
+      '</tr>';
+  }).join('');
+}
+
+load();
+</script>
+</body>
+</html>

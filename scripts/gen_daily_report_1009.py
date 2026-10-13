@@ -6,8 +6,9 @@
 用法：python gen_daily_report_1009.py [文件路径]
       不传参数默认读 热线日报数据/20261010.xlsx
 
-说明：本脚本与日期无关——报告日期一律由数据 processtime 众数推断（date_cn / date_slug），
+说明：本脚本与日期无关——报告日期一律由数据 processtime 推断（date_cn / date_slug），
       脚本名中的 1009 为历史遗留命名，换任何日期的源文件都直接复用同一脚本。
+      若一个 xlsx 含多个日期的工单，按日期分组分别生成每天的日报。
       ⚠️ 模板内**禁止**出现任何写死的年月日字面量（曾因 `<title>` 与正文首句写死
       「2026年10月9日」，导致 10-10 那份日报页头与正文日期错误）。
 """
@@ -17,148 +18,11 @@ from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, '热线日报数据', '20261010.xlsx')
-
-df = pd.read_excel(SRC)
-total = len(df)
-
-# 从数据 processtime 推断日期（取众数）
-_data_dates = pd.to_datetime(df['processtime']).dt.date
-data_date = _data_dates.mode().iloc[0]
 WEEKDAYS = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
-date_cn = f"{data_date.year}年{data_date.month}月{data_date.day}日"
-date_weekday = WEEKDAYS[data_date.weekday()]
-date_slug = data_date.isoformat()  # 例：2026-10-10（由数据本身推断，勿写死）
-src_name = os.path.basename(SRC)
-OUT = os.path.join(ROOT, f'徐汇区12345物业工单日报_{date_cn}.html')
 
-# ---------- 街镇汇总 ----------
-df['street'] = df['s30_str_name'].fillna('__未匹配__')
-# 规整异常值
-df.loc[df['street'].isin(['无', '/']), 'street'] = '__未匹配__'
-
-street_order = ['枫林路街道', '斜土路街道', '漕河泾街道', '天平路街道', '虹梅路街道',
+STREET_ORDER = ['枫林路街道', '斜土路街道', '漕河泾街道', '天平路街道', '虹梅路街道',
                 '徐家汇街道', '康健新村街道', '田林街道', '长桥街道', '龙华街道',
                 '华泾镇', '湖南路街道', '凌云路街道', '__未匹配__']
-
-rows = []
-for st in street_order:
-    sub = df[df['street'] == st]
-    if len(sub) == 0:
-        continue
-    n = len(sub)
-    # 主要类别：按市局12345原生最细一级(problemtyped)取 TOP3
-    sub_typed = sub['problemtyped'].fillna('未分类').value_counts().head(3)
-    main_cat = '、'.join(f'{k} {v}' for k, v in sub_typed.items()) if n else '—'
-    rep = int((sub['is_repeat'] == '是').sum())
-    rep_rate = rep / n * 100 if n else 0
-    label = '待关联街道' if st == '__未匹配__' else st
-    rows.append({
-        'street': label, 'n': n, 'main_cat': main_cat,
-        'rep': rep, 'rep_rate': rep_rate,
-    })
-
-rows.sort(key=lambda r: r['n'], reverse=True)
-
-# ---------- 问题细类 TOP ----------
-typed_vc = df['problemtyped'].fillna('未分类').value_counts()
-top_typed = list(typed_vc.items())[:10]
-
-# ---------- 最细一级分类全量统计（problemtyped）----------
-df['_typed'] = df['problemtyped'].fillna('未分类')
-typed_full = []
-for k, v in df['_typed'].value_counts().items():
-    n_st = df.loc[(df['_typed'] == k) & (df['street'] != '__未匹配__'), 'street'].nunique()
-    typed_full.append((k, int(v), v / total * 100, int(n_st)))
-
-# ---------- 来源 ----------
-src_vc = df['hotlinesource'].fillna('未知').value_counts()
-
-# ---------- 热线类型 ----------
-type_vc = df['hotlinetype'].fillna('未标注').value_counts()
-
-# ---------- 问题中类 ----------
-pb_vc = df['problemtypeb'].fillna('未分类').value_counts()
-
-# 重复率
-rep_total = int((df['is_repeat'] == '是').sum())
-rep_rate_total = rep_total / total * 100
-
-matched = sum(r['n'] for r in rows if r['street'] != '待关联街道')
-unmatched = sum(r['n'] for r in rows if r['street'] == '待关联街道')
-
-# 重点街镇（工单>=6 或 重复率>=40%）
-focus = [r for r in rows if (r['n'] >= 6 or r['rep_rate'] >= 40) and r['street'] != '待关联街道']
-
-now = datetime.now().strftime('%Y-%m-%d %H:%M')
-
-# ======== 生成 HTML ========
-def bar(val, mx, color='#3b82f6'):
-    w = val / mx * 100 if mx else 0
-    return f'<div class="bar-track"><div class="bar-fill" style="width:{w:.1f}%;background:{color}"></div></div>'
-
-max_n = max(r['n'] for r in rows)
-
-table_rows = ''
-for i, r in enumerate(rows, 1):
-    cls = ' class="alt"' if i % 2 == 0 else ''
-    flag = ''
-    if r['street'] == '待关联街道':
-        flag = '<span class="tag warn">待关联</span>'
-    elif r['rep_rate'] >= 40:
-        flag = '<span class="tag danger">重复高</span>'
-    elif r['n'] >= 10:
-        flag = '<span class="tag info">量大</span>'
-    street_cell = f'{r["street"]} {flag}' if flag else r['street']
-    table_rows += f'''<tr{cls}>
-      <td>{i}</td>
-      <td class="left">{street_cell}</td>
-      <td class="num"><b>{r["n"]}</b></td>
-      <td>{bar(r["n"], max_n)}</td>
-      <td class="left">{r["main_cat"]}</td>
-      <td class="num">{r["rep"]}</td>
-      <td class="num {("danger" if r["rep_rate"]>=40 else "")}">{r["rep_rate"]:.0f}%</td>
-    </tr>'''
-
-# 概览卡片
-cards = f'''
-  <div class="card"><div class="c-val">{total}</div><div class="c-lab">当日工单总量</div></div>
-  <div class="card"><div class="c-val">{rep_total}</div><div class="c-lab">重复案件 · {rep_rate_total:.1f}%</div></div>
-  <div class="card"><div class="c-val">{matched}</div><div class="c-lab">已关联街镇工单</div></div>
-  <div class="card"><div class="c-val">{unmatched}</div><div class="c-lab">待关联街道工单</div></div>
-  <div class="card"><div class="c-val">13</div><div class="c-lab">涉及街镇数</div></div>
-'''
-
-# 来源
-src_items = ''.join(
-    f'<div class="dist-row"><span class="dist-lab">{k}</span>'
-    f'<span class="dist-bar">{bar(v, src_vc.max(), "#6366f1")}</span>'
-    f'<span class="dist-num">{v}</span></div>'
-    for k, v in src_vc.items()
-)
-
-# 热线类型
-type_items = ''.join(
-    f'<div class="dist-row"><span class="dist-lab">{k}</span>'
-    f'<span class="dist-bar">{bar(v, type_vc.max(), "#0ea5e9")}</span>'
-    f'<span class="dist-num">{v}</span></div>'
-    for k, v in type_vc.items()
-)
-
-# 问题中类
-pb_items = ''.join(
-    f'<div class="dist-row"><span class="dist-lab">{k}</span>'
-    f'<span class="dist-bar">{bar(v, pb_vc.max(), "#f59e0b")}</span>'
-    f'<span class="dist-num">{v}</span></div>'
-    for k, v in pb_vc.items()
-)
-
-# 问题细类 TOP
-typed_items = ''.join(
-    f'<div class="dist-row"><span class="dist-lab">{k}</span>'
-    f'<span class="dist-bar">{bar(v, typed_vc.max(), "#ef4444")}</span>'
-    f'<span class="dist-num">{v}</span></div>'
-    for k, v in top_typed
-)
 
 # ---------- 个人信息脱敏 ----------
 # ⚠️ 日报含街镇「重复案件明细」，会把源表 problem 字段的诉求正文原样渲染进页面，
@@ -167,13 +31,10 @@ typed_items = ''.join(
 #    都要先把文本过一遍 mask_pii()。
 # 三条规则均**等长替换**，保证下方 60 字截断的落点不因脱敏而漂移。
 _PII_RULES = [
-    # 手机号 → 保留前 3 后 4：158****5213
     (re.compile(r'(?<!\d)1[3-9]\d{9}(?!\d)'),
      lambda m: m.group()[:3] + '****' + m.group()[-4:]),
-    # 身份证号 → 保留前 6 后 4：110101********4512
     (re.compile(r'(?<!\d)\d{17}[\dXx](?!\d)'),
      lambda m: m.group()[:6] + '*' * 8 + m.group()[-4:]),
-    # 邮箱 → 仅留首字符与域名：t***@example.com
     (re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'),
      lambda m: m.group()[0] + '*' * (len(m.group().split('@')[0]) - 1) + '@' + m.group().split('@')[1]),
 ]
@@ -187,11 +48,18 @@ def mask_pii(s):
     return s
 
 
-# 重点街镇
+def _assert_no_pii(text, label):
+    """交付前自检：页面上不得残留手机号 / 身份证号 / 邮箱。"""
+    for rx, name in ((_PII_RULES[0][0], '手机号'), (_PII_RULES[1][0], '身份证号'), (_PII_RULES[2][0], '邮箱')):
+        hits = sorted(set(rx.findall(text)))
+        if hits:
+            raise SystemExit(f'❌ {label} 仍残留{name}：{hits}（脱敏未生效，拒绝出稿）')
+    print(f'  ✅ {label} 隐私自检通过（手机号/身份证/邮箱 均 0 处）')
+
+
 def _clean_prob(s):
     """简化问题正文：脱敏 → 去换行/多空格/系统引用块，截断到 60 字。"""
     s = str(s or '')
-    # 剥离系统引用块（【最近派发的工单编号…】等）
     s = re.sub(r'【.*?】', '', s)
     s = re.sub(r'\s+', '', s)
     s = mask_pii(s)
@@ -199,45 +67,154 @@ def _clean_prob(s):
         s = s[:60] + '…'
     return s or '—'
 
-focus_html = ''
-for r in focus:
-    st_name = r['street']
-    # 提取该街镇重复案件明细
-    rep_df = df[(df['street'] == st_name) & (df['is_repeat'] == '是')].copy()
-    rep_items = ''
-    for _, row in rep_df.iterrows():
-        addr = str(row.get('appealaddr', '') or '').strip() or '—'
-        typed = str(row.get('problemtyped', '') or '').strip() or '—'
-        prob = _clean_prob(row.get('problem', ''))
-        rep_items += (
-            f'<div class="rep-row">'
-            f'<span class="rep-addr">{addr}</span>'
-            f'<span class="rep-type">{typed}</span>'
-            f'<span class="rep-prob">{prob}</span>'
-            f'</div>'
-        )
-    rep_block = ''
-    if rep_items:
-        rep_block = (f'<div class="rep-list"><div class="rep-head">'
-                     f'重复案件明细（{len(rep_df)} 件 · 地址 / 问题细类 / 问题摘要）'
-                     f'</div>{rep_items}</div>')
-    focus_html += (
-        f'<div class="focus-item"><div class="focus-head">'
-        f'<span class="focus-name">{st_name}</span>'
-        f'<span class="focus-n">{r["n"]} 件</span></div>'
-        f'<div class="focus-meta">主要类别：{r["main_cat"]}'
-        f' · 重复案件 {r["rep"]}（{r["rep_rate"]:.0f}%）'
-        + f'</div>{rep_block}</div>'
-    )
-if not focus_html:
-    focus_html = '<p class="empty">暂无重点街镇。</p>'
 
-# 最细一级分类全量统计行
-max_tf = max(t[1] for t in typed_full)
-typed_full_rows = ''
-for i, (k, v, pct, n_st) in enumerate(typed_full, 1):
-    cls = ' class="alt"' if i % 2 == 0 else ''
-    typed_full_rows += f'''<tr{cls}>
+def bar(val, mx, color='#3b82f6'):
+    w = val / mx * 100 if mx else 0
+    return f'<div class="bar-track"><div class="bar-fill" style="width:{w:.1f}%;background:{color}"></div></div>'
+
+
+# ======== 单日日报生成 ========
+def generate_for_date(df, data_date, src_name):
+    """对单个日期的 df 生成日报（根目录中文名版 + daily/ 源版）"""
+    total = len(df)
+    date_cn = f"{data_date.year}年{data_date.month}月{data_date.day}日"
+    date_weekday = WEEKDAYS[data_date.weekday()]
+    date_slug = data_date.isoformat()
+    OUT = os.path.join(ROOT, f'徐汇区12345物业工单日报_{date_cn}.html')
+    now = datetime.now().strftime('%Y-%m-%d %H:%M')
+
+    # ---------- 街镇汇总 ----------
+    df['street'] = df['s30_str_name'].fillna('__未匹配__')
+    df.loc[df['street'].isin(['无', '/']), 'street'] = '__未匹配__'
+
+    rows = []
+    for st in STREET_ORDER:
+        sub = df[df['street'] == st]
+        if len(sub) == 0:
+            continue
+        n = len(sub)
+        sub_typed = sub['problemtyped'].fillna('未分类').value_counts().head(3)
+        main_cat = '、'.join(f'{k} {v}' for k, v in sub_typed.items()) if n else '—'
+        rep = int((sub['is_repeat'] == '是').sum())
+        rep_rate = rep / n * 100 if n else 0
+        label = '待关联街道' if st == '__未匹配__' else st
+        rows.append({'street': label, 'n': n, 'main_cat': main_cat, 'rep': rep, 'rep_rate': rep_rate})
+
+    rows.sort(key=lambda r: r['n'], reverse=True)
+
+    # ---------- 问题细类 TOP ----------
+    typed_vc = df['problemtyped'].fillna('未分类').value_counts()
+    top_typed = list(typed_vc.items())[:10]
+
+    # ---------- 最细一级分类全量统计 ----------
+    df['_typed'] = df['problemtyped'].fillna('未分类')
+    typed_full = []
+    for k, v in df['_typed'].value_counts().items():
+        n_st = df.loc[(df['_typed'] == k) & (df['street'] != '__未匹配__'), 'street'].nunique()
+        typed_full.append((k, int(v), v / total * 100, int(n_st)))
+
+    src_vc = df['hotlinesource'].fillna('未知').value_counts()
+    type_vc = df['hotlinetype'].fillna('未标注').value_counts()
+    pb_vc = df['problemtypeb'].fillna('未分类').value_counts()
+
+    rep_total = int((df['is_repeat'] == '是').sum())
+    rep_rate_total = rep_total / total * 100
+
+    matched = sum(r['n'] for r in rows if r['street'] != '待关联街道')
+    unmatched = sum(r['n'] for r in rows if r['street'] == '待关联街道')
+
+    focus = [r for r in rows if (r['n'] >= 6 or r['rep_rate'] >= 40) and r['street'] != '待关联街道']
+
+    max_n = max(r['n'] for r in rows)
+
+    table_rows = ''
+    for i, r in enumerate(rows, 1):
+        cls = ' class="alt"' if i % 2 == 0 else ''
+        flag = ''
+        if r['street'] == '待关联街道':
+            flag = '<span class="tag warn">待关联</span>'
+        elif r['rep_rate'] >= 40:
+            flag = '<span class="tag danger">重复高</span>'
+        elif r['n'] >= 10:
+            flag = '<span class="tag info">量大</span>'
+        street_cell = f'{r["street"]} {flag}' if flag else r['street']
+        table_rows += f'''<tr{cls}>
+      <td>{i}</td>
+      <td class="left">{street_cell}</td>
+      <td class="num"><b>{r["n"]}</b></td>
+      <td>{bar(r["n"], max_n)}</td>
+      <td class="left">{r["main_cat"]}</td>
+      <td class="num">{r["rep"]}</td>
+      <td class="num {("danger" if r["rep_rate"]>=40 else "")}">{r["rep_rate"]:.0f}%</td>
+    </tr>'''
+
+    cards = f'''
+  <div class="card"><div class="c-val">{total}</div><div class="c-lab">当日工单总量</div></div>
+  <div class="card"><div class="c-val">{rep_total}</div><div class="c-lab">重复案件 · {rep_rate_total:.1f}%</div></div>
+  <div class="card"><div class="c-val">{matched}</div><div class="c-lab">已关联街镇工单</div></div>
+  <div class="card"><div class="c-val">{unmatched}</div><div class="c-lab">待关联街道工单</div></div>
+  <div class="card"><div class="c-val">13</div><div class="c-lab">涉及街镇数</div></div>
+'''
+
+    src_items = ''.join(
+        f'<div class="dist-row"><span class="dist-lab">{k}</span>'
+        f'<span class="dist-bar">{bar(v, src_vc.max(), "#6366f1")}</span>'
+        f'<span class="dist-num">{v}</span></div>'
+        for k, v in src_vc.items())
+
+    type_items = ''.join(
+        f'<div class="dist-row"><span class="dist-lab">{k}</span>'
+        f'<span class="dist-bar">{bar(v, type_vc.max(), "#0ea5e9")}</span>'
+        f'<span class="dist-num">{v}</span></div>'
+        for k, v in type_vc.items())
+
+    pb_items = ''.join(
+        f'<div class="dist-row"><span class="dist-lab">{k}</span>'
+        f'<span class="dist-bar">{bar(v, pb_vc.max(), "#f59e0b")}</span>'
+        f'<span class="dist-num">{v}</span></div>'
+        for k, v in pb_vc.items())
+
+    typed_items = ''.join(
+        f'<div class="dist-row"><span class="dist-lab">{k}</span>'
+        f'<span class="dist-bar">{bar(v, typed_vc.max(), "#ef4444")}</span>'
+        f'<span class="dist-num">{v}</span></div>'
+        for k, v in top_typed)
+
+    focus_html = ''
+    for r in focus:
+        st_name = r['street']
+        rep_df = df[(df['street'] == st_name) & (df['is_repeat'] == '是')].copy()
+        rep_items = ''
+        for _, row in rep_df.iterrows():
+            addr = str(row.get('appealaddr', '') or '').strip() or '—'
+            typed = str(row.get('problemtyped', '') or '').strip() or '—'
+            prob = _clean_prob(row.get('problem', ''))
+            rep_items += (
+                f'<div class="rep-row">'
+                f'<span class="rep-addr">{addr}</span>'
+                f'<span class="rep-type">{typed}</span>'
+                f'<span class="rep-prob">{prob}</span>'
+                f'</div>')
+        rep_block = ''
+        if rep_items:
+            rep_block = (f'<div class="rep-list"><div class="rep-head">'
+                         f'重复案件明细（{len(rep_df)} 件 · 地址 / 问题细类 / 问题摘要）'
+                         f'</div>{rep_items}</div>')
+        focus_html += (
+            f'<div class="focus-item"><div class="focus-head">'
+            f'<span class="focus-name">{st_name}</span>'
+            f'<span class="focus-n">{r["n"]} 件</span></div>'
+            f'<div class="focus-meta">主要类别：{r["main_cat"]}'
+            f' · 重复案件 {r["rep"]}（{r["rep_rate"]:.0f}%）'
+            + f'</div>{rep_block}</div>')
+    if not focus_html:
+        focus_html = '<p class="empty">暂无重点街镇。</p>'
+
+    max_tf = max(t[1] for t in typed_full)
+    typed_full_rows = ''
+    for i, (k, v, pct, n_st) in enumerate(typed_full, 1):
+        cls = ' class="alt"' if i % 2 == 0 else ''
+        typed_full_rows += f'''<tr{cls}>
       <td>{i}</td>
       <td class="left">{k}</td>
       <td class="num"><b>{v}</b></td>
@@ -246,8 +223,8 @@ for i, (k, v, pct, n_st) in enumerate(typed_full, 1):
       <td class="num">{n_st}</td>
     </tr>'''
 
-back_href = '__BACK_HREF__'
-html = f'''<!DOCTYPE html>
+    back_href = '__BACK_HREF__'
+    html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -375,37 +352,37 @@ html = f'''<!DOCTYPE html>
 </body>
 </html>'''
 
-# 兜底：整页再过一次脱敏。_clean_prob() 已是主通道，此处防止将来新增的自由文本渲染口遗漏。
-# 若兜底真拦到了东西，说明有渲染口没走 mask_pii()，需回去补齐。
-_before = mask_pii(html)
-if _before != html:
-    print('  ⚠ 整页兜底脱敏命中：有渲染口未走 mask_pii()，请检查模板')
-html = _before
+    # 兜底：整页再过一次脱敏。_clean_prob() 已是主通道，此处防止将来新增的自由文本渲染口遗漏。
+    _before = mask_pii(html)
+    if _before != html:
+        print('  ⚠ 整页兜底脱敏命中：有渲染口未走 mask_pii()，请检查模板')
+    html = _before
+
+    # 根目录中文名版（用户直接查看，回链指向 daily/index.html 源）
+    html_root = html.replace('__BACK_HREF__', 'daily/index.html')
+    _assert_no_pii(html_root, f'根目录日报({date_slug})')
+    with open(OUT, 'w', encoding='utf-8') as f:
+        f.write(html_root)
+    print('已生成日报(根目录):', OUT)
+
+    # 源 daily/ 版（供 build_publish_site.py 复制到 _publish/daily/，回链同目录 index.html）
+    DAILY_SRC = os.path.join(ROOT, 'daily')
+    os.makedirs(DAILY_SRC, exist_ok=True)
+    out_daily = os.path.join(DAILY_SRC, f'{date_slug}.html')
+    html_daily = html.replace('__BACK_HREF__', 'index.html')
+    _assert_no_pii(html_daily, f'daily源日报({date_slug})')
+    with open(out_daily, 'w', encoding='utf-8') as f:
+        f.write(html_daily)
+    print('已生成日报(daily源):', out_daily)
+    print(f'日期: {date_cn}({date_weekday}) | 工单总数: {total} | 重复: {rep_total}({rep_rate_total:.1f}%) | 已关联街镇: {matched} | 待关联: {unmatched}')
 
 
-def _assert_no_pii(text, label):
-    """交付前自检：页面上不得残留手机号 / 身份证号 / 邮箱。"""
-    for rx, name in ((_PII_RULES[0][0], '手机号'), (_PII_RULES[1][0], '身份证号'), (_PII_RULES[2][0], '邮箱')):
-        hits = sorted(set(rx.findall(text)))
-        if hits:
-            raise SystemExit(f'❌ {label} 仍残留{name}：{hits}（脱敏未生效，拒绝出稿）')
-    print(f'  ✅ {label} 隐私自检通过（手机号/身份证/邮箱 均 0 处）')
-
-
-# 根目录中文名版（用户直接查看，回链指向 daily/index.html 源）
-html_root = html.replace('__BACK_HREF__', 'daily/index.html')
-_assert_no_pii(html_root, '根目录日报')
-with open(OUT, 'w', encoding='utf-8') as f:
-    f.write(html_root)
-print('已生成日报(根目录):', OUT)
-
-# 源 daily/ 版（供 build_publish_site.py 复制到 _publish/daily/，回链同目录 index.html）
-DAILY_SRC = os.path.join(ROOT, 'daily')
-os.makedirs(DAILY_SRC, exist_ok=True)
-out_daily = os.path.join(DAILY_SRC, f'{date_slug}.html')
-html_daily = html.replace('__BACK_HREF__', 'index.html')
-_assert_no_pii(html_daily, 'daily 源日报')
-with open(out_daily, 'w', encoding='utf-8') as f:
-    f.write(html_daily)
-print('已生成日报(daily源):', out_daily)
-print(f'日期: {date_cn}({date_weekday}) | 工单总数: {total} | 重复: {rep_total}({rep_rate_total:.1f}%) | 已关联街镇: {matched} | 待关联: {unmatched}')
+# ======== 主入口：按工单日期分组，每个日期生成一份日报 ========
+df_all = pd.read_excel(SRC)
+src_name = os.path.basename(SRC)
+_data_dates = pd.to_datetime(df_all['processtime']).dt.date
+unique_dates = sorted(_data_dates.unique())
+print(f'数据源: {SRC} | 共 {len(df_all)} 行, {len(unique_dates)} 个日期: {unique_dates}')
+for d in unique_dates:
+    print(f'\n--- 生成 {d} 的日报 ---')
+    generate_for_date(df_all[_data_dates == d].copy(), d, src_name)

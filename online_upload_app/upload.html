@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日热线数据上传 · 12345物业工单日报</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f4f8; padding: 24px; color: #1a2a3a; }
+  .wrap { max-width: 820px; margin: 20px auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,.06); }
+  h1 { font-size: 22px; color: #1a3a5c; margin-bottom: 8px; }
+  .sub { font-size: 13px; color: #6b7c8e; margin-bottom: 20px; line-height: 1.7; }
+  .toplink { font-size: 13px; color: #2a6ab8; text-decoration: none; display: inline-block; margin-bottom: 14px; cursor: pointer; }
+  .toplink:hover { text-decoration: underline; }
+  .upload-zone { display: block; border: 2px dashed #b8c8d8; border-radius: 10px; padding: 36px 20px;
+    text-align: center; transition: all .2s; cursor: pointer; background: #fafcfe; }
+  .upload-zone:hover, .upload-zone.drag { border-color: #2a6ab8; background: #f0f6fc; }
+  .upload-zone .ico { font-size: 40px; margin-bottom: 8px; }
+  .upload-zone .t1 { font-size: 15px; color: #2a4a6a; font-weight: 600; }
+  .upload-zone .t2 { font-size: 12px; color: #8a9aae; margin-top: 6px; }
+  .upload-zone .fname { font-size: 13px; color: #2a6ab8; margin-top: 10px; font-weight: 600; word-break: break-all; }
+  .upload-zone.disabled { opacity: .55; pointer-events: none; }
+  .note { margin-top: 14px; font-size: 12px; color: #8a9aae; line-height: 1.8; }
+  .progress { margin-top: 20px; display: none; }
+  .progress.show { display: block; }
+  .log { margin-top: 12px; font-size: 13px; font-family: "SF Mono", Menlo, monospace; max-height: 380px;
+    overflow-y: auto; background: #f8f9fa; border-radius: 8px; padding: 12px; line-height: 1.7; }
+  .log .ok { color: #2a8a2a; }
+  .log .err { color: #c43a3a; }
+  .log .info { color: #4a6a8a; }
+  .log .dim { color: #9aa8b8; }
+  .summary { margin-top: 20px; padding: 16px; border-radius: 8px; font-size: 14px; display: none; line-height: 1.9; }
+  .summary.show { display: block; }
+  .summary.ok { background: #e8f6e8; border: 1px solid #8cc88c; color: #2a6a2a; }
+  .summary.err { background: #fde8e8; border: 1px solid #e8a8a8; color: #8a2a2a; }
+  .summary a { color: #2a6ab8; cursor: pointer; text-decoration: none; }
+  .summary a:hover { text-decoration: underline; }
+  .btnrow { margin-top: 16px; display: none; }
+  .btnrow.show { display: block; }
+  .btn { display: inline-block; background: #2a6ab8; color: #fff; border: none; padding: 10px 26px;
+    border-radius: 8px; font-size: 14px; cursor: pointer; margin-right: 10px; }
+  .btn:hover { background: #1a5a98; }
+  .btn.ghost { background: #fff; color: #2a6ab8; border: 1px solid #b8c8d8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="toplink" href="index.html" onclick="location.href='index.html';return false;">← 返回日报日历索引</a>
+  <h1>每日热线数据上传</h1>
+  <div class="sub">
+    上传市局 12345 热线同步 Excel（.xlsx），系统在浏览器内解析并生成当日物业工单日报，写入云端数据库。<br>
+    支持一个文件含多天工单 —— 将按工单日期<b>分别生成每天的日报</b>（同日重传自动覆盖）。
+  </div>
+
+  <label class="upload-zone" id="zone">
+    <input type="file" id="fileInput" accept=".xlsx" style="display:none;">
+    <div class="ico">📤</div>
+    <div class="t1">点击选择 或 拖拽 Excel 文件到此处</div>
+    <div class="t2">仅支持 .xlsx 格式 · 文件在浏览器内解析，不会保存原始文件</div>
+    <div class="fname" id="fname"></div>
+  </label>
+
+  <div class="progress" id="progressBox">
+    <div class="log" id="logBox"></div>
+  </div>
+
+  <div class="summary" id="summaryBox"></div>
+
+  <div class="btnrow" id="btnRow">
+    <button class="btn" onclick="location.href='index.html'">查看日历索引</button>
+    <button class="btn ghost" onclick="resetForm()">继续上传</button>
+  </div>
+
+  <div class="note">
+    说明：① 解析完全在浏览器内完成，Excel 原文件不会上传或留存；② 日报数据写入云端数据库，
+    重新部署不会丢失；③ 同一日期重复上传会覆盖该日报（用于数据修正）。
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="app.js"></script>
+<script>
+const zone = document.getElementById('zone');
+const fileInput = document.getElementById('fileInput');
+const fnameEl = document.getElementById('fname');
+const logBox = document.getElementById('logBox');
+const progressBox = document.getElementById('progressBox');
+const summaryBox = document.getElementById('summaryBox');
+const btnRow = document.getElementById('btnRow');
+
+function log(msg, cls = 'info') {
+  const line = document.createElement('div');
+  line.className = cls;
+  line.textContent = new Date().toLocaleTimeString() + ' ' + msg;
+  logBox.appendChild(line);
+  logBox.scrollTop = logBox.scrollHeight;
+}
+
+zone.addEventListener('click', (e) => { e.preventDefault(); fileInput.click(); });
+fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
+zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+zone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  zone.classList.remove('drag');
+  if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+
+function resetForm() {
+  fileInput.value = '';
+  fnameEl.textContent = '';
+  progressBox.classList.remove('show');
+  summaryBox.className = 'summary';
+  btnRow.classList.remove('show');
+  zone.classList.remove('disabled');
+  logBox.innerHTML = '';
+}
+
+async function handleFile(file) {
+  // 重置
+  progressBox.classList.add('show');
+  summaryBox.className = 'summary';
+  btnRow.classList.remove('show');
+  logBox.innerHTML = '';
+  zone.classList.add('disabled');
+  fnameEl.textContent = '已选择：' + file.name;
+
+  try {
+    // 1. 校验格式
+    if (!/\.xlsx$/i.test(file.name)) throw new Error('仅支持 .xlsx 格式，请重新选择文件');
+    log(`文件：${file.name}（${(file.size / 1024).toFixed(1)} KB）`);
+
+    // 2. 浏览器内解析（Excel 不上传服务器）
+    log('解析 Excel…');
+    const buf = await file.arrayBuffer();
+    const { records, skipped } = DailyReportApp.buildRecordsFromWorkbook(buf, file.name);
+    if (records.length === 0) throw new Error('未解析出有效工单数据（processtime 无有效日期）');
+    log(`解析完成：${records.length} 个日期，共 ${records.reduce((s, r) => s + r.total, 0)} 件工单` +
+        (skipped ? `（跳过 ${skipped} 行无日期记录）` : ''), 'ok');
+
+    // 3. 逐条写入云数据库
+    let okCount = 0, errCount = 0;
+    const errs = [];
+    for (let i = 0; i < records.length; i++) {
+      const r = records[i];
+      log(`[${i + 1}/${records.length}] 写入 ${r.report_date}（${r.report_data.weekdayFull} · ${r.total}件 重复${r.rep} ${r.rep_rate}%）…`);
+      try {
+        const { error } = await DailyReportApp.upsertReport(r);
+        if (error) throw new Error(error.message || JSON.stringify(error));
+        log(`  ✅ 成功`, 'ok');
+        okCount++;
+      } catch (e) {
+        log(`  ❌ 失败：${e.message}`, 'err');
+        errCount++;
+        errs.push(`${r.report_date}: ${e.message}`);
+      }
+    }
+
+    // 4. 结果
+    if (errCount === 0) {
+      const links = records.map((r) =>
+        `<a onclick="location.href='report.html?date=${r.report_date}'">${r.report_date}（${r.total}件）</a>`
+      ).join('、');
+      summaryBox.className = 'summary ok';
+      summaryBox.innerHTML = `✅ 已生成 ${records.length} 份日报并写入云端数据库：<br>${links}<br>` +
+        `重复案件合计 ${records.reduce((s, r) => s + r.rep, 0)} 件。`;
+    } else {
+      summaryBox.className = 'summary err';
+      summaryBox.innerHTML = `⚠️ 完成：成功 ${okCount} 份，失败 ${errCount} 份。<br>` +
+        errs.map((e) => `· ${e}`).join('<br>');
+    }
+    btnRow.classList.add('show');
+    log(`\n完成：成功 ${okCount}，失败 ${errCount}`, errCount ? 'err' : 'ok');
+  } catch (e) {
+    log('❌ ' + (e.message || e), 'err');
+    summaryBox.className = 'summary err';
+    summaryBox.textContent = '❌ ' + (e.message || e);
+    btnRow.classList.add('show');
+  } finally {
+    zone.classList.remove('disabled');
+  }
+}
+</script>
+</body>
+</html>
