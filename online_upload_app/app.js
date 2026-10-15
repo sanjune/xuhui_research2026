@@ -18,8 +18,8 @@
 
   // ============ 1. 配置与 SDK ============
   const PUBLIC_CONFIG = {
-    endpoint: 'https://xuhui-property-reports.app.workbuddy.host',
-    publishableKey: 'wbpk_VPtKCSEAs0RVwIWRwLF3mX_Fq068wzA24qbRoolk2UiUPvE40GiieUk'
+    endpoint: 'https://xuhui-daily.app.workbuddy.host',
+    publishableKey: 'wbpk_XxWTXNcnds2ATbdTi0rW43_ftiwd3klnAZfvjJgOGawreEQ66Xq6cSh'
   };
   const TABLE = 'daily_reports';
 
